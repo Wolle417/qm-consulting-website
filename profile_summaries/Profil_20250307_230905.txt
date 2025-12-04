@@ -1,0 +1,92 @@
+## Berufliches Profil
+
+Stefan Schönwälder hat eine tiefgehende Karriere im Bereich der Ingenieursdienstleistungen, spezialisiert auf Entwicklungsarbeiten im Hochtechnologiebereich. Mit seiner umfassenden und vielseitigen Expertise in der Entwicklung und Optimierung von technischen und thermischen Systemen, insbesondere in der Nuklear- und LED-Technologie, ist Herr Schönwälder ein überaus kompetenter und gefragter Projektingenieur. Seine fachliche Exzellenz ergänzt er mit einer außergewöhnlichen Fähigkeit, analytisch und strukturiert auf komplexe technische Herausforderungen zu reagieren. Herr Schönwälder verfügt über weitreichende Erfahrungen im internationalen Kontext, beweist hohe Eigenmotivation und ist ein zuverlässiger Teamplayer, der durch kooperative Zusammenarbeit und vorbildliche Kommunikation besticht.
+
+### Kernkompetenzen
+- Entwicklung und Optimierung technischer Systeme
+- Thermische, elektrische und optische Messungen
+- Projektmanagement und technische Dokumentation
+- Entwicklung neuer Produkte und Problemlösungen
+- Ausgeprägte analytische und konzeptionelle Fähigkeiten
+- Teamleitung und -betreuung
+- Technische Schnittstellenkoordination
+
+## Berufliche Erfahrung
+
+### PAMEC PAPP GmbH (seit September 2021)
+**Entwicklungsingenieur**
+
+- Verantwortlich für Qualitätsmaßnahmen des Innovision-Produkts (MR InBore Patient Entertainment System).
+- Zusammenarbeit mit internationalen Teams, einschließlich Innovere, zur Lösung technischer Probleme.
+- Einführung erweiterter Wareneingangskontrollen für MR HMI-Systeme.
+- FMEA-Risikoanalysen und Implementierung geeigneter Maßnahmen.
+
+### TEMPTON Personaldienstleistungen GmbH (Juni 2018 – 2021)
+**Entwicklungsingenieur für In-core-Instrumentierung**
+- Entwicklung neuer Positionssensoren für Regelstäbe in Zusammenarbeit mit Framatome GmbH.
+- Verantwortung für Berechnung von Magnetfeldern und technisch-dokumentarische Arbeiten für die Kerninstrumentierung Hinkley Point C.
+- Koordination und Betreuung technischer Schnittstellen.
+
+### Framatome GmbH (Juni 2018 – Mai 2020)
+**Ingenieur im Bereich Kerninneninstrumentierung ICTNPI**
+
+- Entwicklung eines Sensors zur redundanten Positionsmessung von Steuerstäben mit Reed-Switch-Technologie.
+- Leitung von EMV-Qualifizierungstests, inkl. Budget- und Terminmanagement.
+- Interface Manager für das Neubauprojekt Hinkley Point C, Sicherstellung technischer Schnittstellenkoordination.
+
+### Brunel GmbH (Mai 2014 – Mai 2017)
+**Projektingenieur**
+
+- Entwicklung von LED-Retrofits, Kühlkonzepten für Lampen und Optimierungsmethoden für Massenproduktion.
+- Eigenständig Ergänzung und Weiterentwicklung von Mess- und Simulationsmethoden.
+- Teilnahme an internationalen Wissensaustauschteams (Global Competence Teams).
+
+### TU BA Freiberg (Juli 2007 – August 2013)
+**Wissenschaftlicher Mitarbeiter**
+
+- Numerische Simulation von Silizium-Kristallzuchtprozessen in der Photovoltaik-Abteilung.
+
+## Fachkenntnisse und Technisches Know-how
+
+### Programmiersprachen und Software:
+- **C++, VB, JAVA:** Gut
+- **Matlab, Origin:** Sehr gut
+- **CAD (SolidWorks, ICEMCFD):** Sehr gut
+- **Numerische Simulation (Ansys FLUENT, FlowSim):** Experte
+
+### Technologien und Methoden:
+- **Reed-Switch Technologie:** Experte
+- **Thermische Simulation (CAD, FEM):** Experte
+- **EMV-Testplanung und -Durchführung:** Sehr gut
+- **Anforderungsmanagement und Konfigurationsmanagement:** Sehr gut
+
+## Soft Skills und Persönliche Stärken
+
+- **Analytisches und Konzeptuelles Denken:** Belegt durch erfolgreiche Leitung komplexer Projekte und schnelle Lösung schwieriger technischer Herausforderungen.
+- **Teamfähigkeit:** Effektive Zusammenarbeit mit interdisziplinären und internationalen Teams.
+- **Zuverlässigkeit und Engagement:** Hervorgehoben durch kontinuierlich hohe Arbeitsqualität und Einsatzbereitschaft.
+- **Kommunikationsstärke:** Erfolgreiche Betreuung von Schnittstellen und Kommunikation komplexer Inhalte an Stakeholder.
+
+## Ausbildung und Weiterbildung
+
+### Akademische Laufbahn:
+- **TU BA Freiberg (Oktober 1999 – Juni 2007):** Diplom in Angewandter Naturwissenschaft (Note 1,8).**
+
+### Grundwehrdienst:
+- **Jägerbataillon 1 Berlin (September 1998 – Juni 1999)**
+
+### Schulbildung:
+- **Gymnasium Coswig (September 1986 – Juni 1988):** Abitur (Note 2,2).
+
+## Erfolge und Besondere Leistungen
+
+- Entwicklung international eingesetzter Sensorentechnologien und qualifiziert für den Betrieb in sicherheitskritischen technischen Umgebungen.
+- Versorgung komplexer technischer Schnittstellen mit innovativen Lösungen, anerkannt durch Bonusprämien und höchste Zufriedenheitsbewertungen seitens führender Technologieunternehmen.
+
+## Sprachkenntnisse
+
+- **Englisch:** Wissenschaftlicher Standard
+
+## Zusammenfassung und Stärken für Bewerbungen
+
+Stefan Schönwälder ist ein erfahrener Ingenieur mit umfangreicher Expertise in der Entwicklung und Optimierung technologischer Systeme mit Fokus auf Sensor- und LED-Technologien. Seine kombinierte Fähigkeit, technische Herausforderungen analytisch und integrativ zu meistern, seine ausgezeichneten Teamarbeits- und Kommunikationsfähigkeiten sowie seine internationale Projekterfahrung machen ihn zu einem herausragenden Kandidaten innerhalb der Technologie- und Ingenieurbranche.

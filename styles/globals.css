@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gradient-dark text-light-gray;
+  }
+}
+
+@layer utilities {
+  .glow-button {
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .glow-button:hover {
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.8);
+  }
+
+  .glass-effect {
+    background: rgba(30, 58, 95, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .gradient-text {
+    background: linear-gradient(90deg, #00D4FF 0%, #00FFF5 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}

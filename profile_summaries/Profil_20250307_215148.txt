@@ -1,0 +1,31 @@
+### 1. Persönliches Profil
+Stefan Schönwälder ist ein hoch qualifizierter Entwicklungsingenieur mit umfassender Erfahrung in der Nuklearindustrie und im Bereich der LED-Technologie. Seine Stärken liegen in der schnellen Auffassungsgabe, exzellenter analytischer und strukturierter Denkweise, sowie in seiner Fähigkeit, komplexe technische Probleme zu lösen. Er zeigt ein hohes Maß an Eigenmotivation, Zuverlässigkeit und Teamfähigkeit, was ihn zu einem geschätzten Mitarbeiter bei diversen internationalen Projekten macht.
+
+### 2. Berufliche Erfahrung
+- **PAMEC PAPP GmbH (seit September 2021)**
+  - Rolle: Entwicklungsingenieur
+  - Erfolge: Verantwortlich für Qualitätsmaßnahmen beim MR InBore Patient Entertainment System, Einführung erweiterter Wareneingangskontrollen, Auszeichnung mit einer Bonusprämie von Siemens Healthineers.
+
+- **TEMPTON Personaldienstleistungen GmbH (Juni 2018 - Mai 2020)**
+  - Rolle: Entwicklungsingenieur für In-core-Instrumentierung bei Framatome GmbH
+  - Erfolge: Entwicklung von Positionssensoren für Reaktorkerne, Koordination technischer Schnittstellen im Projekt Hinkley Point C.
+
+- **Brunel GmbH (Mai 2014 - Juli 2017)**
+  - Rolle: Projektingenieur
+  - Erfolge: Entwicklung von LED-Retrofit-Produkten, Optimierung von Kühlkonzepten, fachübergreifende Zusammenarbeit in internationalen Teams.
+
+- **Wissenschaftlicher Mitarbeiter an der TU Bergakademie Freiberg (Juli 2007 - August 2013)**
+  - Fokus auf die numerische Simulation von Silizium-Kristallzuchtprozessen.
+
+### 3. Qualifikationen und Fähigkeiten
+- **Technische Fähigkeiten:** Entwicklung von Sensorsystemen, numerische Simulation (FEM), CAD (SolidWorks, ICEMCFD), Anwendungskenntnisse in Ansys FLUENT, MATLAB, C++, VB, JAVA.
+- **Sprachkenntnisse:** Englisch (wissenschaftlicher Standard).
+- **Soft Skills:** Ausgeprägte Teamfähigkeit, hohe Flexibilität, starke Kommunikationsfähigkeiten, Organisationstalent.
+
+### 4. Ausbildung und Weiterbildung
+- **Studium:** Angewandte Naturwissenschaften, TU Bergakademie Freiberg, Abschluss als Diplom-Naturwissenschaftler mit der Note 1,8.
+- **Diplomarbeit:** Thema war Stoff- und Wärmetransport bei der Züchtung von galliumdotierten Germaniumkristallen.
+- **Grundwehrdienst:** Jägerbataillon 1 Berlin. 
+- **Schulische Bildung:** Gymnasium Coswig, naturwissenschaftliches Profil mit Abschlussnote 2,2. 
+
+Herr Schönwälder hat sich kontinuierlich durch berufliche Praxis und zusätzliche Aufgaben wie die Leitung von Komitees und internationalen Arbeitsgruppen weitergebildet und ist stets sehr engagiert, neue Herausforderungen anzunehmen.
