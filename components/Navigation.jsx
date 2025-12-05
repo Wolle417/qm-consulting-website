@@ -17,8 +17,7 @@ export default function Navigation() {
   const navItems = [
     { label: 'Für wen', href: '#forwho' },
     { label: 'Leistungen', href: '#services' },
-    { label: 'Expertise', href: '#expertise' },
-    { label: 'Beispiel', href: '#casestudy' },
+    { label: 'Kompetenzprofil', href: '#expertise' },
     { label: 'Arbeitsweise', href: '#about' },
     { label: 'Kontakt', href: '#contact' },
   ];
@@ -37,9 +36,9 @@ export default function Navigation() {
           {/* Logo */}
           <a
             href="#"
-            className="text-xl font-bold text-white hover:text-electric-blue transition-colors"
+            className="text-xl font-bold text-white hover:text-qcore-blue transition-colors"
           >
-            Stefan Schönwälder
+            QCORE CONSULTING
           </a>
 
           {/* Nav Links - Desktop */}
@@ -48,7 +47,7 @@ export default function Navigation() {
               <a
                 key={item.href}
                 href={item.href}
-                className="text-light-gray hover:text-electric-blue transition-colors 
+                className="text-text-light hover:text-qcore-blue transition-colors 
                            text-sm font-medium"
               >
                 {item.label}
@@ -56,9 +55,8 @@ export default function Navigation() {
             ))}
             <a
               href="#contact"
-              className="px-6 py-2 bg-electric-blue/20 text-electric-blue font-semibold 
-                         rounded-lg hover:bg-electric-blue/30 transition-all border 
-                         border-electric-blue/30"
+              className="px-6 py-2 border-2 border-qcore-blue text-qcore-blue font-semibold 
+                         rounded hover:bg-qcore-blue hover:text-dark-navy transition-all"
             >
               Kontakt
             </a>
@@ -85,7 +83,7 @@ export default function Navigation() {
 
       {/* Progress Bar */}
       <motion.div
-        className="h-1 bg-electric-blue origin-left"
+        className="h-1 bg-qcore-blue origin-left"
         style={{
           scaleX: scrolled ? 0.3 : 0,
           transition: 'scaleX 0.3s ease',

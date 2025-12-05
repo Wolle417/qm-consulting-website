@@ -3,7 +3,7 @@ import Hero from '../components/Hero';
 import ForWho from '../components/ForWho';
 import Services from '../components/Services';
 import Expertise from '../components/Expertise';
-import CaseStudy from '../components/CaseStudy';
+import TransferCompetence from '../components/TransferCompetence';
 import About from '../components/About';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
@@ -16,7 +16,7 @@ export default function Home() {
       <ForWho />
       <Services />
       <Expertise />
-      <CaseStudy />
+      <TransferCompetence />
       <About />
       <Contact />
       <Footer />

@@ -9,109 +9,65 @@ export default function About() {
     threshold: 0.1,
   });
 
-  const workingStyle = [
+  const principles = [
     {
-      title: 'Modern & Strukturiert',
-      description:
-        'Ich nutze moderne Tools (z.B. LLM-unterstützte Dokumentenerstellung) kombiniert mit fachlicher Validierung und 4-Augen-Prinzip. Ergebnis: Audit-fähige Dokumente in kürzerer Zeit – ohne Qualitätskompromisse.',
-      icon: '🚀',
+      title: 'Klarheit',
+      description: 'Komplexe Systeme brauchen einfache Strukturen. Keine unnötigen Prozesse. Fokus auf Wirksamkeit.',
     },
     {
-      title: 'Remote-First',
-      description:
-        'Ich arbeite primär remote, mit definierten Präsenztagen vor Ort (z.B. für Audits, Begehungen, Workshops). Flexibel nach Projektbedarf.',
-      icon: '💻',
+      title: 'Reproduzierbarkeit',
+      description: 'Prozesse müssen wiederholbar sein. Standardisierung ohne Überregulierung.',
     },
     {
-      title: 'Projektbasiert',
-      description:
-        'Typische Projekte: 3-6 Monate. Klare Ziele, messbare Deliverables, transparente Kommunikation.',
-      icon: '📊',
+      title: 'Nachvollziehbarkeit',
+      description: 'Dokumentierte Entscheidungen. Audit-Trails. Transparenz für interne und externe Audits.',
     },
     {
-      title: 'Agil & Pragmatisch',
-      description:
-        'Kein Bürokratie-Overhead. Fokus auf das, was wirklich für Compliance und Audit-Readiness nötig ist.',
-      icon: '⚡',
+      title: 'Moderne Methodik',
+      description: 'Effiziente Werkzeuge, moderne Ansätze. LLM-gestützte Prozesse sind selbstverständlich. Hohe Geschwindigkeit ohne Qualitätsverlust.',
     },
   ];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.15 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, scale: 0.9 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: { duration: 0.6 },
-    },
-  };
-
   return (
-    <section id="about" className="py-24 px-6" ref={ref}>
+    <section id="about" className="section-padding bg-dark-navy" ref={ref}>
       <div className="max-w-6xl mx-auto">
         <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={inView ? 'visible' : 'hidden'}
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
         >
-          <motion.h2
-            variants={itemVariants}
-            className="text-4xl md:text-5xl font-bold text-center mb-6"
-          >
-            <span className="gradient-text">Arbeitsweise</span>
-          </motion.h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 text-white">
+            Arbeitsweise
+          </h2>
 
-          <motion.p
-            variants={itemVariants}
-            className="text-xl text-light-gray/80 text-center mb-16 max-w-3xl mx-auto"
-          >
-            Effizient, modern und ohne unnötigen Overhead – fokussiert auf echte
-            Audit-Readiness.
-          </motion.p>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            {workingStyle.map((item, index) => (
+          <div className="grid md:grid-cols-2 gap-8 mb-12">
+            {principles.map((principle, index) => (
               <motion.div
                 key={index}
-                variants={itemVariants}
-                whileHover={{ scale: 1.05 }}
-                className="glass-effect p-8 rounded-2xl hover:bg-white/5 transition-all 
-                           duration-300 cursor-pointer"
+                initial={{ opacity: 0, y: 30 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: index * 0.15 }}
+                className="card-minimal"
               >
-                <div className="text-5xl mb-4">{item.icon}</div>
-                <h3 className="text-2xl font-semibold text-white mb-4">{item.title}</h3>
-                <p className="text-light-gray/80 leading-relaxed">{item.description}</p>
+                <h3 className="text-xl font-semibold text-qcore-blue mb-3">
+                  {principle.title}
+                </h3>
+                <p className="text-text-light leading-relaxed">
+                  {principle.description}
+                </p>
               </motion.div>
             ))}
           </div>
 
-          {/* Education */}
           <motion.div
-            variants={itemVariants}
-            className="mt-16 glass-effect p-10 rounded-2xl text-center"
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            className="text-center"
           >
-            <h3 className="text-2xl font-semibold text-white mb-6">Hintergrund</h3>
-            <div className="max-w-3xl mx-auto space-y-4 text-light-gray/80">
-              <p className="text-lg">
-                <span className="font-semibold text-white">Ausbildung:</span> Diplom-Naturwissenschaftler
-                (TU Bergakademie Freiberg)
-              </p>
-              <p className="text-lg">
-                <span className="font-semibold text-white">Erfahrung:</span> 10+ Jahre in
-                hochregulierten Industrien (Nuklear, Medizintechnik, LED)
-              </p>
-              <p className="text-lg">
-                <span className="font-semibold text-white">Standort:</span> Herzogenaurach /
-                Remote
-              </p>
-            </div>
+            <p className="text-text-muted">
+              Remote-First. Projektbasiert. 3-6 Monate typisch.
+            </p>
           </motion.div>
         </motion.div>
       </div>

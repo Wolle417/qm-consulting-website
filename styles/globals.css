@@ -4,43 +4,75 @@
 
 @layer base {
   body {
-    @apply bg-gradient-dark text-light-gray;
+    @apply bg-dark-navy text-text-light;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-text-light;
+    font-weight: 700;
   }
 }
 
 @layer utilities {
-  .glow-button {
-    box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
-    transition: box-shadow 0.3s ease;
+  /* QCore V2 Button Styles - Outline for Dark Theme */
+  .btn-outline {
+    @apply px-8 py-4 border-2 border-qcore-blue text-qcore-blue font-semibold rounded;
+    transition: all 0.3s ease;
   }
   
-  .glow-button:hover {
-    box-shadow: 0 0 30px rgba(0, 212, 255, 0.8);
+  .btn-outline:hover {
+    @apply bg-qcore-blue text-dark-navy;
+  }
+  
+  .btn-ghost {
+    @apply px-8 py-4 border border-border-dark text-text-light font-medium rounded;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-ghost:hover {
+    @apply border-qcore-blue text-qcore-blue bg-qcore-navy bg-opacity-20;
   }
 
+  /* QCore V2 Card Styles - Dark Cards with Borders */
+  .card-minimal {
+    @apply p-10 bg-qcore-navy bg-opacity-20 border border-border-dark rounded-lg;
+    transition: all 0.3s ease;
+  }
+  
+  .card-minimal:hover {
+    @apply border-qcore-blue shadow-lg;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(74, 144, 226, 0.15);
+  }
+
+  .section-padding {
+    @apply py-24 px-6;
+  }
+
+  /* Glass effect for dark theme - UPDATED */
   .glass-effect {
-    background: rgba(30, 58, 95, 0.3);
+    background: rgba(30, 58, 95, 0.2);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
-
-  .gradient-text {
-    background: linear-gradient(90deg, #00D4FF 0%, #00FFF5 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
 }
 
+/* Subtle animations - NO flashy effects */
 @keyframes float {
   0%, 100% {
     transform: translateY(0px);
   }
   50% {
-    transform: translateY(-20px);
+    transform: translateY(-10px);
   }
 }
 
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
+
+/* REMOVED V1 Styles:
+- .glow-button (replaced with .btn-outline)
+- .gradient-text (no more electric blue gradients)
+*/

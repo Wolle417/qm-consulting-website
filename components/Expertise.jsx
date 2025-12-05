@@ -9,153 +9,119 @@ export default function Expertise() {
     threshold: 0.1,
   });
 
-  const experiences = [
+  const themes = [
     {
-      company: 'Siemens Healthineers',
-      period: '2021-2025',
-      role: 'Technical Quality Management',
-      focus: 'MRT-Systeme, ISO 13485, MDR, FMEA',
-      icon: '🏥',
+      title: 'Qualität & Compliance',
+      intro: 'Qualität ist universell: klare Prozesse, stabile Ergebnisse, kontrollierte Risiken.',
+      points: [
+        'Aufbau & Modernisierung von QM-Systemen (ISO 9001, branchenspezifische Standards)',
+        'Auditfähigkeit, Dokumentationsketten, Risiko- & Abweichungsmanagement',
+        'Corrective Actions, Traceability, Nachvollziehbarkeit',
+        'Change Control, Management Review, kontinuierliche Verbesserung',
+      ],
     },
     {
-      company: 'Framatome',
-      period: '2018-2020',
-      role: 'Kerninstrumentierung',
-      focus: 'Safety-Critical Systems, KTA-Standards, Hinkley Point C',
-      icon: '⚛️',
+      title: 'Technische Systeme & Engineering-Logik',
+      points: [
+        'Analyse technischer Prozesse & Fehlerbilder',
+        'Stabilisierung komplexer Prozessketten',
+        'Verifikation, Nachweisführung, Strukturierung von Workflows',
+        'Integration von Quality Management in technische Entwicklung',
+      ],
     },
     {
-      company: 'Osram',
-      period: '2014-2017',
-      role: 'LED-Entwicklung',
-      focus: 'Produktentwicklung, Thermomanagement, Validation',
-      icon: '💡',
+      title: 'Regulierte Industrien',
+      intro: '10+ Jahre Erfahrung in hochregulierten Branchen:',
+      industries: [
+        'Nukleartechnik (KTA-konform, Safety-Critical Systems)',
+        'Medizintechnik & Healthcare (ISO 13485, MDR)',
+        'Pharma & Biotech (GMP, ICH Guidelines)',
+        'Elektronik & LED (Produktentwicklung, Validation)',
+        'Halbleiter (Cleanroom, Process Control)',
+        'Anlagenbau & Energie (Großanlagen, komplexe Systeme)',
+      ],
+      points: [
+        'Formale Methoden, Risikobeherrschung, Dokumentationsarchitektur',
+      ],
     },
     {
-      company: 'Pharma/Biotech',
-      period: '2025',
-      role: 'Systematische Einarbeitung',
-      focus: 'GMP, ICH Guidelines, Regulatory Processes',
-      icon: '💊',
+      title: 'Prozesse, Struktur & Skalierbarkeit',
+      intro: 'Ihr Problem erfordert Struktur, nicht mehr Meetings.',
+      points: [
+        'Prozessdesign, Rollen & Verantwortlichkeiten',
+        'Fehlerresiliente Abläufe',
+        'Strukturen für Wachstum & technische Skalierung',
+        'Lean Management, keine Überregulierung',
+      ],
+    },
+    {
+      title: 'Arbeitsweise & Methodik',
+      points: [
+        'Grundprinzipien: Analyse → Struktur → Umsetzung → Dokumentation',
+        'Moderne Tools als Methodik: Der Einsatz moderner Werkzeuge (inkl. LLM-gestützter Prozesse) ist selbstverständlich. Effizienzgewinn ohne Qualitätskompromisse.',
+        'Reproduzierbare Ergebnisse: Nachvollziehbarkeit, Präzision, Audit-Sicherheit',
+        'Hohe Wirksamkeit: In heterogenen, technischen Teams. Senior-Level Kommunikation.',
+      ],
     },
   ];
-
-  const coreCompetencies = [
-    'ISO 9001 Quality Management',
-    'Prozessdokumentation & -optimierung',
-    'Audit-Vorbereitung & Zertifizierung',
-    'Risk-Based Thinking',
-    'Validation Lifecycle (IQ/OQ/PQ)',
-    'FMEA & Root Cause Analysis',
-  ];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.15 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, x: -30 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: { duration: 0.6 },
-    },
-  };
 
   return (
-    <section id="expertise" className="py-24 px-6" ref={ref}>
+    <section id="expertise" className="section-padding bg-dark-navy" ref={ref}>
       <div className="max-w-6xl mx-auto">
         <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={inView ? 'visible' : 'hidden'}
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
         >
-          <motion.h2
-            variants={itemVariants}
-            className="text-4xl md:text-5xl font-bold text-center mb-6"
-          >
-            <span className="gradient-text">Kompetenzprofil</span>
-          </motion.h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-6 text-white">
+            Kompetenzprofil
+          </h2>
+          
+          <p className="text-xl text-text-light text-center mb-16 max-w-3xl mx-auto">
+            Branchenübergreifende Expertise in Quality Management, 
+            technischen Systemen und regulierten Industrien.
+          </p>
 
-          <motion.p
-            variants={itemVariants}
-            className="text-xl text-light-gray/80 text-center mb-16 max-w-3xl mx-auto"
-          >
-            10+ Jahre Erfahrung in hochregulierten Industrien –
-            branchenübergreifende QM-Expertise.
-          </motion.p>
-
-          {/* Core Competencies */}
-          <motion.div variants={itemVariants} className="glass-effect p-10 rounded-2xl mb-12">
-            <h3 className="text-2xl font-semibold text-white mb-8 flex items-center">
-              <span className="text-3xl mr-3">🎯</span>
-              Kern: ISO 9001 Quality Management
-            </h3>
-            <div className="grid md:grid-cols-2 gap-4">
-              {coreCompetencies.map((competency, index) => (
-                <div
-                  key={index}
-                  className="flex items-center p-4 rounded-lg hover:bg-white/5 transition-all"
-                >
-                  <div className="w-2 h-2 bg-electric-blue rounded-full mr-4"></div>
-                  <span className="text-light-gray/90">{competency}</span>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Experience Timeline */}
-          <motion.div variants={itemVariants}>
-            <h3 className="text-2xl font-semibold text-white mb-8 text-center">
-              Branchenerfahrung <span className="text-light-gray/60">(10+ Jahre)</span>
-            </h3>
-            <div className="space-y-6">
-              {experiences.map((exp, index) => (
-                <motion.div
-                  key={index}
-                  variants={itemVariants}
-                  whileHover={{ x: 10 }}
-                  className="glass-effect p-6 rounded-xl border-l-4 border-electric-blue 
-                             hover:bg-white/5 transition-all duration-300 cursor-pointer"
-                >
-                  <div className="flex items-start justify-between flex-wrap gap-4">
-                    <div className="flex items-start space-x-4 flex-1">
-                      <div className="text-4xl mt-1">{exp.icon}</div>
-                      <div>
-                        <h4 className="text-xl font-semibold text-white mb-1">
-                          {exp.company}
-                        </h4>
-                        <p className="text-electric-blue font-medium mb-2">{exp.role}</p>
-                        <p className="text-light-gray/80 text-sm leading-relaxed">
-                          {exp.focus}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="text-light-gray/60 font-mono text-sm">{exp.period}</div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Transfer Competence */}
-          <motion.div
-            variants={itemVariants}
-            className="mt-12 glass-effect p-8 rounded-2xl text-center 
-                       border-2 border-electric-blue/30"
-          >
-            <h3 className="text-2xl font-semibold text-white mb-4">
-              <span className="gradient-text">Transfer-Kompetenz</span>
-            </h3>
-            <p className="text-lg text-light-gray/80 leading-relaxed max-w-3xl mx-auto">
-              QM-Prinzipien sind branchenübergreifend. Ich kenne sie aus den strengsten
-              Industrien (Nuklear, Medical Devices) und übertrage sie auf Ihre Branche.
-            </p>
-          </motion.div>
+          <div className="space-y-8">
+            {themes.map((theme, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="card-minimal"
+              >
+                <h3 className="text-2xl font-semibold text-qcore-blue mb-4">
+                  {theme.title}
+                </h3>
+                
+                {theme.intro && (
+                  <p className="text-text-light mb-4 italic">
+                    {theme.intro}
+                  </p>
+                )}
+                
+                {theme.industries && (
+                  <ul className="mb-4 space-y-2">
+                    {theme.industries.map((industry, i) => (
+                      <li key={i} className="text-text-light ml-4 leading-relaxed">
+                        • {industry}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                
+                <ul className="space-y-3">
+                  {theme.points.map((point, i) => (
+                    <li key={i} className="flex items-start">
+                      <span className="w-1.5 h-1.5 bg-qcore-blue rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                      <span className="text-text-light leading-relaxed">{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
       </div>
     </section>
