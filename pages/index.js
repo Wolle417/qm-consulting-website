@@ -2,10 +2,7 @@ import Navigation from '../components/Navigation';
 import Hero from '../components/Hero';
 import ForWho from '../components/ForWho';
 import Services from '../components/Services';
-import Expertise from '../components/Expertise';
-import TransferCompetence from '../components/TransferCompetence';
-import About from '../components/About';
-import Contact from '../components/Contact';
+import Industries from '../components/Industries';
 import Footer from '../components/Footer';
 
 export default function Home() {
@@ -15,10 +12,7 @@ export default function Home() {
       <Hero />
       <ForWho />
       <Services />
-      <Expertise />
-      <TransferCompetence />
-      <About />
-      <Contact />
+      <Industries />
       <Footer />
     </main>
   );

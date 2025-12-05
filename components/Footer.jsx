@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
@@ -21,54 +23,39 @@ export default function Footer() {
 
           {/* Middle: Quick Links */}
           <div>
-            <h4 className="text-white font-semibold mb-3">Navigation</h4>
+            <h4 className="font-semibold text-white mb-3">Navigation</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <a
-                  href="#forwho"
-                  className="text-text-light hover:text-qcore-blue transition-colors"
-                >
-                  Für wen
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#services"
-                  className="text-text-light hover:text-qcore-blue transition-colors"
-                >
+                <Link href="/#services" className="text-text-light hover:text-qcore-blue transition-colors">
                   Leistungen
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#expertise"
-                  className="text-text-light hover:text-qcore-blue transition-colors"
-                >
-                  Kompetenzprofil
-                </a>
+                <Link href="/#industries" className="text-text-light hover:text-qcore-blue transition-colors">
+                  Branchen
+                </Link>
               </li>
               <li>
-                <a
-                  href="#about"
-                  className="text-text-light hover:text-qcore-blue transition-colors"
-                >
+                <Link href="/arbeitsweise" className="text-text-light hover:text-qcore-blue transition-colors">
                   Arbeitsweise
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#contact"
-                  className="text-text-light hover:text-qcore-blue transition-colors"
-                >
+                <Link href="/ueber-uns" className="text-text-light hover:text-qcore-blue transition-colors">
+                  Über uns
+                </Link>
+              </li>
+              <li>
+                <Link href="/#contact" className="text-text-light hover:text-qcore-blue transition-colors">
                   Kontakt
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
 
           {/* Right: Contact */}
           <div>
-            <h4 className="text-white font-semibold mb-3">Kontakt</h4>
+            <h4 className="font-semibold text-white mb-3">Kontakt</h4>
             <ul className="space-y-2 text-sm text-text-light">
               <li>Herzogenaurach / Remote</li>
               <li>

@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import Link from 'next/link';
 
 export default function Services() {
   const [ref, inView] = useInView({
@@ -49,20 +50,19 @@ export default function Services() {
   ];
 
   return (
-    <section id="services" className="section-padding bg-dark-bg" ref={ref}>
+    <section id="services" className="section-padding bg-dark-navy" ref={ref}>
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-6 text-white">
-            Leistungen
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-white">
+            Unsere Leistungen
           </h2>
-
-          <p className="text-xl text-text-light text-center mb-16 max-w-3xl mx-auto">
-            Von QM-System-Aufbau bis zur Zertifizierung – strukturiert, 
-            effizient und audit-fähig.
+          
+          <p className="text-xl text-text-light text-center mb-16">
+            Von QM-System-Aufbau bis zur Zertifizierung
           </p>
 
           <div className="grid md:grid-cols-2 gap-8 mb-12">
@@ -74,14 +74,14 @@ export default function Services() {
                 transition={{ duration: 0.6, delay: index * 0.15 }}
                 className="card-minimal"
               >
-                <h3 className="text-2xl font-semibold text-white mb-6">
+                <h3 className="text-xl font-semibold text-white mb-4">
                   {service.title}
                 </h3>
                 <ul className="space-y-3">
                   {service.items.map((item, i) => (
                     <li key={i} className="flex items-start">
                       <span className="w-1.5 h-1.5 bg-qcore-blue rounded-full mr-3 mt-2 flex-shrink-0"></span>
-                      <span className="text-text-light leading-relaxed">{item}</span>
+                      <span className="text-text-light leading-relaxed text-sm">{item}</span>
                     </li>
                   ))}
                 </ul>
@@ -89,16 +89,16 @@ export default function Services() {
             ))}
           </div>
 
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="text-center"
-          >
-            <p className="text-lg text-text-muted">
-              Projektbasiert. 3-6 Monate typisch. Remote-First mit Präsenztagen.
-            </p>
-          </motion.div>
+          {/* Link to Arbeitsweise Subpage */}
+          <div className="text-center">
+            <Link 
+              href="/arbeitsweise" 
+              className="text-qcore-blue hover:text-blue-300 transition-colors inline-flex items-center gap-2"
+            >
+              Mehr zu unserer Arbeitsweise 
+              <span>→</span>
+            </Link>
+          </div>
         </motion.div>
       </div>
     </section>
