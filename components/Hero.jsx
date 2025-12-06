@@ -63,7 +63,6 @@ export default function Hero() {
             transition={{ delay: 0.3, duration: 0.8 }}
           >
             <p 
-              className="mb-4"
               style={{
                 fontFamily: "'Cormorant', serif",
                 fontSize: '1.4rem',
@@ -74,19 +73,6 @@ export default function Hero() {
             >
               Qualitätsmanagement für regulierte Industrien
             </p>
-            
-            {/* Standards */}
-            <div 
-              style={{
-                fontFamily: "'Cormorant', serif",
-                fontSize: '1rem',
-                fontWeight: 400,
-                letterSpacing: '0.15em',
-                color: '#64748b',
-              }}
-            >
-              ISO 9001 • GMP • ISO 13485 • KTA
-            </div>
           </motion.div>
         </div>
       </div>

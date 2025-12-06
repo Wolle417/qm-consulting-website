@@ -49,7 +49,7 @@ export default function LeistungenHero() {
   ];
 
   return (
-    <section className="relative py-16 z-10" ref={ref}>
+    <section className="relative py-12 z-10" ref={ref}>
       <div className="max-w-6xl mx-auto px-12">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -57,31 +57,28 @@ export default function LeistungenHero() {
           transition={{ duration: 0.6 }}
         >
           <h2 
-            className="text-3xl font-bold mb-12 text-center"
+            className="text-4xl md:text-5xl font-bold text-center mb-16"
             style={{
-              fontFamily: "'Cormorant', serif",
               color: '#1e293b',
-              textShadow: '1px 1px 2px rgba(0,0,0,0.2)',
+              textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
             }}
           >
             Leistungen
           </h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-8">
             {services.map((service, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="p-8 bg-white/70 backdrop-blur-sm border border-slate-300 rounded-lg hover:border-qcore-blue transition-all"
+                transition={{ duration: 0.6, delay: index * 0.15 }}
+                className="p-8 bg-qcore-navy bg-opacity-20 border border-border-dark rounded-lg hover:border-qcore-blue transition-all"
               >
-                <h3 className="text-xl font-semibold mb-3" style={{ 
-                  fontFamily: "'Cormorant', serif",
-                  color: '#1e293b' 
-                }}>
+                <h3 className="text-xl font-semibold mb-2" style={{ color: '#1e293b' }}>
                   {service.title}
                 </h3>
+                
                 <ul className="space-y-3">
                   {service.items.map((item, i) => (
                     <li key={i} className="flex items-start">
