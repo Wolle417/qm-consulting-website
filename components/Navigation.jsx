@@ -26,7 +26,8 @@ export default function Navigation() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
-      className="fixed top-0 left-0 right-0 z-50 bg-slate-900/40 backdrop-blur-sm"
+      className="fixed top-0 left-0 right-0 bg-slate-900/40 backdrop-blur-sm"
+      style={{ zIndex: 100 }}
     >
       <div className="max-w-7xl mx-auto px-6 py-6">
         <div className="flex items-center justify-end">
