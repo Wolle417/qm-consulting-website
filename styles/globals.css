@@ -4,13 +4,42 @@
 
 @layer base {
   body {
-    @apply bg-dark-navy text-text-light;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 18px;
+    background-image: url('/images/hero-bg.jpeg');
+    background-size: cover;
+    background-position: center right;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+  }
+  
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(248,250,252,0.95) 0%, rgba(248,250,252,0.3) 50%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply text-text-light;
-    font-weight: 700;
+    font-family: 'Cormorant', serif;
+    font-weight: 500;
+  }
+  
+  h1 {
+    font-size: 3.5rem;
+  }
+  
+  h2 {
+    font-size: 3rem;
+  }
+  
+  h3 {
+    font-size: 2rem;
   }
 }
 

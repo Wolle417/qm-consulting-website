@@ -11,8 +11,6 @@ export default function Home() {
       <Navigation />
       <Hero />
       <ForWho />
-      <Services />
-      <Industries />
       <Footer />
     </main>
   );

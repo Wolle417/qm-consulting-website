@@ -50,18 +50,29 @@ export default function Services() {
   ];
 
   return (
-    <section id="services" className="section-padding bg-dark-navy" ref={ref}>
+    <section id="services" className="section-padding relative z-10" ref={ref}>
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-white">
+          <h2 
+            className="text-4xl md:text-5xl font-bold text-center mb-4"
+            style={{
+              color: '#1e293b',
+              textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
+            }}
+          >
             Unsere Leistungen
           </h2>
           
-          <p className="text-xl text-text-light text-center mb-16">
+          <p 
+            className="text-xl text-center mb-16"
+            style={{
+              color: '#475569',
+            }}
+          >
             Von QM-System-Aufbau bis zur Zertifizierung
           </p>
 

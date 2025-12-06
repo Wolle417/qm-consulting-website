@@ -31,14 +31,20 @@ export default function ForWho() {
   ];
 
   return (
-    <section id="forwho" className="section-padding bg-dark-bg" ref={ref}>
+    <section id="forwho" className="section-padding relative z-10" ref={ref}>
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-16">
+          <h2 
+            className="text-4xl md:text-5xl font-bold text-center mb-16"
+            style={{
+              color: '#1e293b',
+              textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
+            }}
+          >
             Für wen wir arbeiten
           </h2>
 
@@ -51,29 +57,29 @@ export default function ForWho() {
                 transition={{ duration: 0.6, delay: index * 0.15 }}
                 className="p-8 bg-qcore-navy bg-opacity-20 border border-border-dark rounded-lg hover:border-qcore-blue transition-all"
               >
-                <h3 className="text-xl font-semibold text-white mb-2">
+                <h3 className="text-xl font-semibold mb-2" style={{ color: '#1e293b' }}>
                   {client.title}
                 </h3>
                 
-                <p className="text-sm text-qcore-blue mb-4">
+                <p className="text-sm mb-4" style={{ color: '#3b82f6' }}>
                   {client.industries}
                 </p>
                 
                 <div className="space-y-3">
                   <div>
-                    <p className="text-xs text-text-muted uppercase tracking-wide mb-1">
+                    <p className="text-xs uppercase tracking-wide mb-1" style={{ color: '#64748b' }}>
                       Sie brauchen:
                     </p>
-                    <p className="text-text-light text-sm leading-relaxed">
+                    <p className="text-sm leading-relaxed" style={{ color: '#475569' }}>
                       {client.need}
                     </p>
                   </div>
                   
                   <div>
-                    <p className="text-xs text-text-muted uppercase tracking-wide mb-1">
+                    <p className="text-xs uppercase tracking-wide mb-1" style={{ color: '#64748b' }}>
                       Wir liefern:
                     </p>
-                    <p className="text-text-light text-sm leading-relaxed">
+                    <p className="text-sm leading-relaxed" style={{ color: '#475569' }}>
                       {client.solution}
                     </p>
                   </div>

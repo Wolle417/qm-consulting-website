@@ -4,91 +4,244 @@ import { motion } from 'framer-motion';
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Animated Background Grid - Subtle */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `
-            linear-gradient(rgba(74, 144, 226, 0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(74, 144, 226, 0.1) 1px, transparent 1px)
-          `,
-          backgroundSize: '50px 50px',
-        }} />
-      </div>
+    <section className="relative min-h-screen flex items-center overflow-hidden">
+      {/* Content Container */}
+      <div className="relative z-10 max-w-7xl mx-auto px-12 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+          {/* Left: Logo */}
+          <div>
+            {/* Logo Stack */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="mb-12"
+            >
+              <div className="flex flex-col items-start">
+                {/* QCore */}
+                <h1 
+                  className="mb-3"
+                  style={{
+                    fontFamily: "'Cormorant', serif",
+                    fontSize: '4.5rem',
+                    fontWeight: 500,
+                    color: '#1e293b',
+                    lineHeight: 1,
+                  }}
+                >
+                  QCore
+                </h1>
+                
+                {/* Horizontal Accent Line */}
+                <div 
+                  className="mb-3"
+                  style={{
+                    width: '60px',
+                    height: '2px',
+                    background: 'linear-gradient(to right, #64748b, transparent)',
+                  }}
+                />
+                
+                {/* CONSULTING */}
+                <div 
+                  style={{
+                    fontFamily: "'Cormorant', serif",
+                    fontSize: '1.3rem',
+                    fontWeight: 400,
+                    letterSpacing: '0.4em',
+                    textTransform: 'uppercase',
+                    color: '#64748b',
+                  }}
+                >
+                  CONSULTING
+                </div>
+              </div>
+            </motion.div>
 
-      {/* Content */}
-      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <h1 className="text-5xl md:text-6xl font-bold text-qcore-blue mb-8">
-            QCORE CONSULTING
-          </h1>
-          
-          <div className="mb-12">
-            <p className="text-3xl md:text-4xl font-semibold text-white mb-6">
-              Qualität ist universell.
-            </p>
-            <p className="text-xl md:text-2xl text-text-light leading-relaxed mb-3">
-              Klare Prozesse. Stabile Ergebnisse. Kontrollierte Risiken.
-            </p>
-            <p className="text-xl md:text-2xl text-text-light leading-relaxed">
-              Wir strukturieren Ihre Prozesse. Audit-fähig. Skalierbar.
-            </p>
+            {/* Tagline */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+            >
+              <p 
+                className="mb-6"
+                style={{
+                  fontFamily: "'Cormorant', serif",
+                  fontSize: '1.4rem',
+                  fontWeight: 300,
+                  color: '#475569',
+                  lineHeight: 1.6,
+                }}
+              >
+                Qualitätsmanagement für regulierte Industrien
+              </p>
+              
+              {/* Standards */}
+              <div 
+                style={{
+                  fontFamily: "'Cormorant', serif",
+                  fontSize: '1rem',
+                  fontWeight: 400,
+                  letterSpacing: '0.15em',
+                  color: '#64748b',
+                }}
+              >
+                ISO 9001 • GMP • ISO 13485 • KTA
+              </div>
+            </motion.div>
           </div>
 
+          {/* Right: Leistungen */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8"
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.5, duration: 0.8 }}
           >
-            <a
-              href="#contact"
-              className="btn-outline"
+            <h2 
+              className="text-3xl font-bold mb-8"
+              style={{
+                fontFamily: "'Cormorant', serif",
+                color: '#1e293b',
+                textShadow: '1px 1px 2px rgba(0,0,0,0.2)',
+              }}
             >
-              Kontakt aufnehmen
-            </a>
-            <a
-              href="#services"
-              className="btn-ghost"
-            >
-              Mehr erfahren
-            </a>
-          </motion.div>
+              Leistungen
+            </h2>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="p-8 bg-qcore-navy bg-opacity-20 border border-border-dark rounded-lg hover:border-qcore-blue transition-all">
+                <h3 className="text-xl font-semibold mb-2" style={{ color: '#1e293b' }}>
+                  QM-System Aufbau & Zertifizierung
+                </h3>
+                <ul className="space-y-3">
+                  <li className="flex items-start">
+                    <span className="w-1.5 h-1.5 bg-qcore-blue rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                    <span className="text-sm leading-relaxed" style={{ color: '#475569' }}>Quality Manual & QM-Handbuch (ISO 9001)</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="w-1.5 h-1.5 bg-qcore-blue rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                    <span className="text-sm leading-relaxed" style={{ color: '#475569' }}>Prozessdokumentation (SOPs, Arbeitsanweisungen)</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="w-1.5 h-1.5 bg-qcore-blue rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                    <span className="text-sm leading-relaxed" style={{ color: '#475569' }}>Management Review, Interne Audits</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="w-1.5 h-1.5 bg-qcore-blue rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                    <span className="text-sm leading-relaxed" style={{ color: '#475569' }}>Vorbereitung auf Zertifizierungsaudit</span>
+                  </li>
+                </ul>
+              </div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
-            className="text-sm text-text-muted"
-          >
-            ISO 9001 • GMP • ISO 13485 • KTA • Branchenübergreifend
-          </motion.div>
-        </motion.div>
+              <div className="p-8 bg-qcore-navy bg-opacity-20 border border-border-dark rounded-lg hover:border-qcore-blue transition-all">
+                <h3 className="text-xl font-semibold mb-2" style={{ color: '#1e293b' }}>
+                  Branchenspezifische Anpassung
+                </h3>
+                <ul className="space-y-3">
+                  <li className="flex items-start">
+                    <span className="w-1.5 h-1.5 bg-qcore-blue rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                    <span className="text-sm leading-relaxed" style={{ color: '#475569' }}>Pharma: GMP-Anforderungen, Validation, CAPA</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="w-1.5 h-1.5 bg-qcore-blue rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                    <span className="text-sm leading-relaxed" style={{ color: '#475569' }}>Medical Devices: Technische Dokumentation, Risikoanalyse (ISO 14971)</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="w-1.5 h-1.5 bg-qcore-blue rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                    <span className="text-sm leading-relaxed" style={{ color: '#475569' }}>Nuklear: KTA-Standards, Safety Analysis</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="w-1.5 h-1.5 bg-qcore-blue rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                    <span className="text-sm leading-relaxed" style={{ color: '#475569' }}>Fertigung: Produktionssteuerung, Qualitätskontrolle</span>
+                  </li>
+                </ul>
+              </div>
 
-        {/* Scroll Indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 1 }}
-          className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-        >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-            className="w-6 h-10 border-2 border-qcore-blue rounded-full flex justify-center"
-          >
-            <div className="w-1 h-3 bg-qcore-blue rounded-full mt-2"></div>
+              <div className="p-8 bg-qcore-navy bg-opacity-20 border border-border-dark rounded-lg hover:border-qcore-blue transition-all">
+                <h3 className="text-xl font-semibold mb-2" style={{ color: '#1e293b' }}>
+                  Risk Management & Prozessoptimierung
+                </h3>
+                <ul className="space-y-3">
+                  <li className="flex items-start">
+                    <span className="w-1.5 h-1.5 bg-qcore-blue rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                    <span className="text-sm leading-relaxed" style={{ color: '#475569' }}>FMEA (Failure Mode and Effects Analysis)</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="w-1.5 h-1.5 bg-qcore-blue rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                    <span className="text-sm leading-relaxed" style={{ color: '#475569' }}>Root Cause Analysis (5-Why, Ishikawa)</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="w-1.5 h-1.5 bg-qcore-blue rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                    <span className="text-sm leading-relaxed" style={{ color: '#475569' }}>Continuous Improvement (KVP, Lean)</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="w-1.5 h-1.5 bg-qcore-blue rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                    <span className="text-sm leading-relaxed" style={{ color: '#475569' }}>Process Mapping und Optimization</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="p-8 bg-qcore-navy bg-opacity-20 border border-border-dark rounded-lg hover:border-qcore-blue transition-all">
+                <h3 className="text-xl font-semibold mb-2" style={{ color: '#1e293b' }}>
+                  Dokumentation & Validation
+                </h3>
+                <ul className="space-y-3">
+                  <li className="flex items-start">
+                    <span className="w-1.5 h-1.5 bg-qcore-blue rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                    <span className="text-sm leading-relaxed" style={{ color: '#475569' }}>Equipment Qualification (IQ/OQ/PQ)</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="w-1.5 h-1.5 bg-qcore-blue rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                    <span className="text-sm leading-relaxed" style={{ color: '#475569' }}>Process Validation</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="w-1.5 h-1.5 bg-qcore-blue rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                    <span className="text-sm leading-relaxed" style={{ color: '#475569' }}>Computer System Validation</span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="w-1.5 h-1.5 bg-qcore-blue rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                    <span className="text-sm leading-relaxed" style={{ color: '#475569' }}>Analytical Method Validation</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
 
-      {/* Subtle Gradient Orbs - Navy Blue tones */}
-      <div className="absolute top-1/4 left-10 w-72 h-72 bg-qcore-blue/10 rounded-full blur-3xl animate-float"></div>
-      <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-qcore-navy/15 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+      {/* Scroll Indicator - Bottom Left */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1, duration: 1 }}
+        className="absolute bottom-12 left-12"
+      >
+        <div className="flex flex-col items-center">
+          {/* Vertical Line */}
+          <motion.div
+            animate={{ scaleY: [1, 0.6, 1] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="w-px h-16 mb-3 origin-top"
+            style={{ backgroundColor: '#64748b' }}
+          />
+          {/* Text */}
+          <div 
+            className="rotate-180"
+            style={{
+              fontFamily: "'Cormorant', serif",
+              fontSize: '0.85rem',
+              fontWeight: 400,
+              letterSpacing: '0.2em',
+              color: '#64748b',
+              writingMode: 'vertical-rl',
+              textOrientation: 'mixed',
+            }}
+          >
+            ENTDECKEN
+          </div>
+        </div>
+      </motion.div>
     </section>
   );
 }

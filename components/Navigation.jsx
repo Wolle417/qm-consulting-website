@@ -17,50 +17,40 @@ export default function Navigation() {
 
   const navItems = [
     { label: 'Leistungen', href: '/#services' },
-    { label: 'Branchen', href: '/#industries' },
-    { label: 'Arbeitsweise', href: '/arbeitsweise' },
     { label: 'Über uns', href: '/ueber-uns' },
+    { label: 'Kontakt', href: '/#contact' },
   ];
 
   return (
     <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled 
-          ? 'glass-effect shadow-lg' 
-          : 'bg-transparent'
-      }`}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+      className="fixed top-0 left-0 right-0 z-50 bg-slate-900/40 backdrop-blur-sm"
     >
-      <div className="max-w-7xl mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
-          <Link
-            href="/"
-            className="text-xl font-bold text-white hover:text-qcore-blue transition-colors"
-          >
-            QCORE CONSULTING
-          </Link>
-
-          <div className="hidden md:flex items-center space-x-8">
+      <div className="max-w-7xl mx-auto px-6 py-6">
+        <div className="flex items-center justify-end">
+          <div className="hidden md:flex items-center gap-10">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-sm font-medium text-text-light hover:text-qcore-blue transition-colors"
+                style={{
+                  fontFamily: "'Cormorant', serif",
+                  fontSize: '1.4rem',
+                  fontWeight: 400,
+                  color: '#1e293b',
+                  transition: 'color 0.3s ease',
+                }}
+                className="hover:text-slate-600"
               >
                 {item.label}
               </Link>
             ))}
-            <a
-              href="/#contact"
-              className="px-6 py-2 border-2 border-qcore-blue text-qcore-blue font-semibold rounded hover:bg-qcore-blue hover:text-dark-navy transition-all"
-            >
-              Kontakt
-            </a>
           </div>
 
-          <button className="md:hidden text-white">
+          {/* Mobile menu button */}
+          <button className="md:hidden text-slate-200">
             <svg
               className="w-6 h-6"
               fill="none"
@@ -77,14 +67,6 @@ export default function Navigation() {
           </button>
         </div>
       </div>
-
-      <motion.div
-        className="h-1 bg-qcore-blue origin-left"
-        style={{
-          scaleX: scrolled ? 0.3 : 0,
-          transition: 'scaleX 0.3s ease',
-        }}
-      />
     </motion.nav>
   );
 }
