@@ -56,24 +56,6 @@ export default function Hero() {
             </div>
           </motion.div>
 
-          {/* Tagline */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-          >
-            <p 
-              style={{
-                fontFamily: "'Cormorant', serif",
-                fontSize: '1.4rem',
-                fontWeight: 300,
-                color: '#475569',
-                lineHeight: 1.6,
-              }}
-            >
-              Qualitätsmanagement für regulierte Industrien
-            </p>
-          </motion.div>
         </div>
       </div>
 

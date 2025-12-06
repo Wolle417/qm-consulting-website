@@ -49,23 +49,13 @@ export default function LeistungenHero() {
   ];
 
   return (
-    <section className="relative py-12 z-10" ref={ref}>
+    <section className="relative pt-4 pb-12 z-10" ref={ref}>
       <div className="max-w-6xl mx-auto px-12">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <h2 
-            className="text-4xl md:text-5xl font-bold text-center mb-16"
-            style={{
-              color: '#1e293b',
-              textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
-            }}
-          >
-            Leistungen
-          </h2>
-          
           <div className="grid md:grid-cols-2 gap-8">
             {services.map((service, index) => (
               <motion.div
