@@ -22,7 +22,7 @@
     background-size: cover;
     background-position: center right;
     z-index: -2;
-    animation: breathe 15s ease-in-out infinite;
+    animation: breathe 25s ease-in-out infinite;
   }
   
   /* Gradient Overlay - KEIN Animation */
