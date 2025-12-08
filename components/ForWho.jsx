@@ -32,7 +32,7 @@ export default function ForWho() {
 
   return (
     <section id="forwho" className="section-padding relative z-10" ref={ref}>
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-full mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -48,14 +48,14 @@ export default function ForWho() {
             Für wen wir arbeiten
           </h2>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-4">
             {clients.map((client, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: index * 0.15 }}
-                className="p-8 bg-qcore-navy bg-opacity-20 border border-border-dark rounded-lg hover:border-qcore-blue transition-all"
+                className="p-8 bg-slate-300 bg-opacity-70 border border-border-dark rounded-lg hover:border-qcore-blue transition-all"
               >
                 <h3 className="text-xl font-semibold mb-2" style={{ color: '#1e293b' }}>
                   {client.title}
@@ -65,12 +65,12 @@ export default function ForWho() {
                   {client.industries}
                 </p>
                 
-                <div className="space-y-3">
+                <div className="space-y-2">
                   <div>
                     <p className="text-xs uppercase tracking-wide mb-1" style={{ color: '#64748b' }}>
                       Sie brauchen:
                     </p>
-                    <p className="text-sm leading-relaxed" style={{ color: '#475569' }}>
+                    <p className="text-sm leading-tight" style={{ color: '#000000' }}>
                       {client.need}
                     </p>
                   </div>
@@ -79,7 +79,7 @@ export default function ForWho() {
                     <p className="text-xs uppercase tracking-wide mb-1" style={{ color: '#64748b' }}>
                       Wir liefern:
                     </p>
-                    <p className="text-sm leading-relaxed" style={{ color: '#475569' }}>
+                    <p className="text-sm leading-tight" style={{ color: '#000000' }}>
                       {client.solution}
                     </p>
                   </div>

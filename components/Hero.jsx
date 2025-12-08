@@ -6,7 +6,7 @@ export default function Hero() {
   return (
     <section className="relative h-[50vh] flex items-start overflow-hidden">
       {/* Content Container */}
-      <div className="relative z-10 px-32 w-full" style={{ paddingTop: '140px' }}>
+      <div className="relative z-10 px-40 w-full" style={{ paddingTop: '140px' }}>
         <div className="max-w-xl">
           {/* Logo Stack */}
           <motion.div
