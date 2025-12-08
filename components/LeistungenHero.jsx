@@ -66,7 +66,7 @@ export default function LeistungenHero() {
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: index * 0.15 }}
                 className="p-6 border border-border-dark rounded-lg hover:border-qcore-blue transition-all"
-                style={{ backgroundColor: 'rgba(125, 167, 176, 0.7)' }}
+                style={{ backgroundColor: 'rgba(103, 127, 133, 0.7)' }}
               >
                 <h3 className="text-xl font-semibold mb-2" style={{ color: '#1e293b' }}>
                   {service.title}
