@@ -51,7 +51,7 @@ export default function Services() {
 
   return (
     <section id="services" className="section-padding relative z-10" ref={ref}>
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}

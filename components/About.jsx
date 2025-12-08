@@ -30,7 +30,7 @@ export default function About() {
 
   return (
     <section id="about" className="section-padding bg-dark-navy" ref={ref}>
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}

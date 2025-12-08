@@ -6,7 +6,7 @@ export default function Hero() {
   return (
     <section className="relative h-[50vh] flex items-start overflow-hidden">
       {/* Content Container */}
-      <div className="relative z-10 max-w-7xl mx-auto px-12 w-full" style={{ paddingTop: '120px' }}>
+      <div className="relative z-10 max-w-7xl mx-auto px-12 w-full" style={{ paddingTop: '140px' }}>
         <div className="max-w-xl">
           {/* Logo Stack */}
           <motion.div
@@ -21,7 +21,7 @@ export default function Hero() {
                 className="mb-2"
                 style={{
                   fontFamily: "'Cormorant', serif",
-                  fontSize: '4rem',
+                  fontSize: '4.5rem',
                   fontWeight: 500,
                   color: '#1e293b',
                   lineHeight: 1,
