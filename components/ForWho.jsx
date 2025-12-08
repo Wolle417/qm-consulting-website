@@ -62,13 +62,13 @@ export default function ForWho() {
                   {client.title}
                 </h3>
                 
-                <p className="text-sm mb-4" style={{ color: '#3b82f6' }}>
+                <p className="text-sm mb-4" style={{ color: '#000000' }}>
                   {client.industries}
                 </p>
                 
                 <div className="space-y-2">
                   <div>
-                    <p className="text-xs uppercase tracking-wide mb-1" style={{ color: '#64748b' }}>
+                    <p className="text-xs uppercase tracking-wide mb-1" style={{ color: '#000000' }}>
                       Sie brauchen:
                     </p>
                     <p className="text-sm leading-tight" style={{ color: '#000000' }}>
@@ -77,7 +77,7 @@ export default function ForWho() {
                   </div>
                   
                   <div>
-                    <p className="text-xs uppercase tracking-wide mb-1" style={{ color: '#64748b' }}>
+                    <p className="text-xs uppercase tracking-wide mb-1" style={{ color: '#000000' }}>
                       Wir liefern:
                     </p>
                     <p className="text-sm leading-tight" style={{ color: '#000000' }}>
