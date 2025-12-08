@@ -32,7 +32,7 @@ export default function ForWho() {
 
   return (
     <section id="forwho" className="section-padding relative z-10" ref={ref}>
-      <div className="max-w-full mx-auto px-4">
+      <div className="max-w-[80%] mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -55,7 +55,8 @@ export default function ForWho() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: index * 0.15 }}
-                className="p-8 bg-slate-300 bg-opacity-70 border border-border-dark rounded-lg hover:border-qcore-blue transition-all"
+                className="p-8 border border-border-dark rounded-lg hover:border-qcore-blue transition-all"
+                style={{ backgroundColor: 'rgba(103, 127, 133, 0.7)' }}
               >
                 <h3 className="text-xl font-semibold mb-2" style={{ color: '#1e293b' }}>
                   {client.title}
