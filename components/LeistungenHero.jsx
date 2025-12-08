@@ -49,7 +49,7 @@ export default function LeistungenHero() {
   ];
 
   return (
-    <section className="relative pb-12 z-10" ref={ref} style={{ marginTop: '0' }}>
+    <section className="relative pb-12 z-10" ref={ref} style={{ marginTop: '5vh' }}>
       {/* GEÄNDERT: max-w-full und px-4 statt max-w-6xl und px-12 */}
       <div className="max-w-full mx-auto px-4">
         <motion.div
