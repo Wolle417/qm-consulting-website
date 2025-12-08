@@ -6,14 +6,26 @@
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-size: 18px;
+    position: relative;
+    overflow-x: hidden;
+  }
+  
+  /* Separates Element für animiertes Hintergrundbild */
+  body::after {
+    content: '';
+    position: fixed;
+    top: -20px;
+    left: -20px;
+    width: calc(100% + 40px);
+    height: calc(100% + 40px);
     background-image: url('/images/hero-bg.jpeg');
     background-size: cover;
     background-position: center right;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
+    z-index: -2;
     animation: breathe 15s ease-in-out infinite;
   }
   
+  /* Gradient Overlay - KEIN Animation */
   body::before {
     content: '';
     position: fixed;
@@ -23,7 +35,7 @@
     height: 100%;
     background: linear-gradient(to right, rgba(248,250,252,0.95) 0%, rgba(248,250,252,0.3) 50%, transparent 100%);
     pointer-events: none;
-    z-index: 0;
+    z-index: -1;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -45,7 +57,6 @@
 }
 
 @layer utilities {
-  /* QCore V2 Button Styles - Outline for Dark Theme */
   .btn-outline {
     @apply px-8 py-4 border-2 border-qcore-blue text-qcore-blue font-semibold rounded;
     transition: all 0.3s ease;
@@ -64,11 +75,12 @@
     @apply border-qcore-blue text-qcore-blue bg-qcore-navy bg-opacity-20;
   }
 
-  /* QCore V2 Card Styles - Dark Cards with Borders */
+  /* QCore V2 Card Styles - BREITER + KOMPAKTER */
   .card-minimal {
-    @apply p-8 bg-qcore-navy bg-opacity-30 border border-border-dark rounded-lg;
+    @apply p-6 bg-qcore-navy bg-opacity-30 border border-border-dark rounded-lg;
     transition: all 0.3s ease;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    min-width: 500px;
   }
   
   .card-minimal:hover {
@@ -76,24 +88,26 @@
     box-shadow: 0 4px 20px rgba(74, 144, 226, 0.2);
   }
 
-  /* Compact list styling for boxes */
+  /* KOMPAKTE LISTEN - SCHWARZER TEXT */
   .card-minimal ul {
-    margin: 0;
-    padding-left: 0;
+    margin: 0 !important;
+    padding-left: 1.2em !important;
+    list-style: disc !important;
   }
 
   .card-minimal li {
-    margin-bottom: 4px !important;
-    line-height: 1.25 !important;
+    margin-bottom: 2px !important;
+    margin-top: 0 !important;
     padding: 0 !important;
+    line-height: 1.2 !important;
     color: #000000 !important;
+    font-size: 0.95rem !important;
   }
 
   .section-padding {
-    @apply py-24 px-6;
+    @apply py-24 px-4;
   }
 
-  /* Glass effect for dark theme - UPDATED */
   .glass-effect {
     background: rgba(30, 58, 95, 0.2);
     backdrop-filter: blur(10px);
@@ -101,7 +115,17 @@
   }
 }
 
-/* Subtle animations - NO flashy effects */
+/* Hintergrund-Animation - NUR das Bild bewegt sich */
+@keyframes breathe {
+  0%, 100% {
+    transform: scale(1) translate(0, 0);
+  }
+  50% {
+    transform: scale(1.05) translate(10px, 10px);
+  }
+}
+
+/* Float animation für andere Elemente falls benötigt */
 @keyframes float {
   0%, 100% {
     transform: translateY(0px);
@@ -114,22 +138,3 @@
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
-
-/* Subtle background breathing animation - FIXED smooth loop */
-@keyframes breathe {
-  0%, 100% {
-    transform: scale(1) translate(0, 0);
-  }
-  50% {
-    transform: scale(1.05) translate(10px, 10px);
-  }
-}
-
-body {
-  animation-direction: alternate;
-}
-
-/* REMOVED V1 Styles:
-- .glow-button (replaced with .btn-outline)
-- .gradient-text (no more electric blue gradients)
-*/
