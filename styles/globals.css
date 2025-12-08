@@ -11,6 +11,7 @@
     background-position: center right;
     background-attachment: fixed;
     background-repeat: no-repeat;
+    animation: breathe 15s ease-in-out infinite;
   }
   
   body::before {
@@ -65,14 +66,15 @@
 
   /* QCore V2 Card Styles - Dark Cards with Borders */
   .card-minimal {
-    @apply p-10 bg-qcore-navy bg-opacity-20 border border-border-dark rounded-lg;
+    @apply p-8 bg-qcore-navy bg-opacity-30 border border-border-dark rounded-lg;
     transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   }
   
   .card-minimal:hover {
     @apply border-qcore-blue shadow-lg;
     transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(74, 144, 226, 0.15);
+    box-shadow: 0 4px 20px rgba(74, 144, 226, 0.2);
   }
 
   .section-padding {
@@ -99,6 +101,20 @@
 
 .animate-float {
   animation: float 6s ease-in-out infinite;
+}
+
+/* Subtle background breathing animation - FIXED smooth loop */
+@keyframes breathe {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+body {
+  animation-direction: alternate;
 }
 
 /* REMOVED V1 Styles:

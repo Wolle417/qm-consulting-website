@@ -85,14 +85,14 @@ export default function Services() {
                 transition={{ duration: 0.6, delay: index * 0.15 }}
                 className="card-minimal"
               >
-                <h3 className="text-xl font-semibold text-white mb-4">
+                <h3 className="text-xl font-semibold mb-4" style={{ color: '#1a1a1a' }}>
                   {service.title}
                 </h3>
-                <ul className="space-y-3">
+                <ul className="space-y-1">
                   {service.items.map((item, i) => (
                     <li key={i} className="flex items-start">
-                      <span className="w-1.5 h-1.5 bg-qcore-blue rounded-full mr-3 mt-2 flex-shrink-0"></span>
-                      <span className="text-text-light leading-relaxed text-sm">{item}</span>
+                      <span className="w-1.5 h-1.5 bg-qcore-blue rounded-full mr-3 mt-1.5 flex-shrink-0"></span>
+                      <span className="text-sm" style={{ color: '#1a1a1a', lineHeight: '1.2' }}>{item}</span>
                     </li>
                   ))}
                 </ul>

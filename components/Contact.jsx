@@ -32,16 +32,16 @@ export default function Contact() {
           </p>
 
           <div className="card-minimal mb-12">
-            <h3 className="text-xl font-semibold text-center mb-6 text-white">
+            <h3 className="text-xl font-semibold text-center mb-6" style={{ color: '#1a1a1a' }}>
               Wir besprechen:
             </h3>
-            <ul className="space-y-4 mb-6">
+            <ul className="space-y-2 mb-6">
               {steps.map((step, index) => (
                 <li key={index} className="flex items-start">
                   <span className="flex-shrink-0 w-8 h-8 bg-qcore-navy rounded-full flex items-center justify-center text-qcore-blue font-semibold mr-4">
                     {index + 1}
                   </span>
-                  <span className="text-text-light text-lg pt-1">{step}</span>
+                  <span className="text-lg pt-1" style={{ color: '#1a1a1a', lineHeight: '1.2' }}>{step}</span>
                 </li>
               ))}
             </ul>

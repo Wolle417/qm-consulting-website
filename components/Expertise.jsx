@@ -96,26 +96,26 @@ export default function Expertise() {
                 </h3>
                 
                 {theme.intro && (
-                  <p className="text-text-light mb-4 italic">
+                  <p className="mb-4 italic" style={{ color: '#1a1a1a', lineHeight: '1.2' }}>
                     {theme.intro}
                   </p>
                 )}
                 
                 {theme.industries && (
-                  <ul className="mb-4 space-y-2">
+                  <ul className="mb-4 space-y-1">
                     {theme.industries.map((industry, i) => (
-                      <li key={i} className="text-text-light ml-4 leading-relaxed">
+                      <li key={i} className="ml-4" style={{ color: '#1a1a1a', lineHeight: '1.2' }}>
                         • {industry}
                       </li>
                     ))}
                   </ul>
                 )}
                 
-                <ul className="space-y-3">
+                <ul className="space-y-1">
                   {theme.points.map((point, i) => (
                     <li key={i} className="flex items-start">
-                      <span className="w-1.5 h-1.5 bg-qcore-blue rounded-full mr-3 mt-2 flex-shrink-0"></span>
-                      <span className="text-text-light leading-relaxed">{point}</span>
+                      <span className="w-1.5 h-1.5 bg-qcore-blue rounded-full mr-3 mt-1.5 flex-shrink-0"></span>
+                      <span style={{ color: '#1a1a1a', lineHeight: '1.2' }}>{point}</span>
                     </li>
                   ))}
                 </ul>

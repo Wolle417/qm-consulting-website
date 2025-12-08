@@ -52,7 +52,7 @@ export default function About() {
                 <h3 className="text-xl font-semibold text-qcore-blue mb-3">
                   {principle.title}
                 </h3>
-                <p className="text-text-light leading-relaxed">
+                <p style={{ color: '#1a1a1a', lineHeight: '1.2' }}>
                   {principle.description}
                 </p>
               </motion.div>
