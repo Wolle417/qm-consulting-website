@@ -82,7 +82,7 @@ export default function Expertise() {
             technischen Systemen und regulierten Industrien.
           </p>
 
-          <div className="space-y-8">
+          <div className="space-y-5">
             {themes.map((theme, index) => (
               <motion.div
                 key={index}

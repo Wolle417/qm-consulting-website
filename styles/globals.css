@@ -73,7 +73,6 @@
   
   .card-minimal:hover {
     @apply border-qcore-blue shadow-lg;
-    transform: translateY(-2px);
     box-shadow: 0 4px 20px rgba(74, 144, 226, 0.2);
   }
 
@@ -84,9 +83,10 @@
   }
 
   .card-minimal li {
-    margin-bottom: 0.2em;
-    line-height: 1.3;
-    color: #000000;
+    margin-bottom: 4px !important;
+    line-height: 1.25 !important;
+    padding: 0 !important;
+    color: #000000 !important;
   }
 
   .section-padding {

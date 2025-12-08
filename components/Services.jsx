@@ -76,7 +76,7 @@ export default function Services() {
             Von QM-System-Aufbau bis zur Zertifizierung
           </p>
 
-          <div className="grid md:grid-cols-2 gap-8 mb-12">
+          <div className="grid md:grid-cols-2 gap-5 mb-12">
             {services.map((service, index) => (
               <motion.div
                 key={index}

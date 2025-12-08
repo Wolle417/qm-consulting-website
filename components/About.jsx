@@ -40,7 +40,7 @@ export default function About() {
             Arbeitsweise
           </h2>
 
-          <div className="grid md:grid-cols-2 gap-8 mb-12">
+          <div className="grid md:grid-cols-2 gap-5 mb-12">
             {principles.map((principle, index) => (
               <motion.div
                 key={index}
