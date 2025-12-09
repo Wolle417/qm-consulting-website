@@ -88,7 +88,7 @@ Ein Cookie-Banner ist daher **nicht erforderlich**.
 
 ## 6. Keine externen Dienste
 
-Auf dieser Website werden **keine** externen Inhalte nachgeladen, wie z. B.:
+Auf dieser Website werden **keine** externen Inhalte nachgeladen, wie z. B.:
 
 - Google Analytics  
 - YouTube  
@@ -122,7 +122,7 @@ Eine Übermittlung personenbezogener Daten an Dritte findet nicht statt, außer:
 Sie haben jederzeit folgende Rechte:
 
 | Recht | Inhalt |
-|------|--------|
+|-------|--------|
 | **Auskunft (Art. 15 DSGVO)** | Welche Daten wir gespeichert haben |
 | **Berichtigung (Art. 16 DSGVO)** | Korrektur unrichtiger Daten |
 | **Löschung (Art. 17 DSGVO)** | Recht auf Vergessenwerden |
@@ -146,7 +146,5 @@ Wir verwenden technische und organisatorische Maßnahmen (TLS/SSL), um Ihre Date
 Diese Datenschutzerklärung kann bei Bedarf angepasst werden, um rechtliche oder technische Änderungen abzubilden.
 
 ---
-
-## 12. Stand
 
 **Stand: Dezember 2025**

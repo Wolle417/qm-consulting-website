@@ -20,7 +20,7 @@ Mündliche Absprachen werden erst durch schriftliche Bestätigung verbindlich.
 ---
 
 ## 3. Leistungsumfang
-Der konkrete Leistungsumfang – z. B. Beratung, Audit-Vorbereitung, Dokumentationserstellung, Workshops oder Schulungen – wird individuell im jeweiligen Einzelauftrag festgelegt.  
+Der konkrete Leistungsumfang – z. B. Beratung, Audit-Vorbereitung, Dokumentationserstellung, Workshops oder Schulungen – wird individuell im jeweiligen Einzelauftrag festgelegt.  
 QCore Consulting erbringt Beratungs- und Unterstützungsleistungen, jedoch **keine Garantie für Zertifizierungserfolge oder bestimmte wirtschaftliche Ergebnisse**.
 
 ---

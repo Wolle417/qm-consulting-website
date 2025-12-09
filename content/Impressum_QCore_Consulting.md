@@ -41,3 +41,7 @@ Alle Inhalte dieser Website unterliegen dem deutschen Urheberrecht.
 ## Online-Streitbeilegung / Verbraucherschlichtung
 Plattform der EU-Kommission: https://ec.europa.eu/consumers/odr/  
 Ich bin nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
+
+---
+
+**Stand: Dezember 2025**

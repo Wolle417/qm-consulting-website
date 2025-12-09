@@ -26,28 +26,51 @@ export default function Footer() {
             <h4 className="font-semibold mb-3" style={{ color: '#1e293b' }}>Navigation</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/#services" className="hover:text-qcore-blue transition-colors" style={{ color: '#475569' }}>
+                <Link href="/" className="hover:text-qcore-blue transition-colors" style={{ color: '#475569' }}>
+                  Start
+                </Link>
+              </li>
+              <li>
+                <Link href="/leistungen" className="hover:text-qcore-blue transition-colors" style={{ color: '#475569' }}>
                   Leistungen
                 </Link>
               </li>
               <li>
-                <Link href="/#industries" className="hover:text-qcore-blue transition-colors" style={{ color: '#475569' }}>
-                  Branchen
+                <Link href="/kunden" className="hover:text-qcore-blue transition-colors" style={{ color: '#475569' }}>
+                  Kunden
                 </Link>
               </li>
               <li>
-                <Link href="/arbeitsweise" className="hover:text-qcore-blue transition-colors" style={{ color: '#475569' }}>
-                  Arbeitsweise
+                <Link href="/ueber-mich" className="hover:text-qcore-blue transition-colors" style={{ color: '#475569' }}>
+                  Über mich
                 </Link>
               </li>
               <li>
-                <Link href="/ueber-uns" className="hover:text-qcore-blue transition-colors" style={{ color: '#475569' }}>
-                  Über uns
+                <Link href="/qm-wissen" className="hover:text-qcore-blue transition-colors" style={{ color: '#475569' }}>
+                  QM-Wissen
                 </Link>
               </li>
               <li>
-                <Link href="/#contact" className="hover:text-qcore-blue transition-colors" style={{ color: '#475569' }}>
+                <Link href="/kontakt" className="hover:text-qcore-blue transition-colors" style={{ color: '#475569' }}>
                   Kontakt
+                </Link>
+              </li>
+            </ul>
+            <h4 className="font-semibold mb-3 mt-6" style={{ color: '#1e293b' }}>Rechtliches</h4>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link href="/impressum" className="hover:text-qcore-blue transition-colors" style={{ color: '#475569' }}>
+                  Impressum
+                </Link>
+              </li>
+              <li>
+                <Link href="/datenschutz" className="hover:text-qcore-blue transition-colors" style={{ color: '#475569' }}>
+                  Datenschutz
+                </Link>
+              </li>
+              <li>
+                <Link href="/agb" className="hover:text-qcore-blue transition-colors" style={{ color: '#475569' }}>
+                  AGB
                 </Link>
               </li>
             </ul>
