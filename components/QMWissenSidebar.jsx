@@ -8,7 +8,7 @@ const QMWissenSidebar = ({
   onToggleCategory 
 }) => {
   return (
-    <aside className="w-64 bg-slate-300 bg-opacity-70 backdrop-blur-sm rounded-lg h-fit sticky top-24 overflow-y-auto hidden md:block">
+    <aside className="w-64 bg-qcore-navy bg-opacity-30 backdrop-blur-sm rounded-lg h-fit sticky top-24 overflow-y-auto hidden md:block">
       {/* Header */}
       <div className="p-4 border-b border-gray-400">
         <h2 className="font-bold text-lg" style={{ color: '#1e293b' }}>

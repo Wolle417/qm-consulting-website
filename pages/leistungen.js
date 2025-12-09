@@ -25,7 +25,7 @@ export default function Leistungen() {
             </div>
 
             {/* Service Box 1 */}
-            <div className="bg-slate-300 bg-opacity-70 p-8 rounded-lg mt-8">
+            <div className="bg-qcore-navy bg-opacity-30 p-8 rounded-lg mt-8">
               <h2 className="text-2xl font-semibold mb-4" style={{ color: '#1e293b' }}>
                 QM-System Aufbau & Zertifizierung
               </h2>
@@ -61,7 +61,7 @@ export default function Leistungen() {
             </div>
 
             {/* Service Box 2 */}
-            <div className="bg-slate-300 bg-opacity-70 p-8 rounded-lg mt-8">
+            <div className="bg-qcore-navy bg-opacity-30 p-8 rounded-lg mt-8">
               <h2 className="text-2xl font-semibold mb-4" style={{ color: '#1e293b' }}>
                 Audit-Vorbereitung & Begleitung
               </h2>
@@ -97,7 +97,7 @@ export default function Leistungen() {
             </div>
 
             {/* Service Box 3 */}
-            <div className="bg-slate-300 bg-opacity-70 p-8 rounded-lg mt-8">
+            <div className="bg-qcore-navy bg-opacity-30 p-8 rounded-lg mt-8">
               <h2 className="text-2xl font-semibold mb-4" style={{ color: '#1e293b' }}>
                 Technische Dokumentation & Risikoanalyse
               </h2>
@@ -132,7 +132,7 @@ export default function Leistungen() {
             </div>
 
             {/* Service Box 4 */}
-            <div className="bg-slate-300 bg-opacity-70 p-8 rounded-lg mt-8 mb-12">
+            <div className="bg-qcore-navy bg-opacity-30 p-8 rounded-lg mt-8 mb-12">
               <h2 className="text-2xl font-semibold mb-4" style={{ color: '#1e293b' }}>
                 Schulungen & Workshops
               </h2>

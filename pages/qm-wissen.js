@@ -33,8 +33,8 @@ export default function QMWissen() {
         </div>
         
         {/* Content */}
-        <main className="flex-1 bg-slate-300 bg-opacity-70 backdrop-blur-sm rounded-lg">
-          <QMWissenContent 
+        <main className="flex-1 bg-qcore-navy bg-opacity-30 backdrop-blur-sm rounded-lg">
+          <QMWissenContent
             selectedArticle={selectedArticle}
             categories={categories}
           />
