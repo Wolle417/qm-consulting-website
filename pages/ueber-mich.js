@@ -115,43 +115,15 @@ export default function UeberMich() {
             </div>
 
             {/* Qualifications */}
-            <div className="p-6 bg-slate-300 bg-opacity-70 rounded-lg mt-8">
+            <div className="p-6 bg-slate-300 bg-opacity-70 rounded-lg mt-8 mb-12">
               <h2 className="text-2xl font-semibold mb-4" style={{ color: '#1e293b' }}>
                 Qualifikationen
               </h2>
               <ul className="list-disc list-inside space-y-2" style={{ color: '#000000' }}>
-                <li>Diplom Angewandte Naturwissenschaft (TU Freiberg, Note 1,8)</li>
+                <li>Diplom Angewandte Naturwissenschaft</li>
                 <li>DEKRA Qualitätsmanagementbeauftragter (QMB)</li>
-                <li>FEM-Simulation (ANSYS, SolidWorks)</li>
                 <li>FMEA-Moderation</li>
               </ul>
-            </div>
-
-            {/* What Makes Me Different */}
-            <div className="p-6 bg-slate-300 bg-opacity-70 rounded-lg mt-8">
-              <h2 className="text-2xl font-semibold mb-4" style={{ color: '#1e293b' }}>
-                Was mich unterscheidet
-              </h2>
-              <p style={{ color: '#000000' }}>
-                Die meisten QM-Berater sind Papiertiger – sie kennen die Normen, aber nicht die Technik.
-              </p>
-              <p className="mt-4" style={{ color: '#000000' }}>
-                Ich bin Ingenieur. Ich habe Sensoren entwickelt, LED-Produkte optimiert, MRT-Systeme qualifiziert.
-              </p>
-              <p className="mt-4" style={{ color: '#000000' }}>
-                Wenn Sie mir ein technisches Problem schildern, verstehe ich es – nicht nur die QM-Anforderungen drumherum.
-              </p>
-            </div>
-
-            {/* Location */}
-            <div className="p-6 bg-slate-300 bg-opacity-70 rounded-lg mt-8 mb-12">
-              <h2 className="text-2xl font-semibold mb-4" style={{ color: '#1e293b' }}>
-                Standort
-              </h2>
-              <p style={{ color: '#000000' }}>
-                Herzogenaurach (Metropolregion Nürnberg)<br />
-                Vor-Ort in Bayern & Remote deutschlandweit
-              </p>
             </div>
           </div>
         </section>
