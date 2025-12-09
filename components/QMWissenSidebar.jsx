@@ -8,13 +8,13 @@ const QMWissenSidebar = ({
   onToggleCategory 
 }) => {
   return (
-    <aside className="w-64 bg-slate-50 bg-opacity-95 border-r border-gray-200 h-screen sticky top-0 overflow-y-auto hidden md:block">
+    <aside className="w-64 bg-slate-300 bg-opacity-70 backdrop-blur-sm rounded-lg h-fit sticky top-24 overflow-y-auto hidden md:block">
       {/* Header */}
-      <div className="p-4 border-b border-gray-200">
+      <div className="p-4 border-b border-gray-400">
         <h2 className="font-bold text-lg" style={{ color: '#1e293b' }}>
           QM-Wissen
         </h2>
-        <p className="text-sm text-gray-500">Tutorials & Guides</p>
+        <p className="text-sm" style={{ color: '#475569' }}>Tutorials & Guides</p>
       </div>
 
       {/* Categories */}
@@ -27,13 +27,13 @@ const QMWissenSidebar = ({
               {/* Category Header */}
               <button
                 onClick={() => onToggleCategory(category.id)}
-                className="w-full flex items-center justify-between p-2 rounded hover:bg-slate-100 cursor-pointer transition-colors"
+                className="w-full flex items-center justify-between p-2 rounded hover:bg-slate-400 hover:bg-opacity-50 cursor-pointer transition-colors"
               >
                 <div className="flex items-center">
                   <span className="mr-2">{category.icon}</span>
-                  <span className="font-medium text-slate-700">{category.title}</span>
+                  <span className="font-medium" style={{ color: '#000000' }}>{category.title}</span>
                 </div>
-                <span className="text-gray-400 text-sm">
+                <span className="text-gray-500 text-sm">
                   {isExpanded ? '▼' : '▶'}
                 </span>
               </button>
@@ -48,11 +48,12 @@ const QMWissenSidebar = ({
                       <button
                         key={article.id}
                         onClick={() => onSelectArticle(article.id)}
-                        className={`w-full text-left p-2 pl-4 text-sm transition-colors ${
+                        className={`w-full text-left p-2 pl-4 text-sm rounded transition-colors ${
                           isSelected
-                            ? 'bg-blue-100 border-l-4 border-blue-500 text-blue-700 font-medium'
-                            : 'hover:bg-blue-50 hover:text-blue-600 text-gray-700'
+                            ? 'bg-blue-200 bg-opacity-50 border-l-4 border-blue-500 font-medium'
+                            : 'hover:bg-slate-400 hover:bg-opacity-50'
                         }`}
+                        style={{ color: isSelected ? '#1e40af' : '#000000' }}
                       >
                         {article.title}
                       </button>

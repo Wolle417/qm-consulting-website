@@ -5,14 +5,16 @@ const QMWissenContent = ({ selectedArticle, categories }) => {
   if (!selectedArticle) {
     return (
       <div className="p-8">
-        <h1 className="text-3xl font-bold text-slate-800 mb-4">QM-Wissen</h1>
-        <p className="text-lg text-slate-600 mb-8">
+        <h1 className="text-3xl font-bold mb-4" style={{ color: '#1e293b' }}>QM-Wissen</h1>
+        <p className="text-lg mb-8" style={{ color: '#000000' }}>
           Praktisches Know-how für Qualitätsmanagement. 
           Wählen Sie links eine Kategorie oder einen Artikel.
         </p>
         
-        <div className="bg-amber-50 border border-amber-200 rounded-lg p-6">
-          <h3 className="font-semibold text-amber-800 mb-2">🚧 In Entwicklung</h3>
+        <div className="bg-amber-100 bg-opacity-80 border border-amber-300 rounded-lg p-6">
+          <h3 className="font-semibold text-amber-800 mb-2 flex items-center">
+            <span className="mr-2">🚧</span> In Entwicklung
+          </h3>
           <p className="text-amber-700">
             Diese Wissensdatenbank wird kontinuierlich erweitert. 
             Die ersten Artikel erscheinen in Kürze.
@@ -45,7 +47,7 @@ const QMWissenContent = ({ selectedArticle, categories }) => {
   if (!article) {
     return (
       <div className="p-8">
-        <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+        <div className="bg-red-100 bg-opacity-80 border border-red-300 rounded-lg p-6">
           <h3 className="font-semibold text-red-800 mb-2">Artikel nicht gefunden</h3>
           <p className="text-red-700">
             Der gewählte Artikel konnte nicht geladen werden.
@@ -59,7 +61,7 @@ const QMWissenContent = ({ selectedArticle, categories }) => {
   return (
     <div className="flex-1 overflow-y-auto">
       {/* Breadcrumb */}
-      <div className="px-8 py-3 text-sm text-gray-500 border-b bg-slate-50">
+      <div className="px-8 py-3 text-sm border-b bg-slate-200 bg-opacity-50" style={{ color: '#475569' }}>
         QM-Wissen › {categoryTitle} › {article.title}
       </div>
 
@@ -67,7 +69,7 @@ const QMWissenContent = ({ selectedArticle, categories }) => {
         {/* Header */}
         <div className="flex justify-between items-start mb-6">
           <div>
-            <h1 className="text-3xl font-bold text-slate-800 mb-2">{article.title}</h1>
+            <h1 className="text-3xl font-bold mb-2" style={{ color: '#1e293b' }}>{article.title}</h1>
           </div>
           <div className="text-right">
             <div className="text-sm text-gray-500 mb-1">⏱ {article.time} Lesezeit</div>
@@ -76,8 +78,10 @@ const QMWissenContent = ({ selectedArticle, categories }) => {
         </div>
 
         {/* Placeholder for article without content */}
-        <div className="bg-amber-50 border border-amber-200 rounded-lg p-6 text-center">
-          <p className="text-amber-800 font-medium">🚧 Dieser Artikel ist in Arbeit</p>
+        <div className="bg-amber-100 bg-opacity-80 border border-amber-300 rounded-lg p-6 text-center">
+          <p className="text-amber-800 font-medium flex items-center justify-center">
+            <span className="mr-2">🚧</span> Dieser Artikel ist in Arbeit
+          </p>
           <p className="text-amber-700 text-sm mt-2">
             Der Inhalt wird in Kürze veröffentlicht.
           </p>

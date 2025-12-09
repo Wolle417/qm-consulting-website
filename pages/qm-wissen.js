@@ -10,33 +10,35 @@ export default function QMWissen() {
   const [expandedCategories, setExpandedCategories] = useState(['grundlagen']);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen relative">
       <Navigation />
       
-      {/* Main Layout */}
-      <div className="flex-1 flex">
+      {/* Main Layout with proper spacing */}
+      <div className="flex min-h-screen pt-24 px-4 pb-8">
         {/* Sidebar */}
-        <QMWissenSidebar 
-          categories={categories}
-          selectedArticle={selectedArticle}
-          onSelectArticle={setSelectedArticle}
-          expandedCategories={expandedCategories}
-          onToggleCategory={(catId) => {
-            setExpandedCategories(prev => 
-              prev.includes(catId) 
-                ? prev.filter(c => c !== catId)
-                : [...prev, catId]
-            );
-          }}
-        />
+        <div className="mr-4">
+          <QMWissenSidebar 
+            categories={categories}
+            selectedArticle={selectedArticle}
+            onSelectArticle={setSelectedArticle}
+            expandedCategories={expandedCategories}
+            onToggleCategory={(catId) => {
+              setExpandedCategories(prev => 
+                prev.includes(catId) 
+                  ? prev.filter(c => c !== catId)
+                  : [...prev, catId]
+              );
+            }}
+          />
+        </div>
         
         {/* Content */}
-        <div className="flex-1 bg-white bg-opacity-95">
+        <main className="flex-1 bg-slate-300 bg-opacity-70 backdrop-blur-sm rounded-lg">
           <QMWissenContent 
             selectedArticle={selectedArticle}
             categories={categories}
           />
-        </div>
+        </main>
       </div>
       
       <Footer />
