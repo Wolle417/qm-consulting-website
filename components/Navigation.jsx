@@ -16,9 +16,12 @@ export default function Navigation() {
   }, []);
 
   const navItems = [
-    { label: 'Leistungen', href: '/#services' },
-    { label: 'Über uns', href: '/ueber-uns' },
-    { label: 'Kontakt', href: '/#contact' },
+    { label: 'Start', href: '/' },
+    { label: 'Leistungen', href: '/leistungen' },
+    { label: 'Kunden', href: '/kunden' },
+    { label: 'Über mich', href: '/ueber-mich' },
+    { label: 'QM-Wissen', href: '/qm-wissen' },
+    { label: 'Kontakt', href: '/kontakt' },
   ];
 
   return (
