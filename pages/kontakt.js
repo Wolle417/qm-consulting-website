@@ -28,7 +28,7 @@ export default function Kontakt() {
         {/* Contact Content */}
         <section className="relative z-10 section-padding">
           <div className="max-w-3xl mx-auto px-6">
-            <div className="p-8 bg-slate-300 bg-opacity-70 rounded-lg">
+            <div className="p-8 bg-qcore-navy bg-opacity-30 rounded-lg">
               <div className="space-y-6">
                 {/* Email */}
                 <div>

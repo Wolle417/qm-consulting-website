@@ -25,7 +25,7 @@ export default function Kunden() {
             </div>
 
             {/* Target Group 1: MedTech */}
-            <div className="bg-slate-300 bg-opacity-70 p-8 rounded-lg mt-8">
+            <div className="bg-qcore-navy bg-opacity-30 p-8 rounded-lg mt-8">
               <h2 className="text-2xl font-semibold mb-4" style={{ color: '#1e293b' }}>
                 Medizintechnik-Unternehmen
               </h2>
@@ -65,7 +65,7 @@ export default function Kunden() {
             </div>
 
             {/* Target Group 2: Pharma & Biotech */}
-            <div className="bg-slate-300 bg-opacity-70 p-8 rounded-lg mt-8">
+            <div className="bg-qcore-navy bg-opacity-30 p-8 rounded-lg mt-8">
               <h2 className="text-2xl font-semibold mb-4" style={{ color: '#1e293b' }}>
                 Pharma- & Biotech-Startups
               </h2>
@@ -105,7 +105,7 @@ export default function Kunden() {
             </div>
 
             {/* Target Group 3: Tech & Manufacturing */}
-            <div className="bg-slate-300 bg-opacity-70 p-8 rounded-lg mt-8">
+            <div className="bg-qcore-navy bg-opacity-30 p-8 rounded-lg mt-8">
               <h2 className="text-2xl font-semibold mb-4" style={{ color: '#1e293b' }}>
                 Technologie-KMU & Fertigung
               </h2>
@@ -145,7 +145,7 @@ export default function Kunden() {
             </div>
 
             {/* Common Denominator */}
-            <div className="bg-slate-300 bg-opacity-70 p-8 rounded-lg mt-12">
+            <div className="bg-qcore-navy bg-opacity-30 p-8 rounded-lg mt-12">
               <h2 className="text-2xl font-semibold mb-6" style={{ color: '#1e293b' }}>
                 Was alle meine Kunden gemeinsam haben
               </h2>
@@ -158,7 +158,7 @@ export default function Kunden() {
             </div>
 
             {/* Testimonials Placeholder */}
-            <div className="bg-slate-300 bg-opacity-70 p-8 rounded-lg mt-12 border-2 border-dashed border-gray-400">
+            <div className="bg-qcore-navy bg-opacity-30 p-8 rounded-lg mt-12 border-2 border-dashed border-gray-400">
               <h2 className="text-2xl font-semibold mb-4" style={{ color: '#1e293b' }}>
                 Kundenstimmen
               </h2>
@@ -168,7 +168,7 @@ export default function Kunden() {
             </div>
 
             {/* CTA Box */}
-            <div className="bg-slate-300 bg-opacity-70 p-8 rounded-lg mt-12 mb-12 text-center">
+            <div className="bg-qcore-navy bg-opacity-30 p-8 rounded-lg mt-12 mb-12 text-center">
               <h2 className="text-2xl font-semibold" style={{ color: '#1e293b' }}>
                 Wiedergefunden?
               </h2>

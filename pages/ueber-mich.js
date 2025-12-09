@@ -33,7 +33,7 @@ export default function UeberMich() {
             </div>
 
             {/* Short Profile */}
-            <div className="p-6 bg-slate-300 bg-opacity-70 rounded-lg mt-8">
+            <div className="p-6 bg-qcore-navy bg-opacity-30 rounded-lg mt-8">
               <p style={{ color: '#000000' }}>
                 18 Jahre Erfahrung in hochregulierten Branchen – von Nukleartechnik über LED-Entwicklung bis Medizintechnik. Als Ingenieur mit QM-Expertise verstehe ich nicht nur die Norm, sondern auch die Technik dahinter.
               </p>
@@ -43,7 +43,7 @@ export default function UeberMich() {
             </div>
 
             {/* Professional Timeline */}
-            <div className="p-6 bg-slate-300 bg-opacity-70 rounded-lg mt-8">
+            <div className="p-6 bg-qcore-navy bg-opacity-30 rounded-lg mt-8">
               <h2 className="text-2xl font-semibold mb-6" style={{ color: '#1e293b' }}>
                 Berufliche Stationen
               </h2>
@@ -115,7 +115,7 @@ export default function UeberMich() {
             </div>
 
             {/* Qualifications */}
-            <div className="p-6 bg-slate-300 bg-opacity-70 rounded-lg mt-8 mb-12">
+            <div className="p-6 bg-qcore-navy bg-opacity-30 rounded-lg mt-8 mb-12">
               <h2 className="text-2xl font-semibold mb-4" style={{ color: '#1e293b' }}>
                 Qualifikationen
               </h2>
