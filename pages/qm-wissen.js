@@ -37,6 +37,7 @@ export default function QMWissen() {
           <QMWissenContent
             selectedArticle={selectedArticle}
             categories={categories}
+            onSelectArticle={setSelectedArticle}
           />
         </main>
       </div>

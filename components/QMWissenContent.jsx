@@ -2,7 +2,7 @@ import LevelBadge from './LevelBadge';
 import ISO13485Article from './articles/ISO13485Article';
 import GMPArticle from './articles/GMPArticle';
 
-const QMWissenContent = ({ selectedArticle, categories }) => {
+const QMWissenContent = ({ selectedArticle, categories, onSelectArticle }) => {
   // If no article is selected, show welcome view
   if (!selectedArticle) {
     return (
@@ -12,6 +12,50 @@ const QMWissenContent = ({ selectedArticle, categories }) => {
           Praktisches Know-how für Qualitätsmanagement. 
           Wählen Sie links eine Kategorie oder einen Artikel.
         </p>
+        
+        {/* Featured Articles Section */}
+        <section className="mb-12">
+          <h2 className="text-xl font-semibold mb-4 flex items-center" style={{ color: '#1e293b' }}>
+            <span className="text-qcore-cyan mr-2">★</span>
+            Beliebte Artikel
+          </h2>
+          
+          <div className="grid md:grid-cols-2 gap-4">
+            {/* Featured Card 1 - ISO 13485 */}
+            <div 
+              onClick={() => onSelectArticle && onSelectArticle('iso-13485')}
+              className="bg-qcore-navy bg-opacity-50 border border-qcore-cyan 
+                        rounded-lg p-5 hover:border-white transition-all cursor-pointer"
+            >
+              <span className="bg-qcore-cyan text-qcore-navy px-2 py-0.5 rounded text-xs font-bold">
+                MEDTECH
+              </span>
+              <h3 className="text-lg font-bold text-white mt-2 mb-2">
+                ISO 13485: QM für Medizinprodukte
+              </h3>
+              <p className="text-gray-400 text-sm">
+                Alles über das QM-System für Medizinproduktehersteller: Aufbau, Anforderungen und Zertifizierung
+              </p>
+            </div>
+            
+            {/* Featured Card 2 - GMP */}
+            <div 
+              onClick={() => onSelectArticle && onSelectArticle('gmp')}
+              className="bg-qcore-navy bg-opacity-50 border border-qcore-cyan 
+                        rounded-lg p-5 hover:border-white transition-all cursor-pointer"
+            >
+              <span className="bg-qcore-cyan text-qcore-navy px-2 py-0.5 rounded text-xs font-bold">
+                PHARMA
+              </span>
+              <h3 className="text-lg font-bold text-white mt-2 mb-2">
+                GMP: Gute Herstellungspraxis
+              </h3>
+              <p className="text-gray-400 text-sm">
+                Die 10 GMP-Prinzipien und was Pharmaunternehmen wissen müssen - von der Herstellungserlaubnis bis zur Inspektion
+              </p>
+            </div>
+          </div>
+        </section>
         
         <div className="bg-amber-100 bg-opacity-80 border border-amber-300 rounded-lg p-6">
           <h3 className="font-semibold text-amber-800 mb-2 flex items-center">
