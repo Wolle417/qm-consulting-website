@@ -1,4 +1,5 @@
 import LevelBadge from './LevelBadge';
+import ISO13485Article from './articles/ISO13485Article';
 
 const QMWissenContent = ({ selectedArticle, categories }) => {
   // If no article is selected, show welcome view
@@ -77,21 +78,26 @@ const QMWissenContent = ({ selectedArticle, categories }) => {
           </div>
         </div>
 
-        {/* Placeholder for article without content */}
-        <div className="bg-amber-100 bg-opacity-80 border border-amber-300 rounded-lg p-6 text-center">
-          <p className="text-amber-800 font-medium flex items-center justify-center">
-            <span className="mr-2">🚧</span> Dieser Artikel ist in Arbeit
-          </p>
-          <p className="text-amber-700 text-sm mt-2">
-            Der Inhalt wird in Kürze veröffentlicht.
-          </p>
-          <p className="text-amber-600 text-sm mt-4">
-            Interesse an diesem Thema? 
-            <a href="mailto:kontakt@qcore-consulting.de" className="text-blue-600 hover:underline ml-1">
-              kontakt@qcore-consulting.de
-            </a>
-          </p>
-        </div>
+        {/* Article Content */}
+        {selectedArticle === 'iso-13485' ? (
+          <ISO13485Article />
+        ) : (
+          /* Placeholder for article without content */
+          <div className="bg-amber-100 bg-opacity-80 border border-amber-300 rounded-lg p-6 text-center">
+            <p className="text-amber-800 font-medium flex items-center justify-center">
+              <span className="mr-2">🚧</span> Dieser Artikel ist in Arbeit
+            </p>
+            <p className="text-amber-700 text-sm mt-2">
+              Der Inhalt wird in Kürze veröffentlicht.
+            </p>
+            <p className="text-amber-600 text-sm mt-4">
+              Interesse an diesem Thema? 
+              <a href="mailto:kontakt@qcore-consulting.de" className="text-blue-600 hover:underline ml-1">
+                kontakt@qcore-consulting.de
+              </a>
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
