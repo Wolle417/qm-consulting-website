@@ -1,6 +1,7 @@
 import LevelBadge from './LevelBadge';
 import ISO13485Article from './articles/ISO13485Article';
 import GMPArticle from './articles/GMPArticle';
+import WasIstQMArticle from './articles/WasIstQMArticle';
 
 const QMWissenContent = ({ selectedArticle, categories, onSelectArticle }) => {
   // If no article is selected, show welcome view
@@ -108,9 +109,10 @@ const QMWissenContent = ({ selectedArticle, categories, onSelectArticle }) => {
         </div>
 
         {/* Article Content */}
+        {selectedArticle === 'was-ist-qm' && <WasIstQMArticle />}
         {selectedArticle === 'iso-13485' && <ISO13485Article />}
         {selectedArticle === 'gmp' && <GMPArticle />}
-        {selectedArticle !== 'iso-13485' && selectedArticle !== 'gmp' && (
+        {selectedArticle !== 'was-ist-qm' && selectedArticle !== 'iso-13485' && selectedArticle !== 'gmp' && (
           /* Placeholder for article without content */
           <div className="bg-amber-100 bg-opacity-80 border border-amber-300 rounded-lg p-6 text-center">
             <p className="text-amber-800 font-medium flex items-center justify-center">
