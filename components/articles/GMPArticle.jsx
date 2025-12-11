@@ -313,44 +313,187 @@ export default function GMPArticle() {
 
       {/* Kapitel 7 */}
       <h2 id="kapitel-7" className="text-2xl font-semibold mt-12 mb-4" style={{ color: '#1e293b' }}>
-        7. Herstellungserlaubnis und Inspektionen
+        7. Qualifizierung: IQ, OQ, PQ erklärt
       </h2>
       
       <p style={{ color: '#000000' }}>
-        In Deutschland brauchen Sie eine <strong>Herstellungserlaubnis nach §13 AMG</strong> 
-        von der zuständigen Landesbehörde (z.B. Regierung von Oberbayern).
+        Bevor eine Anlage in Betrieb genommen wird, muss sie qualifiziert werden:
       </p>
       
-      <div className="space-y-3 my-6">
-        <div className="bg-qcore-navy bg-opacity-20 rounded-lg p-4 border border-gray-600">
-          <h4 className="font-semibold mb-2" style={{ color: '#1e293b' }}>📋 Was wird geprüft?</h4>
-          <ul className="text-sm space-y-1" style={{ color: '#000000' }}>
-            <li>• Räumlichkeiten und Ausrüstung geeignet?</li>
-            <li>• Personal qualifiziert?</li>
-            <li>• QM-System vorhanden und gelebt?</li>
-            <li>• Sachkundige Person (QP) vorhanden?</li>
-          </ul>
+      <div className="flex flex-wrap items-center justify-center gap-2 my-8">
+        <div className="bg-qcore-navy bg-opacity-30 rounded-lg px-4 py-3 text-center">
+          <div className="font-semibold" style={{ color: '#1e293b' }}>DQ</div>
+          <div className="text-xs" style={{ color: '#000000' }}>Design</div>
+          <div className="text-xs" style={{ color: '#475569' }}>Richtig geplant?</div>
         </div>
-        
-        <div className="bg-qcore-navy bg-opacity-20 rounded-lg p-4 border border-gray-600">
-          <h4 className="font-semibold mb-2" style={{ color: '#1e293b' }}>🔍 GMP-Inspektionen</h4>
-          <ul className="text-sm space-y-1" style={{ color: '#000000' }}>
-            <li>• Alle 2-3 Jahre durch Überwachungsbehörde</li>
-            <li>• Unangemeldet oder angekündigt</li>
-            <li>• Dauer: 1-5 Tage (je nach Betriebsgröße)</li>
-            <li>• Checkliste basiert auf EU-GMP-Leitfaden</li>
-          </ul>
+        <div style={{ color: '#475569' }}>→</div>
+        <div className="bg-qcore-navy bg-opacity-30 rounded-lg px-4 py-3 text-center">
+          <div className="font-semibold" style={{ color: '#1e293b' }}>IQ</div>
+          <div className="text-xs" style={{ color: '#000000' }}>Installation</div>
+          <div className="text-xs" style={{ color: '#475569' }}>Richtig installiert?</div>
+        </div>
+        <div style={{ color: '#475569' }}>→</div>
+        <div className="bg-qcore-navy bg-opacity-30 rounded-lg px-4 py-3 text-center">
+          <div className="font-semibold" style={{ color: '#1e293b' }}>OQ</div>
+          <div className="text-xs" style={{ color: '#000000' }}>Operational</div>
+          <div className="text-xs" style={{ color: '#475569' }}>Funktioniert?</div>
+        </div>
+        <div style={{ color: '#475569' }}>→</div>
+        <div className="bg-green-900 bg-opacity-30 rounded-lg px-4 py-3 text-center border border-green-700">
+          <div className="font-semibold" style={{ color: '#1e293b' }}>PQ</div>
+          <div className="text-xs" style={{ color: '#000000' }}>Performance</div>
+          <div className="text-xs" style={{ color: '#475569' }}>Reproduzierbar?</div>
         </div>
       </div>
       
-      <WarningBox>
-        Ein GMP-Inspektionsbericht mit "kritischen" Mängeln kann zur Aussetzung der 
-        Herstellungserlaubnis führen. Das bedeutet: Produktionsstopp.
-      </WarningBox>
+      <div className="overflow-x-auto my-6">
+        <table className="min-w-full border border-gray-600">
+          <thead className="bg-qcore-navy bg-opacity-30">
+            <tr>
+              <th className="px-4 py-2 text-left border-b border-gray-600" style={{ color: '#1e293b' }}>Phase</th>
+              <th className="px-4 py-2 text-left border-b border-gray-600" style={{ color: '#1e293b' }}>Fragt</th>
+              <th className="px-4 py-2 text-left border-b border-gray-600" style={{ color: '#1e293b' }}>Prüft z.B.</th>
+            </tr>
+          </thead>
+          <tbody style={{ color: '#000000' }}>
+            <tr className="bg-qcore-navy bg-opacity-10">
+              <td className="px-4 py-2 border-b border-gray-600 font-semibold">DQ</td>
+              <td className="px-4 py-2 border-b border-gray-600">Ist das Design geeignet?</td>
+              <td className="px-4 py-2 border-b border-gray-600">Spezifikationen, Normen, URS</td>
+            </tr>
+            <tr>
+              <td className="px-4 py-2 border-b border-gray-600 font-semibold">IQ</td>
+              <td className="px-4 py-2 border-b border-gray-600">Ist alles korrekt installiert?</td>
+              <td className="px-4 py-2 border-b border-gray-600">Kalibrierung, Anschlüsse, Doku</td>
+            </tr>
+            <tr className="bg-qcore-navy bg-opacity-10">
+              <td className="px-4 py-2 border-b border-gray-600 font-semibold">OQ</td>
+              <td className="px-4 py-2 border-b border-gray-600">Funktioniert es wie spezifiziert?</td>
+              <td className="px-4 py-2 border-b border-gray-600">Grenzwerte, Alarme, Funktionen</td>
+            </tr>
+            <tr>
+              <td className="px-4 py-2 border-b border-gray-600 font-semibold">PQ</td>
+              <td className="px-4 py-2 border-b border-gray-600">Funktioniert es reproduzierbar?</td>
+              <td className="px-4 py-2 border-b border-gray-600">3 Chargen unter Produktion</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <TipBox>
+        Die Qualifizierung ist kein einmaliger Akt. Bei Änderungen an der Anlage 
+        muss eine Requalifizierung erfolgen - zumindest für die betroffenen Teile.
+      </TipBox>
 
       {/* Kapitel 8 */}
       <h2 id="kapitel-8" className="text-2xl font-semibold mt-12 mb-4" style={{ color: '#1e293b' }}>
-        8. GMP vs. ISO 9001 - die Unterschiede
+        8. GMP-Inspektionen
+      </h2>
+      
+      <p style={{ color: '#000000' }}>
+        Anders als bei ISO gibt es bei GMP keine "Zertifizierung" durch private Stellen. 
+        Die Überwachung erfolgt durch <strong>staatliche Behörden</strong>:
+      </p>
+      
+      <div className="overflow-x-auto my-6">
+        <table className="min-w-full border border-gray-600">
+          <thead className="bg-qcore-navy bg-opacity-30">
+            <tr>
+              <th className="px-4 py-2 text-left border-b border-gray-600" style={{ color: '#1e293b' }}>Region</th>
+              <th className="px-4 py-2 text-left border-b border-gray-600" style={{ color: '#1e293b' }}>Behörde</th>
+              <th className="px-4 py-2 text-left border-b border-gray-600" style={{ color: '#1e293b' }}>Ergebnis</th>
+            </tr>
+          </thead>
+          <tbody style={{ color: '#000000' }}>
+            <tr className="bg-qcore-navy bg-opacity-10">
+              <td className="px-4 py-2 border-b border-gray-600">Deutschland</td>
+              <td className="px-4 py-2 border-b border-gray-600">Landesbehörden (z.B. Regierungspräsidium)</td>
+              <td className="px-4 py-2 border-b border-gray-600">GMP-Zertifikat</td>
+            </tr>
+            <tr>
+              <td className="px-4 py-2 border-b border-gray-600">EU</td>
+              <td className="px-4 py-2 border-b border-gray-600">Nationale Behörden + EMA</td>
+              <td className="px-4 py-2 border-b border-gray-600">GMP-Zertifikat</td>
+            </tr>
+            <tr className="bg-qcore-navy bg-opacity-10">
+              <td className="px-4 py-2 border-b border-gray-600">USA</td>
+              <td className="px-4 py-2 border-b border-gray-600">FDA</td>
+              <td className="px-4 py-2 border-b border-gray-600">Form 483 / Warning Letter</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <p style={{ color: '#000000' }}><strong>Inspektionsergebnisse:</strong></p>
+      <ul style={{ color: '#000000' }} className="list-disc pl-6 space-y-1">
+        <li><strong>Keine Mängel:</strong> Selten, aber möglich</li>
+        <li><strong>Kleinere Mängel:</strong> Müssen behoben werden, keine sofortigen Konsequenzen</li>
+        <li><strong>Größere Mängel:</strong> Sofortige Maßnahmen erforderlich</li>
+        <li><strong>Kritische Mängel:</strong> Können zur Schließung führen</li>
+      </ul>
+      
+      <WarningBox>
+        Eine FDA Warning Letter ist öffentlich und kann den Ruf eines Unternehmens 
+        nachhaltig schädigen. Prävention ist alles.
+      </WarningBox>
+
+      {/* Kapitel 9 */}
+      <h2 id="kapitel-9" className="text-2xl font-semibold mt-12 mb-4" style={{ color: '#1e293b' }}>
+        9. Häufige GMP-Mängel
+      </h2>
+      
+      <div className="overflow-x-auto my-6">
+        <table className="min-w-full border border-gray-600">
+          <thead className="bg-qcore-navy bg-opacity-30">
+            <tr>
+              <th className="px-4 py-2 text-left border-b border-gray-600" style={{ color: '#1e293b' }}>Bereich</th>
+              <th className="px-4 py-2 text-left border-b border-gray-600" style={{ color: '#1e293b' }}>Typischer Mangel</th>
+              <th className="px-4 py-2 text-left border-b border-gray-600" style={{ color: '#1e293b' }}>Lösung</th>
+            </tr>
+          </thead>
+          <tbody style={{ color: '#000000' }}>
+            <tr className="bg-qcore-navy bg-opacity-10">
+              <td className="px-4 py-2 border-b border-gray-600">Dokumentation</td>
+              <td className="px-4 py-2 border-b border-gray-600">Unleserliche Einträge, fehlende Unterschriften</td>
+              <td className="px-4 py-2 border-b border-gray-600">ALCOA-Prinzip schulen</td>
+            </tr>
+            <tr>
+              <td className="px-4 py-2 border-b border-gray-600">CAPA</td>
+              <td className="px-4 py-2 border-b border-gray-600">Oberflächliche Root Cause, keine Wirksamkeit</td>
+              <td className="px-4 py-2 border-b border-gray-600">5-Why konsequent anwenden</td>
+            </tr>
+            <tr className="bg-qcore-navy bg-opacity-10">
+              <td className="px-4 py-2 border-b border-gray-600">Validierung</td>
+              <td className="px-4 py-2 border-b border-gray-600">Veraltete Validierungsdaten</td>
+              <td className="px-4 py-2 border-b border-gray-600">Revalidierungsplan erstellen</td>
+            </tr>
+            <tr>
+              <td className="px-4 py-2 border-b border-gray-600">Schulung</td>
+              <td className="px-4 py-2 border-b border-gray-600">Personal kennt aktuelle SOPs nicht</td>
+              <td className="px-4 py-2 border-b border-gray-600">Schulungssystem überarbeiten</td>
+            </tr>
+            <tr className="bg-qcore-navy bg-opacity-10">
+              <td className="px-4 py-2 border-b border-gray-600">Reinigung</td>
+              <td className="px-4 py-2 border-b border-gray-600">Keine Reinigungsvalidierung</td>
+              <td className="px-4 py-2 border-b border-gray-600">Validierungsplan aufsetzen</td>
+            </tr>
+            <tr>
+              <td className="px-4 py-2 border-b border-gray-600">Lieferanten</td>
+              <td className="px-4 py-2 border-b border-gray-600">Keine Qualifizierung kritischer Lieferanten</td>
+              <td className="px-4 py-2 border-b border-gray-600">Lieferanten-Audit-Programm</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <TipBox>
+        ALCOA steht für: Attributable (zuordenbar), Legible (lesbar), Contemporaneous 
+        (zeitnah), Original, Accurate (genau). Die goldene Regel für GMP-Dokumentation.
+      </TipBox>
+
+      {/* Kapitel 10 */}
+      <h2 id="kapitel-10" className="text-2xl font-semibold mt-12 mb-4" style={{ color: '#1e293b' }}>
+        10. GMP vs. ISO 9001 vs. ISO 13485
       </h2>
       
       <div className="overflow-x-auto my-6">
@@ -358,168 +501,61 @@ export default function GMPArticle() {
           <thead className="bg-qcore-navy bg-opacity-30">
             <tr>
               <th className="px-4 py-2 text-left border-b border-gray-600" style={{ color: '#1e293b' }}>Aspekt</th>
-              <th className="px-4 py-2 text-left border-b border-gray-600" style={{ color: '#1e293b' }}>ISO 9001</th>
               <th className="px-4 py-2 text-left border-b border-gray-600" style={{ color: '#1e293b' }}>GMP</th>
+              <th className="px-4 py-2 text-left border-b border-gray-600" style={{ color: '#1e293b' }}>ISO 13485</th>
+              <th className="px-4 py-2 text-left border-b border-gray-600" style={{ color: '#1e293b' }}>ISO 9001</th>
             </tr>
           </thead>
           <tbody style={{ color: '#000000' }}>
             <tr className="bg-qcore-navy bg-opacity-10">
-              <td className="px-4 py-2 border-b border-gray-600">Status</td>
-              <td className="px-4 py-2 border-b border-gray-600">Freiwillig</td>
-              <td className="px-4 py-2 border-b border-gray-600"><strong>Gesetzlich vorgeschrieben</strong></td>
-            </tr>
-            <tr>
               <td className="px-4 py-2 border-b border-gray-600">Branche</td>
+              <td className="px-4 py-2 border-b border-gray-600">Pharma</td>
+              <td className="px-4 py-2 border-b border-gray-600">Medizinprodukte</td>
               <td className="px-4 py-2 border-b border-gray-600">Alle</td>
-              <td className="px-4 py-2 border-b border-gray-600"><strong>Nur Pharma</strong></td>
-            </tr>
-            <tr className="bg-qcore-navy bg-opacity-10">
-              <td className="px-4 py-2 border-b border-gray-600">Fokus</td>
-              <td className="px-4 py-2 border-b border-gray-600">Kundenzufriedenheit</td>
-              <td className="px-4 py-2 border-b border-gray-600"><strong>Patientensicherheit</strong></td>
             </tr>
             <tr>
-              <td className="px-4 py-2 border-b border-gray-600">Prüfung</td>
-              <td className="px-4 py-2 border-b border-gray-600">Zertifizierungsgesellschaft</td>
-              <td className="px-4 py-2 border-b border-gray-600"><strong>Behördeninspektionen</strong></td>
+              <td className="px-4 py-2 border-b border-gray-600">Rechtliche Basis</td>
+              <td className="px-4 py-2 border-b border-gray-600"><strong>Gesetz</strong></td>
+              <td className="px-4 py-2 border-b border-gray-600">Norm (harmonisiert)</td>
+              <td className="px-4 py-2 border-b border-gray-600">Norm (freiwillig)</td>
             </tr>
             <tr className="bg-qcore-navy bg-opacity-10">
+              <td className="px-4 py-2 border-b border-gray-600">Überwachung</td>
+              <td className="px-4 py-2 border-b border-gray-600">Staatliche Behörde</td>
+              <td className="px-4 py-2 border-b border-gray-600">Benannte Stelle</td>
+              <td className="px-4 py-2 border-b border-gray-600">Zertifizierungsstelle</td>
+            </tr>
+            <tr>
               <td className="px-4 py-2 border-b border-gray-600">Dokumentation</td>
-              <td className="px-4 py-2 border-b border-gray-600">Pragmatisch</td>
               <td className="px-4 py-2 border-b border-gray-600"><strong>Sehr umfangreich</strong></td>
+              <td className="px-4 py-2 border-b border-gray-600">Umfangreich</td>
+              <td className="px-4 py-2 border-b border-gray-600">Moderat</td>
             </tr>
-            <tr>
+            <tr className="bg-qcore-navy bg-opacity-10">
               <td className="px-4 py-2 border-b border-gray-600">Validierung</td>
-              <td className="px-4 py-2 border-b border-gray-600">Optional</td>
-              <td className="px-4 py-2 border-b border-gray-600"><strong>Pflicht für kritische Prozesse</strong></td>
+              <td className="px-4 py-2 border-b border-gray-600"><strong>Umfassend gefordert</strong></td>
+              <td className="px-4 py-2 border-b border-gray-600">Gefordert</td>
+              <td className="px-4 py-2 border-b border-gray-600">Bei Bedarf</td>
             </tr>
-            <tr className="bg-qcore-navy bg-opacity-10">
-              <td className="px-4 py-2 border-b border-gray-600">Konsequenzen</td>
+            <tr>
+              <td className="px-4 py-2 border-b border-gray-600">Konsequenz bei Verstoß</td>
+              <td className="px-4 py-2 border-b border-gray-600"><strong>Herstellungsverbot</strong></td>
               <td className="px-4 py-2 border-b border-gray-600">Zertifikatsentzug</td>
-              <td className="px-4 py-2 border-b border-gray-600"><strong>Produktionsstopp, Bußgeld</strong></td>
+              <td className="px-4 py-2 border-b border-gray-600">Zertifikatsentzug</td>
             </tr>
           </tbody>
         </table>
       </div>
-      
-      <TipBox>
-        ISO 9001 ist eine gute Basis, reicht aber für Pharma nicht aus. GMP geht deutlich 
-        weiter in Sachen Validierung, Rückverfolgbarkeit und Dokumentation.
-      </TipBox>
-
-      {/* Kapitel 9 */}
-      <h2 id="kapitel-9" className="text-2xl font-semibold mt-12 mb-4" style={{ color: '#1e293b' }}>
-        9. Typische Stolperfallen bei GMP-Einführung
-      </h2>
-      
-      <div className="overflow-x-auto my-6">
-        <table className="min-w-full border border-gray-600">
-          <thead className="bg-qcore-navy bg-opacity-30">
-            <tr>
-              <th className="px-4 py-2 text-left border-b border-gray-600" style={{ color: '#1e293b' }}>Stolperfalle</th>
-              <th className="px-4 py-2 text-left border-b border-gray-600" style={{ color: '#1e293b' }}>Warum passiert das?</th>
-              <th className="px-4 py-2 text-left border-b border-gray-600" style={{ color: '#1e293b' }}>Lösung</th>
-            </tr>
-          </thead>
-          <tbody style={{ color: '#000000' }}>
-            <tr className="bg-qcore-navy bg-opacity-10">
-              <td className="px-4 py-2 border-b border-gray-600">Dokumentation zu spät</td>
-              <td className="px-4 py-2 border-b border-gray-600">"Machen wir später"</td>
-              <td className="px-4 py-2 border-b border-gray-600">Von Anfang an dokumentieren</td>
-            </tr>
-            <tr>
-              <td className="px-4 py-2 border-b border-gray-600">Validierung unterschätzt</td>
-              <td className="px-4 py-2 border-b border-gray-600">"Läuft doch!"</td>
-              <td className="px-4 py-2 border-b border-gray-600">Validierungsplan erstellen</td>
-            </tr>
-            <tr className="bg-qcore-navy bg-opacity-10">
-              <td className="px-4 py-2 border-b border-gray-600">Abweichungen ignoriert</td>
-              <td className="px-4 py-2 border-b border-gray-600">Zeitmangel, Bequemlichkeit</td>
-              <td className="px-4 py-2 border-b border-gray-600">Jede Abweichung = Pflicht</td>
-            </tr>
-            <tr>
-              <td className="px-4 py-2 border-b border-gray-600">Change Control fehlt</td>
-              <td className="px-4 py-2 border-b border-gray-600">Schnell mal geändert</td>
-              <td className="px-4 py-2 border-b border-gray-600">Änderungen nur mit Genehmigung</td>
-            </tr>
-            <tr className="bg-qcore-navy bg-opacity-10">
-              <td className="px-4 py-2 border-b border-gray-600">Schulungen vernachlässigt</td>
-              <td className="px-4 py-2 border-b border-gray-600">"Wissen die schon"</td>
-              <td className="px-4 py-2 border-b border-gray-600">Regelmäßige, dokumentierte Schulungen</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      
-      <WarningBox>
-        Der größte Fehler: GMP als reines Papiersystem betrachten. GMP muss gelebt 
-        werden - nicht nur bei Inspektionen.
-      </WarningBox>
-
-      {/* Kapitel 10 */}
-      <h2 id="kapitel-10" className="text-2xl font-semibold mt-12 mb-4" style={{ color: '#1e293b' }}>
-        10. GMP und Digitalisierung
-      </h2>
-      
-      <p style={{ color: '#000000' }}>
-        Moderne GMP-Systeme setzen zunehmend auf digitale Lösungen:
-      </p>
-      
-      <div className="space-y-4 my-6">
-        <div className="bg-qcore-navy bg-opacity-20 rounded-lg p-4 border border-gray-600">
-          <h4 className="font-semibold flex items-center" style={{ color: '#1e293b' }}>
-            <span className="mr-2">💻</span> Elektronische Chargenprotokolle (eBatch Records)
-          </h4>
-          <p className="text-sm mt-2" style={{ color: '#000000' }}>
-            Papierlos, automatische Plausibilitätsprüfung, schnellere Freigabe. 
-            Aber: Validierung nach 21 CFR Part 11 erforderlich.
-          </p>
-        </div>
-        
-        <div className="bg-qcore-navy bg-opacity-20 rounded-lg p-4 border border-gray-600">
-          <h4 className="font-semibold flex items-center" style={{ color: '#1e293b' }}>
-            <span className="mr-2">📊</span> Manufacturing Execution Systems (MES)
-          </h4>
-          <p className="text-sm mt-2" style={{ color: '#000000' }}>
-            Integrierte Produktionssteuerung, Echtzeit-Überwachung, automatische 
-            Dokumentation.
-          </p>
-        </div>
-        
-        <div className="bg-qcore-navy bg-opacity-20 rounded-lg p-4 border border-gray-600">
-          <h4 className="font-semibold flex items-center" style={{ color: '#1e293b' }}>
-            <span className="mr-2">🔐</span> Elektronische Signaturen
-          </h4>
-          <p className="text-sm mt-2" style={{ color: '#000000' }}>
-            Ersetzen händische Unterschriften. Anforderungen: 21 CFR Part 11 (FDA), 
-            Annex 11 (EU-GMP).
-          </p>
-        </div>
-        
-        <div className="bg-qcore-navy bg-opacity-20 rounded-lg p-4 border border-gray-600">
-          <h4 className="font-semibold flex items-center" style={{ color: '#1e293b' }}>
-            <span className="mr-2">📱</span> Audit Trail
-          </h4>
-          <p className="text-sm mt-2" style={{ color: '#000000' }}>
-            Jede Änderung muss nachvollziehbar sein: Wer, Was, Wann, Warum. 
-            Automatisch protokolliert.
-          </p>
-        </div>
-      </div>
-      
-      <TipBox>
-        Digitalisierung bringt Effizienz, aber auch neue Anforderungen: CSV 
-        (Computer System Validation), Data Integrity, Cyber Security. Nicht unterschätzen!
-      </TipBox>
 
       {/* CTA */}
       <div className="bg-qcore-navy bg-opacity-30 rounded-lg p-8 mt-12 text-center border border-gray-600">
         <h3 className="text-xl font-semibold mb-4" style={{ color: '#1e293b' }}>
-          Sie führen GMP ein oder bereiten sich auf eine Inspektion vor?
+          Sie brauchen Unterstützung im GMP-Umfeld?
         </h3>
         <p className="mb-6" style={{ color: '#000000' }}>
-          Mit Praxiserfahrung aus der Pharmaindustrie unterstütze ich Sie beim Aufbau 
-          oder der Optimierung Ihres GMP-Systems - pragmatisch, audit-sicher, ohne unnötigen Overhead.
+          Mit Erfahrung aus regulierten Industrien unterstütze ich Sie bei 
+          Qualifizierung, Validierung und Audit-Vorbereitung - pragmatisch 
+          und inspektionssicher.
         </p>
         <a 
           href="/kontakt" 
