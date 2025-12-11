@@ -10,8 +10,11 @@ const QMWissenSidebar = ({
   return (
     <aside className="w-64 bg-qcore-navy bg-opacity-30 backdrop-blur-sm rounded-lg h-fit sticky top-24 overflow-y-auto hidden md:block">
       {/* Header */}
-      <div className="p-4 border-b border-gray-400">
-        <h2 className="font-bold text-lg" style={{ color: '#1e293b' }}>
+      <div 
+        onClick={() => onSelectArticle(null)}
+        className="p-4 border-b border-gray-400 cursor-pointer hover:bg-slate-400 hover:bg-opacity-30 transition-colors"
+      >
+        <h2 className="font-bold text-lg hover:text-qcore-cyan transition-colors" style={{ color: '#1e293b' }}>
           QM-Wissen
         </h2>
         <p className="text-sm" style={{ color: '#475569' }}>Tutorials & Guides</p>

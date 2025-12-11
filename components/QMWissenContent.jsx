@@ -56,22 +56,6 @@ const QMWissenContent = ({ selectedArticle, categories, onSelectArticle }) => {
             </div>
           </div>
         </section>
-        
-        <div className="bg-amber-100 bg-opacity-80 border border-amber-300 rounded-lg p-6">
-          <h3 className="font-semibold text-amber-800 mb-2 flex items-center">
-            <span className="mr-2">🚧</span> In Entwicklung
-          </h3>
-          <p className="text-amber-700">
-            Diese Wissensdatenbank wird kontinuierlich erweitert. 
-            Die ersten Artikel erscheinen in Kürze.
-          </p>
-          <p className="text-amber-600 text-sm mt-4">
-            Interesse an einem bestimmten Thema? Schreiben Sie mir:
-            <a href="mailto:kontakt@qcore-consulting.de" className="text-blue-600 hover:underline ml-1">
-              kontakt@qcore-consulting.de
-            </a>
-          </p>
-        </div>
       </div>
     );
   }
