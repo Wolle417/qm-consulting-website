@@ -1,31 +1,11 @@
 import Link from 'next/link';
+import { TipBox, WarningBox, ExampleBox, InfoBox as SharedInfoBox, Table, SectionTitle, CTABox } from '../ArticleComponents';
 
-const TipBox = ({ children }) => (
-  <div className="bg-qcore-navy bg-opacity-40 border-l-4 border-qcore-cyan p-4 my-4 rounded-r">
-    <p className="text-gray-300 font-semibold mb-1">💡 Praxis-Tipp</p>
-    <div className="text-gray-200">{children}</div>
-  </div>
-);
-
+// Custom InfoBox wrapper for simple usage (without title)
 const InfoBox = ({ children }) => (
-  <div className="bg-qcore-navy bg-opacity-40 border-l-4 border-blue-400 p-4 my-4 rounded-r">
-    <p className="text-gray-300 font-semibold mb-1">ℹ️ Info</p>
-    <div className="text-gray-200">{children}</div>
-  </div>
-);
-
-const WarningBox = ({ children }) => (
-  <div className="bg-qcore-navy bg-opacity-40 border-l-4 border-yellow-500 p-4 my-4 rounded-r">
-    <p className="text-yellow-400 font-semibold mb-1">⚠️ Wichtig</p>
-    <div className="text-gray-200">{children}</div>
-  </div>
-);
-
-const ExampleBox = ({ children }) => (
-  <div className="bg-qcore-navy bg-opacity-40 border-l-4 border-purple-400 p-4 my-4 rounded-r">
-    <p className="text-gray-300 font-semibold mb-1">📌 Beispiel</p>
-    <div className="text-gray-200">{children}</div>
-  </div>
+  <SharedInfoBox title="ℹ️ Info">
+    {children}
+  </SharedInfoBox>
 );
 
 const QMDiagram = () => (
