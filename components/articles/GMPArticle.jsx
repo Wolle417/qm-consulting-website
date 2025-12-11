@@ -38,130 +38,136 @@ export default function GMPArticle() {
       
       {/* Kapitel 1 */}
       <h2 id="kapitel-1" className="text-2xl font-semibold mt-8 mb-4" style={{ color: '#1e293b' }}>
-        1. Was ist ISO 13485?
+        1. Was ist GMP?
       </h2>
       
       <p style={{ color: '#000000' }}>
-        Die ISO 13485 ist die internationale Norm für Qualitätsmanagementsysteme in der 
-        Medizinprodukteindustrie. Die aktuelle Version (ISO 13485:2016) ist in Deutschland 
-        als DIN EN ISO 13485:2021 verfügbar.
+        GMP steht für <strong>Good Manufacturing Practice</strong> (Gute Herstellungspraxis) und 
+        bezeichnet Richtlinien zur Qualitätssicherung bei der Herstellung von Arzneimitteln, 
+        Wirkstoffen und anderen regulierten Produkten.
       </p>
       
-      <InfoBox title="ISO 13485 - Definition">
-        Qualitätsmanagementsystem für Organisationen, die Medizinprodukte entwickeln, 
-        herstellen, lagern, vertreiben oder warten. Kernziel: Sichere und wirksame Medizinprodukte.
+      <InfoBox title="GMP - Definition">
+        Good Manufacturing Practice ist ein System von Richtlinien, das sicherstellt, dass 
+        Produkte konstant nach Qualitätsstandards hergestellt und kontrolliert werden. 
+        Ziel: Sichere, wirksame und unbedenkliche Arzneimittel.
       </InfoBox>
       
       <p style={{ color: '#000000' }}>
-        Im Gegensatz zur ISO 9001, die auf Kundenzufriedenheit und kontinuierliche 
-        Verbesserung fokussiert, steht bei der ISO 13485 die <strong>Produktsicherheit 
-        und Wirksamkeit</strong> im Mittelpunkt. Die Norm ist mit den EU-Verordnungen 
-        MDR und IVDR harmonisiert.
+        Im Gegensatz zu ISO-Normen ist GMP <strong>gesetzlich verankert</strong>. In Deutschland 
+        gilt die Arzneimittel- und Wirkstoffherstellungsverordnung (AMWHV), die sich auf den 
+        EU-GMP-Leitfaden bezieht. Wer Arzneimittel herstellt, MUSS GMP einhalten - es gibt 
+        keine freiwillige Zertifizierung.
       </p>
       
       <TipBox>
-        Die ISO 13485 ist kein Selbstzweck. Sie ist das Fundament, auf dem alles andere 
-        aufbaut - CE-Kennzeichnung, Audits, Marktzugang.
+        GMP ist keine Empfehlung, sondern Pflicht. Ohne GMP-Konformität keine 
+        Herstellungserlaubnis - so einfach ist das.
       </TipBox>
 
       {/* Kapitel 2 */}
       <h2 id="kapitel-2" className="text-2xl font-semibold mt-12 mb-4" style={{ color: '#1e293b' }}>
-        2. Für wen gilt die Norm?
+        2. Geschichte: Warum gibt es GMP?
       </h2>
       
       <p style={{ color: '#000000' }}>
-        Die Norm gilt für alle Organisationen, die am Lebenszyklus eines Medizinprodukts 
-        beteiligt sind:
+        GMP entstand als Reaktion auf Arzneimittelskandale:
       </p>
       
       <div className="overflow-x-auto my-6">
         <table className="min-w-full border border-gray-600">
           <thead className="bg-qcore-navy bg-opacity-30">
             <tr>
-              <th className="px-4 py-2 text-left border-b border-gray-600" style={{ color: '#1e293b' }}>Rolle</th>
-              <th className="px-4 py-2 text-left border-b border-gray-600" style={{ color: '#1e293b' }}>Beispiel</th>
-              <th className="px-4 py-2 text-left border-b border-gray-600" style={{ color: '#1e293b' }}>ISO 13485?</th>
+              <th className="px-4 py-2 text-left border-b border-gray-600" style={{ color: '#1e293b' }}>Jahr</th>
+              <th className="px-4 py-2 text-left border-b border-gray-600" style={{ color: '#1e293b' }}>Ereignis</th>
             </tr>
           </thead>
           <tbody style={{ color: '#000000' }}>
             <tr className="bg-qcore-navy bg-opacity-10">
-              <td className="px-4 py-2 border-b border-gray-600">Hersteller</td>
-              <td className="px-4 py-2 border-b border-gray-600">Entwickelt und produziert MRT-System</td>
-              <td className="px-4 py-2 border-b border-gray-600">✅ Ja, zwingend</td>
+              <td className="px-4 py-2 border-b border-gray-600">1937</td>
+              <td className="px-4 py-2 border-b border-gray-600">Sulfanilamid-Katastrophe (USA) - 107 Tote durch giftiges Lösungsmittel</td>
             </tr>
             <tr>
-              <td className="px-4 py-2 border-b border-gray-600">Zulieferer</td>
-              <td className="px-4 py-2 border-b border-gray-600">Liefert Sensoren für MRT</td>
-              <td className="px-4 py-2 border-b border-gray-600">⚠️ Oft vom Kunden gefordert</td>
+              <td className="px-4 py-2 border-b border-gray-600">1961</td>
+              <td className="px-4 py-2 border-b border-gray-600">Contergan-Skandal (DE) - Tausende Missbildungen bei Neugeborenen</td>
             </tr>
             <tr className="bg-qcore-navy bg-opacity-10">
-              <td className="px-4 py-2 border-b border-gray-600">Lohnfertiger</td>
-              <td className="px-4 py-2 border-b border-gray-600">Produziert Gehäuse im Auftrag</td>
-              <td className="px-4 py-2 border-b border-gray-600">⚠️ Je nach Vertrag</td>
+              <td className="px-4 py-2 border-b border-gray-600">1962</td>
+              <td className="px-4 py-2 border-b border-gray-600">WHO veröffentlicht erste GMP-Guidelines</td>
             </tr>
             <tr>
-              <td className="px-4 py-2 border-b border-gray-600">Händler/Importeur</td>
-              <td className="px-4 py-2 border-b border-gray-600">Bringt Produkt in EU-Markt</td>
-              <td className="px-4 py-2 border-b border-gray-600">✅ Ja, seit MDR</td>
+              <td className="px-4 py-2 border-b border-gray-600">1978</td>
+              <td className="px-4 py-2 border-b border-gray-600">FDA publiziert cGMP Guide - erste gesetzlich verankerte GMP-Regeln</td>
             </tr>
             <tr className="bg-qcore-navy bg-opacity-10">
-              <td className="px-4 py-2 border-b border-gray-600">Dienstleister</td>
-              <td className="px-4 py-2 border-b border-gray-600">Sterilisation, Kalibrierung</td>
-              <td className="px-4 py-2 border-b border-gray-600">⚠️ Oft gefordert</td>
+              <td className="px-4 py-2 border-b border-gray-600">1978</td>
+              <td className="px-4 py-2 border-b border-gray-600">Deutsches Arzneimittelgesetz (AMG) als Folge von Contergan</td>
+            </tr>
+            <tr>
+              <td className="px-4 py-2 border-b border-gray-600">1989</td>
+              <td className="px-4 py-2 border-b border-gray-600">EU-GMP-Leitfaden erscheint</td>
             </tr>
           </tbody>
         </table>
       </div>
       
-      <TipBox>
-        Auch wenn Sie "nur" Zulieferer sind: Ihre Kunden werden zunehmend ISO 13485 
-        fordern. Lieber proaktiv zertifizieren als Aufträge verlieren.
-      </TipBox>
+      <WarningBox>
+        GMP ist das direkte Ergebnis von Tragödien. Jede Abkürzung, jede "Vereinfachung" 
+        kann Menschenleben kosten.
+      </WarningBox>
 
       {/* Kapitel 3 */}
       <h2 id="kapitel-3" className="text-2xl font-semibold mt-12 mb-4" style={{ color: '#1e293b' }}>
-        3. ISO 13485 und MDR/IVDR - wie hängt das zusammen?
+        3. Für wen gilt GMP?
       </h2>
       
       <p style={{ color: '#000000' }}>
-        Ein häufiges Missverständnis: ISO 13485 und MDR sind nicht dasselbe - aber sie 
-        gehören zusammen.
+        GMP gilt für alle, die an der Herstellung von Arzneimitteln beteiligt sind:
       </p>
       
-      <div className="grid md:grid-cols-2 gap-4 my-6">
-        <div className="bg-qcore-navy bg-opacity-20 rounded-lg p-4 border border-gray-600">
-          <h4 className="font-semibold mb-2" style={{ color: '#1e293b' }}>MDR / IVDR (EU-Verordnung)</h4>
-          <p className="text-sm mb-2" style={{ color: '#000000' }}><strong>"WAS muss ich tun?"</strong></p>
-          <ul className="text-sm space-y-1" style={{ color: '#000000' }}>
-            <li>• Rechtlich bindend</li>
-            <li>• Definiert Pflichten</li>
-            <li>• Gilt in der EU</li>
-          </ul>
-        </div>
-        <div className="bg-qcore-navy bg-opacity-20 rounded-lg p-4 border border-gray-600">
-          <h4 className="font-semibold mb-2" style={{ color: '#1e293b' }}>ISO 13485 (Norm)</h4>
-          <p className="text-sm mb-2" style={{ color: '#000000' }}><strong>"WIE mache ich es?"</strong></p>
-          <ul className="text-sm space-y-1" style={{ color: '#000000' }}>
-            <li>• Anerkannter Standard</li>
-            <li>• Beschreibt Methoden</li>
-            <li>• Gilt weltweit</li>
-          </ul>
-        </div>
+      <div className="overflow-x-auto my-6">
+        <table className="min-w-full border border-gray-600">
+          <thead className="bg-qcore-navy bg-opacity-30">
+            <tr>
+              <th className="px-4 py-2 text-left border-b border-gray-600" style={{ color: '#1e293b' }}>Bereich</th>
+              <th className="px-4 py-2 text-left border-b border-gray-600" style={{ color: '#1e293b' }}>Beispiele</th>
+              <th className="px-4 py-2 text-left border-b border-gray-600" style={{ color: '#1e293b' }}>Regelwerk</th>
+            </tr>
+          </thead>
+          <tbody style={{ color: '#000000' }}>
+            <tr className="bg-qcore-navy bg-opacity-10">
+              <td className="px-4 py-2 border-b border-gray-600">Pharma (Human)</td>
+              <td className="px-4 py-2 border-b border-gray-600">Tabletten, Injektionen, Salben</td>
+              <td className="px-4 py-2 border-b border-gray-600">EU-GMP Teil I</td>
+            </tr>
+            <tr>
+              <td className="px-4 py-2 border-b border-gray-600">Pharma (Tierarzneimittel)</td>
+              <td className="px-4 py-2 border-b border-gray-600">Veterinärpräparate</td>
+              <td className="px-4 py-2 border-b border-gray-600">EU-GMP Teil I</td>
+            </tr>
+            <tr className="bg-qcore-navy bg-opacity-10">
+              <td className="px-4 py-2 border-b border-gray-600">Wirkstoffe (API)</td>
+              <td className="px-4 py-2 border-b border-gray-600">Pharmazeutische Wirkstoffe</td>
+              <td className="px-4 py-2 border-b border-gray-600">EU-GMP Teil II</td>
+            </tr>
+            <tr>
+              <td className="px-4 py-2 border-b border-gray-600">Prüfpräparate</td>
+              <td className="px-4 py-2 border-b border-gray-600">Klinische Studien</td>
+              <td className="px-4 py-2 border-b border-gray-600">Anhang 13</td>
+            </tr>
+            <tr className="bg-qcore-navy bg-opacity-10">
+              <td className="px-4 py-2 border-b border-gray-600">Sterilprodukte</td>
+              <td className="px-4 py-2 border-b border-gray-600">Infusionen, Augentropfen</td>
+              <td className="px-4 py-2 border-b border-gray-600">Anhang 1</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
       
-      <p className="text-center my-4" style={{ color: '#475569' }}>
-        ↓ Zusammen führen sie zur ↓
+      <p style={{ color: '#000000' }}>
+        Auch <strong>Lohnhersteller</strong>, <strong>Verpackungsbetriebe</strong> und 
+        <strong> Labore</strong> müssen GMP einhalten, wenn sie für Pharmaunternehmen arbeiten.
       </p>
-      
-      <div className="bg-green-900 bg-opacity-20 rounded-lg p-4 text-center border border-green-700">
-        <strong style={{ color: '#1e293b' }}>CE-Kennzeichnung = Marktzugang EU</strong>
-      </div>
-      
-      <WarningBox>
-        ISO 13485-Zertifizierung allein reicht NICHT für die CE-Kennzeichnung. Sie 
-        brauchen zusätzlich die Technische Dokumentation, Konformitätsbewertung und 
-        ggf. Beteiligung einer Benannten Stelle.
-      </WarningBox>
 
       {/* Kapitel 4 */}
       <h2 id="kapitel-4" className="text-2xl font-semibold mt-12 mb-4" style={{ color: '#1e293b' }}>
