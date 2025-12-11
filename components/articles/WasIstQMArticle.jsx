@@ -1,29 +1,29 @@
 import Link from 'next/link';
 
 const TipBox = ({ children }) => (
-  <div className="bg-green-900 bg-opacity-30 border-l-4 border-green-500 p-4 my-4 rounded-r">
-    <p className="text-green-300 font-semibold mb-1">💡 Tipp</p>
+  <div className="bg-qcore-navy bg-opacity-40 border-l-4 border-qcore-cyan p-4 my-4 rounded-r">
+    <p className="text-gray-300 font-semibold mb-1">💡 Praxis-Tipp</p>
     <div className="text-gray-200">{children}</div>
   </div>
 );
 
 const InfoBox = ({ children }) => (
-  <div className="bg-blue-900 bg-opacity-30 border-l-4 border-blue-500 p-4 my-4 rounded-r">
-    <p className="text-blue-300 font-semibold mb-1">ℹ️ Info</p>
+  <div className="bg-qcore-navy bg-opacity-40 border-l-4 border-blue-400 p-4 my-4 rounded-r">
+    <p className="text-gray-300 font-semibold mb-1">ℹ️ Info</p>
     <div className="text-gray-200">{children}</div>
   </div>
 );
 
 const WarningBox = ({ children }) => (
-  <div className="bg-yellow-900 bg-opacity-30 border-l-4 border-yellow-500 p-4 my-4 rounded-r">
-    <p className="text-yellow-300 font-semibold mb-1">⚠️ Wichtig</p>
+  <div className="bg-qcore-navy bg-opacity-40 border-l-4 border-yellow-500 p-4 my-4 rounded-r">
+    <p className="text-yellow-400 font-semibold mb-1">⚠️ Wichtig</p>
     <div className="text-gray-200">{children}</div>
   </div>
 );
 
 const ExampleBox = ({ children }) => (
-  <div className="bg-purple-900 bg-opacity-30 border-l-4 border-purple-500 p-4 my-4 rounded-r">
-    <p className="text-purple-300 font-semibold mb-1">📌 Beispiel</p>
+  <div className="bg-qcore-navy bg-opacity-40 border-l-4 border-purple-400 p-4 my-4 rounded-r">
+    <p className="text-gray-300 font-semibold mb-1">📌 Beispiel</p>
     <div className="text-gray-200">{children}</div>
   </div>
 );
@@ -178,26 +178,28 @@ const WasIstQMArticle = () => {
           4. Warum braucht man QM?
         </h2>
         
-        <div className="grid md:grid-cols-2 gap-4 my-4">
-          <div className="bg-red-900 bg-opacity-20 border-l-4 border-red-500 p-4 rounded-r">
-            <p className="font-bold text-red-400 mb-2">❌ Ohne QM:</p>
-            <ul className="list-disc list-inside text-gray-200 space-y-1">
-              <li>Jeder arbeitet nach eigenem Verständnis</li>
-              <li>Fehler wiederholen sich</li>
-              <li>Wissen geht verloren, wenn Mitarbeiter gehen</li>
-              <li>Kunden bekommen unterschiedliche Qualität</li>
-              <li>Probleme werden erst beim Kunden entdeckt</li>
+        <div className="grid md:grid-cols-2 gap-4 my-6">
+          {/* Ohne QM */}
+          <div className="bg-qcore-navy bg-opacity-40 p-4 rounded border border-red-500/30">
+            <p className="text-red-400 font-semibold mb-2">✗ Ohne QM:</p>
+            <ul className="text-gray-300 space-y-1 text-sm">
+              <li>• Jeder arbeitet nach eigenem Verständnis</li>
+              <li>• Fehler wiederholen sich</li>
+              <li>• Wissen geht verloren, wenn Mitarbeiter gehen</li>
+              <li>• Kunden bekommen unterschiedliche Qualität</li>
+              <li>• Probleme werden erst beim Kunden entdeckt</li>
             </ul>
           </div>
           
-          <div className="bg-green-900 bg-opacity-20 border-l-4 border-green-500 p-4 rounded-r">
-            <p className="font-bold text-green-400 mb-2">✅ Mit QM:</p>
-            <ul className="list-disc list-inside text-gray-200 space-y-1">
-              <li>Einheitliche Standards für alle</li>
-              <li>Aus Fehlern wird gelernt (CAPA)</li>
-              <li>Prozesse sind dokumentiert und übertragbar</li>
-              <li>Konsistente Qualität</li>
-              <li>Probleme werden früh erkannt</li>
+          {/* Mit QM */}
+          <div className="bg-qcore-navy bg-opacity-40 p-4 rounded border border-green-500/30">
+            <p className="text-green-400 font-semibold mb-2">✓ Mit QM:</p>
+            <ul className="text-gray-300 space-y-1 text-sm">
+              <li>• Einheitliche Standards für alle</li>
+              <li>• Aus Fehlern wird gelernt (CAPA)</li>
+              <li>• Prozesse sind dokumentiert und übertragbar</li>
+              <li>• Konsistente Qualität</li>
+              <li>• Probleme werden früh erkannt</li>
             </ul>
           </div>
         </div>
