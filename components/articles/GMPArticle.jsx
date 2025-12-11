@@ -32,7 +32,7 @@ const InfoBox = ({ title, children }) => (
   </div>
 );
 
-export default function ISO13485Article() {
+export default function GMPArticle() {
   return (
     <article className="prose max-w-none">
       
