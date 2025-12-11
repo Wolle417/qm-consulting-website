@@ -5,7 +5,7 @@ export const categories = [
     title: 'Grundlagen',
     articles: [
       { id: 'was-ist-qm', title: 'Was ist Qualitätsmanagement?', time: '5 Min', level: 1 },
-      { id: 'iso-9001', title: 'ISO 9001 erklärt', time: '8 Min', level: 1 },
+      { id: 'iso-9001', title: 'ISO 9001 erklärt', time: '10 Min', level: 1 },
       { id: 'pdca', title: 'Der PDCA-Zyklus', time: '5 Min', level: 1 },
       { id: 'begriffe', title: 'Begriffe & Definitionen', time: '6 Min', level: 1 },
     ]
