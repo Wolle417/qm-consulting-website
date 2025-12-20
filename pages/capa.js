@@ -3,14 +3,14 @@ import Link from 'next/link';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import QMWissenSidebar from '../components/QMWissenSidebar';
-import RootCauseArticle from '../components/articles/RootCauseArticle';
+import CAPAArticle from '../components/articles/CAPAArticle';
 
-export default function RootCauseAnalysisArtikel() {
+export default function CAPAArtikel() {
   return (
     <>
       <Head>
-        <title>Root Cause Analysis: 5-Why und Ishikawa erklärt | QCore Consulting</title>
-        <meta name="description" content="Root Cause Analysis einfach erklärt: 5-Why-Methode, Ishikawa-Diagramm und systematische Ursachenanalyse. Praktische Anleitung mit Beispielen aus der Industrie." />
+        <title>CAPA richtig umsetzen: Korrektur- und Vorbeugemaßnahmen | QCore Consulting</title>
+        <meta name="description" content="CAPA-Prozess Schritt für Schritt erklärt: Von der Fehlererfassung bis zur Wirksamkeitsprüfung. Praktische Anleitung für ISO 9001, ISO 13485 und FDA-Compliance." />
       </Head>
 
       <Navigation />
@@ -18,7 +18,7 @@ export default function RootCauseAnalysisArtikel() {
       <main className="min-h-screen pt-20">
         <div className="flex">
           {/* Sidebar */}
-          <QMWissenSidebar currentArticle="root-cause" />
+          <QMWissenSidebar currentArticle="capa" />
 
           {/* Content */}
           <div className="flex-1 px-8 py-6 max-w-4xl">
@@ -28,18 +28,18 @@ export default function RootCauseAnalysisArtikel() {
               <span className="mx-2">›</span>
               <Link href="/qm-wissen#methoden" className="hover:text-qcore-blue">Methoden</Link>
               <span className="mx-2">›</span>
-              <span className="text-gray-700">Root Cause Analysis</span>
+              <span className="text-gray-700">CAPA richtig umsetzen</span>
             </nav>
 
             {/* Header */}
             <div className="flex justify-between items-start mb-8">
               <h1 className="text-4xl md:text-5xl font-serif text-dark-navy">
-                Root Cause Analysis: Ursachen systematisch finden
+                CAPA richtig umsetzen
               </h1>
               <div className="text-right text-sm text-gray-500">
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-qcore-blue"></span>
-                  <span>10 Min Lesezeit</span>
+                  <span>11 Min Lesezeit</span>
                 </div>
                 <div className="flex items-center gap-2 mt-1">
                   <span className="w-2 h-2 rounded-full bg-qcore-blue"></span>
@@ -51,22 +51,22 @@ export default function RootCauseAnalysisArtikel() {
             </div>
 
             {/* Article Content */}
-            <RootCauseArticle />
+            <CAPAArticle />
 
             {/* Navigation between articles */}
             <div className="flex justify-between mt-12 pt-6 border-t border-gray-300">
               <Link
-                href="/fmea"
+                href="/root-cause-analysis"
                 className="flex items-center text-qcore-blue hover:underline"
               >
                 <span className="mr-2">←</span>
-                Vorheriger: FMEA Grundlagen
+                Vorheriger: Root Cause Analysis
               </Link>
               <Link
-                href="/capa"
+                href="/qm-wissen"
                 className="flex items-center text-qcore-blue hover:underline"
               >
-                Nächster: CAPA umsetzen
+                Nächster: Audit-Vorbereitung
                 <span className="ml-2">→</span>
               </Link>
             </div>
