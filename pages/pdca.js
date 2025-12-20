@@ -1,8 +1,8 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import Navbar from '../../components/Navbar';
-import Footer from '../../components/Footer';
-import QMWissenSidebar from '../../components/QMWissenSidebar';
+import Navigation from '../components/Navigation';
+import Footer from '../components/Footer';
+import QMWissenSidebar from '../components/QMWissenSidebar';
 
 export default function PDCAArtikel() {
   return (
@@ -12,7 +12,7 @@ export default function PDCAArtikel() {
         <meta name="description" content="PDCA-Zyklus einfach erklärt: Plan-Do-Check-Act als Grundlage kontinuierlicher Verbesserung. Praktische Anwendung und Beispiele." />
       </Head>
 
-      <Navbar />
+      <Navigation />
 
       <main className="min-h-screen pt-20">
         <div className="flex">

@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
 const QMWissenSidebar = ({ 
-  categories, 
-  selectedArticle, 
-  onSelectArticle,
-  expandedCategories,
-  onToggleCategory 
+  categories = [], 
+  selectedArticle = null, 
+  onSelectArticle = () => {},
+  expandedCategories = [],
+  onToggleCategory = () => {} 
 }) => {
   return (
     <aside className="w-64 bg-qcore-navy bg-opacity-30 backdrop-blur-sm rounded-lg h-fit sticky top-24 overflow-y-auto hidden md:block">
