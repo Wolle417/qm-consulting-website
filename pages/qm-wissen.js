@@ -7,7 +7,7 @@ import { categories } from '../data/qm-articles';
 
 export default function QMWissen() {
   const [selectedArticle, setSelectedArticle] = useState(null);
-  const [expandedCategories, setExpandedCategories] = useState(['grundlagen']);
+  const [expandedCategories, setExpandedCategories] = useState(['grundlagen', 'methoden', 'branchen', 'validation']);
 
   return (
     <div className="min-h-screen relative">
