@@ -10,8 +10,8 @@
     overflow-x: hidden;
   }
   
-  /* Separates Element für animiertes Hintergrundbild */
-  body::after {
+  /* Separates Element für animiertes Hintergrundbild - DEAKTIVIERT: Ersetzt durch NetworkBackground */
+  /* body::after {
     content: '';
     position: fixed;
     top: -20px;
@@ -23,9 +23,9 @@
     background-position: center right;
     z-index: -2;
     animation: breathe 25s ease-in-out infinite;
-  }
+  } */
   
-  /* Gradient Overlay - KEIN Animation */
+  /* Gradient Overlay - Über dem NetworkBackground für bessere Lesbarkeit */
   body::before {
     content: '';
     position: fixed;
