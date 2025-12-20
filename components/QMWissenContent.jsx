@@ -6,6 +6,7 @@ import ISO9001Article from './articles/ISO9001Article';
 import PDCAArticle from './articles/PDCAArticle';
 import BegriffeArticle from './articles/BegriffeArticle';
 import FMEAArticle from './articles/FMEAArticle';
+import RootCauseArticle from './articles/RootCauseArticle';
 
 const QMWissenContent = ({ selectedArticle, categories, onSelectArticle }) => {
   // If no article is selected, show welcome view
@@ -120,7 +121,8 @@ const QMWissenContent = ({ selectedArticle, categories, onSelectArticle }) => {
         {selectedArticle === 'iso-13485' && <ISO13485Article />}
         {selectedArticle === 'gmp' && <GMPArticle />}
         {selectedArticle === 'fmea' && <FMEAArticle />}
-        {selectedArticle !== 'was-ist-qm' && selectedArticle !== 'iso-9001' && selectedArticle !== 'pdca' && selectedArticle !== 'begriffe' && selectedArticle !== 'iso-13485' && selectedArticle !== 'gmp' && selectedArticle !== 'fmea' && (
+        {selectedArticle === 'root-cause' && <RootCauseArticle />}
+        {selectedArticle !== 'was-ist-qm' && selectedArticle !== 'iso-9001' && selectedArticle !== 'pdca' && selectedArticle !== 'begriffe' && selectedArticle !== 'iso-13485' && selectedArticle !== 'gmp' && selectedArticle !== 'fmea' && selectedArticle !== 'root-cause' && (
           /* Placeholder for article without content */
           <div className="bg-amber-100 bg-opacity-80 border border-amber-300 rounded-lg p-6 text-center">
             <p className="text-amber-800 font-medium flex items-center justify-center">
