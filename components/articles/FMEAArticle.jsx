@@ -465,12 +465,12 @@ const FMEAArticle = () => {
       </h2>
 
       {/* Info Box */}
-      <div className="bg-blue-50 border-l-4 border-blue-400 rounded-lg p-4 my-6">
-        <div className="flex items-center gap-2 text-blue-700 font-medium mb-2">
+      <div className="bg-qcore-navy bg-opacity-20 border-l-4 border-blue-400 rounded-lg p-4 my-6">
+        <div className="flex items-center gap-2 font-medium mb-2" style={{ color: '#1e293b' }}>
           <span>ℹ️</span>
           <span>Info</span>
         </div>
-        <p className="text-gray-700 m-0">
+        <p className="m-0" style={{ color: '#000000' }}>
           In der Medizintechnik ist FMEA Teil des Risikomanagements nach <strong>ISO 14971</strong>.
           Sie ist oft verpflichtend für die Zulassung (CE-Kennzeichnung, FDA).
         </p>
@@ -493,6 +493,7 @@ const FMEAArticle = () => {
           <thead>
             <tr className="bg-slate-700/80">
               <th className="text-left p-3 text-gray-200 font-medium">Norm</th>
+              <th className="text-left p-3 text-gray-200 font-medium">Branche</th>
               <th className="text-left p-3 text-gray-200 font-medium">FMEA-Anforderung</th>
               <th className="text-left p-3 text-gray-200 font-medium">Besonderheit</th>
             </tr>
@@ -500,21 +501,25 @@ const FMEAArticle = () => {
           <tbody>
             <tr className="bg-slate-600/30 border-b border-slate-600/50">
               <td className="p-3 text-gray-800">ISO 9001</td>
+              <td className="p-3 text-gray-700">QM generell</td>
               <td className="p-3 text-gray-700">Risikobasiertes Denken (Kap. 6.1)</td>
               <td className="p-3 text-gray-700">FMEA empfohlen, nicht explizit gefordert</td>
             </tr>
             <tr className="bg-slate-600/20 border-b border-slate-600/50">
               <td className="p-3 text-gray-800">ISO 13485</td>
+              <td className="p-3 text-gray-700">Medizintechnik</td>
               <td className="p-3 text-gray-700">Risikomanagement (Kap. 7.1)</td>
               <td className="p-3 text-gray-700">FMEA als typische Methode</td>
             </tr>
             <tr className="bg-slate-600/30 border-b border-slate-600/50">
               <td className="p-3 text-gray-800">ISO 14971</td>
+              <td className="p-3 text-gray-700">Medizintechnik</td>
               <td className="p-3 text-gray-700">Risikobewertung (Kap. 5)</td>
               <td className="p-3 text-gray-700">FMEA explizit als Beispielmethode genannt</td>
             </tr>
             <tr className="bg-slate-600/20">
               <td className="p-3 text-gray-800">IATF 16949</td>
+              <td className="p-3 text-gray-700">Automotive</td>
               <td className="p-3 text-gray-700">PFMEA/DFMEA (Kap. 8.3.5)</td>
               <td className="p-3 text-gray-700">Verpflichtend, detaillierte Vorgaben</td>
             </tr>
@@ -652,18 +657,13 @@ const FMEAArticle = () => {
       </div>
 
       {/* CTA-Bereich */}
-      <div className="bg-slate-700/80 rounded-lg p-8 mt-10 text-center">
-        <h3 className="text-xl font-semibold mb-4 text-qcore-cyan">
+      <div className="bg-qcore-navy bg-opacity-30 rounded-lg p-8 mt-12 text-center border border-gray-600">
+        <h3 className="text-xl font-semibold mb-4" style={{ color: '#1e293b' }}>
           Sie brauchen Unterstützung bei Ihrer FMEA?
         </h3>
-        <p className="text-gray-200 mb-6">
-          Ich helfe Ihnen bei:
+        <p className="mb-6" style={{ color: '#000000' }}>
+          Mit langjähriger Erfahrung in der Medizintechnik helfe ich Ihnen bei FMEA-Workshops, Reviews bestehender FMEAs und der Integration in Ihr Risikomanagement - pragmatisch und audit-sicher.
         </p>
-        <ul className="text-gray-200 list-disc pl-6 space-y-1 mb-6 text-left max-w-md mx-auto">
-          <li>FMEA-Workshops moderieren</li>
-          <li>Bestehende FMEAs reviewen</li>
-          <li>FMEA in Ihr Risikomanagement integrieren</li>
-        </ul>
         <Link
           href="/kontakt"
           className="inline-block bg-qcore-blue text-white px-6 py-3 rounded hover:opacity-90 transition-opacity"
