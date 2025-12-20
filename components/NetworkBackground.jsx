@@ -43,8 +43,8 @@ export default function NetworkBackground() {
     window.addEventListener('pointerup', handlePointerUp);
     window.addEventListener('pointerleave', handlePointerLeave);
 
-    // Fake DOF
-    const DOF = { focusZ: 3.05, blurStrength: 9, maxBlur: 10 };
+    // Fake DOF - Stärkerer Blur für mehr Tiefe
+    const DOF = { focusZ: 3.05, blurStrength: 14, maxBlur: 16 };
 
     // Overall motion speed
     const SPEED = prefersReduced ? 0.28 : 0.38;
@@ -59,7 +59,7 @@ export default function NetworkBackground() {
 
     function buildGraph() {
       const base = (window.innerWidth * window.innerHeight) / 240000;
-      const N = clamp(Math.floor(34 + base * 14 * (prefersReduced ? 0.7 : 1.0)), 28, 62);
+      const N = clamp(Math.floor(55 + base * 20 * (prefersReduced ? 0.7 : 1.0)), 45, 90);
 
       const cxS = window.innerWidth * 0.56;
       const cyS = window.innerHeight * 0.62;
@@ -261,7 +261,7 @@ export default function NetworkBackground() {
       const proj = new Array(nodes.length);
       for (let i = 0; i < nodes.length; i++) proj[i] = worldToScreen(nodes[i]);
 
-      ctx.lineWidth = 1.35;
+      ctx.lineWidth = 2.0;
       for (let e = 0; e < edges.length; e++) {
         const ed = edges[e];
         const a = proj[ed.i];
@@ -289,20 +289,20 @@ export default function NetworkBackground() {
         const depth = clamp(1.0 / p.z, 0.22, 0.88);
         const blur = clamp(Math.abs(p.z - DOF.focusZ) * DOF.blurStrength * 0.55, 0, DOF.maxBlur);
 
-        const r = clamp(3.0 * depth, 1.7, 4.8);
+        const r = clamp(5.0 * depth, 3.0, 8.0);
         const a = clamp(0.58 + depth * 0.80, 0.48, 0.98);
 
         ctx.shadowBlur = blur;
         ctx.shadowColor = 'rgba(0,0,0,0.24)';
-        ctx.fillStyle = `rgba(18,26,28,${a})`;
+        ctx.fillStyle = `rgba(45,75,85,${a})`;
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
         ctx.fill();
 
-        const hr = r * 0.34;
+        const hr = r * 0.45;
         ctx.shadowBlur = 0;
-        ctx.fillStyle = `rgba(255,255,255,${0.18 * depth})`;
+        ctx.fillStyle = `rgba(255,255,255,${0.35 * depth})`;
         ctx.beginPath();
         ctx.arc(p.x - r * 0.26, p.y - r * 0.26, hr, 0, Math.PI * 2);
         ctx.fill();
@@ -358,7 +358,7 @@ export default function NetworkBackground() {
             radial-gradient(1200px 900px at 18% 12%, rgba(255,255,255,.55), transparent 62%),
             radial-gradient(900px 700px at 78% 65%, rgba(255,255,255,.25), transparent 58%),
             radial-gradient(1400px 1100px at 82% 20%, rgba(130,170,185,.28), transparent 60%),
-            linear-gradient(180deg, #b7c6cc, #8fa7af);
+            linear-gradient(180deg, #c5d3d8, #7a9299);
         }
         .network-canvas {
           position: fixed;
