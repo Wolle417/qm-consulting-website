@@ -114,11 +114,11 @@ export const Bold = ({ children }) => (
 // ============================================
 
 export const CTABox = ({ title, children, buttonText = "Kostenlose Erstberatung vereinbaren", buttonLink = "/kontakt" }) => (
-  <div className="bg-qcore-navy bg-opacity-40 border border-gray-600 rounded-lg p-6 my-8">
-    <h3 className="text-lg font-semibold text-gray-900 mb-3">{title}</h3>
-    <div className="text-gray-900 text-sm mb-4">{children}</div>
+  <div className="bg-qcore-navy bg-opacity-30 rounded-lg p-8 mt-12 text-center border border-gray-600">
+    <h3 className="text-xl font-semibold mb-4" style={{ color: '#1e293b' }}>{title}</h3>
+    <div className="mb-6" style={{ color: '#000000' }}>{children}</div>
     <Link href={buttonLink}>
-      <span className="inline-block bg-qcore-cyan text-qcore-navy px-4 py-2 rounded font-medium hover:bg-opacity-80 transition-colors cursor-pointer">
+      <span className="inline-block bg-qcore-blue text-white px-6 py-3 rounded hover:opacity-90 transition-opacity cursor-pointer">
         {buttonText}
       </span>
     </Link>

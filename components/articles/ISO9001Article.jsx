@@ -201,12 +201,7 @@ export default function ISO9001Article() {
 
       {/* CTA */}
       <CTABox title="ISO 9001 einführen oder verbessern?">
-        <p>Als erfahrener QM-Berater unterstütze ich Sie bei:</p>
-        <ul className="mt-2 space-y-1">
-          <li>• Aufbau eines pragmatischen QMS</li>
-          <li>• Vorbereitung auf die Zertifizierung</li>
-          <li>• Optimierung bestehender Systeme</li>
-        </ul>
+        Ich unterstütze Sie beim Aufbau eines pragmatischen Qualitätsmanagementsystems - von der Ersteinführung über die Zertifizierungsvorbereitung bis zur Optimierung bestehender Systeme.
       </CTABox>
     </article>
   );

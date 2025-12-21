@@ -193,12 +193,7 @@ export default function PDCAArticle() {
 
       {/* CTA */}
       <CTABox title="PDCA in Ihrem Unternehmen etablieren?">
-        <p>Als erfahrener QM-Berater unterstütze ich Sie bei:</p>
-        <ul className="mt-2 space-y-1">
-          <li>• Implementierung systematischer Verbesserungsprozesse</li>
-          <li>• Schulung Ihrer Mitarbeiter in PDCA-Methodik</li>
-          <li>• Aufbau eines wirksamen KVP-Systems</li>
-        </ul>
+        Ich unterstütze Sie bei der Implementierung systematischer Verbesserungsprozesse - vom Aufbau eines wirksamen KVP-Systems bis zur Schulung Ihrer Mitarbeiter in PDCA-Methodik.
       </CTABox>
     </article>
   );

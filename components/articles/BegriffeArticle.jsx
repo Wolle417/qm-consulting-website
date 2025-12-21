@@ -464,12 +464,7 @@ export default function BegriffeArticle() {
 
       {/* CTA */}
       <CTABox title="Fragen zu QM-Begriffen oder Konzepten?">
-        <p>Als erfahrener QM-Berater unterstütze ich Sie bei:</p>
-        <ul className="mt-2 space-y-1">
-          <li>• Schulungen zu QM-Grundlagen und Terminologie</li>
-          <li>• Aufbau eines gemeinsamen QM-Verständnisses im Team</li>
-          <li>• Praxisnaher Umsetzung von QM-Konzepten</li>
-        </ul>
+        Ich unterstütze Sie bei Schulungen zu QM-Grundlagen und Terminologie - für ein gemeinsames QM-Verständnis im Team und praxisnahe Umsetzung von QM-Konzepten.
       </CTABox>
     </article>
   );
