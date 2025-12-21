@@ -15,19 +15,16 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navItems = [
-    { label: 'Start', href: '/' },
+  const leftNavItem = { label: 'Start', href: '/' };
+
+  const rightNavItems = [
     { label: 'Leistungen', href: '/leistungen' },
-    { label: 'Kunden', href: '/kunden' },
     { label: 'Über mich', href: '/ueber-mich' },
     { label: 'QM-Wissen', href: '/qm-wissen' },
-    { label: 'Kontakt', href: '/kontakt' },
+    { label: 'QMB Trainer', href: '/qmb-trainer' },
   ];
 
-  const trainerButton = {
-    label: 'QMB Trainer',
-    href: '/qmb-trainer',
-  };
+  const contactItem = { label: 'Kontakt', href: '/kontakt' };
 
   return (
     <motion.nav
@@ -38,9 +35,27 @@ export default function Navigation() {
       style={{ zIndex: 100 }}
     >
       <div className="max-w-7xl mx-auto px-6 py-6">
-        <div className="flex items-center justify-end">
+        <div className="flex items-center justify-between">
+          {/* Start - links */}
+          <div className="hidden md:flex">
+            <Link
+              href={leftNavItem.href}
+              style={{
+                fontFamily: "'Cormorant', serif",
+                fontSize: '1.4rem',
+                fontWeight: 400,
+                color: '#1e293b',
+                transition: 'color 0.3s ease',
+              }}
+              className="hover:text-slate-600"
+            >
+              {leftNavItem.label}
+            </Link>
+          </div>
+
+          {/* Rechte Navigation */}
           <div className="hidden md:flex items-center gap-10">
-            {navItems.map((item) => (
+            {rightNavItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
@@ -56,16 +71,21 @@ export default function Navigation() {
                 {item.label}
               </Link>
             ))}
+
+            {/* Kontakt mit extra Abstand */}
             <Link
-              href={trainerButton.href}
-              className="bg-qcore-cyan text-white px-5 py-2 rounded hover:opacity-90 transition-opacity"
+              href={contactItem.href}
               style={{
                 fontFamily: "'Cormorant', serif",
                 fontSize: '1.4rem',
-                fontWeight: 500,
+                fontWeight: 400,
+                color: '#1e293b',
+                transition: 'color 0.3s ease',
+                marginLeft: '2rem',
               }}
+              className="hover:text-slate-600"
             >
-              {trainerButton.label}
+              {contactItem.label}
             </Link>
           </div>
 
