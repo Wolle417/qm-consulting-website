@@ -958,23 +958,18 @@ const IQOQPQArticle = () => {
       </div>
 
       {/* CTA */}
-      <div className="bg-qcore-navy bg-opacity-30 border border-gray-600 rounded-lg p-6 my-8">
-        <h3 className="mt-0 mb-3" style={{ color: '#1e293b' }}>Qualifizierung steht an und Sie brauchen Unterstützung?</h3>
-        <p className="mb-4" style={{ color: '#000000' }}>
-          Ich helfe Ihnen bei:
+      <div className="bg-qcore-navy bg-opacity-30 rounded-lg p-8 mt-12 text-center border border-gray-600">
+        <h3 className="text-xl font-semibold mb-4" style={{ color: '#1e293b' }}>
+          Qualifizierung steht an und Sie brauchen Unterstützung?
+        </h3>
+        <p className="mb-6" style={{ color: '#000000' }}>
+          Ich unterstütze Sie bei der Planung und Durchführung von IQ/OQ/PQ - von der risikobasierten Qualifizierungsstrategie bis zur GMP-konformen Dokumentation.
         </p>
-        <ul className="mb-4" style={{ color: '#000000' }}>
-          <li>Qualifizierungsplanung (VMP, Protokolle)</li>
-          <li>IQ/OQ/PQ Durchführung und Dokumentation</li>
-          <li>Risikobasierte Qualifizierungsstrategie</li>
-          <li>Requalifizierung nach Änderungen</li>
-          <li>Auditvorbereitung für GMP/ISO-Inspektionen</li>
-        </ul>
         <a
           href="/kontakt"
-          className="inline-block bg-qcore-blue text-white px-6 py-2 rounded hover:bg-blue-600 transition-colors"
+          className="inline-block bg-qcore-blue text-white px-6 py-3 rounded hover:opacity-90 transition-opacity"
         >
-          Kostenloses Erstgespräch vereinbaren
+          Kostenlose Erstberatung vereinbaren
         </a>
       </div>
     </article>

@@ -691,16 +691,18 @@ const EUMDRArticle = () => {
       </div>
 
       {/* CTA */}
-      <div className="bg-qcore-navy bg-opacity-30 border border-gray-600 rounded-lg p-6 my-8">
-        <h3 className="mt-0 mb-3" style={{ color: '#1e293b' }}>MDR-Transition professionell begleiten lassen?</h3>
-        <p className="mb-4" style={{ color: '#000000' }}>
-          QCore Consulting unterstützt Sie bei der MDR-Umsetzung: Gap-Analysen, CER-Erstellung, PMS-Implementierung, technische Dokumentation und Audit-Vorbereitung.
+      <div className="bg-qcore-navy bg-opacity-30 rounded-lg p-8 mt-12 text-center border border-gray-600">
+        <h3 className="text-xl font-semibold mb-4" style={{ color: '#1e293b' }}>
+          MDR-Transition professionell begleiten lassen?
+        </h3>
+        <p className="mb-6" style={{ color: '#000000' }}>
+          Ich unterstütze Sie bei der MDR-Umsetzung - von Gap-Analysen über CER-Erstellung bis zur Audit-Vorbereitung. Professionelle Begleitung für eine erfolgreiche MDR-Transition.
         </p>
         <a
           href="/kontakt"
-          className="inline-block bg-qcore-blue text-white px-6 py-2 rounded hover:bg-blue-600 transition-colors"
+          className="inline-block bg-qcore-blue text-white px-6 py-3 rounded hover:opacity-90 transition-opacity"
         >
-          Jetzt Erstgespräch vereinbaren
+          Kostenlose Erstberatung vereinbaren
         </a>
       </div>
     </article>
