@@ -16,9 +16,9 @@ export const categories = [
     title: 'Methoden',
     articles: [
       { id: 'fmea', title: 'FMEA Grundlagen', time: '12 Min', level: 2 },
-      { id: 'root-cause', title: 'Root Cause Analysis', time: '7 Min', level: 2 },
-      { id: 'capa', title: 'CAPA umsetzen', time: '10 Min', level: 2 },
-      { id: 'audit-vorbereitung', title: 'Audit-Vorbereitung', time: '8 Min', level: 2 },
+      { id: 'root-cause', title: 'Root Cause Analysis', time: '9 Min', level: 2 },
+      { id: 'capa', title: 'CAPA umsetzen', time: '11 Min', level: 2 },
+      { id: 'audit-vorbereitung', title: 'Audit-Vorbereitung', time: '12 Min', level: 2 },
     ]
   },
   {
@@ -28,7 +28,7 @@ export const categories = [
     articles: [
       { id: 'iso-13485', title: 'ISO 13485 (Medical)', time: '15 Min', level: 2 },
       { id: 'gmp', title: 'GMP (Pharma)', time: '12 Min', level: 3 },
-      { id: 'mdr', title: 'EU-MDR Grundlagen', time: '10 Min', level: 2 },
+      { id: 'eu-mdr', title: 'EU-MDR Grundlagen', time: '14 Min', level: 2 },
     ]
   },
   {
@@ -36,7 +36,7 @@ export const categories = [
     icon: '✅',
     title: 'Validation',
     articles: [
-      { id: 'iq-oq-pq', title: 'IQ/OQ/PQ erklärt', time: '10 Min', level: 2 },
+      { id: 'iq-oq-pq', title: 'IQ/OQ/PQ erklärt', time: '11 Min', level: 2 },
       { id: 'process-validation', title: 'Process Validation', time: '12 Min', level: 3 },
       { id: 'csv', title: 'Computer System Validation', time: '14 Min', level: 3 },
     ]
