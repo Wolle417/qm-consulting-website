@@ -37,7 +37,7 @@ export const categories = [
     title: 'Validation',
     articles: [
       { id: 'iq-oq-pq', title: 'IQ/OQ/PQ erklärt', time: '11 Min', level: 2 },
-      { id: 'process-validation', title: 'Process Validation', time: '12 Min', level: 3 },
+      { id: 'process-validation', title: 'Process Validation', time: '13 Min', level: 2 },
       { id: 'csv', title: 'Computer System Validation', time: '14 Min', level: 3 },
     ]
   },
