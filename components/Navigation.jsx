@@ -24,6 +24,11 @@ export default function Navigation() {
     { label: 'Kontakt', href: '/kontakt' },
   ];
 
+  const trainerButton = {
+    label: 'QMB Trainer',
+    href: '/qmb-trainer',
+  };
+
   return (
     <motion.nav
       initial={{ opacity: 0 }}
@@ -51,6 +56,17 @@ export default function Navigation() {
                 {item.label}
               </Link>
             ))}
+            <Link
+              href={trainerButton.href}
+              className="bg-qcore-cyan text-white px-5 py-2 rounded hover:opacity-90 transition-opacity"
+              style={{
+                fontFamily: "'Cormorant', serif",
+                fontSize: '1.4rem',
+                fontWeight: 500,
+              }}
+            >
+              {trainerButton.label}
+            </Link>
           </div>
 
           {/* Mobile menu button */}

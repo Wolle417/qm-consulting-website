@@ -13,8 +13,19 @@ import EUMDRArticle from './articles/EUMDRArticle';
 import IQOQPQArticle from './articles/IQOQPQArticle';
 import ProcessValidationArticle from './articles/ProcessValidationArticle';
 import CSVArticle from './articles/CSVArticle';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 const QMWissenContent = ({ selectedArticle, categories, onSelectArticle }) => {
+  const router = useRouter();
+
+  // Special handling for QMB Trainer - redirect to standalone page
+  useEffect(() => {
+    if (selectedArticle === 'qmb-trainer') {
+      router.push('/qmb-trainer');
+    }
+  }, [selectedArticle, router]);
+
   // If no article is selected, show welcome view
   if (!selectedArticle) {
     return (
