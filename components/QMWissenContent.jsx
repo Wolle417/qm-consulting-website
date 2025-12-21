@@ -12,6 +12,7 @@ import AuditVorbereitungArticle from './articles/AuditVorbereitungArticle';
 import EUMDRArticle from './articles/EUMDRArticle';
 import IQOQPQArticle from './articles/IQOQPQArticle';
 import ProcessValidationArticle from './articles/ProcessValidationArticle';
+import CSVArticle from './articles/CSVArticle';
 
 const QMWissenContent = ({ selectedArticle, categories, onSelectArticle }) => {
   // If no article is selected, show welcome view
@@ -132,7 +133,8 @@ const QMWissenContent = ({ selectedArticle, categories, onSelectArticle }) => {
         {selectedArticle === 'eu-mdr' && <EUMDRArticle />}
         {selectedArticle === 'iq-oq-pq' && <IQOQPQArticle />}
         {selectedArticle === 'process-validation' && <ProcessValidationArticle />}
-        {selectedArticle !== 'was-ist-qm' && selectedArticle !== 'iso-9001' && selectedArticle !== 'pdca' && selectedArticle !== 'begriffe' && selectedArticle !== 'iso-13485' && selectedArticle !== 'gmp' && selectedArticle !== 'fmea' && selectedArticle !== 'root-cause' && selectedArticle !== 'capa' && selectedArticle !== 'audit-vorbereitung' && selectedArticle !== 'eu-mdr' && selectedArticle !== 'iq-oq-pq' && selectedArticle !== 'process-validation' && (
+        {selectedArticle === 'csv' && <CSVArticle />}
+        {selectedArticle !== 'was-ist-qm' && selectedArticle !== 'iso-9001' && selectedArticle !== 'pdca' && selectedArticle !== 'begriffe' && selectedArticle !== 'iso-13485' && selectedArticle !== 'gmp' && selectedArticle !== 'fmea' && selectedArticle !== 'root-cause' && selectedArticle !== 'capa' && selectedArticle !== 'audit-vorbereitung' && selectedArticle !== 'eu-mdr' && selectedArticle !== 'iq-oq-pq' && selectedArticle !== 'process-validation' && selectedArticle !== 'csv' && (
           /* Placeholder for article without content */
           <div className="bg-amber-100 bg-opacity-80 border border-amber-300 rounded-lg p-6 text-center">
             <p className="text-amber-800 font-medium flex items-center justify-center">
