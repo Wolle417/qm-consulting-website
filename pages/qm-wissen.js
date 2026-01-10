@@ -7,14 +7,14 @@ import { categories } from '../data/qm-articles';
 
 export default function QMWissen() {
   const [selectedArticle, setSelectedArticle] = useState(null);
-  const [expandedCategories, setExpandedCategories] = useState(['grundlagen', 'methoden', 'branchen', 'validation', 'pruefung']);
+  const [expandedCategories, setExpandedCategories] = useState(['grundlagen', 'methoden', 'branchen', 'validation']);
 
   return (
     <div className="min-h-screen relative">
       <Navigation />
       
       {/* Main Layout with proper spacing */}
-      <div className="flex min-h-screen pt-24 px-4 pb-8">
+      <div className="flex min-h-screen pt-16 px-4 pb-8">
         {/* Sidebar */}
         <div className="mr-4">
           <QMWissenSidebar 

@@ -7,7 +7,7 @@ export default function Footer() {
 
   return (
     <footer className="py-12 px-6 border-t border-border-dark relative z-10">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-[90%] mx-auto px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Spalte 1: Brand */}
           <div>
@@ -21,7 +21,7 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Spalte 2: Navigation (ohne Kontakt) */}
+          {/* Spalte 2: Navigation */}
           <div>
             <h4 className="font-semibold mb-3" style={{ color: '#000000' }}>Navigation</h4>
             <ul className="space-y-2 text-sm">
@@ -36,8 +36,8 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/kunden" className="hover:text-qcore-blue transition-colors" style={{ color: '#000000' }}>
-                  Kunden
+                <Link href="/referenz-projekt" className="hover:text-qcore-blue transition-colors" style={{ color: '#000000' }}>
+                  Praxisbeispiel
                 </Link>
               </li>
               <li>
@@ -45,18 +45,23 @@ export default function Footer() {
                   Über mich
                 </Link>
               </li>
+            </ul>
+          </div>
+
+          {/* Spalte 3: Wissen & Training */}
+          <div>
+            <h4 className="font-semibold mb-3" style={{ color: '#000000' }}>Wissen & Training</h4>
+            <ul className="space-y-2 text-sm">
               <li>
                 <Link href="/qm-wissen" className="hover:text-qcore-blue transition-colors" style={{ color: '#000000' }}>
                   QM-Wissen
                 </Link>
               </li>
-            </ul>
-          </div>
-
-          {/* Spalte 3: Rechtliches */}
-          <div>
-            <h4 className="font-semibold mb-3" style={{ color: '#000000' }}>Rechtliches</h4>
-            <ul className="space-y-2 text-sm">
+              <li>
+                <Link href="/qmb-trainer" className="hover:text-qcore-blue transition-colors" style={{ color: '#000000' }}>
+                  QMB Trainer
+                </Link>
+              </li>
               <li>
                 <Link href="/impressum" className="hover:text-qcore-blue transition-colors" style={{ color: '#000000' }}>
                   Impressum
@@ -65,11 +70,6 @@ export default function Footer() {
               <li>
                 <Link href="/datenschutz" className="hover:text-qcore-blue transition-colors" style={{ color: '#000000' }}>
                   Datenschutz
-                </Link>
-              </li>
-              <li>
-                <Link href="/agb" className="hover:text-qcore-blue transition-colors" style={{ color: '#000000' }}>
-                  AGB
                 </Link>
               </li>
             </ul>

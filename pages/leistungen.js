@@ -7,8 +7,8 @@ export default function Leistungen() {
       <Navigation />
       <main className="relative min-h-screen">
         {/* Hero Section */}
-        <section className="relative section-padding pt-32">
-          <div className="relative z-10 max-w-5xl mx-auto px-6">
+        <section className="relative section-padding pt-24">
+          <div className="relative z-10 max-w-[80%] mx-auto px-8">
             <div className="text-center mb-12">
               <h1 
                 className="text-4xl font-bold"

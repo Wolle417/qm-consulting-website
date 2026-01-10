@@ -31,10 +31,40 @@ const QMWissenContent = ({ selectedArticle, categories, onSelectArticle }) => {
     return (
       <div className="p-8">
         <h1 className="text-3xl font-bold mb-4" style={{ color: '#1e293b' }}>QM-Wissen</h1>
-        <p className="text-lg mb-8" style={{ color: '#000000' }}>
+        <p className="text-lg mb-6" style={{ color: '#000000' }}>
           Praktisches Know-how für Qualitätsmanagement. 
           Wählen Sie links eine Kategorie oder einen Artikel.
         </p>
+
+        {/* QMB Trainer Banner */}
+        <div 
+          onClick={() => router.push('/qmb-trainer')}
+          className="mb-8 p-6 rounded-lg cursor-pointer transition-all hover:scale-[1.01]"
+          style={{ 
+            background: 'linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%)',
+            boxShadow: '0 4px 20px rgba(30, 58, 138, 0.3)'
+          }}
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="inline-block px-3 py-1 rounded-full text-xs font-bold mb-3"
+                style={{ backgroundColor: 'rgba(255,255,255,0.2)', color: '#ffffff' }}>
+                🎯 INTERAKTIV
+              </span>
+              <h2 className="text-2xl font-bold text-white mb-2">
+                QMB Trainer – 100 Prüfungsfragen
+              </h2>
+              <p className="text-blue-100">
+                Bereiten Sie sich optimal auf die DEKRA QMB-Prüfung vor. 
+                Mit sofortigem Feedback und Erklärungen.
+              </p>
+            </div>
+            <div className="text-6xl ml-4">📝</div>
+          </div>
+          <div className="mt-4 flex items-center text-white text-sm font-medium">
+            Jetzt trainieren <span className="ml-2">→</span>
+          </div>
+        </div>
         
         {/* Featured Articles Section */}
         <section className="mb-12">

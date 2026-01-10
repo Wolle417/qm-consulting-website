@@ -41,12 +41,4 @@ export const categories = [
       { id: 'csv', title: 'Computer System Validation', time: '14 Min', level: 3 },
     ]
   },
-  {
-    id: 'pruefung',
-    icon: '🎯',
-    title: 'Prüfungsvorbereitung',
-    articles: [
-      { id: 'qmb-trainer', title: 'DEKRA QMB Trainer', time: '100 Fragen', level: 3 },
-    ]
-  },
 ];

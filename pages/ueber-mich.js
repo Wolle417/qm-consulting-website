@@ -7,18 +7,20 @@ export default function UeberMich() {
       <Navigation />
       <main className="relative min-h-screen">
         {/* Hero Section with Photo and Name */}
-        <section className="relative section-padding pt-32">
-          <div className="relative z-10 max-w-4xl mx-auto px-6">
-            <div className="flex flex-col md:flex-row items-center md:items-start gap-8 mb-8">
-              {/* Photo Placeholder */}
-              <div className="w-48 h-48 rounded-lg bg-slate-400 border-2 border-gray-600 flex items-center justify-center flex-shrink-0">
-                <span className="text-gray-700 font-semibold">Foto</span>
-              </div>
+        <section className="relative section-padding pt-24">
+          <div className="relative z-10 max-w-[80%] mx-auto px-8">
+            <div className="flex flex-col md:flex-row items-center md:items-center gap-12 mb-8">
+              {/* Photo */}
+              <img 
+                src="/images/freepik__professional-cv-portrait-very-short-3mm-hair-neutr__83197.png"
+                alt="Stefan Schönwälder"
+                className="w-72 h-72 rounded-lg object-cover flex-shrink-0"
+              />
               
-              {/* Name and Tagline */}
+              {/* Name, Tagline and Profile Text */}
               <div className="text-center md:text-left">
                 <h1 
-                  className="text-4xl font-bold mb-4"
+                  className="text-5xl font-bold mb-4"
                   style={{
                     fontFamily: "'Cormorant', serif",
                     color: '#1e293b',
@@ -26,24 +28,20 @@ export default function UeberMich() {
                 >
                   Stefan Schönwälder
                 </h1>
-                <p className="text-xl" style={{ color: '#475569' }}>
+                <p className="text-2xl mb-6" style={{ color: '#475569' }}>
                   Technisches Qualitätsmanagement für regulierte Industrien
+                </p>
+                <p className="text-lg" style={{ color: '#334155' }}>
+                  18 Jahre Erfahrung in hochregulierten Branchen – von Nukleartechnik über LED-Entwicklung bis Medizintechnik. Als Ingenieur mit QM-Expertise verstehe ich nicht nur die Norm, sondern auch die Technik dahinter.
+                </p>
+                <p className="text-lg mt-4" style={{ color: '#334155' }}>
+                  Mein Ansatz: Schlanke Prozesse die funktionieren, keine Bürokratie-Monster.
                 </p>
               </div>
             </div>
 
-            {/* Short Profile */}
-            <div className="p-6 bg-qcore-navy bg-opacity-30 rounded-lg mt-8">
-              <p style={{ color: '#000000' }}>
-                18 Jahre Erfahrung in hochregulierten Branchen – von Nukleartechnik über LED-Entwicklung bis Medizintechnik. Als Ingenieur mit QM-Expertise verstehe ich nicht nur die Norm, sondern auch die Technik dahinter.
-              </p>
-              <p className="mt-4" style={{ color: '#000000' }}>
-                Mein Ansatz: Schlanke Prozesse die funktionieren, keine Bürokratie-Monster.
-              </p>
-            </div>
-
             {/* Professional Timeline */}
-            <div className="p-6 bg-qcore-navy bg-opacity-30 rounded-lg mt-8">
+            <div className="p-6 bg-qcore-navy bg-opacity-30 rounded-lg mt-8 mb-12">
               <h2 className="text-2xl font-semibold mb-6" style={{ color: '#1e293b' }}>
                 Berufliche Stationen
               </h2>
@@ -112,18 +110,6 @@ export default function UeberMich() {
                   </ul>
                 </div>
               </div>
-            </div>
-
-            {/* Qualifications */}
-            <div className="p-6 bg-qcore-navy bg-opacity-30 rounded-lg mt-8 mb-12">
-              <h2 className="text-2xl font-semibold mb-4" style={{ color: '#1e293b' }}>
-                Qualifikationen
-              </h2>
-              <ul className="list-disc list-inside space-y-2" style={{ color: '#000000' }}>
-                <li>Diplom Angewandte Naturwissenschaft</li>
-                <li>DEKRA Qualitätsmanagementbeauftragter (QMB)</li>
-                <li>FMEA-Moderation</li>
-              </ul>
             </div>
           </div>
         </section>

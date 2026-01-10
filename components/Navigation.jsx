@@ -19,9 +19,9 @@ export default function Navigation() {
 
   const rightNavItems = [
     { label: 'Leistungen', href: '/leistungen' },
-    { label: 'Über mich', href: '/ueber-mich' },
+    { label: 'Praxisbeispiel', href: '/referenz-projekt' },
     { label: 'QM-Wissen', href: '/qm-wissen' },
-    { label: 'QMB Trainer', href: '/qmb-trainer' },
+    { label: 'Über mich', href: '/ueber-mich' },
   ];
 
   const contactItem = { label: 'Kontakt', href: '/kontakt' };
@@ -34,16 +34,17 @@ export default function Navigation() {
       className="fixed top-0 left-0 right-0 bg-slate-900/40 backdrop-blur-sm"
       style={{ zIndex: 100 }}
     >
-      <div className="max-w-7xl mx-auto px-6 py-6">
+      {/* Volle Breite mit großzügigem Padding */}
+      <div className="w-full px-8 lg:px-16 xl:px-24 py-3">
         <div className="flex items-center justify-between">
-          {/* Start - links */}
+          {/* Start - ganz links */}
           <div className="hidden md:flex">
             <Link
               href={leftNavItem.href}
               style={{
                 fontFamily: "'Cormorant', serif",
-                fontSize: '1.4rem',
-                fontWeight: 400,
+                fontSize: '1.15rem',
+                fontWeight: 500,
                 color: '#1e293b',
                 transition: 'color 0.3s ease',
               }}
@@ -53,15 +54,15 @@ export default function Navigation() {
             </Link>
           </div>
 
-          {/* Rechte Navigation */}
-          <div className="hidden md:flex items-center gap-10">
+          {/* Rechte Navigation - ganz rechts */}
+          <div className="hidden md:flex items-center gap-8 lg:gap-10 xl:gap-12">
             {rightNavItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 style={{
                   fontFamily: "'Cormorant', serif",
-                  fontSize: '1.4rem',
+                  fontSize: '1.15rem',
                   fontWeight: 400,
                   color: '#1e293b',
                   transition: 'color 0.3s ease',
@@ -77,11 +78,11 @@ export default function Navigation() {
               href={contactItem.href}
               style={{
                 fontFamily: "'Cormorant', serif",
-                fontSize: '1.4rem',
+                fontSize: '1.15rem',
                 fontWeight: 400,
                 color: '#1e293b',
                 transition: 'color 0.3s ease',
-                marginLeft: '2rem',
+                marginLeft: '1.5rem',
               }}
               className="hover:text-slate-600"
             >
