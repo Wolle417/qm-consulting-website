@@ -50,14 +50,12 @@ export default function LeistungenHero() {
 
   return (
     <section className="relative pb-12 z-10" ref={ref} style={{ marginTop: '5vh' }}>
-      {/* GEÄNDERT: max-w-full und px-4 statt max-w-6xl und px-12 */}
-      <div className="max-w-[80%] mx-auto px-4">
+      <div className="max-w-[90%] mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          {/* GEÄNDERT: gap-4 statt gap-8 */}
           <div className="grid md:grid-cols-2 gap-4">
             {services.map((service, index) => (
               <motion.div
@@ -65,20 +63,18 @@ export default function LeistungenHero() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: index * 0.15 }}
-                className="p-6 border border-border-dark rounded-lg hover:border-qcore-blue transition-all"
+                className="p-8 border border-border-dark rounded-lg hover:border-qcore-blue transition-all"
                 style={{ backgroundColor: 'rgba(103, 127, 133, 0.7)' }}
               >
-                <h3 className="text-xl font-semibold mb-2" style={{ color: '#1e293b' }}>
+                <h3 className="text-2xl font-semibold mb-3" style={{ color: '#1e293b' }}>
                   {service.title}
                 </h3>
                 
-                {/* GEÄNDERT: space-y-1 statt space-y-3 */}
-                <ul className="space-y-1">
+                <ul className="space-y-2">
                   {service.items.map((item, i) => (
                     <li key={i} className="flex items-start">
-                      <span className="w-1.5 h-1.5 bg-qcore-blue rounded-full mr-3 mt-2 flex-shrink-0"></span>
-                      {/* GEÄNDERT: color #000000 statt #475569 */}
-                      <span className="text-sm leading-tight" style={{ color: '#000000' }}>{item}</span>
+                      <span className="w-2 h-2 bg-qcore-blue rounded-full mr-3 mt-2 flex-shrink-0"></span>
+                      <span className="text-base leading-relaxed" style={{ color: '#000000' }}>{item}</span>
                     </li>
                   ))}
                 </ul>

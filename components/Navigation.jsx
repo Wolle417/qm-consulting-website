@@ -15,16 +15,12 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const leftNavItem = { label: 'Start', href: '/' };
-
-  const rightNavItems = [
+  const navItems = [
     { label: 'Leistungen', href: '/leistungen' },
     { label: 'Praxisbeispiel', href: '/referenz-projekt' },
-    { label: 'QM-Wissen', href: '/qm-wissen' },
     { label: 'Über mich', href: '/ueber-mich' },
+    { label: 'QM-Wissen', href: '/qm-wissen' },
   ];
-
-  const contactItem = { label: 'Kontakt', href: '/kontakt' };
 
   return (
     <motion.nav
@@ -34,13 +30,12 @@ export default function Navigation() {
       className="fixed top-0 left-0 right-0 bg-slate-900/40 backdrop-blur-sm"
       style={{ zIndex: 100 }}
     >
-      {/* Volle Breite mit großzügigem Padding */}
-      <div className="w-full px-8 lg:px-16 xl:px-24 py-3">
+      <div className="w-full px-6 lg:px-12 py-3">
         <div className="flex items-center justify-between">
           {/* Start - ganz links */}
           <div className="hidden md:flex">
             <Link
-              href={leftNavItem.href}
+              href="/"
               style={{
                 fontFamily: "'Cormorant', serif",
                 fontSize: '1.15rem',
@@ -50,13 +45,13 @@ export default function Navigation() {
               }}
               className="hover:text-slate-600"
             >
-              {leftNavItem.label}
+              Start
             </Link>
           </div>
 
-          {/* Rechte Navigation - ganz rechts */}
-          <div className="hidden md:flex items-center gap-8 lg:gap-10 xl:gap-12">
-            {rightNavItems.map((item) => (
+          {/* Mitte - Navigation */}
+          <div className="hidden md:flex items-center gap-8 lg:gap-12">
+            {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
@@ -72,21 +67,22 @@ export default function Navigation() {
                 {item.label}
               </Link>
             ))}
+          </div>
 
-            {/* Kontakt mit extra Abstand */}
+          {/* Kontakt - ganz rechts */}
+          <div className="hidden md:flex">
             <Link
-              href={contactItem.href}
+              href="/kontakt"
               style={{
                 fontFamily: "'Cormorant', serif",
                 fontSize: '1.15rem',
                 fontWeight: 400,
                 color: '#1e293b',
                 transition: 'color 0.3s ease',
-                marginLeft: '1.5rem',
               }}
               className="hover:text-slate-600"
             >
-              {contactItem.label}
+              Kontakt
             </Link>
           </div>
 

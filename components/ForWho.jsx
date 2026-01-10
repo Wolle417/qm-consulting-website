@@ -32,7 +32,7 @@ export default function ForWho() {
 
   return (
     <section id="forwho" className="section-padding relative z-10" ref={ref}>
-      <div className="max-w-[80%] mx-auto px-4">
+      <div className="max-w-[90%] mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}

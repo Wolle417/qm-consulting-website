@@ -10,15 +10,8 @@ export default function UeberMich() {
         <section className="relative section-padding pt-24">
           <div className="relative z-10 max-w-[80%] mx-auto px-8">
             <div className="flex flex-col md:flex-row items-center md:items-center gap-12 mb-8">
-              {/* Photo */}
-              <img 
-                src="/images/freepik__professional-cv-portrait-very-short-3mm-hair-neutr__83197.png"
-                alt="Stefan Schönwälder"
-                className="w-72 h-72 rounded-lg object-cover flex-shrink-0"
-              />
-              
-              {/* Name, Tagline and Profile Text */}
-              <div className="text-center md:text-left">
+              {/* Name, Tagline and Profile Text - links */}
+              <div className="text-center md:text-left flex-1">
                 <h1 
                   className="text-5xl font-bold mb-4"
                   style={{
@@ -32,12 +25,22 @@ export default function UeberMich() {
                   Technisches Qualitätsmanagement für regulierte Industrien
                 </p>
                 <p className="text-lg" style={{ color: '#334155' }}>
-                  18 Jahre Erfahrung in hochregulierten Branchen – von Nukleartechnik über LED-Entwicklung bis Medizintechnik. Als Ingenieur mit QM-Expertise verstehe ich nicht nur die Norm, sondern auch die Technik dahinter.
+                  18 Jahre Erfahrung in hochregulierten Branchen – von Nukleartechnik über LED-Entwicklung bis Medizintechnik.
+                </p>
+                <p className="text-lg mt-4" style={{ color: '#334155' }}>
+                  Als Ingenieur mit QM-Expertise verstehe ich nicht nur die Norm, sondern auch die Technik dahinter.
                 </p>
                 <p className="text-lg mt-4" style={{ color: '#334155' }}>
                   Mein Ansatz: Schlanke Prozesse die funktionieren, keine Bürokratie-Monster.
                 </p>
               </div>
+
+              {/* Photo - freigestellt, rechts */}
+              <img 
+                src="/images/profile_free.png"
+                alt="Stefan Schönwälder"
+                className="w-96 h-96 object-cover flex-shrink-0"
+              />
             </div>
 
             {/* Professional Timeline */}
