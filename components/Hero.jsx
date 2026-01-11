@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 export default function Hero() {
   return (
-    <section className="relative h-[50vh] flex items-start overflow-hidden">
+    <section className="relative h-[40vh] flex items-start overflow-hidden">
       {/* Content Container - responsive padding */}
       <div className="relative z-10 w-full px-8 lg:px-16 xl:px-24" style={{ paddingTop: '120px' }}>
         <div className="max-w-xl">

@@ -93,9 +93,9 @@ export default function ReferenzProjekt() {
       <Navigation />
       <main className="relative min-h-screen">
         {/* Hero Section */}
-        <section className="relative section-padding pt-24 pb-16">
-          <div className="relative z-10 max-w-[80%] mx-auto px-8">
-            <div className="text-center mb-8">
+        <section className="relative pt-24 pb-0">
+          <div className="relative z-10 max-w-[90%] mx-auto px-8">
+            <div className="mb-8">
               <span 
                 className="inline-block px-4 py-1 rounded-full text-sm mb-4"
                 style={{ 
@@ -113,32 +113,30 @@ export default function ReferenzProjekt() {
                   color: '#1e293b',
                 }}
               >
-                GMP-Dokumentation
-                <br />
-                <span style={{ color: '#1e3a8a' }}>in Tagen statt Monaten</span>
+                GMP-Dokumentation: <span style={{ color: '#1e3a8a' }}>In Tagen statt Monaten</span>
               </h1>
-              <p className="text-xl mt-4 max-w-3xl mx-auto" style={{ color: '#475569' }}>
-                Ein komplettes pharmazeutisches QM-Dokumentationspaket für API-Herstellung 
-                und Japan-Export – systematisch erarbeitet und audit-fähig dokumentiert.
+              <p className="text-xl mt-4 max-w-4xl" style={{ color: '#475569' }}>
+                Ein komplettes pharmazeutisches QM-Dokumentationspaket für API-Herstellung und Japan-Export –<br />
+                systematisch erarbeitet und audit-fähig dokumentiert.
               </p>
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12 max-w-4xl mx-auto">
+            <div className="grid grid-cols-4 gap-4">
               {stats.map((stat, index) => (
                 <div 
                   key={index}
-                  className="bg-qcore-navy bg-opacity-20 backdrop-blur-sm rounded-lg p-6 text-center"
+                  className="bg-qcore-navy bg-opacity-20 hover:bg-opacity-35 transition-all duration-300 backdrop-blur-sm rounded-lg p-6 flex items-baseline justify-center cursor-default"
                 >
-                  <div 
-                    className="text-3xl font-bold"
+                  <span 
+                    className="text-4xl font-bold mr-3"
                     style={{ color: '#1e3a8a', fontFamily: "'Cormorant', serif" }}
                   >
                     {stat.value}
-                  </div>
-                  <div className="text-sm mt-1" style={{ color: '#475569' }}>
+                  </span>
+                  <span className="text-2xl" style={{ color: '#475569', fontFamily: "'Cormorant', serif" }}>
                     {stat.label}
-                  </div>
+                  </span>
                 </div>
               ))}
             </div>
@@ -146,9 +144,9 @@ export default function ReferenzProjekt() {
         </section>
 
         {/* Kontext Section */}
-        <section className="relative py-12">
-          <div className="relative z-10 max-w-[80%] mx-auto px-8">
-            <div className="bg-qcore-navy bg-opacity-30 backdrop-blur-sm rounded-lg p-8">
+        <section className="relative pt-4 pb-8">
+          <div className="relative z-10 max-w-[90%] mx-auto px-8">
+            <div className="bg-qcore-navy bg-opacity-30 hover:bg-opacity-45 transition-all duration-300 backdrop-blur-sm rounded-lg p-8 cursor-default">
               <h2 
                 className="text-2xl font-semibold mb-6"
                 style={{ color: '#1e293b', fontFamily: "'Cormorant', serif" }}
@@ -202,10 +200,10 @@ export default function ReferenzProjekt() {
         </section>
 
         {/* Dokumente Section */}
-        <section className="relative py-12">
-          <div className="relative z-10 max-w-[80%] mx-auto px-8">
+        <section className="relative py-8">
+          <div className="relative z-10 max-w-[90%] mx-auto px-8">
             <h2 
-              className="text-2xl font-semibold mb-8 text-center"
+              className="text-3xl md:text-4xl font-bold mb-8"
               style={{ color: '#1e293b', fontFamily: "'Cormorant', serif" }}
             >
               Erstellte Dokumente
@@ -215,7 +213,7 @@ export default function ReferenzProjekt() {
               {documents.map((doc) => (
                 <div 
                   key={doc.id}
-                  className="bg-qcore-navy bg-opacity-20 backdrop-blur-sm rounded-lg p-6 transition-all duration-300 hover:bg-opacity-30"
+                  className="bg-qcore-navy bg-opacity-20 hover:bg-opacity-35 backdrop-blur-sm rounded-lg p-6 transition-all duration-300 cursor-default"
                 >
                   <div className="flex justify-between items-start mb-3">
                     <div>
@@ -277,15 +275,15 @@ export default function ReferenzProjekt() {
         </section>
 
         {/* Ergebnis Section */}
-        <section className="relative py-12">
-          <div className="relative z-10 max-w-[80%] mx-auto px-8">
-            <div className="bg-qcore-navy bg-opacity-30 backdrop-blur-sm rounded-lg p-8">
-              <h2 
-                className="text-2xl font-semibold mb-6"
-                style={{ color: '#1e293b', fontFamily: "'Cormorant', serif" }}
-              >
-                Ergebnis & Übertragbarkeit
-              </h2>
+        <section className="relative py-8">
+          <div className="relative z-10 max-w-[90%] mx-auto px-8">
+            <h2 
+              className="text-3xl md:text-4xl font-bold mb-8"
+              style={{ color: '#1e293b', fontFamily: "'Cormorant', serif" }}
+            >
+              Ergebnis & Übertragbarkeit
+            </h2>
+            <div className="bg-qcore-navy bg-opacity-30 hover:bg-opacity-45 transition-all duration-300 backdrop-blur-sm rounded-lg p-8 cursor-default">
               
               <div className="grid md:grid-cols-3 gap-6">
                 <div className="text-center p-4">
@@ -315,8 +313,8 @@ export default function ReferenzProjekt() {
         </section>
 
         {/* CTA Section */}
-        <section className="relative py-16">
-          <div className="relative z-10 max-w-3xl mx-auto px-8 text-center">
+        <section className="relative py-12">
+          <div className="relative z-10 max-w-[90%] mx-auto px-8 text-center">
             <h2 
               className="text-3xl font-bold mb-4"
               style={{ color: '#1e293b', fontFamily: "'Cormorant', serif" }}
