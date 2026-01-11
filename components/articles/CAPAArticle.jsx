@@ -416,7 +416,7 @@ const CAPAArticle = () => {
       </div>
 
       <p className="text-gray-700">
-        → Ausführliche Anleitung im Artikel <Link href="/root-cause-analysis" className="text-qcore-blue hover:underline">Root Cause Analysis</Link>
+        → Ausführliche Anleitung im Artikel <Link href="/qm-wissen?article=root-cause" className="text-qcore-blue hover:underline">Root Cause Analysis</Link>
       </p>
 
       <h3 className="text-xl font-serif text-dark-navy mt-8 mb-3">
