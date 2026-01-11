@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Punkte-Netzwerk Background (statisch + Feder-Rückzug + Mouse-Repulsion)</title>
+  <style>
+    :root{
+      /* Reference-like: light foggy blue/grey */
+      --bg0:#b7c6cc;
+      --bg1:#8fa7af;
+      --fg: rgba(10,18,24,.88);
+      --muted: rgba(10,18,24,.62);
+    }
+    html,body{height:100%;}
+    body{
+      margin:0;
+      background:
+        radial-gradient(1200px 900px at 18% 12%, rgba(255,255,255,.55), transparent 62%),
+        radial-gradient(900px 700px at 78% 65%, rgba(255,255,255,.25), transparent 58%),
+        radial-gradient(1400px 1100px at 82% 20%, rgba(130,170,185,.28), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow:hidden;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color:var(--fg);
+    }
+    canvas{position:fixed; inset:0; width:100vw; height:100vh; display:block;}
+
+    .hero{
+      position:fixed;
+      left:18px; right:18px; top:16px;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      pointer-events:none;
+    }
+    .card{
+      pointer-events:auto;
+      max-width:min(920px, calc(100vw - 36px));
+      padding:12px 14px;
+      border-radius:14px;
+      background: rgba(255,255,255,.42);
+      border:1px solid rgba(0,0,0,.10);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 55px rgba(0,0,0,.18);
+    }
+    .title{margin:0 0 4px 0; font-weight:700; font-size:14px; letter-spacing:.2px;}
+    .meta{margin:0; font-size:12px; color:var(--muted); line-height:1.35;}
+
+    .controls{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:flex-end;
+      pointer-events:auto;
+    }
+    button{
+      cursor:pointer;
+      border:1px solid rgba(0,0,0,.12);
+      background: rgba(255,255,255,.42);
+      color: rgba(10,18,24,.88);
+      border-radius:14px;
+      padding:10px 12px;
+      font-weight:650;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 55px rgba(0,0,0,.18);
+      user-select:none;
+    }
+    button:active{transform: translateY(1px) scale(.99);}
+
+    .hint{
+      position:fixed;
+      right:14px;
+      bottom:12px;
+      padding:8px 10px;
+      border-radius:12px;
+      background: rgba(255,255,255,.36);
+      border:1px solid rgba(0,0,0,.10);
+      color: rgba(10,18,24,.62);
+      font-size:12px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 55px rgba(0,0,0,.12);
+      pointer-events:none;
+    }
+
+    /* For embedding into a website: uncomment to disable pointer events */
+    /* canvas { pointer-events:none; } */
+  </style>
+</head>
+<body>
+  <canvas id="c"></canvas>
+
+  <div class="hero">
+    <div class="card">
+      <p class="title">Punkte-Netzwerk (statisch + Rückzug)</p>
+      <p class="meta">Statisch wie Referenzbild, weniger Knoten. Subtile Interaktion: Maus nahe am Netz stößt Punkte ab, Federn + Anker ziehen langsam zurück in den Ursprungszustand. Leertaste = Pause • R = Reset</p>
+    </div>
+    <div class="controls">
+      <button id="btnPause">Pause</button>
+      <button id="btnReset">Reset</button>
+    </div>
+  </div>
+
+  <div class="hint">Tipp: Für Website-Background: canvas { pointer-events:none; } + Buttons entfernen</div>
+
+<script>
+(() => {
+  const canvas = document.getElementById('c');
+  const ctx = canvas.getContext('2d', { alpha:true, desynchronized:true });
+  const btnPause = document.getElementById('btnPause');
+  const btnReset = document.getElementById('btnReset');
+
+  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let W=0,H=0,DPR=1;
+  function resize(){
+    DPR = Math.min(window.devicePixelRatio || 1, prefersReduced ? 1.0 : 1.25);
+    W = Math.max(1, Math.floor(innerWidth * DPR));
+    H = Math.max(1, Math.floor(innerHeight * DPR));
+    canvas.width = W;
+    canvas.height = H;
+    canvas.style.width = innerWidth + 'px';
+    canvas.style.height = innerHeight + 'px';
+    ctx.setTransform(1,0,0,1,0,0);
+    ctx.scale(DPR, DPR);
+  }
+
+  const mouse = { x: innerWidth*0.5, y: innerHeight*0.5, active:false, down:false };
+  addEventListener('pointermove', (e)=>{ mouse.x=e.clientX; mouse.y=e.clientY; mouse.active=true; });
+  addEventListener('pointerdown', ()=>{ mouse.down=true; });
+  addEventListener('pointerup',   ()=>{ mouse.down=false; });
+  addEventListener('pointerleave', ()=>{ mouse.active=false; mouse.down=false; });
+
+  function clamp(x,a,b){ return Math.max(a, Math.min(b,x)); }
+
+  // ===== Graph =====
+  let nodes = []; // {x,y,z,vx,vy,vz,x0,y0,z0}
+  let edges = []; // {i,j,rest}
+  let paused = false;
+
+  // Fake DOF
+  const DOF = { focusZ: 3.05, blurStrength: 9, maxBlur: 10 };
+
+  // overall motion speed (higher = snappier)
+  const SPEED = prefersReduced ? 0.28 : 0.38; // even calmer/slower
+
+  // Stable framing: centered with a slight bias to the right/bottom
+  const FRAME = {
+    projScale: 0.60,
+    zoff: 3.0,
+    cx: () => innerWidth  * 0.54,
+    cy: () => innerHeight * 0.58,
+  };
+
+  function buildGraph(){
+    // fewer nodes (as requested)
+    const base = (innerWidth*innerHeight) / 240000;
+    const N = clamp(Math.floor(34 + base*14*(prefersReduced ? 0.7 : 1.0)), 28, 62);
+
+    // Target layout in SCREEN space (so we can enforce: mostly right-bottom, few left)
+    // We then convert back into world coords so the projection stays stable.
+    const cxS = innerWidth  * 0.56; // centered, but biased to the right
+    const cyS = innerHeight * 0.62; // biased to the bottom
+
+    const spreadX = innerWidth  * 0.24;
+    const spreadY = innerHeight * 0.20;
+
+    function randn(){
+      // Box–Muller
+      let u = 0, v = 0;
+      while (u === 0) u = Math.random();
+      while (v === 0) v = Math.random();
+      return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+    }
+
+    function sampleScreenPoint(){
+      // Mixture: mostly clustered around (cxS, cyS), rarely a left-reaching point.
+      const leftTail = (Math.random() < 0.12);
+
+      let sx = cxS + randn() * spreadX * (leftTail ? 1.35 : 1.0);
+      let sy = cyS + randn() * spreadY;
+
+      // Add a diagonal structure similar to the photo
+      // (slight correlation: further left -> slightly up)
+      const dx = (sx - cxS) / (spreadX + 1e-6);
+      sy += dx * (-innerHeight * 0.05);
+
+      // Hard clamp so nodes do not go off-screen
+      const margin = 18;
+      sx = clamp(sx, margin, innerWidth - margin);
+      sy = clamp(sy, margin, innerHeight - margin);
+
+      return {sx, sy};
+    }
+
+    // Convert screen coords back to world coords (inverse of worldToScreen)
+    function screenToWorld(sx, sy){
+      const x = (sx - FRAME.cx()) / (FRAME.projScale * innerWidth);
+      const y = (sy - FRAME.cy()) / (FRAME.projScale * innerHeight);
+      return {x, y};
+    }
+
+    nodes = new Array(N).fill(0).map(()=>{
+      const {sx, sy} = sampleScreenPoint();
+      const w = screenToWorld(sx, sy);
+
+      // Depth: small variance, slightly more depth toward the right-bottom
+      const nx = (sx / innerWidth);
+      const ny = (sy / innerHeight);
+      const zBias = clamp((nx*0.55 + ny*0.45) - 0.55, -0.25, 0.45);
+      const z = (randn() * 0.22) + zBias * 0.35;
+
+      return {
+        x: w.x,
+        y: w.y,
+        z,
+        vx: 0, vy: 0, vz: 0,
+        x0: w.x, y0: w.y, z0: z,
+      };
+    });
+
+    // Build edges with guaranteed connectivity:
+    // For each node, connect to its k nearest neighbors, but store edges in a Set to avoid duplicates.
+    const k = (N > 50) ? 2 : 3;
+    const longEdgeChance = 0.28;
+
+    const edgeSet = new Set();
+    edges = [];
+
+    function addEdge(i, j, w=1.0){
+      if (i === j) return;
+      const a = Math.min(i,j), b = Math.max(i,j);
+      const key = a + ':' + b;
+      if (edgeSet.has(key)) return;
+      edgeSet.add(key);
+      const A = nodes[a], B = nodes[b];
+      const dx=A.x-B.x, dy=A.y-B.y, dz=A.z-B.z;
+      const rest = Math.sqrt(dx*dx+dy*dy+dz*dz) + 1e-6;
+      edges.push({ i:a, j:b, rest, w });
+    }
+
+    for (let i=0;i<N;i++){
+      const dists = [];
+      const a = nodes[i];
+      for (let j=0;j<N;j++){
+        if (j===i) continue;
+        const b = nodes[j];
+        const dx=a.x-b.x, dy=a.y-b.y, dz=a.z-b.z;
+        dists.push([dx*dx+dy*dy+dz*dz, j]);
+      }
+      dists.sort((p,q)=>p[0]-q[0]);
+
+      for (let n=0;n<k;n++) addEdge(i, dists[n][1], 1.0);
+
+      if (Math.random() < longEdgeChance){
+        const pickFrom = Math.min(dists.length-1, k + 10);
+        const pickIdx = clamp(k + Math.floor(Math.random()*10), k, pickFrom);
+        addEdge(i, dists[pickIdx][1], 0.80);
+      }
+    }
+
+    // Safety: if any node still has degree 0 (shouldn't happen), connect it to nearest.
+    const deg = new Array(N).fill(0);
+    for (const e of edges){ deg[e.i]++; deg[e.j]++; }
+    for (let i=0;i<N;i++){
+      if (deg[i] > 0) continue;
+      let bestJ = -1, best = Infinity;
+      for (let j=0;j<N;j++){
+        if (i===j) continue;
+        const dx=nodes[i].x-nodes[j].x, dy=nodes[i].y-nodes[j].y, dz=nodes[i].z-nodes[j].z;
+        const d2 = dx*dx+dy*dy+dz*dz;
+        if (d2 < best){ best = d2; bestJ = j; }
+      }
+      if (bestJ >= 0) addEdge(i, bestJ, 1.0);
+    }
+  }
+
+  function reset(){
+    buildGraph();
+  }
+
+  // Convert world->screen for repulsion calculations (no rotation, stable scale)
+  function worldToScreen(p){
+    const z = p.z + FRAME.zoff;
+    const x2 = (p.x * FRAME.projScale) * innerWidth  + FRAME.cx();
+    const y2 = (p.y * FRAME.projScale) * innerHeight + FRAME.cy();
+    return { x:x2, y:y2, z };
+  }
+
+  // Map screen delta back to world delta (approx, good enough for subtle repulsion)
+  function screenDeltaToWorld(dx, dy){
+    return {
+      x: dx / (FRAME.projScale * innerWidth),
+      y: dy / (FRAME.projScale * innerHeight),
+    };
+  }
+
+  function physics(dt){
+    // springs + anchor back to original positions
+    const kSpring = prefersReduced ? 0.45 : 0.55; // softer springs
+    const kAnchor = prefersReduced ? 0.40 : 0.52; // slower, heavier return
+    const damp = prefersReduced ? 0.985 : 0.992; // more viscous
+
+    // mouse repulsion (wide range, very soft)
+    const radius = prefersReduced ? 240 : 340;
+    const r2 = radius*radius;
+    const repelStrength = prefersReduced ? 0.55 : (mouse.down ? 0.85 : 0.55);
+    const repelWorldScale = 0.85;
+    const maxV = prefersReduced ? 0.32 : 0.45; // strongly constrain motion // strongly limit excursions // limit excursions
+
+    const fx = new Float32Array(nodes.length);
+    const fy = new Float32Array(nodes.length);
+    const fz = new Float32Array(nodes.length);
+
+    // edge springs
+    for (let e=0;e<edges.length;e++){
+      const ed = edges[e];
+      const a = nodes[ed.i];
+      const b = nodes[ed.j];
+      const dx=b.x-a.x, dy=b.y-a.y, dz=b.z-a.z;
+      const dist = Math.sqrt(dx*dx+dy*dy+dz*dz) + 1e-6;
+      const diff = dist - ed.rest;
+      const f = diff * kSpring * (ed.w || 1.0);
+      const ux=dx/dist, uy=dy/dist, uz=dz/dist;
+      fx[ed.i] += f*ux; fy[ed.i] += f*uy; fz[ed.i] += f*uz;
+      fx[ed.j] -= f*ux; fy[ed.j] -= f*uy; fz[ed.j] -= f*uz;
+    }
+
+    // anchor springs (prevents drift/"zooming")
+    for (let i=0;i<nodes.length;i++){
+      const p = nodes[i];
+      fx[i] += (p.x0 - p.x) * kAnchor;
+      fy[i] += (p.y0 - p.y) * kAnchor;
+      fz[i] += (p.z0 - p.z) * (kAnchor*0.70);
+    }
+
+    // mouse repulsion in screen space (push away), converted to world space
+    if (mouse.active){
+      for (let i=0;i<nodes.length;i++){
+        const p = nodes[i];
+        const sp = worldToScreen(p);
+        const dx = sp.x - mouse.x;
+        const dy = sp.y - mouse.y;
+        const d2 = dx*dx + dy*dy;
+        if (d2 > r2) continue;
+
+        const d = Math.sqrt(d2) + 1e-6;
+        const fall = (1.0 - d / radius);
+        const push = repelStrength * fall * fall * fall; // gentler far away
+
+        // push direction in screen coords
+        const sx = dx / d;
+        const sy = dy / d;
+
+        // convert push direction to world, then re-normalize (prevents weird direction skew)
+        let wd = screenDeltaToWorld(sx, sy);
+        const wl = Math.hypot(wd.x, wd.y) + 1e-9;
+        wd.x /= wl; wd.y /= wl;
+
+        fx[i] += wd.x * push * repelWorldScale;
+        fy[i] += wd.y * push * repelWorldScale;
+        // subtle z wobble so DOF reacts a bit
+        fz[i] += (0.15 * push) * (p.z >= 0 ? 1 : -1);
+      }
+    }
+
+    // integrate
+    for (let i=0;i<nodes.length;i++){
+      const p = nodes[i];
+      p.vx = (p.vx + fx[i]*dt) * damp;
+      p.vy = (p.vy + fy[i]*dt) * damp;
+      p.vz = (p.vz + fz[i]*dt) * damp;
+
+      // velocity clamp (prevents blow-ups)
+      p.vx = clamp(p.vx, -maxV, maxV);
+      p.vy = clamp(p.vy, -maxV, maxV);
+      p.vz = clamp(p.vz, -maxV, maxV);
+
+      p.x += p.vx * dt;
+      p.y += p.vy * dt;
+      p.z += p.vz * dt;
+    }
+  }
+
+  function render(){
+    // Draw full frame (no trail accumulation => truly stable)
+    ctx.setTransform(1,0,0,1,0,0);
+    ctx.clearRect(0,0,canvas.width, canvas.height);
+    ctx.scale(DPR, DPR);
+
+    // subtle fog overlay (keeps the same look even if canvas is transparent)
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = 'rgba(175,195,202,0.04)';
+    ctx.fillRect(0,0,innerWidth, innerHeight);
+
+    // project once
+    const proj = new Array(nodes.length);
+    for (let i=0;i<nodes.length;i++) proj[i] = worldToScreen(nodes[i]);
+
+    // edges (graphite, more visible like reference)
+    ctx.lineWidth = 1.35;
+    for (let e=0;e<edges.length;e++){
+      const ed = edges[e];
+      const a = proj[ed.i];
+      const b = proj[ed.j];
+
+      const zAvg = (a.z + b.z) * 0.5;
+      const depth = clamp(1.0 / zAvg, 0.22, 0.75);
+      const blur = clamp(Math.abs(zAvg - DOF.focusZ) * DOF.blurStrength * 0.55, 0, DOF.maxBlur);
+
+      // darker, closer to photo; long struts slightly bolder
+      const baseA = (ed.w && ed.w < 1.0) ? 0.28 : 0.24;
+      const alpha = clamp(baseA * depth, 0.08, 0.26);
+
+      ctx.shadowBlur = blur;
+      ctx.shadowColor = 'rgba(0,0,0,0.22)';
+      ctx.strokeStyle = `rgba(10,14,16,${alpha})`;
+
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
+    }
+
+    // nodes (more present like photo: larger + darker + specular highlight)
+    for (let i=0;i<proj.length;i++){
+      const p = proj[i];
+      const depth = clamp(1.0 / p.z, 0.22, 0.88);
+      const blur = clamp(Math.abs(p.z - DOF.focusZ) * DOF.blurStrength * 0.55, 0, DOF.maxBlur);
+
+      const r = clamp(3.0 * depth, 1.7, 4.8);
+      const a = clamp(0.58 + depth*0.80, 0.48, 0.98);
+
+      ctx.shadowBlur = blur;
+      ctx.shadowColor = 'rgba(0,0,0,0.24)';
+      ctx.fillStyle = `rgba(18,26,28,${a})`;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, r, 0, Math.PI*2);
+      ctx.fill();
+
+      // tiny highlight ("bead" look)
+      const hr = r * 0.34;
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = `rgba(255,255,255,${0.18 * depth})`;
+      ctx.beginPath();
+      ctx.arc(p.x - r*0.26, p.y - r*0.26, hr, 0, Math.PI*2);
+      ctx.fill();
+    }
+
+    ctx.shadowBlur = 0;
+  }
+
+  // ===== Loop =====
+  let last = performance.now();
+  function loop(now){
+    requestAnimationFrame(loop);
+    if (paused) return;
+
+    const dt = Math.min(0.033, (now - last) / 1000);
+    last = now;
+
+    if (!prefersReduced){
+      physics(dt * SPEED);
+    } else {
+      // Reduced motion: very gentle return-only (no mouse force)
+      physics(dt * 0.35 * SPEED);
+    }
+    render();
+  }
+
+  function togglePause(){
+    paused = !paused;
+    btnPause.textContent = paused ? 'Weiter' : 'Pause';
+  }
+
+  // events
+  btnPause.addEventListener('click', togglePause);
+  btnReset.addEventListener('click', reset);
+
+  addEventListener('keydown', (e)=>{
+    if (e.code === 'Space'){ e.preventDefault(); togglePause(); }
+    if (e.key.toLowerCase() === 'r') reset();
+  });
+
+  addEventListener('resize', ()=>{ resize(); reset(); });
+
+  // start
+  resize();
+  reset();
+  // Minimal self-checks (console)
+  function selfTest(){
+    if (!ctx) throw new Error('Canvas context missing');
+    if (!nodes.length) throw new Error('No nodes');
+    if (!edges.length) throw new Error('No edges');
+    const p = nodes[0];
+    ['x','y','z','vx','vy','vz','x0','y0','z0'].forEach(k=>{
+      if (!Number.isFinite(p[k])) throw new Error('NaN in node');
+    });
+  }
+  try{ selfTest(); } catch(e){ console.error('SelfTest failed:', e); }
+
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>

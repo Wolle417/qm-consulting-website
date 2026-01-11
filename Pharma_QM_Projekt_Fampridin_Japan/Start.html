@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pharma-QM – Beispielprojekt Fampridin</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f5f7fb;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      color: #222;
+    }
+    .wrapper {
+      width: 100%;
+      background-color: #f5f7fb;
+      padding: 24px 0;
+    }
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+      overflow: hidden;
+    }
+    .header {
+      background: linear-gradient(135deg, #184e77, #1e6091);
+      padding: 20px 28px;
+      color: #ffffff;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 600;
+    }
+    .header p {
+      margin: 6px 0 0;
+      font-size: 13px;
+      opacity: 0.9;
+    }
+    .content {
+      padding: 24px 28px 12px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .content h2 {
+      font-size: 16px;
+      margin-top: 18px;
+      margin-bottom: 8px;
+      color: #184e77;
+    }
+    .content p {
+      margin: 0 0 10px;
+    }
+    .tagline {
+      font-size: 13px;
+      color: #555;
+      margin-bottom: 14px;
+    }
+    .pill {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background-color: #edf2ff;
+      color: #1e6091;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+    }
+    .doc-list {
+      margin: 8px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .doc-item {
+      border-top: 1px solid #edf0f5;
+      padding: 12px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .doc-title-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .doc-title {
+      font-weight: 600;
+      font-size: 14px;
+      color: #123456;
+    }
+    .doc-meta {
+      font-size: 12px;
+      color: #666;
+    }
+    .doc-desc {
+      font-size: 13px;
+      color: #444;
+    }
+    .btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 500;
+      text-decoration: none;
+      color: #ffffff;
+      background-color: #1e6091;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .btn:hover {
+      background-color: #184e77;
+    }
+    .footer {
+      padding: 10px 28px 18px;
+      font-size: 11px;
+      color: #777;
+    }
+    .footer p {
+      margin: 4px 0;
+    }
+    @media (max-width: 600px) {
+      .container {
+        border-radius: 0;
+      }
+      .content, .header, .footer {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="container">
+      <div class="header">
+        <h1>Pharma-QM: Beispielprojekt Fampridin</h1>
+        <p>Systematische Einarbeitung in API-Qualitätsmanagement &amp; Regulierung</p>
+      </div>
+
+      <div class="content">
+        <span class="pill">Persönliches QM-Training</span>
+        <p class="tagline">
+          In den letzten Tagen habe ich ein kompaktes, aber vollständiges Beispielprojekt
+          zur API-Herstellung und -Registrierung ausgearbeitet – als eigenes
+          Training in pharmazeutischem Qualitätsmanagement.
+        </p>
+
+        <h2>Zielsetzung</h2>
+        <p>
+          Ziel des Projekts war es, mich strukturiert in die regulatorischen Anforderungen
+          für Wirkstoffhersteller einzuarbeiten und diese anhand eines fiktiven,
+          aber realistisch aufgebauten Beispiels (Fampridin, Export nach Japan) praktisch
+          umzusetzen:
+        </p>
+        <ul>
+          <li>Verständnis von ICH Q7, EU GMP und PMDA-Anforderungen</li>
+          <li>Durchspielen zentraler QM- und Validierungsprozesse</li>
+          <li>Erstellung audit-fähiger GMP-Dokumentation</li>
+          <li>Einsatz moderner Textwerkzeuge (inkl. LLM-Unterstützung) mit
+              anschließender fachlicher Validierung und unabhängigem Review</li>
+        </ul>
+
+        <h2>Erstellte Dokumente (Fampridin-Beispiel)</h2>
+        <p>
+          Im Rahmen des Trainings sind die folgenden Dokumente entstanden
+          (alle als fiktives, aber regulatorisch konsistentes Beispiel ausgearbeitet):
+        </p>
+
+        <ul class="doc-list">
+          <li class="doc-item">
+            <div class="doc-title-line">
+              <div class="doc-title">QM-001 &mdash; Quality Manual (36 Seiten)</div>
+              <a href="https://LINK_ZUM_QM" class="btn">Dokument öffnen</a>
+            </div>
+            <div class="doc-desc">
+              Vollständiges Quality Management System nach ICH Q7 / EU GMP
+              (u. a. Organisation, Dokumentation, Personnel, Produktion, QC, Validation,
+              CAPA, Change Control, Complaints/Recalls).
+            </div>
+          </li>
+
+          <li class="doc-item">
+            <div class="doc-title-line">
+              <div class="doc-title">MVP-001 &mdash; Master Validation Plan (22 Seiten)</div>
+              <a href="https://LINK_ZUM_MVP" class="btn">Dokument öffnen</a>
+            </div>
+            <div class="doc-desc">
+              Validierungsstrategie für Equipment, Utilities, Prozess, Cleaning,
+              analytische Methoden und CSV, inkl. 12-Monats-Timeline.
+            </div>
+          </li>
+
+          <li class="doc-item">
+            <div class="doc-title-line">
+              <div class="doc-title">PVP-FAM-001 &mdash; Process Validation Protocol (25 Seiten)</div>
+              <a href="https://LINK_ZUM_PVP" class="btn">Dokument öffnen</a>
+            </div>
+            <div class="doc-desc">
+              Prospektive Validierung des Fampridin-Syntheseprozesses
+              (6 Herstellungsschritte, 9 CPPs, 5 IPCs, 8 CQAs, statistische Auswertung
+              von 3 Chargen).
+            </div>
+          </li>
+
+          <li class="doc-item">
+            <div class="doc-title-line">
+              <div class="doc-title">AMV-HPLC-001 &mdash; Analytical Method Validation (18 Seiten)</div>
+              <a href="https://LINK_ZUR_AMV" class="btn">Dokument öffnen</a>
+            </div>
+            <div class="doc-desc">
+              Validierung einer HPLC-Methode für Assay und Impurities gemäß ICH Q2(R1),
+              inkl. Specificity, Linearity, Accuracy, Precision, Range, LOD/LOQ
+              und Robustness (Forced Degradation Studies).
+            </div>
+          </li>
+
+          <li class="doc-item">
+            <div class="doc-title-line">
+              <div class="doc-title">CAPA-2025-001 &mdash; CAPA Report (15 Seiten)</div>
+              <a href="https://LINK_ZUR_CAPA" class="btn">Dokument öffnen</a>
+            </div>
+            <div class="doc-desc">
+              Beispiel-Deviation (HVAC-Druckabweichung) mit vollständiger Root Cause
+              Analysis (5-Why), Corrective und Preventive Actions sowie
+              dokumentiertem Effectiveness Check.
+            </div>
+          </li>
+
+          <li class="doc-item">
+            <div class="doc-title-line">
+              <div class="doc-title">DMF-FAM-001 &mdash; Drug Master File (28 Seiten)</div>
+              <a href="https://LINK_ZUM_DMF" class="btn">Dokument öffnen</a>
+            </div>
+            <div class="doc-desc">
+              CTD Module 3.2.S für das fiktive Fampridin-API (Herstellung,
+              Charakterisierung, Spezifikation, Stabilität, Validierung) in
+              Anlehnung an eine PMDA-Einreichung.
+            </div>
+          </li>
+
+          <li class="doc-item">
+            <div class="doc-title-line">
+              <div class="doc-title">REG-PROC-001 &mdash; Regulatory Process Flowchart</div>
+              <a href="https://LINK_ZUM_FLOWCHART" class="btn">Dokument öffnen</a>
+            </div>
+            <div class="doc-desc">
+              Übersicht des regulatorischen Gesamtprozesses in fünf Phasen mit
+              ca. 70 identifizierten Dokumenten (vom QMS bis zur Submission).
+            </div>
+          </li>
+        </ul>
+
+        <h2>Einordnung &amp; Übertragbarkeit</h2>
+        <p>
+          Das Beispielprojekt dient mir als Referenzrahmen, um pharmazeutische
+          QM-Strukturen, Validierung und regulatorische Abläufe geschlossen
+          zu verstehen und in der Praxis anwenden zu können. Die Vorgehensweise
+          (strukturierte Analyse + moderne Textwerkzeuge + fachlicher Review)
+          ist aus meiner Sicht direkt auf reale Projekte &mdash; beispielsweise
+          am Standort Luckenwalde &mdash; übertragbar.
+        </p>
+      </div>
+
+      <div class="footer">
+        <p>Viele Grüße<br/>Stefan Schönwälder</p>
+        <p style="margin-top: 8px; color:#999;">
+          Hinweis: Alle Dokumente sind als fiktive, exemplarische Unterlagen erstellt
+          und dienen ausschließlich der Veranschaulichung von Prozessen und Strukturen
+          im Pharma-QM.
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

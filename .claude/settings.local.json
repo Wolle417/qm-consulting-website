@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run build:*)",
+      "Bash(timeout:*)",
+      "Bash(exit 0)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nAlign WasIstQMArticle design with ISO13485Article\n\n- Replace shared component imports with local component definitions to match ISO 13485 article structure\n- Update all color schemes to use consistent inline styles \\(#1e293b for headings, #000000 for body text\\)\n- Standardize table styling with bg-qcore-navy bg-opacity-30 headers and border-gray-600\n- Convert section wrappers to direct h2 elements with consistent spacing \\(mt-12\\)\n- Update all box components to match ISO 13485 design \\(opacity levels, borders, colors\\)\n- Restructure QM-Beauftragter section to use info boxes instead of plain list\n- Simplify CTA section to match ISO 13485 CTA box styling\n- Remove prose-invert class to prevent text color overrides\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git push:*)",
+      "Bash(ping:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd FMEA Grundlagen article to QM-Wissen\n\n- Create comprehensive FMEA article covering failure mode and effects analysis\n- Include 7-step FMEA process with detailed tables and examples\n- Add Design-FMEA vs. Process-FMEA comparison\n- Cover S×O×D risk priority number calculation with severity scale\n- Include MedTech-specific requirements \\(ISO 14971, ISO 13485\\)\n- Add common mistakes and FMEA software comparison\n- Structure follows pdca.js template with consistent styling\n- Article accessible at /fmea with breadcrumb navigation\n- Level: Fortgeschritten \\(12 Min Lesezeit\\)\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nIntegrate FMEA article into QM-Wissen system\n\n- Create FMEAArticle component extracted from fmea.js page\n- Import FMEAArticle in QMWissenContent\n- Add FMEA article rendering logic for selectedArticle === ''fmea''\n- Article now properly displays in QM-Wissen interface\n- Maintains consistent styling with other QM articles\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nImprove FMEA article design consistency\n\n- Add Branche column to norms table \\(ISO 9001 → QM generell, ISO 13485/14971 → Medizintechnik, IATF 16949 → Automotive\\)\n- Fix info box background in FMEA in der Medizintechnik section \\(change from white bg-blue-50 to dark bg-qcore-navy bg-opacity-20\\)\n- Update CTA design to match ISO 13485 article \\(bg-qcore-navy bg-opacity-30, border-gray-600, inline color styles\\)\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git commit:*)"
+    ]
+  }
+}
