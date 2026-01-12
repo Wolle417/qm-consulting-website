@@ -41,6 +41,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/produkte" className="hover:text-qcore-blue transition-colors" style={{ color: '#000000' }}>
+                  Produkte
+                </Link>
+              </li>
+              <li>
                 <Link href="/ueber-mich" className="hover:text-qcore-blue transition-colors" style={{ color: '#000000' }}>
                   Über mich
                 </Link>

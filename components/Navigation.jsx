@@ -18,6 +18,7 @@ export default function Navigation() {
   const navItems = [
     { label: 'Leistungen', href: '/leistungen' },
     { label: 'Praxisbeispiel', href: '/referenz-projekt' },
+    { label: 'Produkte', href: '/produkte' },
     { label: 'Über mich', href: '/ueber-mich' },
     { label: 'QM-Wissen', href: '/qm-wissen' },
   ];
