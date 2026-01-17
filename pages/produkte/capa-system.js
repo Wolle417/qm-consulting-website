@@ -149,9 +149,9 @@ export default function CAPASystem() {
                   </p>
 
                   <div className="border-t pt-4" style={{ borderColor: 'rgba(30, 58, 138, 0.15)' }}>
-                    <p className="font-semibold mb-3 text-sm" style={{ color: '#1e293b' }}>{pd?.includedTitle || 'Included in the bundle:'}</p>
+                    <p className="font-semibold mb-3 text-sm" style={{ color: '#1e293b' }}>{pd?.includedTitle || 'Included:'}</p>
                     <ul className="text-sm space-y-2">
-                      {(pd?.includedItems || ['7 Documents', 'Completed example', 'Free updates', 'Company-wide license']).map((item, i) => (
+                      {['7 Documents (Word, Excel, PDF)', 'Filled CAPA example', 'RCA Toolkit with 5-Why', 'Company-wide license'].map((item, i) => (
                         <li key={i} className="flex items-center" style={{ color: '#334155' }}>
                           <span className="mr-2" style={{ color: '#22c55e' }}>✓</span>
                           {item}

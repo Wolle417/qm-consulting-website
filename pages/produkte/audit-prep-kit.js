@@ -4,274 +4,620 @@ import Link from 'next/link';
 import Head from 'next/head';
 import Script from 'next/script';
 import { useState } from 'react';
-import { useTranslation } from '../../hooks/useTranslation';
+import { useRouter } from 'next/router';
 
-const cardStyle = {
-  backgroundColor: 'rgba(255, 255, 255, 0.35)',
-  borderColor: 'rgba(30, 58, 138, 0.2)'
+// ============================================================
+// VIEWER COMPONENTS
+// ============================================================
+
+function PDFViewer({ pdfPath, height = 600 }) {
+  return (
+    <div className="w-full rounded-lg overflow-hidden shadow-lg" 
+         style={{ height: `${height}px`, border: '1px solid rgba(30, 58, 138, 0.15)' }}>
+      <iframe
+        src={`${pdfPath}#toolbar=0&navpanes=0&scrollbar=1&view=FitH`}
+        className="w-full h-full"
+        title="PDF Preview"
+      />
+    </div>
+  );
+}
+
+function ImageViewer({ src, alt, caption }) {
+  return (
+    <div className="rounded-lg overflow-hidden shadow-lg w-full" 
+         style={{ border: '1px solid rgba(30, 58, 138, 0.15)' }}>
+      <img src={src} alt={alt} className="w-full h-auto" style={{ display: 'block' }} />
+      {caption && (
+        <div className="px-4 py-2 text-sm text-center" 
+             style={{ backgroundColor: 'rgba(30, 58, 138, 0.05)', color: '#475569' }}>
+          {caption}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function TabbedImageViewer({ images }) {
+  const [activeTab, setActiveTab] = useState(0);
+  
+  return (
+    <div className="w-full">
+      <div className="flex flex-wrap gap-3 mb-6">
+        {images.map((img, idx) => (
+          <button
+            key={idx}
+            onClick={() => setActiveTab(idx)}
+            className="px-6 py-3 rounded-lg text-base font-semibold transition-all"
+            style={{
+              backgroundColor: activeTab === idx ? '#1e3a8a' : 'white',
+              color: activeTab === idx ? 'white' : '#1e3a8a',
+              border: '2px solid #1e3a8a',
+              minWidth: '120px',
+            }}
+          >
+            {img.tab}
+          </button>
+        ))}
+      </div>
+      <ImageViewer src={images[activeTab].src} alt={images[activeTab].alt} caption={images[activeTab].caption} />
+    </div>
+  );
+}
+
+function ImagePopup({ src, alt, label }) {
+  const [isOpen, setIsOpen] = useState(false);
+  
+  return (
+    <>
+      <button 
+        onClick={() => setIsOpen(true)} 
+        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all hover:opacity-80"
+        style={{ backgroundColor: 'rgba(30, 58, 138, 0.1)', color: '#1e3a8a' }}
+      >
+        <span>🔍</span>
+        <span>{label}</span>
+      </button>
+      
+      {isOpen && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }}
+          onClick={() => setIsOpen(false)}
+        >
+          <div className="relative max-w-5xl max-h-[90vh] overflow-auto">
+            <button 
+              onClick={() => setIsOpen(false)}
+              className="absolute top-2 right-2 w-10 h-10 rounded-full flex items-center justify-center text-white text-2xl"
+              style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
+            >
+              ×
+            </button>
+            <img src={src} alt={alt} className="max-w-full h-auto" />
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+
+// ============================================================
+// STEP COMPONENTS
+// ============================================================
+
+function StepPDF({ number, title, pdfPath, pdfHeight = 650, children }) {
+  return (
+    <section className="mb-16">
+      <div className="flex items-center gap-4 mb-6">
+        <div 
+          className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg"
+          style={{ backgroundColor: '#1e3a8a', color: 'white' }}
+        >
+          {number}
+        </div>
+        <h3 className="text-2xl font-semibold" style={{ fontFamily: "'Cormorant', serif", color: '#0f172a' }}>
+          {title}
+        </h3>
+      </div>
+      
+      <div className="grid lg:grid-cols-5 gap-8">
+        <div className="lg:col-span-3">
+          <PDFViewer pdfPath={pdfPath} height={pdfHeight} />
+        </div>
+        <div className="lg:col-span-2">
+          <div 
+            className="lg:sticky lg:top-24 p-6 rounded-lg"
+            style={{ backgroundColor: 'rgba(30, 58, 138, 0.06)', border: '1px solid rgba(30, 58, 138, 0.1)' }}
+          >
+            {children}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function StepImage({ number, title, imageSrc, imageAlt, imageCaption, children }) {
+  return (
+    <section className="mb-16">
+      <div className="flex items-center gap-4 mb-6">
+        <div 
+          className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg"
+          style={{ backgroundColor: '#1e3a8a', color: 'white' }}
+        >
+          {number}
+        </div>
+        <h3 className="text-2xl font-semibold" style={{ fontFamily: "'Cormorant', serif", color: '#0f172a' }}>
+          {title}
+        </h3>
+      </div>
+      
+      <div className="grid lg:grid-cols-5 gap-8">
+        <div className="lg:col-span-3">
+          <ImageViewer src={imageSrc} alt={imageAlt} caption={imageCaption} />
+        </div>
+        <div className="lg:col-span-2">
+          <div 
+            className="lg:sticky lg:top-24 p-6 rounded-lg"
+            style={{ backgroundColor: 'rgba(30, 58, 138, 0.06)', border: '1px solid rgba(30, 58, 138, 0.1)' }}
+          >
+            {children}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function StepTabbed({ number, title, images, popupImages, children }) {
+  return (
+    <section className="mb-16">
+      <div className="flex items-center gap-4 mb-6">
+        <div 
+          className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg"
+          style={{ backgroundColor: '#1e3a8a', color: 'white' }}
+        >
+          {number}
+        </div>
+        <h3 className="text-2xl font-semibold" style={{ fontFamily: "'Cormorant', serif", color: '#0f172a' }}>
+          {title}
+        </h3>
+      </div>
+      
+      <div className="grid lg:grid-cols-5 gap-8">
+        <div className="lg:col-span-3">
+          <TabbedImageViewer images={images} />
+          {popupImages && popupImages.length > 0 && (
+            <div className="mt-4 flex flex-wrap gap-3">
+              {popupImages.map((img, idx) => (
+                <ImagePopup key={idx} src={img.src} alt={img.alt} label={img.label} />
+              ))}
+            </div>
+          )}
+        </div>
+        <div className="lg:col-span-2">
+          <div 
+            className="lg:sticky lg:top-24 p-6 rounded-lg"
+            style={{ backgroundColor: 'rgba(30, 58, 138, 0.06)', border: '1px solid rgba(30, 58, 138, 0.1)' }}
+          >
+            {children}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ============================================================
+// TRANSLATIONS
+// ============================================================
+
+const t = {
+  de: {
+    meta: {
+      title: 'Audit Prep Kit | ISO 13485 Zertifizierungsaudit | QCore',
+      description: 'Audit Preparation Kit für MedTech: SOP, Interview-Guide, Checklisten, Finding Response. Systematisch vorbereitet auf ISO 13485 & FDA Audits. €79.'
+    },
+    breadcrumb: 'Produkte',
+    hero: {
+      title: 'Audit Preparation Kit',
+      badges: [
+        { std: 'ISO 13485', clause: '§8.2.4' },
+        { std: 'FDA 21 CFR 820', clause: '§820.22' },
+        { std: 'ISO 19011', clause: 'Audit Guidelines' }
+      ],
+      warning: {
+        title: 'Audits sind stressig',
+        text: 'Teams arbeiten bis zur letzten Minute an Dokumenten, Mitarbeiter wissen nicht was sie sagen dürfen, und niemand weiß genau wo die Lücken sind.'
+      },
+      problem: 'Unstrukturierte Audit-Vorbereitung führt zu Findings, die vermeidbar gewesen wären.',
+      solution: 'Ein systematischer Audit-Prozess mit Interview-Guide, Checklisten und Pre-Check – damit Sie vor dem Auditor wissen, wo Sie stehen.',
+      howItWorks: 'Das Kit führt Sie durch den kompletten Audit-Zyklus: Von der Planung über die Durchführung bis zum Reporting. Jedes Dokument ist audit-erprobt und direkt einsetzbar.'
+    },
+    step1: {
+      title: 'Internal Audit SOP',
+      intro: 'Die Basis: Eine vollständige Verfahrensanweisung für Ihr internes Audit-Programm.',
+      sections: {
+        included: 'Was enthalten ist:',
+        items: [
+          'Audit-Programm Management',
+          'Auditor-Qualifikation & Unabhängigkeit',
+          'Major/Minor NC Klassifizierung',
+          'CAPA-Verknüpfung & Follow-up',
+          'Management Review Input'
+        ]
+      },
+      tip: '💡 Die SOP definiert klare Eskalationskriterien – so weiß jeder, wann ein Finding "Major" wird.'
+    },
+    step2: {
+      title: 'Audit Plan Template',
+      intro: 'Strukturierte Planung für jedes Audit – mit Risk-Trigger und Prozess-Scope.',
+      sections: {
+        included: 'Enthält:',
+        items: [
+          'Audit-Scope & Objectives',
+          'Risk-basierte Begründung',
+          'Zeitplan & Ressourcen',
+          'Auditor-Zuweisung',
+          'Dokumenten-Anforderungen'
+        ]
+      },
+      tip: '💡 "Why is this audit performed now?" – diese Frage beantwortet der Plan direkt.'
+    },
+    step3: {
+      title: 'Audit Report Template',
+      intro: 'Professionelle Audit-Berichte mit Finding-Klassifizierung und Regulatory Impact.',
+      sections: {
+        included: 'Report-Struktur:',
+        items: [
+          'Executive Summary',
+          'Finding-Details mit Evidenz',
+          'Regulatory Impact Assessment',
+          'CAPA-Referenzen',
+          'Follow-up Requirements'
+        ]
+      },
+      tip: '📋 Das "Regulatory Impact (Yes/No)" Feld hilft bei der Priorisierung.'
+    },
+    step4: {
+      title: 'Interview Guide',
+      intro: 'Der USP dieses Kits: Praxiserprobte Fragen für jeden QMS-Bereich – plus Red Flags.',
+      sections: {
+        included: 'Abgedeckte Bereiche:',
+        items: [
+          'Document Control & CAPA',
+          'Production & Quality Control',
+          'Design & Risk Management',
+          'Supplier Management',
+          'Cross-Functional Integration'
+        ]
+      },
+      tip: '⚠️ "Red Flag Answers" zeigen Ihnen, wann eine Antwort problematisch ist.'
+    },
+    step5: {
+      title: 'Audit Checklists',
+      intro: 'Umfassende Checklisten für ISO 13485 und FDA 21 CFR 820 – mit Objective Evidence.',
+      tabs: {
+        iso: 'ISO 13485',
+        fda: 'FDA 820'
+      },
+      sections: {
+        included: 'Checklist-Features:',
+        items: [
+          'Alle relevanten Clauses',
+          'Objective Evidence Spalte',
+          'Status-Tracking (Compliant/NC/NA)',
+          'Kommentarfeld für Details'
+        ]
+      },
+      tip: '🔍 Zwei separate Checklisten – für ISO-fokussierte und FDA-fokussierte Audits.'
+    },
+    step6: {
+      title: 'Audit Schedule',
+      intro: 'Visueller Zeitplan für die Audit-Durchführung mit Bereichen und Verantwortlichen.',
+      sections: {
+        included: 'Schedule enthält:',
+        items: [
+          'Prozess/Bereich-Zuordnung',
+          'Auditor-Zuweisung',
+          'Zeitslots',
+          'Ansprechpartner pro Bereich'
+        ]
+      },
+      tip: '📅 Verhindert Ad-hoc-Planung und sorgt für strukturierte Durchführung.'
+    },
+    step7: {
+      title: 'Quick Reference Card',
+      intro: 'Ein-Seiter für alle Mitarbeiter: Verhaltensregeln im Audit auf einen Blick.',
+      sections: {
+        included: 'Auf der Karte:',
+        items: [
+          'Do\'s und Don\'ts im Audit',
+          'Eskalationswege',
+          'Kommunikationsregeln',
+          'Was Auditoren erwarten'
+        ]
+      },
+      tip: '🖨️ Drucken Sie diese Karte aus und verteilen Sie sie vor dem Audit an alle Bereiche.'
+    },
+    cta: {
+      title: 'Bereit für Ihr nächstes Audit?',
+      text: '€79 für strukturierte Vorbereitung – damit das Audit keine Überraschungen bringt.',
+      button: 'Jetzt kaufen'
+    },
+    upsell: {
+      title: 'Komplettpaket für Ihr QMS',
+      text: 'Das Audit Prep Kit ist Teil unserer QMS-Bundle-Serie:',
+      bundles: [
+        { name: 'CAPA System Bundle', price: '€129', link: '/produkte/capa-system' },
+        { name: 'NC Management Bundle', price: '€99', link: '/produkte/nc-system' }
+      ],
+      bundleHint: 'Alle 3 Bundles zusammen: €307 statt €349'
+    },
+    buyBox: {
+      price: '€79',
+      oneTime: 'einmalig',
+      button: 'Jetzt kaufen',
+      secure: 'Sichere Zahlung via Gumroad · Sofortiger Download',
+      included: [
+        '8 Dokumente (Word, Excel, PDF)',
+        'Interview Guide mit Red Flags',
+        'ISO + FDA Checklisten',
+        'Firmenweite Lizenz'
+      ]
+    }
+  },
+  en: {
+    meta: {
+      title: 'Audit Prep Kit | ISO 13485 Certification Audit | QCore',
+      description: 'Audit Preparation Kit for MedTech: SOP, Interview Guide, Checklists, Finding Response. Systematically prepared for ISO 13485 & FDA audits. €79.'
+    },
+    breadcrumb: 'Products',
+    hero: {
+      title: 'Audit Preparation Kit',
+      badges: [
+        { std: 'ISO 13485', clause: '§8.2.4' },
+        { std: 'FDA 21 CFR 820', clause: '§820.22' },
+        { std: 'ISO 19011', clause: 'Audit Guidelines' }
+      ],
+      warning: {
+        title: 'Audits are stressful',
+        text: 'Teams work on documents until the last minute, employees don\'t know what they can say, and nobody knows exactly where the gaps are.'
+      },
+      problem: 'Unstructured audit preparation leads to findings that could have been avoided.',
+      solution: 'A systematic audit process with interview guide, checklists, and pre-check – so you know where you stand before the auditor does.',
+      howItWorks: 'The kit guides you through the complete audit cycle: from planning to execution to reporting. Every document is audit-proven and ready to use.'
+    },
+    step1: {
+      title: 'Internal Audit SOP',
+      intro: 'The foundation: A complete procedure for your internal audit program.',
+      sections: {
+        included: 'What\'s included:',
+        items: [
+          'Audit Program Management',
+          'Auditor Qualification & Independence',
+          'Major/Minor NC Classification',
+          'CAPA Linkage & Follow-up',
+          'Management Review Input'
+        ]
+      },
+      tip: '💡 The SOP defines clear escalation criteria – so everyone knows when a finding becomes "Major".'
+    },
+    step2: {
+      title: 'Audit Plan Template',
+      intro: 'Structured planning for every audit – with risk trigger and process scope.',
+      sections: {
+        included: 'Includes:',
+        items: [
+          'Audit Scope & Objectives',
+          'Risk-based Rationale',
+          'Schedule & Resources',
+          'Auditor Assignment',
+          'Documentation Requirements'
+        ]
+      },
+      tip: '💡 "Why is this audit performed now?" – the plan answers this question directly.'
+    },
+    step3: {
+      title: 'Audit Report Template',
+      intro: 'Professional audit reports with finding classification and regulatory impact.',
+      sections: {
+        included: 'Report Structure:',
+        items: [
+          'Executive Summary',
+          'Finding Details with Evidence',
+          'Regulatory Impact Assessment',
+          'CAPA References',
+          'Follow-up Requirements'
+        ]
+      },
+      tip: '📋 The "Regulatory Impact (Yes/No)" field helps with prioritization.'
+    },
+    step4: {
+      title: 'Interview Guide',
+      intro: 'The USP of this kit: Battle-tested questions for every QMS area – plus red flags.',
+      sections: {
+        included: 'Covered Areas:',
+        items: [
+          'Document Control & CAPA',
+          'Production & Quality Control',
+          'Design & Risk Management',
+          'Supplier Management',
+          'Cross-Functional Integration'
+        ]
+      },
+      tip: '⚠️ "Red Flag Answers" show you when a response is problematic.'
+    },
+    step5: {
+      title: 'Audit Checklists',
+      intro: 'Comprehensive checklists for ISO 13485 and FDA 21 CFR 820 – with objective evidence.',
+      tabs: {
+        iso: 'ISO 13485',
+        fda: 'FDA 820'
+      },
+      sections: {
+        included: 'Checklist Features:',
+        items: [
+          'All relevant clauses',
+          'Objective Evidence column',
+          'Status tracking (Compliant/NC/NA)',
+          'Comment field for details'
+        ]
+      },
+      tip: '🔍 Two separate checklists – for ISO-focused and FDA-focused audits.'
+    },
+    step6: {
+      title: 'Audit Schedule',
+      intro: 'Visual timeline for audit execution with areas and responsibilities.',
+      sections: {
+        included: 'Schedule includes:',
+        items: [
+          'Process/Area assignment',
+          'Auditor assignment',
+          'Time slots',
+          'Contact person per area'
+        ]
+      },
+      tip: '📅 Prevents ad-hoc planning and ensures structured execution.'
+    },
+    step7: {
+      title: 'Quick Reference Card',
+      intro: 'One-pager for all employees: Audit behavior rules at a glance.',
+      sections: {
+        included: 'On the card:',
+        items: [
+          'Do\'s and Don\'ts in audit',
+          'Escalation paths',
+          'Communication rules',
+          'What auditors expect'
+        ]
+      },
+      tip: '🖨️ Print this card and distribute it to all areas before the audit.'
+    },
+    cta: {
+      title: 'Ready for your next audit?',
+      text: '€79 for structured preparation – so the audit brings no surprises.',
+      button: 'Buy now'
+    },
+    upsell: {
+      title: 'Complete package for your QMS',
+      text: 'The Audit Prep Kit is part of our QMS bundle series:',
+      bundles: [
+        { name: 'CAPA System Bundle', price: '€129', link: '/produkte/capa-system' },
+        { name: 'NC Management Bundle', price: '€99', link: '/produkte/nc-system' }
+      ],
+      bundleHint: 'All 3 bundles together: €307 instead of €349'
+    },
+    buyBox: {
+      price: '€79',
+      oneTime: 'one-time',
+      button: 'Buy now',
+      secure: 'Secure payment via Gumroad · Instant download',
+      included: [
+        '8 Documents (Word, Excel, PDF)',
+        'Interview Guide with Red Flags',
+        'ISO + FDA Checklists',
+        'Company-wide license'
+      ]
+    }
+  }
 };
 
+// ============================================================
+// MAIN COMPONENT
+// ============================================================
+
 export default function AuditPrepKit() {
-  const [openFAQ, setOpenFAQ] = useState(null);
-  const { t, locale } = useTranslation();
-
-  const documents = [
-    {
-      name: locale === 'de' ? 'Audit Preparation SOP' : 'Audit Preparation SOP',
-      description: locale === 'de' 
-        ? 'Prozedur für systematische Audit-Vorbereitung: Timeline, Verantwortlichkeiten, Kommunikation.'
-        : 'Procedure for systematic audit preparation: timeline, responsibilities, communication protocols.',
-      format: 'Word (.docx)',
-      pages: '6',
-    },
-    {
-      name: locale === 'de' ? 'Audit Preparation Checklist' : 'Audit Preparation Checklist',
-      description: locale === 'de'
-        ? 'Umfassende Checkliste für alle Vorbereitungsschritte – von 8 Wochen vor bis Audit-Tag.'
-        : 'Comprehensive checklist for all preparation steps – from 8 weeks before to audit day.',
-      format: 'Word (.docx)',
-      pages: '4',
-    },
-    {
-      name: locale === 'de' ? 'Audit Schedule Template' : 'Audit Schedule Template',
-      description: locale === 'de'
-        ? 'Vorlage für den Audit-Zeitplan mit Bereichen, Auditoren, Ansprechpartnern und Räumen.'
-        : 'Template for audit schedule with areas, auditors, contacts, and rooms.',
-      format: 'Word (.docx)',
-      pages: '2',
-    },
-    {
-      name: locale === 'de' ? 'Document Readiness Tracker' : 'Document Readiness Tracker',
-      description: locale === 'de'
-        ? 'Excel-Tracker für den Dokumentenstatus aller QMS-Dokumente vor dem Audit.'
-        : 'Excel tracker for document status of all QMS documents before the audit.',
-      format: 'Excel (.xlsx)',
-      pages: '2 Sheets',
-    },
-    {
-      name: locale === 'de' ? 'Finding Response Template' : 'Finding Response Template',
-      description: locale === 'de'
-        ? 'Vorlage für die strukturierte Beantwortung von Audit-Findings nach dem Audit.'
-        : 'Template for structured response to audit findings after the audit.',
-      format: 'Word (.docx)',
-      pages: '3',
-    },
-    {
-      name: locale === 'de' ? 'Pre-Audit Self-Assessment' : 'Pre-Audit Self-Assessment',
-      description: locale === 'de'
-        ? 'Internes Self-Assessment nach ISO 13485 Hauptkapiteln – identifiziert Lücken vor dem Auditor.'
-        : 'Internal self-assessment based on ISO 13485 main clauses – identifies gaps before the auditor does.',
-      format: 'Excel (.xlsx)',
-      pages: '3 Sheets',
-    },
-    {
-      name: locale === 'de' ? 'Audit Day Briefing Template' : 'Audit Day Briefing Template',
-      description: locale === 'de'
-        ? "Vorlage für das Team-Briefing am Audit-Tag: Do's, Don'ts, Kommunikationsregeln."
-        : "Template for team briefing on audit day: do's, don'ts, communication rules.",
-      format: 'Word (.docx)',
-      pages: '2',
-    },
-    {
-      name: locale === 'de' ? 'Quick Reference Card' : 'Quick Reference Card',
-      description: locale === 'de'
-        ? 'Ein-Seiter für jeden Mitarbeiter: Verhaltensregeln im Audit, Eskalationswege.'
-        : 'One-pager for every employee: behavior rules during audit, escalation paths.',
-      format: 'PDF',
-      pages: '1',
-    },
-  ];
-
-  const faqs = [
-    {
-      q: locale === 'de' ? 'Deckt das Kit ISO 13485 und FDA ab?' : 'Does the kit cover ISO 13485 and FDA?',
-      a: locale === 'de' 
-        ? 'Ja. Die Checklisten und das Self-Assessment basieren auf ISO 13485:2016 und berücksichtigen FDA 21 CFR 820 Anforderungen. Sie sind für Zertifizierungs-, Überwachungs- und Kundenaudits geeignet.'
-        : 'Yes. The checklists and self-assessment are based on ISO 13485:2016 and consider FDA 21 CFR 820 requirements. Suitable for certification, surveillance, and customer audits.'
-    },
-    {
-      q: locale === 'de' ? 'Kann ich das Kit auch für interne Audits nutzen?' : 'Can I use the kit for internal audits?',
-      a: locale === 'de'
-        ? 'Die Vorbereitungs-Checklisten sind primär für externe Audits gedacht. Für interne Audits empfehlen wir das kommende Internal Audit Bundle – oder Sie nutzen das Self-Assessment als Gap-Analyse.'
-        : 'The preparation checklists are primarily designed for external audits. For internal audits, we recommend the upcoming Internal Audit Bundle – or use the Self-Assessment as a gap analysis.'
-    },
-    {
-      q: locale === 'de' ? 'Wie funktioniert die Finding-Klassifizierung?' : 'How does finding classification work?',
-      a: locale === 'de'
-        ? 'Das Finding Response Template enthält eine Bewertungsmatrix für Major/Minor Nonconformities und Observations. Sie hilft bei der Priorisierung und strukturierten Beantwortung.'
-        : 'The Finding Response Template includes an assessment matrix for Major/Minor Nonconformities and Observations. It helps with prioritization and structured responses.'
-    },
-    {
-      q: locale === 'de' ? 'Wann sollte ich mit der Vorbereitung beginnen?' : 'When should I start preparation?',
-      a: locale === 'de'
-        ? 'Die SOP empfiehlt 8 Wochen vor dem Audit. Das Self-Assessment sollten Sie zuerst durchführen – so haben Sie genug Zeit, identifizierte Lücken zu schließen.'
-        : 'The SOP recommends 8 weeks before the audit. Run the Self-Assessment first – this gives you enough time to close identified gaps.'
-    },
-    {
-      q: locale === 'de' ? 'In welcher Sprache sind die Dokumente?' : 'What language are the documents in?',
-      a: locale === 'de'
-        ? 'Englisch – passend für internationale Zertifizierungsaudits. Die Struktur ist aber leicht zu übersetzen, falls Sie deutsche Versionen benötigen.'
-        : 'English – suitable for international certification audits. The structure is easy to translate if you need localized versions.'
-    },
-  ];
-
-  const timeline = [
-    { 
-      time: locale === 'de' ? '8-4 Wochen' : '8-4 Weeks', 
-      title: 'Planning', 
-      desc: locale === 'de' ? 'Audit-Scope klären, Team informieren, Self-Assessment starten' : 'Clarify audit scope, inform team, start self-assessment'
-    },
-    { 
-      time: locale === 'de' ? '4-2 Wochen' : '4-2 Weeks', 
-      title: 'Documentation', 
-      desc: locale === 'de' ? 'Dokumente prüfen, Lücken schließen, Tracker aktualisieren' : 'Review documents, close gaps, update tracker'
-    },
-    { 
-      time: locale === 'de' ? '2-1 Woche' : '2-1 Week', 
-      title: 'Team Prep', 
-      desc: locale === 'de' ? 'Briefings durchführen, Rollen klären, Übungen' : 'Conduct briefings, clarify roles, run exercises'
-    },
-    { 
-      time: locale === 'de' ? 'Audit-Tag' : 'Audit Day', 
-      title: 'Execution', 
-      desc: locale === 'de' ? 'Opening Meeting, Begleitung, Dokumentation, Closing' : 'Opening meeting, accompaniment, documentation, closing'
-    },
-  ];
-
-  const whyItems = [
-    { 
-      icon: '📋', 
-      title: locale === 'de' ? 'Strukturiert' : 'Structured', 
-      desc: locale === 'de' 
-        ? 'Klare Timeline von 8 Wochen vor dem Audit bis zum Closing. Keine Ad-hoc-Aktionen mehr.' 
-        : 'Clear timeline from 8 weeks before the audit to closing. No more ad-hoc actions.'
-    },
-    { 
-      icon: '🔍', 
-      title: 'Self-Assessment', 
-      desc: locale === 'de' 
-        ? 'Finden Sie Lücken bevor der Auditor sie findet. Basierend auf ISO 13485 Hauptkapiteln.' 
-        : 'Find gaps before the auditor does. Based on ISO 13485 main clauses.'
-    },
-    { 
-      icon: '👥', 
-      title: 'Team-ready', 
-      desc: locale === 'de' 
-        ? 'Briefing-Templates und Quick Reference Card für alle Mitarbeiter – jeder weiß, was zu tun ist.' 
-        : 'Briefing templates and Quick Reference Card for all employees – everyone knows what to do.'
-    },
-  ];
+  const router = useRouter();
+  const locale = router.locale || 'de';
+  const text = t[locale] || t.en;
 
   return (
     <>
       <Head>
-        <title>{locale === 'de' ? 'Audit Preparation Kit | ISO 13485 Zertifizierungsaudit vorbereiten | QCore' : 'Audit Preparation Kit | ISO 13485 Certification Audit Prep | QCore'}</title>
-        <meta name="description" content={locale === 'de' ? 'Audit Preparation Kit für MedTech: Checklisten, Self-Assessment, Finding Response Templates. Systematisch vorbereitet auf ISO 13485 Zertifizierungsaudits. €79.' : 'Audit Preparation Kit for MedTech: checklists, self-assessment, finding response templates. Systematically prepared for ISO 13485 certification audits. €79.'} />
+        <title>{text.meta.title}</title>
+        <meta name="description" content={text.meta.description} />
+        <meta name="keywords" content="Audit Preparation, ISO 13485 Audit, FDA Inspection, Internal Audit, Audit Checklist, MedTech Audit" />
+        <meta property="og:title" content={text.meta.title} />
+        <meta property="og:description" content={text.meta.description} />
+        <meta property="og:type" content="product" />
+        <meta property="product:price:amount" content="79" />
+        <meta property="product:price:currency" content="EUR" />
       </Head>
       
       <Script src="https://gumroad.com/js/gumroad.js" strategy="lazyOnload" />
       
       <Navigation />
+      
       <main className="relative min-h-screen">
         {/* Breadcrumb */}
         <section className="relative pt-20 pb-2">
           <div className="relative z-10 max-w-[90%] mx-auto px-8">
             <nav className="text-sm" style={{ color: '#64748b' }}>
-              <Link href="/produkte" className="hover:underline">{locale === 'de' ? 'Produkte' : 'Products'}</Link>
+              <Link href="/produkte" className="hover:underline">{text.breadcrumb}</Link>
               <span className="mx-2">→</span>
               <span style={{ color: '#1e293b' }}>Audit Preparation Kit</span>
             </nav>
           </div>
         </section>
 
-        {/* Hero Section */}
-        <section className="relative pt-4 pb-8">
+        {/* HERO */}
+        <section className="relative pt-4 pb-12">
           <div className="relative z-10 max-w-[90%] mx-auto px-8">
             <div className="grid lg:grid-cols-5 gap-8 items-start">
-              {/* Left: Info (3 cols) */}
+              {/* Left Content */}
               <div className="lg:col-span-3">
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <span className="px-3 py-1 rounded text-sm" style={{ backgroundColor: 'rgba(30, 58, 138, 0.15)', color: '#1e3a8a' }}>ISO 13485</span>
-                  <span className="px-3 py-1 rounded text-sm" style={{ backgroundColor: 'rgba(30, 58, 138, 0.15)', color: '#1e3a8a' }}>FDA 21 CFR 820</span>
-                  <span className="px-3 py-1 rounded text-sm" style={{ backgroundColor: 'rgba(30, 58, 138, 0.15)', color: '#1e3a8a' }}>{locale === 'de' ? 'Zertifizierungsaudit' : 'Certification Audit'}</span>
-                </div>
-                
-                <h1 
-                  className="text-4xl md:text-5xl mb-4"
-                  style={{
-                    fontFamily: "'Cormorant', serif",
-                    color: '#0f172a',
-                    fontWeight: 600,
-                    textShadow: '0 1px 2px rgba(255,255,255,0.5)'
-                  }}
-                >
-                  Audit Preparation Kit
+                {/* Title */}
+                <h1 className="text-5xl lg:text-6xl font-semibold mb-4" 
+                    style={{ fontFamily: "'Cormorant', serif", color: '#0f172a' }}>
+                  {text.hero.title}
                 </h1>
                 
-                <p className="text-xl mb-6" style={{ color: '#334155' }}>
-                  {locale === 'de' 
-                    ? '8 Dokumente für systematische Audit-Vorbereitung. Von 8 Wochen vorher bis zum Audit-Tag – nichts vergessen.'
-                    : '8 documents for systematic audit preparation. From 8 weeks before to audit day – nothing forgotten.'}
-                </p>
-
-                {/* Key Benefits */}
-                <div 
-                  className="backdrop-blur-sm p-5 rounded-lg border mb-6"
-                  style={cardStyle}
-                >
-                  <div className="grid sm:grid-cols-3 gap-4">
-                    <div className="text-center">
-                      <div className="text-2xl font-bold" style={{ color: '#1e3a8a' }}>8</div>
-                      <div className="text-sm" style={{ color: '#475569' }}>{locale === 'de' ? 'Dokumente' : 'Documents'}</div>
+                {/* Badges */}
+                <div className="flex flex-wrap gap-3 mb-8">
+                  {text.hero.badges.map((item, i) => (
+                    <div key={i} className="px-4 py-2 rounded-lg backdrop-blur-sm" 
+                         style={{ backgroundColor: 'rgba(30, 58, 138, 0.08)', border: '1px solid rgba(30, 58, 138, 0.15)' }}>
+                      <span className="font-semibold" style={{ color: '#1e3a8a' }}>{item.std}</span>
+                      <span className="ml-2 text-sm" style={{ color: '#64748b' }}>{item.clause}</span>
                     </div>
-                    <div className="text-center">
-                      <div className="text-2xl font-bold" style={{ color: '#1e3a8a' }}>~55</div>
-                      <div className="text-sm" style={{ color: '#475569' }}>{locale === 'de' ? 'Seiten' : 'Pages'}</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-2xl font-bold" style={{ color: '#1e3a8a' }}>Word & Excel</div>
-                      <div className="text-sm" style={{ color: '#475569' }}>{locale === 'de' ? 'Editierbar' : 'Editable'}</div>
+                  ))}
+                </div>
+                
+                {/* Warning Box */}
+                <div className="rounded-xl p-6 mb-8" 
+                     style={{ backgroundColor: 'rgba(239, 68, 68, 0.08)', border: '1px solid rgba(239, 68, 68, 0.2)' }}>
+                  <div className="flex items-start gap-4">
+                    <div className="text-3xl">⚠️</div>
+                    <div>
+                      <p className="font-bold text-xl mb-2" style={{ color: '#b91c1c' }}>{text.hero.warning.title}</p>
+                      <p className="text-lg" style={{ color: '#7f1d1d' }}>{text.hero.warning.text}</p>
                     </div>
                   </div>
                 </div>
-
-                {/* Problem/Solution */}
-                <div className="space-y-4">
-                  <div 
-                    className="backdrop-blur-sm border-l-4 p-4 rounded-r-lg"
-                    style={{ backgroundColor: 'rgba(254, 202, 202, 0.3)', borderColor: '#f87171' }}
-                  >
-                    <p className="font-semibold mb-1" style={{ color: '#991b1b' }}>{locale === 'de' ? 'Das Problem:' : 'The problem:'}</p>
-                    <p className="text-sm" style={{ color: '#7f1d1d' }}>
-                      {locale === 'de'
-                        ? 'Audit-Vorbereitung ist stressig. Teams arbeiten bis zur letzten Minute an Dokumenten, Mitarbeiter sind unsicher was sie sagen dürfen, und niemand weiß genau, wo die Lücken sind.'
-                        : "Audit preparation is stressful. Teams work on documents until the last minute, employees are unsure what they can say, and nobody knows exactly where the gaps are."}
-                    </p>
-                  </div>
-
-                  <div 
-                    className="backdrop-blur-sm border-l-4 p-4 rounded-r-lg"
-                    style={{ backgroundColor: 'rgba(187, 247, 208, 0.3)', borderColor: '#4ade80' }}
-                  >
-                    <p className="font-semibold mb-1" style={{ color: '#166534' }}>{locale === 'de' ? 'Die Lösung:' : 'The solution:'}</p>
-                    <p className="text-sm" style={{ color: '#15803d' }}>
-                      {locale === 'de'
-                        ? 'Ein strukturierter Vorbereitungsprozess mit Timeline, Self-Assessment zur Lückenidentifikation, und klaren Briefing-Unterlagen für alle Beteiligten.'
-                        : 'A structured preparation process with timeline, self-assessment for gap identification, and clear briefing materials for all involved.'}
-                    </p>
-                  </div>
+                
+                {/* Problem / Solution */}
+                <div className="mb-8" style={{ color: '#334155' }}>
+                  <p className="text-lg mb-4"><strong>{locale === 'de' ? 'Das Problem:' : 'The problem:'}</strong> {text.hero.problem}</p>
+                  <p className="text-lg"><strong>{locale === 'de' ? 'Die Lösung:' : 'The solution:'}</strong> {text.hero.solution}</p>
+                </div>
+                
+                {/* How It Works */}
+                <div className="rounded-xl p-6" 
+                     style={{ backgroundColor: 'rgba(30, 58, 138, 0.04)', border: '1px solid rgba(30, 58, 138, 0.1)' }}>
+                  <p className="text-lg" style={{ color: '#475569' }}>{text.hero.howItWorks}</p>
                 </div>
               </div>
 
-              {/* Right: Buy Box (2 cols) */}
+              {/* Right: Buy Box */}
               <div className="lg:col-span-2 lg:sticky lg:top-24">
                 <div 
                   className="backdrop-blur-sm border rounded-lg p-6 shadow-lg"
                   style={{ backgroundColor: 'rgba(255, 255, 255, 0.7)', borderColor: 'rgba(30, 58, 138, 0.2)' }}
                 >
                   <div className="text-center mb-6">
-                    <span className="text-4xl font-bold" style={{ color: '#1e3a8a' }}>€79</span>
-                    <span className="text-sm ml-2" style={{ color: '#64748b' }}>{locale === 'de' ? 'einmalig' : 'one-time'}</span>
+                    <span className="text-4xl font-bold" style={{ color: '#1e3a8a' }}>{text.buyBox.price}</span>
+                    <span className="text-sm ml-2" style={{ color: '#64748b' }}>{text.buyBox.oneTime}</span>
                   </div>
 
                   <a 
@@ -281,20 +627,19 @@ export default function AuditPrepKit() {
                     className="block w-full text-center px-6 py-4 rounded-lg text-lg font-semibold transition-all hover:opacity-90 mb-3"
                     style={{ backgroundColor: '#1e3a8a', color: '#ffffff' }}
                   >
-                    🇬🇧 {locale === 'de' ? 'Jetzt kaufen' : 'Buy now'}
+                    🇬🇧 {text.buyBox.button}
                   </a>
 
                   <p className="text-xs text-center mb-4" style={{ color: '#64748b' }}>
-                    {locale === 'de' ? 'Sichere Zahlung via Gumroad · Sofortiger Download' : 'Secure payment via Gumroad · Instant download'}
+                    {text.buyBox.secure}
                   </p>
 
                   <div className="border-t pt-4" style={{ borderColor: 'rgba(30, 58, 138, 0.15)' }}>
-                    <p className="font-semibold mb-3 text-sm" style={{ color: '#1e293b' }}>{locale === 'de' ? 'Im Kit enthalten:' : 'Included in the bundle:'}</p>
+                    <p className="font-semibold mb-3 text-sm" style={{ color: '#1e293b' }}>
+                      {locale === 'de' ? 'Im Kit enthalten:' : 'Included:'}
+                    </p>
                     <ul className="text-sm space-y-2">
-                      {(locale === 'de' 
-                        ? ['8 Dokumente (Word, Excel, PDF)', 'Self-Assessment nach ISO 13485', 'Finding Response Templates', 'Firmenweite Lizenz']
-                        : ['8 Documents (Word, Excel, PDF)', 'Self-Assessment based on ISO 13485', 'Finding Response Templates', 'Company-wide license']
-                      ).map((item, i) => (
+                      {text.buyBox.included.map((item, i) => (
                         <li key={i} className="flex items-center" style={{ color: '#334155' }}>
                           <span className="mr-2" style={{ color: '#22c55e' }}>✓</span>
                           {item}
@@ -302,230 +647,213 @@ export default function AuditPrepKit() {
                       ))}
                     </ul>
                   </div>
-
-                  {/* Bundle Hint */}
-                  <div 
-                    className="mt-4 p-3 rounded-lg text-sm"
-                    style={{ backgroundColor: 'rgba(30, 58, 138, 0.08)' }}
-                  >
-                    <p style={{ color: '#475569' }}>
-                      <strong style={{ color: '#1e3a8a' }}>💡 {locale === 'de' ? 'Komplettpaket:' : 'Complete package:'}</strong> {locale === 'de' ? 'Alle 3 Bundles zusammen für €307 statt €349.' : 'All 3 bundles together for €307 instead of €349.'}{' '}
-                      <Link href="/kontakt" className="underline" style={{ color: '#1e3a8a' }}>
-                        {locale === 'de' ? 'Anfragen →' : 'Inquire →'}
-                      </Link>
-                    </p>
-                  </div>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Sample Preview - Embedded PDF */}
+        {/* STEPS */}
         <section className="relative py-8">
           <div className="relative z-10 max-w-[90%] mx-auto px-8">
-            <h2 
-              className="text-3xl mb-6"
-              style={{ color: '#0f172a', fontFamily: "'Cormorant', serif", fontWeight: 600 }}
-            >
-              {locale === 'de' ? 'Vorschau: Audit Preparation SOP' : 'Preview: Audit Preparation SOP'}
-            </h2>
             
-            <div 
-              className="backdrop-blur-sm border rounded-lg overflow-hidden"
-              style={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderColor: 'rgba(30, 58, 138, 0.2)' }}
+            {/* Step 1: Audit SOP */}
+            <StepPDF 
+              number={1} 
+              title={text.step1.title}
+              pdfPath="/docs/audit/QCore_Audit-SOP_v1.1.pdf"
+              pdfHeight={700}
             >
-              {/* PDF Header */}
-              <div 
-                className="px-6 py-4 border-b flex items-center justify-between"
-                style={{ backgroundColor: 'rgba(30, 58, 138, 0.08)', borderColor: 'rgba(30, 58, 138, 0.15)' }}
-              >
-                <div>
-                  <p className="font-semibold" style={{ color: '#1e293b' }}>SOP-AUD-001 | Audit Preparation</p>
-                  <p className="text-xs" style={{ color: '#64748b' }}>{locale === 'de' ? 'Sample Preview – Inhaltsverzeichnis & Struktur' : 'Sample Preview – Table of Contents & Structure'}</p>
-                </div>
-                <a 
-                  href="/docs/samples/QCore_Audit-Prep_Sample.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-3 py-1 rounded text-xs font-medium flex items-center gap-1 hover:opacity-80 transition-opacity"
-                  style={{ backgroundColor: 'rgba(30, 58, 138, 0.15)', color: '#1e3a8a' }}
-                >
-                  {locale === 'de' ? 'PDF öffnen ↗' : 'Open PDF ↗'}
-                </a>
-              </div>
-
-              {/* Embedded PDF */}
-              <div className="relative" style={{ height: '600px' }}>
-                <iframe 
-                  src="/docs/samples/QCore_Audit-Prep_Sample.pdf#view=FitH"
-                  className="w-full h-full"
-                  title="Audit Preparation SOP Sample Preview"
-                  style={{ border: 'none' }}
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Documents Detail */}
-        <section className="relative py-8">
-          <div className="relative z-10 max-w-[90%] mx-auto px-8">
-            <h2 
-              className="text-3xl mb-6"
-              style={{ color: '#0f172a', fontFamily: "'Cormorant', serif", fontWeight: 600 }}
-            >
-              {locale === 'de' ? 'Alle 8 Dokumente im Kit' : 'All 8 documents in the kit'}
-            </h2>
-            
-            <div className="grid md:grid-cols-2 gap-4">
-              {documents.map((doc, index) => (
-                <div 
-                  key={index}
-                  className="backdrop-blur-sm p-5 rounded-lg border"
-                  style={cardStyle}
-                >
-                  <div className="flex items-start justify-between mb-2">
-                    <h3 className="font-semibold" style={{ color: '#1e293b' }}>
-                      {index + 1}. {doc.name}
-                    </h3>
-                    <div className="flex gap-2">
-                      <span className="text-xs px-2 py-1 rounded" style={{ backgroundColor: 'rgba(30, 58, 138, 0.1)', color: '#64748b' }}>
-                        {doc.format}
-                      </span>
-                      <span className="text-xs px-2 py-1 rounded" style={{ backgroundColor: 'rgba(30, 58, 138, 0.1)', color: '#64748b' }}>
-                        {doc.pages} {doc.pages === '1' ? (locale === 'de' ? 'Seite' : 'Page') : doc.pages.includes('Sheet') ? '' : (locale === 'de' ? 'Seiten' : 'Pages')}
-                      </span>
-                    </div>
-                  </div>
-                  <p className="text-sm" style={{ color: '#475569' }}>
-                    {doc.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Timeline Visual */}
-        <section className="relative py-8">
-          <div className="relative z-10 max-w-[90%] mx-auto px-8">
-            <h2 
-              className="text-3xl mb-6"
-              style={{ color: '#0f172a', fontFamily: "'Cormorant', serif", fontWeight: 600 }}
-            >
-              {locale === 'de' ? 'Audit-Vorbereitung Timeline' : 'Audit Preparation Timeline'}
-            </h2>
-            
-            <div 
-              className="backdrop-blur-sm p-6 rounded-lg border"
-              style={cardStyle}
-            >
-              <div className="grid md:grid-cols-4 gap-4">
-                {timeline.map((phase, i) => (
-                  <div key={i} className="text-center">
-                    <div 
-                      className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3"
-                      style={{ backgroundColor: 'rgba(30, 58, 138, 0.15)' }}
-                    >
-                      <span className="font-bold" style={{ color: '#1e3a8a' }}>{i + 1}</span>
-                    </div>
-                    <p className="text-xs font-medium mb-1" style={{ color: '#1e3a8a' }}>{phase.time}</p>
-                    <p className="font-semibold mb-1" style={{ color: '#1e293b' }}>{phase.title}</p>
-                    <p className="text-xs" style={{ color: '#475569' }}>{phase.desc}</p>
-                  </div>
+              <p className="mb-4" style={{ color: '#475569' }}>{text.step1.intro}</p>
+              
+              <h4 className="font-semibold text-lg mb-3" style={{ color: '#0f172a' }}>
+                {text.step1.sections.included}
+              </h4>
+              <ul className="space-y-2 mb-6" style={{ color: '#475569' }}>
+                {text.step1.sections.items.map((item, i) => (
+                  <li key={i}>• {item}</li>
                 ))}
+              </ul>
+              
+              <div className="p-4 rounded-lg" style={{ backgroundColor: 'rgba(34, 197, 94, 0.1)' }}>
+                <p className="text-sm font-medium" style={{ color: '#166534' }}>
+                  {text.step1.tip}
+                </p>
               </div>
-            </div>
-          </div>
-        </section>
+            </StepPDF>
 
-        {/* Why this kit */}
-        <section className="relative py-8">
-          <div className="relative z-10 max-w-[90%] mx-auto px-8">
-            <h2 
-              className="text-3xl mb-6"
-              style={{ color: '#0f172a', fontFamily: "'Cormorant', serif", fontWeight: 600 }}
+            {/* Step 2: Audit Plan */}
+            <StepPDF 
+              number={2} 
+              title={text.step2.title}
+              pdfPath="/docs/audit/QCore_Audit-Plan_v1.1.pdf"
+              pdfHeight={650}
             >
-              {locale === 'de' ? 'Warum dieses Kit?' : 'Why this kit?'}
-            </h2>
-            
-            <div className="grid md:grid-cols-3 gap-4">
-              {whyItems.map((item, i) => (
-                <div 
-                  key={i}
-                  className="backdrop-blur-sm p-5 rounded-lg border"
-                  style={cardStyle}
-                >
-                  <div className="text-2xl mb-2">{item.icon}</div>
-                  <h3 className="font-semibold mb-2" style={{ color: '#1e293b' }}>{item.title}</h3>
-                  <p className="text-sm" style={{ color: '#475569' }}>{item.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+              <p className="mb-4" style={{ color: '#475569' }}>{text.step2.intro}</p>
+              
+              <h4 className="font-semibold text-lg mb-3" style={{ color: '#0f172a' }}>
+                {text.step2.sections.included}
+              </h4>
+              <ul className="space-y-2 mb-6" style={{ color: '#475569' }}>
+                {text.step2.sections.items.map((item, i) => (
+                  <li key={i}>• {item}</li>
+                ))}
+              </ul>
+              
+              <div className="p-4 rounded-lg" style={{ backgroundColor: 'rgba(34, 197, 94, 0.1)' }}>
+                <p className="text-sm font-medium" style={{ color: '#166534' }}>
+                  {text.step2.tip}
+                </p>
+              </div>
+            </StepPDF>
 
-        {/* FAQ */}
-        <section className="relative py-8">
-          <div className="relative z-10 max-w-[90%] mx-auto px-8">
-            <h2 
-              className="text-3xl mb-6"
-              style={{ color: '#0f172a', fontFamily: "'Cormorant', serif", fontWeight: 600 }}
+            {/* Step 3: Audit Report */}
+            <StepPDF 
+              number={3} 
+              title={text.step3.title}
+              pdfPath="/docs/audit/QCore_Audit-Report_v1.1.pdf"
+              pdfHeight={650}
             >
-              {locale === 'de' ? 'Häufige Fragen' : 'Frequently Asked Questions'}
-            </h2>
-            
-            <div className="space-y-3 max-w-3xl">
-              {faqs.map((faq, i) => (
-                <div 
-                  key={i}
-                  className="backdrop-blur-sm rounded-lg border overflow-hidden"
-                  style={cardStyle}
-                >
-                  <button
-                    onClick={() => setOpenFAQ(openFAQ === i ? null : i)}
-                    className="w-full text-left p-4 flex items-center justify-between"
-                  >
-                    <span className="font-semibold" style={{ color: '#1e293b' }}>{faq.q}</span>
-                    <span 
-                      className="text-sm transition-transform"
-                      style={{ 
-                        color: '#64748b',
-                        transform: openFAQ === i ? 'rotate(180deg)' : 'rotate(0deg)'
-                      }}
-                    >
-                      ▼
-                    </span>
-                  </button>
-                  {openFAQ === i && (
-                    <div className="px-4 pb-4">
-                      <p className="text-sm" style={{ color: '#475569' }}>{faq.a}</p>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
+              <p className="mb-4" style={{ color: '#475569' }}>{text.step3.intro}</p>
+              
+              <h4 className="font-semibold text-lg mb-3" style={{ color: '#0f172a' }}>
+                {text.step3.sections.included}
+              </h4>
+              <ul className="space-y-2 mb-6" style={{ color: '#475569' }}>
+                {text.step3.sections.items.map((item, i) => (
+                  <li key={i}>• {item}</li>
+                ))}
+              </ul>
+              
+              <div className="p-4 rounded-lg" style={{ backgroundColor: 'rgba(59, 130, 246, 0.1)' }}>
+                <p className="text-sm font-medium" style={{ color: '#1e40af' }}>
+                  {text.step3.tip}
+                </p>
+              </div>
+            </StepPDF>
+
+            {/* Step 4: Interview Guide */}
+            <StepPDF 
+              number={4} 
+              title={text.step4.title}
+              pdfPath="/docs/audit/QCore_Audit-Interview-Guide_v1.1.pdf"
+              pdfHeight={700}
+            >
+              <p className="mb-4" style={{ color: '#475569' }}>{text.step4.intro}</p>
+              
+              <h4 className="font-semibold text-lg mb-3" style={{ color: '#0f172a' }}>
+                {text.step4.sections.included}
+              </h4>
+              <ul className="space-y-2 mb-6" style={{ color: '#475569' }}>
+                {text.step4.sections.items.map((item, i) => (
+                  <li key={i}>• {item}</li>
+                ))}
+              </ul>
+              
+              <div className="p-4 rounded-lg" style={{ backgroundColor: 'rgba(245, 158, 11, 0.1)' }}>
+                <p className="text-sm font-medium" style={{ color: '#b45309' }}>
+                  {text.step4.tip}
+                </p>
+              </div>
+            </StepPDF>
+
+            {/* Step 5: Checklists (Tabbed) */}
+            <StepTabbed 
+              number={5} 
+              title={text.step5.title}
+              images={[
+                { src: '/docs/audit/images/Audit_checklist.png', alt: 'ISO 13485 Checklist', tab: text.step5.tabs.iso, caption: 'ISO 13485:2016 Audit Checklist' },
+                { src: '/docs/audit/images/Audit_checklist_FDA.png', alt: 'FDA 820 Checklist', tab: text.step5.tabs.fda, caption: 'FDA 21 CFR 820 Audit Checklist' }
+              ]}
+            >
+              <p className="mb-4" style={{ color: '#475569' }}>{text.step5.intro}</p>
+              
+              <h4 className="font-semibold text-lg mb-3" style={{ color: '#0f172a' }}>
+                {text.step5.sections.included}
+              </h4>
+              <ul className="space-y-2 mb-6" style={{ color: '#475569' }}>
+                {text.step5.sections.items.map((item, i) => (
+                  <li key={i}>• {item}</li>
+                ))}
+              </ul>
+              
+              <div className="p-4 rounded-lg" style={{ backgroundColor: 'rgba(59, 130, 246, 0.1)' }}>
+                <p className="text-sm font-medium" style={{ color: '#1e40af' }}>
+                  {text.step5.tip}
+                </p>
+              </div>
+            </StepTabbed>
+
+            {/* Step 6: Schedule */}
+            <StepImage 
+              number={6} 
+              title={text.step6.title}
+              imageSrc="/docs/audit/images/Audit_planning.png"
+              imageAlt="Audit Schedule"
+              imageCaption="Audit Schedule Template"
+            >
+              <p className="mb-4" style={{ color: '#475569' }}>{text.step6.intro}</p>
+              
+              <h4 className="font-semibold text-lg mb-3" style={{ color: '#0f172a' }}>
+                {text.step6.sections.included}
+              </h4>
+              <ul className="space-y-2 mb-6" style={{ color: '#475569' }}>
+                {text.step6.sections.items.map((item, i) => (
+                  <li key={i}>• {item}</li>
+                ))}
+              </ul>
+              
+              <div className="p-4 rounded-lg" style={{ backgroundColor: 'rgba(59, 130, 246, 0.1)' }}>
+                <p className="text-sm font-medium" style={{ color: '#1e40af' }}>
+                  {text.step6.tip}
+                </p>
+              </div>
+            </StepImage>
+
+            {/* Step 7: Quick Reference */}
+            <StepImage 
+              number={7} 
+              title={text.step7.title}
+              imageSrc="/docs/audit/images/Audit_quickref.png"
+              imageAlt="Quick Reference Card"
+              imageCaption="Audit Quick Reference Card (1 Page)"
+            >
+              <p className="mb-4" style={{ color: '#475569' }}>{text.step7.intro}</p>
+              
+              <h4 className="font-semibold text-lg mb-3" style={{ color: '#0f172a' }}>
+                {text.step7.sections.included}
+              </h4>
+              <ul className="space-y-2 mb-6" style={{ color: '#475569' }}>
+                {text.step7.sections.items.map((item, i) => (
+                  <li key={i}>• {item}</li>
+                ))}
+              </ul>
+              
+              <div className="p-4 rounded-lg" style={{ backgroundColor: 'rgba(34, 197, 94, 0.1)' }}>
+                <p className="text-sm font-medium" style={{ color: '#166534' }}>
+                  {text.step7.tip}
+                </p>
+              </div>
+            </StepImage>
+
           </div>
         </section>
 
-        {/* Final CTA */}
-        <section className="relative py-8 pb-16">
+        {/* CTA */}
+        <section className="relative py-12">
           <div className="relative z-10 max-w-[90%] mx-auto px-8 text-center">
             <div 
               className="backdrop-blur-sm rounded-lg border p-8 max-w-2xl mx-auto"
               style={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderColor: 'rgba(30, 58, 138, 0.2)' }}
             >
               <h2 
-                className="text-2xl mb-4"
+                className="text-3xl mb-4"
                 style={{ color: '#0f172a', fontFamily: "'Cormorant', serif", fontWeight: 600 }}
               >
-                {locale === 'de' ? 'Bereit für Ihr nächstes Audit?' : 'Ready for your next audit?'}
+                {text.cta.title}
               </h2>
-              <p className="mb-6" style={{ color: '#475569' }}>
-                {locale === 'de' 
-                  ? '€79 für strukturierte Vorbereitung – damit das Audit keine Überraschungen bringt.'
-                  : '€79 for structured preparation – so the audit brings no surprises.'}
+              <p className="mb-6 text-lg" style={{ color: '#475569' }}>
+                {text.cta.text}
               </p>
               <a 
                 href="https://qcore33.gumroad.com/l/wcevjy"
@@ -534,11 +862,43 @@ export default function AuditPrepKit() {
                 className="inline-block px-8 py-4 rounded-lg text-lg font-semibold transition-all hover:opacity-90"
                 style={{ backgroundColor: '#1e3a8a', color: '#ffffff' }}
               >
-                {locale === 'de' ? 'Jetzt kaufen – €79' : 'Buy now – €79'}
+                {text.cta.button} – €79
               </a>
             </div>
           </div>
         </section>
+
+        {/* UPSELL */}
+        <section className="relative py-8 pb-16">
+          <div className="relative z-10 max-w-[90%] mx-auto px-8">
+            <h2 
+              className="text-2xl mb-6"
+              style={{ color: '#0f172a', fontFamily: "'Cormorant', serif", fontWeight: 600 }}
+            >
+              {text.upsell.title}
+            </h2>
+            <p className="mb-6" style={{ color: '#475569' }}>{text.upsell.text}</p>
+            
+            <div className="grid md:grid-cols-2 gap-4 max-w-2xl">
+              {text.upsell.bundles.map((bundle, i) => (
+                <Link 
+                  key={i}
+                  href={bundle.link}
+                  className="backdrop-blur-sm p-5 rounded-lg border flex justify-between items-center hover:opacity-80 transition-opacity"
+                  style={{ backgroundColor: 'rgba(255, 255, 255, 0.35)', borderColor: 'rgba(30, 58, 138, 0.2)' }}
+                >
+                  <span className="font-semibold" style={{ color: '#1e293b' }}>{bundle.name}</span>
+                  <span className="font-bold" style={{ color: '#1e3a8a' }}>{bundle.price}</span>
+                </Link>
+              ))}
+            </div>
+            
+            <p className="mt-4 text-sm" style={{ color: '#64748b' }}>
+              💡 {text.upsell.bundleHint} – <Link href="/kontakt" className="underline" style={{ color: '#1e3a8a' }}>{locale === 'de' ? 'Anfragen' : 'Inquire'}</Link>
+            </p>
+          </div>
+        </section>
+
       </main>
       <Footer />
     </>
