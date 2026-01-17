@@ -1,42 +1,26 @@
 'use client';
 
+import { useTranslation } from '../hooks/useTranslation';
+
 export default function LeistungenHero() {
+  const { t } = useTranslation();
+  
   const services = [
     {
-      title: 'QM-System Aufbau & Zertifizierung',
-      items: [
-        'Quality Manual & QM-Handbuch (ISO 9001)',
-        'Prozessdokumentation (SOPs, Arbeitsanweisungen)',
-        'Management Review, Interne Audits',
-        'Vorbereitung auf Zertifizierungsaudit',
-      ],
+      title: t('home.services.title1'),
+      items: t('home.services.items1'),
     },
     {
-      title: 'Branchenspezifische Anpassung',
-      items: [
-        'Pharma: GMP-Anforderungen, Validation, CAPA',
-        'Medical Devices: Technische Dokumentation, Risikoanalyse (ISO 14971)',
-        'Nuklear: KTA-Standards, Safety Analysis',
-        'Fertigung: Produktionssteuerung, Qualitätskontrolle',
-      ],
+      title: t('home.services.title2'),
+      items: t('home.services.items2'),
     },
     {
-      title: 'Risk Management & Prozessoptimierung',
-      items: [
-        'FMEA (Failure Mode and Effects Analysis)',
-        'Root Cause Analysis (5-Why, Ishikawa)',
-        'Continuous Improvement (KVP, Lean)',
-        'Process Mapping und Optimization',
-      ],
+      title: t('home.services.title3'),
+      items: t('home.services.items3'),
     },
     {
-      title: 'Dokumentation & Validation',
-      items: [
-        'Equipment Qualification (IQ/OQ/PQ)',
-        'Process Validation',
-        'Computer System Validation',
-        'Analytical Method Validation',
-      ],
+      title: t('home.services.title4'),
+      items: t('home.services.items4'),
     },
   ];
 
@@ -47,7 +31,7 @@ export default function LeistungenHero() {
           {services.map((service, index) => (
             <div
               key={index}
-              className="p-8 rounded-lg transition-all duration-300 bg-qcore-navy bg-opacity-30 hover:bg-opacity-45 cursor-default"
+              className="p-8 rounded-lg transition-all duration-300 bg-qcore-navy bg-opacity-30 hover:bg-opacity-45 backdrop-blur-[3px] cursor-default"
             >
               <h3 className="text-2xl font-semibold mb-3" style={{ color: '#1e293b' }}>
                 {service.title}

@@ -2,198 +2,389 @@ import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import Link from 'next/link';
 import Head from 'next/head';
+import { useState } from 'react';
+import { useTranslation } from '../hooks/useTranslation';
 
-const products = [
+const getProducts = (t) => [
   {
     id: 'capa-system',
-    title: 'CAPA System Bundle',
-    subtitle: '7 Dokumente für ein audit-fertiges CAPA-System',
-    description: 'Alles was Sie für ein funktionierendes CAPA-System brauchen: SOP, Formulare, Tracking, Root Cause Toolkit – sofort einsatzbereit.',
-    price: '€129',
-    badges: ['ISO 13485', 'FDA 820.100', 'EU MDR'],
-    highlights: [
-      'SOP mit klarer Prozesslogik',
-      'CAPA-Formular mit Eskalationsstufen',
-      'Root Cause Analysis Toolkit (5-Why, Ishikawa)',
-      'Tracking Log für Übersicht',
-      'Ausgefülltes Beispiel inklusive',
-      'Quick Reference Card',
-    ],
+    title: t('products.capa.title'),
+    oneLiner: t('products.capa.oneLiner'),
+    price: '129',
+    isFree: true,
+    freeHref: '/capa-system-free',
+    docs: 7,
+    pages: '~45',
+    standards: ['ISO 13485', 'FDA 820.100', 'EU MDR'],
+    highlights: t('products.capa.highlights'),
+    documents: t('products.capa.documents'),
+    faq: t('products.capa.faq'),
     href: '/produkte/capa-system',
-    available: true,
+    gumroad: { en: 'https://qcore33.gumroad.com/l/capa-system', de: null },
   },
   {
     id: 'nc-system',
-    title: 'Nonconformity System Bundle',
-    subtitle: 'Strukturiertes Abweichungsmanagement',
-    description: 'NC-Erfassung, Bewertung, Eskalation zu CAPA – nahtlos integriert.',
-    price: '€99',
-    badges: ['ISO 13485', 'GMP'],
-    highlights: [
-      'NC-Formular mit Klassifizierung',
-      'Bewertungsmatrix',
-      'Eskalationslogik zu CAPA',
-      'Tracking & Reporting',
-    ],
+    title: t('products.nc.title'),
+    oneLiner: t('products.nc.oneLiner'),
+    price: '99',
+    docs: 7,
+    pages: '~40',
+    standards: ['ISO 13485', 'FDA 820.90', 'EU MDR'],
+    highlights: t('products.nc.highlights'),
+    documents: t('products.nc.documents'),
+    faq: t('products.nc.faq'),
     href: '/produkte/nc-system',
-    available: false,
-    comingSoon: true,
+    gumroad: { en: 'https://qcore33.gumroad.com/l/cgjwqa', de: null },
   },
   {
-    id: 'audit-prep',
-    title: 'Audit Preparation Kit',
-    subtitle: 'Vorbereitet ins Audit',
-    description: 'Checklisten, typische Fragen, Dokumenten-Review-Guide.',
-    price: '€79',
-    badges: ['ISO 13485', 'ISO 9001'],
-    highlights: [
-      'Pre-Audit Checkliste',
-      'Typische Auditfragen & Antworten',
-      'Dokumenten-Review-Template',
-      'Mock-Audit Guide',
-    ],
-    href: '/produkte/audit-prep',
-    available: false,
-    comingSoon: true,
+    id: 'audit-prep-kit',
+    title: t('products.audit.title'),
+    oneLiner: t('products.audit.oneLiner'),
+    price: '79',
+    docs: 8,
+    pages: '~55',
+    standards: ['ISO 13485', 'FDA 820.22', 'ISO 19011'],
+    highlights: t('products.audit.highlights'),
+    documents: t('products.audit.documents'),
+    faq: t('products.audit.faq'),
+    href: '/produkte/audit-prep-kit',
+    gumroad: { en: 'https://qcore33.gumroad.com/l/wcevjy', de: null },
   },
 ];
 
+const getUpcomingMedTech = (t) => [
+  { name: t('products.upcoming.risk'), standard: 'ISO 14971' },
+  { name: t('products.upcoming.docControl'), standard: 'ISO 13485' },
+  { name: t('products.upcoming.supplier'), standard: 'FDA 820.50' },
+  { name: t('products.upcoming.design'), standard: 'FDA 820.30' },
+];
+
+// FAQ Component
+function ProductFAQ({ faq, t }) {
+  const [openIndex, setOpenIndex] = useState(null);
+  
+  return (
+    <div className="mt-3 pt-3 border-t" style={{ borderColor: 'rgba(30, 58, 138, 0.12)' }}>
+      <p className="text-xs font-semibold mb-2" style={{ color: '#475569' }}>{t('products.bundle.faqTitle')}</p>
+      <div className="space-y-1">
+        {faq.map((item, i) => (
+          <div key={i}>
+            <button
+              onClick={() => setOpenIndex(openIndex === i ? null : i)}
+              className="w-full text-left flex items-start justify-between gap-2 py-1.5 text-sm transition-colors hover:text-qcore-blue"
+              style={{ color: '#1e293b' }}
+            >
+              <span>{item.q}</span>
+              <span 
+                className="flex-shrink-0 text-xs mt-0.5 transition-transform"
+                style={{ 
+                  color: '#64748b',
+                  transform: openIndex === i ? 'rotate(180deg)' : 'rotate(0deg)'
+                }}
+              >
+                ▼
+              </span>
+            </button>
+            {openIndex === i && (
+              <p 
+                className="text-xs pb-2 pl-0 pr-6"
+                style={{ color: '#475569' }}
+              >
+                {item.a}
+              </p>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Document List Component
+function DocumentList({ documents, isOpen, onToggle, t }) {
+  return (
+    <div className="mt-2">
+      <button
+        onClick={onToggle}
+        className="text-xs flex items-center gap-1 transition-colors hover:opacity-80 font-medium"
+        style={{ color: '#1e3a8a' }}
+      >
+        <span>{isOpen ? '▼' : '▶'}</span>
+        <span>{isOpen ? t('products.bundle.hideDocs') : t('products.bundle.showDocs')}</span>
+      </button>
+      {isOpen && (
+        <ul className="mt-2 space-y-1 pl-3 border-l-2" style={{ borderColor: 'rgba(30, 58, 138, 0.25)' }}>
+          {documents.map((doc, i) => (
+            <li key={i} className="text-xs" style={{ color: '#475569' }}>
+              {doc}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
 export default function Produkte() {
+  const [openDocs, setOpenDocs] = useState({});
+  const { t, locale } = useTranslation();
+  
+  const products = getProducts(t);
+  const upcomingMedTech = getUpcomingMedTech(t);
+  
+  const toggleDocs = (productId) => {
+    setOpenDocs(prev => ({ ...prev, [productId]: !prev[productId] }));
+  };
+
   return (
     <>
       <Head>
-        <title>QM-Produkte & Templates | QCore Consulting</title>
-        <meta name="description" content="Audit-fertige QM-Templates für MedTech und Pharma. CAPA-System, NC-Management, Audit-Vorbereitung. ISO 13485, FDA, EU MDR konform." />
-        <meta name="keywords" content="CAPA Template, ISO 13485, FDA 21 CFR 820, QM Templates, MedTech, Medical Device" />
+        <title>{t('products.meta.title')}</title>
+        <meta name="description" content={t('products.meta.description')} />
       </Head>
       <Navigation />
+      
       <main className="relative min-h-screen">
-        {/* Hero Section */}
-        <section className="relative pt-24 pb-8">
+        
+        {/* Hero - Mit Expertise-Signal */}
+        <section className="relative pt-24 pb-4">
           <div className="relative z-10 max-w-[90%] mx-auto px-8">
             <h1 
-              className="text-4xl md:text-5xl font-bold mb-4"
-              style={{
-                fontFamily: "'Cormorant', serif",
-                color: '#1e293b',
-              }}
+              className="text-4xl md:text-5xl mb-2"
+              style={{ fontFamily: "'Cormorant', serif", color: '#1e293b', fontWeight: 400 }}
             >
-              Produkte
+              {t('products.hero.title')}
             </h1>
-            <p className="text-xl max-w-3xl" style={{ color: '#475569' }}>
-              Audit-fertige QM-Templates – durchdacht, praxiserprobt, sofort einsetzbar.
+            <p className="text-lg mb-3" style={{ color: '#475569' }}>
+              {t('products.hero.subtitle')}
+            </p>
+            {/* Expertise Signal */}
+            <p className="text-sm" style={{ color: '#64748b' }}>
+              {t('products.hero.expertise')}{' '}
+              <Link href="/ueber-mich" className="hover:underline" style={{ color: '#3b82f6' }}>
+                {t('products.hero.learnMore')}
+              </Link>
             </p>
           </div>
         </section>
 
-        {/* Value Proposition */}
-        <section className="relative py-6">
+        {/* Trust Signals Bar */}
+        <section className="relative py-3">
           <div className="relative z-10 max-w-[90%] mx-auto px-8">
-            <div className="bg-qcore-navy bg-opacity-20 p-6 rounded-lg">
-              <div className="grid md:grid-cols-3 gap-6 text-center">
-                <div>
-                  <div className="text-2xl mb-2">⏱️</div>
-                  <h3 className="font-semibold mb-1" style={{ color: '#1e293b' }}>Sofort einsatzbereit</h3>
-                  <p className="text-sm" style={{ color: '#475569' }}>Keine 2-Tages-Schulung nötig</p>
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs" style={{ color: '#64748b' }}>
+              <span className="flex items-center gap-1.5">
+                <span style={{ color: '#22c55e' }}>✓</span>
+                {t('products.trust.auditBased')}
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span style={{ color: '#22c55e' }}>✓</span>
+                {t('products.trust.noGeneric')}
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span style={{ color: '#22c55e' }}>✓</span>
+                {t('products.trust.readyToUse')}
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span style={{ color: '#22c55e' }}>✓</span>
+                {t('products.trust.transparent')}
+              </span>
+            </div>
+          </div>
+        </section>
+
+        {/* Industrie-Tabs */}
+        <section className="relative py-4">
+          <div className="relative z-10 max-w-[90%] mx-auto px-8">
+            <div className="flex gap-3">
+              {/* MedTech - Active */}
+              <div 
+                className="backdrop-blur-sm px-6 py-4 rounded-lg flex-1 md:flex-none md:min-w-[280px] border"
+                style={{ backgroundColor: 'rgba(255, 255, 255, 0.35)', borderColor: 'rgba(30, 58, 138, 0.2)' }}
+              >
+                <p className="text-xl font-semibold mb-1" style={{ color: '#1e293b', fontFamily: "'Cormorant', serif" }}>
+                  {t('products.tabs.medtech')}
+                </p>
+                <div className="flex flex-wrap gap-1">
+                  <span className="px-2 py-0.5 rounded text-xs" style={{ backgroundColor: 'rgba(30, 58, 138, 0.2)', color: '#1e3a8a' }}>ISO 13485</span>
+                  <span className="px-2 py-0.5 rounded text-xs" style={{ backgroundColor: 'rgba(30, 58, 138, 0.2)', color: '#1e3a8a' }}>FDA 21 CFR 820</span>
+                  <span className="px-2 py-0.5 rounded text-xs" style={{ backgroundColor: 'rgba(30, 58, 138, 0.2)', color: '#1e3a8a' }}>EU MDR</span>
                 </div>
-                <div>
-                  <div className="text-2xl mb-2">✓</div>
-                  <h3 className="font-semibold mb-1" style={{ color: '#1e293b' }}>Audit-ready</h3>
-                  <p className="text-sm" style={{ color: '#475569' }}>Erfüllt ISO 13485, FDA, EU MDR Anforderungen</p>
-                </div>
-                <div>
-                  <div className="text-2xl mb-2">📋</div>
-                  <h3 className="font-semibold mb-1" style={{ color: '#1e293b' }}>Mit Beispiel</h3>
-                  <p className="text-sm" style={{ color: '#475569' }}>Ausgefüllte Muster zeigen die Anwendung</p>
+              </div>
+              
+              {/* Pharma - Coming Soon */}
+              <div 
+                className="backdrop-blur-sm px-6 py-4 rounded-lg flex-1 md:flex-none md:min-w-[280px] opacity-60 border"
+                style={{ backgroundColor: 'rgba(255, 255, 255, 0.4)', borderColor: 'rgba(100, 116, 139, 0.1)' }}
+              >
+                <p className="text-xl font-semibold mb-1" style={{ color: '#64748b', fontFamily: "'Cormorant', serif" }}>
+                  {t('products.tabs.pharma')}
+                </p>
+                <div className="flex flex-wrap gap-1">
+                  <span className="px-2 py-0.5 rounded text-xs" style={{ backgroundColor: 'rgba(100, 116, 139, 0.2)', color: '#64748b' }}>GMP</span>
+                  <span className="px-2 py-0.5 rounded text-xs" style={{ backgroundColor: 'rgba(100, 116, 139, 0.2)', color: '#64748b' }}>ICH Q7</span>
+                  <span className="text-xs ml-1" style={{ color: '#94a3b8' }}>{t('products.tabs.planned')}</span>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Products Grid */}
-        <section className="relative py-8">
+        {/* Produkte Grid */}
+        <section className="relative py-6">
           <div className="relative z-10 max-w-[90%] mx-auto px-8">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-3 gap-4">
               {products.map((product) => (
                 <div 
                   key={product.id}
-                  className={`bg-qcore-navy bg-opacity-30 hover:bg-opacity-45 transition-all duration-300 p-6 rounded-lg flex flex-col ${product.comingSoon ? 'opacity-60' : ''}`}
+                  className="backdrop-blur-sm transition-all duration-300 p-5 rounded-lg flex flex-col shadow-sm border hover:shadow-md group"
+                  style={{
+                    backgroundColor: 'rgba(255, 255, 255, 0.35)',
+                    borderColor: 'rgba(30, 58, 138, 0.2)'
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.55)'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.35)'}
                 >
-                  {/* Header */}
-                  <div className="mb-4">
-                    <div className="flex items-start justify-between mb-2">
-                      <h2 
-                        className="text-xl font-bold"
-                        style={{ color: '#1e293b', fontFamily: "'Cormorant', serif" }}
+                  {/* Header: Title + Price */}
+                  <div className="flex items-start justify-between mb-2">
+                    <h2 
+                      className="text-2xl"
+                      style={{ 
+                        fontFamily: "'Cormorant', serif", 
+                        color: '#0f172a', 
+                        fontWeight: 600,
+                        textShadow: '0 1px 2px rgba(255,255,255,0.5)'
+                      }}
+                    >
+                      {product.title}
+                    </h2>
+                    {product.isFree ? (
+                      <span className="flex items-center gap-2 flex-shrink-0">
+                        <span className="text-lg line-through" style={{ color: '#94a3b8' }}>€{product.price}</span>
+                        <span className="text-2xl font-bold" style={{ color: '#16a34a', textShadow: '0 1px 2px rgba(255,255,255,0.5)' }}>FREE</span>
+                      </span>
+                    ) : (
+                      <span 
+                        className="text-2xl font-bold flex-shrink-0"
+                        style={{ color: '#1e3a8a', textShadow: '0 1px 2px rgba(255,255,255,0.5)' }}
                       >
-                        {product.title}
-                      </h2>
-                      {product.comingSoon && (
-                        <span className="px-2 py-1 text-xs rounded bg-yellow-100 text-yellow-800">
-                          Bald
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-sm mb-3" style={{ color: '#475569' }}>
-                      {product.subtitle}
-                    </p>
-                    <div className="flex flex-wrap gap-1 mb-3">
-                      {product.badges.map((badge) => (
-                        <span 
-                          key={badge}
-                          className="px-2 py-0.5 rounded text-xs"
-                          style={{ backgroundColor: 'rgba(30, 58, 138, 0.15)', color: '#1e3a8a' }}
-                        >
-                          {badge}
-                        </span>
-                      ))}
-                    </div>
+                        €{product.price}
+                      </span>
+                    )}
                   </div>
-
-                  {/* Description */}
-                  <p className="text-sm mb-4 flex-grow" style={{ color: '#334155' }}>
-                    {product.description}
+                  
+                  {/* One-liner */}
+                  <p className="text-sm mb-3 font-medium" style={{ color: '#334155' }}>
+                    {product.oneLiner}
                   </p>
 
+                  {/* Standards Badges */}
+                  <div className="flex flex-wrap gap-1 mb-3">
+                    {product.standards.map((std) => (
+                      <span 
+                        key={std}
+                        className="px-2 py-0.5 rounded text-xs"
+                        style={{ backgroundColor: 'rgba(30, 58, 138, 0.15)', color: '#1e3a8a' }}
+                      >
+                        {std}
+                      </span>
+                    ))}
+                  </div>
+
                   {/* Highlights */}
-                  <ul className="text-sm mb-4 space-y-1">
-                    {product.highlights.slice(0, 4).map((highlight, i) => (
-                      <li key={i} className="flex items-start" style={{ color: '#334155' }}>
-                        <span className="mr-2 text-green-600">✓</span>
-                        {highlight}
+                  <ul className="space-y-1 mb-3 flex-grow">
+                    {product.highlights.map((item, i) => (
+                      <li key={i} className="flex items-start text-sm" style={{ color: '#1e293b' }}>
+                        <span className="w-1.5 h-1.5 rounded-full mr-2 mt-1.5 flex-shrink-0" style={{ backgroundColor: '#1e3a8a' }}></span>
+                        {item}
                       </li>
                     ))}
-                    {product.highlights.length > 4 && (
-                      <li className="text-sm" style={{ color: '#64748b' }}>
-                        + {product.highlights.length - 4} weitere...
-                      </li>
-                    )}
                   </ul>
 
-                  {/* Price & CTA */}
-                  <div className="mt-auto pt-4 border-t border-gray-300">
-                    <div className="flex items-center justify-between">
-                      <span 
-                        className="text-2xl font-bold"
-                        style={{ color: '#1e293b' }}
-                      >
-                        {product.price}
-                      </span>
-                      {product.available ? (
+                  {/* Meta */}
+                  <p className="text-xs mb-2 font-medium" style={{ color: '#475569' }}>
+                    {product.docs} {t('products.bundle.docsCount')} · {product.pages} {t('products.bundle.pages')} · Word & Excel
+                  </p>
+
+                  {/* Document List Toggle */}
+                  <DocumentList 
+                    documents={product.documents}
+                    isOpen={openDocs[product.id]}
+                    onToggle={() => toggleDocs(product.id)}
+                    t={t}
+                  />
+
+                  {/* FAQ Section */}
+                  <ProductFAQ faq={product.faq} t={t} />
+
+                  {/* Actions */}
+                  <div className="pt-3 mt-3 border-t" style={{ borderColor: 'rgba(30, 58, 138, 0.15)' }}>
+                    {product.isFree ? (
+                      /* Free Product - Same layout as paid, but GB links to free page */
+                      <>
+                        <div className="flex gap-2 mb-2">
+                          <Link
+                            href={product.freeHref}
+                            className="flex-1 text-center px-3 py-2 rounded text-sm font-medium transition-all hover:opacity-90"
+                            style={{ backgroundColor: '#16a34a', color: '#ffffff' }}
+                          >
+                            🇬🇧 {t('products.bundle.buy')}
+                          </Link>
+                          <span 
+                            className="flex-1 text-center px-3 py-2 rounded text-sm"
+                            style={{ backgroundColor: 'rgba(30, 58, 138, 0.1)', color: '#94a3b8' }}
+                          >
+                            🇩🇪 {t('products.bundle.soon')}
+                          </span>
+                        </div>
+                        <Link
+                          href={product.freeHref}
+                          className="block text-center px-3 py-2.5 rounded text-sm font-semibold transition-all hover:bg-opacity-100 border-2"
+                          style={{ color: '#1e3a8a', borderColor: '#1e3a8a', backgroundColor: 'rgba(30, 58, 138, 0.12)' }}
+                        >
+                          {t('products.bundle.detailsPreview')}
+                        </Link>
+                      </>
+                    ) : (
+                      /* Paid Product - Buy Buttons + Details */
+                      <>
+                        <div className="flex gap-2 mb-2">
+                          <a
+                            href={product.gumroad.en}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex-1 text-center px-3 py-2 rounded text-sm font-medium transition-all hover:opacity-90"
+                            style={{ backgroundColor: '#1e3a8a', color: '#ffffff' }}
+                          >
+                            🇬🇧 {t('products.bundle.buy')}
+                          </a>
+                          {product.gumroad.de ? (
+                            <a
+                              href={product.gumroad.de}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex-1 text-center px-3 py-2 rounded text-sm font-medium transition-all hover:opacity-90"
+                              style={{ backgroundColor: '#1e3a8a', color: '#ffffff' }}
+                            >
+                              🇩🇪 {t('products.bundle.buy')}
+                            </a>
+                          ) : (
+                            <span 
+                              className="flex-1 text-center px-3 py-2 rounded text-sm"
+                              style={{ backgroundColor: 'rgba(30, 58, 138, 0.1)', color: '#94a3b8' }}
+                            >
+                              🇩🇪 {t('products.bundle.soon')}
+                            </span>
+                          )}
+                        </div>
                         <Link
                           href={product.href}
-                          className="px-4 py-2 rounded text-sm font-semibold transition-all hover:opacity-90"
-                          style={{ backgroundColor: '#1e3a8a', color: '#ffffff' }}
+                          className="block text-center px-3 py-2.5 rounded text-sm font-semibold transition-all hover:bg-opacity-100 border-2"
+                          style={{ color: '#1e3a8a', borderColor: '#1e3a8a', backgroundColor: 'rgba(30, 58, 138, 0.12)' }}
                         >
-                          Details →
+                          {t('products.bundle.detailsPreview')}
                         </Link>
-                      ) : (
-                        <span className="px-4 py-2 rounded text-sm text-gray-500 bg-gray-200 cursor-not-allowed">
-                          Bald verfügbar
-                        </span>
-                      )}
-                    </div>
+                      </>
+                    )}
                   </div>
                 </div>
               ))}
@@ -201,53 +392,68 @@ export default function Produkte() {
           </div>
         </section>
 
-        {/* FAQ Teaser */}
-        <section className="relative py-12">
+        {/* Was ist enthalten */}
+        <section className="relative py-4">
           <div className="relative z-10 max-w-[90%] mx-auto px-8">
-            <div className="bg-white bg-opacity-60 p-8 rounded-lg">
-              <h2 
-                className="text-2xl font-bold mb-6"
-                style={{ color: '#1e293b', fontFamily: "'Cormorant', serif" }}
-              >
-                Häufige Fragen
-              </h2>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <h3 className="font-semibold mb-2" style={{ color: '#1e293b' }}>In welchem Format sind die Templates?</h3>
-                  <p className="text-sm" style={{ color: '#475569' }}>Word (.docx) und Excel (.xlsx) – editierbar, kein PDF-Ausfüllen.</p>
+            <div 
+              className="backdrop-blur-sm p-5 rounded-lg border"
+              style={{ backgroundColor: 'rgba(255, 255, 255, 0.35)', borderColor: 'rgba(30, 58, 138, 0.2)' }}
+            >
+              <p className="font-semibold mb-3" style={{ color: '#1e293b' }}>
+                {t('products.included.title')}
+              </p>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div className="flex items-center gap-2 text-sm" style={{ color: '#1e293b' }}>
+                  <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: '#1e3a8a' }}></span>
+                  {t('products.included.editable')}
                 </div>
-                <div>
-                  <h3 className="font-semibold mb-2" style={{ color: '#1e293b' }}>Kann ich die Templates an mein Unternehmen anpassen?</h3>
-                  <p className="text-sm" style={{ color: '#475569' }}>Ja, alle Dokumente sind zur Anpassung gedacht. Logo, Prozesse, Begriffe – alles editierbar.</p>
+                <div className="flex items-center gap-2 text-sm" style={{ color: '#1e293b' }}>
+                  <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: '#1e3a8a' }}></span>
+                  {t('products.included.example')}
                 </div>
-                <div>
-                  <h3 className="font-semibold mb-2" style={{ color: '#1e293b' }}>Sind Updates inklusive?</h3>
-                  <p className="text-sm" style={{ color: '#475569' }}>Ja, bei regulatorischen Änderungen erhalten Sie kostenlose Updates.</p>
+                <div className="flex items-center gap-2 text-sm" style={{ color: '#1e293b' }}>
+                  <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: '#1e3a8a' }}></span>
+                  {t('products.included.license')}
                 </div>
-                <div>
-                  <h3 className="font-semibold mb-2" style={{ color: '#1e293b' }}>Für wie viele Nutzer gilt die Lizenz?</h3>
-                  <p className="text-sm" style={{ color: '#475569' }}>Eine Lizenz gilt für ein Unternehmen – unbegrenzte interne Nutzung.</p>
+                <div className="flex items-center gap-2 text-sm" style={{ color: '#1e293b' }}>
+                  <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: '#1e3a8a' }}></span>
+                  {t('products.included.updates')}
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="relative py-8 pb-16">
-          <div className="relative z-10 max-w-[90%] mx-auto px-8 text-center">
-            <p className="text-lg mb-4" style={{ color: '#475569' }}>
-              Sie brauchen ein anderes Template oder eine individuelle Anpassung?
-            </p>
-            <Link
-              href="/kontakt"
-              className="inline-block px-6 py-3 rounded text-sm font-semibold transition-all border-2 hover:bg-opacity-10"
-              style={{ borderColor: '#1e3a8a', color: '#1e3a8a' }}
-            >
-              Anfrage stellen
-            </Link>
+        {/* Coming Soon */}
+        <section className="relative py-4">
+          <div className="relative z-10 max-w-[90%] mx-auto px-8">
+            <p className="text-sm mb-2" style={{ color: '#64748b' }}>{t('products.upcoming.title')}</p>
+            <div className="flex flex-wrap gap-2">
+              {upcomingMedTech.map((item) => (
+                <span 
+                  key={item.name}
+                  className="px-3 py-1.5 rounded text-sm"
+                  style={{ backgroundColor: 'rgba(30, 58, 138, 0.1)', color: '#64748b' }}
+                >
+                  {item.name} <span style={{ color: '#94a3b8' }}>({item.standard})</span>
+                </span>
+              ))}
+            </div>
           </div>
         </section>
+
+        {/* Kontakt */}
+        <section className="relative py-6 pb-16">
+          <div className="relative z-10 max-w-[90%] mx-auto px-8">
+            <p className="text-sm" style={{ color: '#64748b' }}>
+              {t('products.cta.custom')}{' '}
+              <Link href="/kontakt" className="hover:underline" style={{ color: '#3b82f6' }}>
+                {t('products.cta.contact')}
+              </Link>
+            </p>
+          </div>
+        </section>
+
       </main>
       <Footer />
     </>

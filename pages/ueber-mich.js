@@ -1,51 +1,18 @@
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
-
-const stations = [
-  {
-    period: '2021 – 2025',
-    company: 'Siemens Healthineers',
-    role: 'Technischer Qualitätsmanager',
-    items: [
-      'MRT InBore Patient Entertainment System',
-      'FMEA-Risikoanalysen',
-      'Koordination internationaler Teams',
-    ],
-  },
-  {
-    period: '2018 – 2021',
-    company: 'Framatome GmbH',
-    role: 'Entwicklungsingenieur Kerninstrumentierung',
-    items: [
-      'Positionssensoren für Reaktor-Regelstäbe',
-      'Safety-Critical Systems',
-      'Interface Management (Hinkley Point C)',
-    ],
-  },
-  {
-    period: '2014 – 2017',
-    company: 'Osram / Ledvance',
-    role: 'Thermal Engineer',
-    items: [
-      'LED-Retrofit Produktentwicklung',
-      'Design-FMEA',
-      'Thermische Simulation (FEM)',
-    ],
-  },
-  {
-    period: '2007 – 2013',
-    company: 'TU Bergakademie Freiberg',
-    role: 'Wissenschaftlicher Mitarbeiter',
-    items: [
-      'Numerische Simulation',
-      'Kristallzuchtprozesse (Photovoltaik)',
-    ],
-  },
-];
+import { useTranslation } from '../hooks/useTranslation';
+import Head from 'next/head';
 
 export default function UeberMich() {
+  const { t } = useTranslation();
+  const stations = t('about.stations');
+
   return (
     <>
+      <Head>
+        <title>{t('about.meta.title')}</title>
+        <meta name="description" content={t('about.meta.description')} />
+      </Head>
       <Navigation />
       <main className="relative min-h-screen">
         {/* Hero Section with Photo and Name */}
@@ -64,16 +31,16 @@ export default function UeberMich() {
                   Stefan Schönwälder
                 </h1>
                 <p className="text-2xl mb-4" style={{ color: '#475569' }}>
-                  Technisches Qualitätsmanagement für regulierte Industrien
+                  {t('about.tagline')}
                 </p>
                 <p className="text-lg" style={{ color: '#334155' }}>
-                  18 Jahre Erfahrung in hochregulierten Branchen – von Nukleartechnik über LED-Entwicklung bis Medizintechnik.
+                  {t('about.intro1')}
                 </p>
                 <p className="text-lg mt-2" style={{ color: '#334155' }}>
-                  Als Ingenieur mit QM-Expertise verstehe ich nicht nur die Norm, sondern auch die Technik dahinter.
+                  {t('about.intro2')}
                 </p>
                 <p className="text-lg mt-2" style={{ color: '#334155' }}>
-                  Mein Ansatz: Schlanke Prozesse die funktionieren, keine Bürokratie-Monster.
+                  {t('about.intro3')}
                 </p>
               </div>
 
@@ -96,7 +63,7 @@ export default function UeberMich() {
               {stations.map((station, index) => (
                 <div 
                   key={index}
-                  className="bg-qcore-navy bg-opacity-30 hover:bg-opacity-45 transition-all duration-300 p-5 rounded-lg cursor-default"
+                  className="bg-qcore-navy bg-opacity-30 hover:bg-opacity-45 transition-all duration-300 backdrop-blur-[3px] p-5 rounded-lg cursor-default"
                 >
                   <div className="flex items-start gap-3">
                     <span 

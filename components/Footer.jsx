@@ -1,9 +1,37 @@
 'use client';
 
 import Link from 'next/link';
+import { useTranslation } from '../hooks/useTranslation';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const { t, locale } = useTranslation();
+
+  const navLinks = locale === 'de' ? [
+    { href: '/', label: 'Start' },
+    { href: '/leistungen', label: 'Leistungen' },
+    { href: '/referenz-projekt', label: 'Praxisbeispiel' },
+    { href: '/produkte', label: 'Produkte' },
+    { href: '/ueber-mich', label: 'Über mich' },
+  ] : [
+    { href: '/', label: 'Home' },
+    { href: '/leistungen', label: 'Services' },
+    { href: '/referenz-projekt', label: 'Case Study' },
+    { href: '/produkte', label: 'Products' },
+    { href: '/ueber-mich', label: 'About' },
+  ];
+
+  const knowledgeLinks = locale === 'de' ? [
+    { href: '/qm-wissen', label: 'QM-Wissen' },
+    { href: '/qmb-trainer', label: 'QMB Trainer' },
+    { href: '/impressum', label: 'Impressum' },
+    { href: '/datenschutz', label: 'Datenschutz' },
+  ] : [
+    { href: '/qm-wissen', label: 'QM Knowledge' },
+    { href: '/qmb-trainer', label: 'QMB Trainer' },
+    { href: '/impressum', label: 'Imprint' },
+    { href: '/datenschutz', label: 'Privacy Policy' },
+  ];
 
   return (
     <footer className="py-12 px-6 border-t border-border-dark relative z-10">
@@ -15,9 +43,10 @@ export default function Footer() {
               QCORE CONSULTING
             </h3>
             <p className="text-sm" style={{ color: '#000000' }}>
-              Spezialist für Quality Management
-              <br />
-              in hochregulierten Industrien
+              {locale === 'de' 
+                ? <>Spezialist für Quality Management<br />in hochregulierten Industrien</>
+                : <>Specialist for Quality Management<br />in highly regulated industries</>
+              }
             </p>
           </div>
 
@@ -25,64 +54,37 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-3" style={{ color: '#000000' }}>Navigation</h4>
             <ul className="space-y-2 text-sm">
-              <li>
-                <Link href="/" className="hover:text-qcore-blue transition-colors" style={{ color: '#000000' }}>
-                  Start
-                </Link>
-              </li>
-              <li>
-                <Link href="/leistungen" className="hover:text-qcore-blue transition-colors" style={{ color: '#000000' }}>
-                  Leistungen
-                </Link>
-              </li>
-              <li>
-                <Link href="/referenz-projekt" className="hover:text-qcore-blue transition-colors" style={{ color: '#000000' }}>
-                  Praxisbeispiel
-                </Link>
-              </li>
-              <li>
-                <Link href="/produkte" className="hover:text-qcore-blue transition-colors" style={{ color: '#000000' }}>
-                  Produkte
-                </Link>
-              </li>
-              <li>
-                <Link href="/ueber-mich" className="hover:text-qcore-blue transition-colors" style={{ color: '#000000' }}>
-                  Über mich
-                </Link>
-              </li>
+              {navLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="hover:text-qcore-blue transition-colors" style={{ color: '#000000' }}>
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Spalte 3: Wissen & Training */}
           <div>
-            <h4 className="font-semibold mb-3" style={{ color: '#000000' }}>Wissen & Training</h4>
+            <h4 className="font-semibold mb-3" style={{ color: '#000000' }}>
+              {locale === 'de' ? 'Wissen & Training' : 'Knowledge & Training'}
+            </h4>
             <ul className="space-y-2 text-sm">
-              <li>
-                <Link href="/qm-wissen" className="hover:text-qcore-blue transition-colors" style={{ color: '#000000' }}>
-                  QM-Wissen
-                </Link>
-              </li>
-              <li>
-                <Link href="/qmb-trainer" className="hover:text-qcore-blue transition-colors" style={{ color: '#000000' }}>
-                  QMB Trainer
-                </Link>
-              </li>
-              <li>
-                <Link href="/impressum" className="hover:text-qcore-blue transition-colors" style={{ color: '#000000' }}>
-                  Impressum
-                </Link>
-              </li>
-              <li>
-                <Link href="/datenschutz" className="hover:text-qcore-blue transition-colors" style={{ color: '#000000' }}>
-                  Datenschutz
-                </Link>
-              </li>
+              {knowledgeLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="hover:text-qcore-blue transition-colors" style={{ color: '#000000' }}>
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Spalte 4: Kontakt */}
           <div>
-            <h4 className="font-semibold mb-3" style={{ color: '#000000' }}>Kontakt</h4>
+            <h4 className="font-semibold mb-3" style={{ color: '#000000' }}>
+              {locale === 'de' ? 'Kontakt' : 'Contact'}
+            </h4>
             <p className="text-sm mb-2" style={{ color: '#000000' }}>Herzogenaurach / Remote</p>
             <a
               href="mailto:kontakt@qcore-consulting.de"
@@ -96,7 +98,7 @@ export default function Footer() {
 
         {/* Bottom */}
         <div className="pt-8 border-t border-border-subtle text-center text-sm" style={{ color: '#000000' }}>
-          <p>© {currentYear} QCore Consulting. Alle Rechte vorbehalten.</p>
+          <p>© {currentYear} QCore Consulting. {t('footer.rights')}</p>
         </div>
       </div>
     </footer>

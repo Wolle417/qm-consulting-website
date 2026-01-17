@@ -3,9 +3,11 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { useTranslation } from '../hooks/useTranslation';
 
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
+  const { t, locale, switchLocale } = useTranslation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,11 +18,11 @@ export default function Navigation() {
   }, []);
 
   const navItems = [
-    { label: 'Leistungen', href: '/leistungen' },
-    { label: 'Praxisbeispiel', href: '/referenz-projekt' },
-    { label: 'Produkte', href: '/produkte' },
-    { label: 'Über mich', href: '/ueber-mich' },
-    { label: 'QM-Wissen', href: '/qm-wissen' },
+    { label: t('nav.services'), href: '/leistungen' },
+    { label: t('nav.caseStudy'), href: '/referenz-projekt' },
+    { label: t('nav.products'), href: '/produkte' },
+    { label: t('nav.about'), href: '/ueber-mich' },
+    { label: t('nav.knowledge'), href: '/qm-wissen' },
   ];
 
   return (
@@ -46,7 +48,7 @@ export default function Navigation() {
               }}
               className="hover:text-slate-600"
             >
-              Start
+              {t('nav.start')}
             </Link>
           </div>
 
@@ -70,8 +72,8 @@ export default function Navigation() {
             ))}
           </div>
 
-          {/* Kontakt - ganz rechts */}
-          <div className="hidden md:flex">
+          {/* Rechts: Kontakt + Language Switch */}
+          <div className="hidden md:flex items-center gap-6">
             <Link
               href="/kontakt"
               style={{
@@ -83,8 +85,43 @@ export default function Navigation() {
               }}
               className="hover:text-slate-600"
             >
-              Kontakt
+              {t('nav.contact')}
             </Link>
+            
+            {/* Language Switch - beide Optionen sichtbar */}
+            <div 
+              className="flex items-center rounded-full px-1 py-1"
+              style={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', border: '1px solid rgba(100, 116, 139, 0.3)' }}
+            >
+              <button
+                onClick={() => switchLocale('de')}
+                className={`flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium transition-all ${
+                  locale === 'de' 
+                    ? 'bg-white shadow-sm' 
+                    : 'hover:bg-white/50'
+                }`}
+                style={{ 
+                  color: locale === 'de' ? '#1e3a8a' : '#64748b',
+                }}
+              >
+                <span>🇩🇪</span>
+                <span>DE</span>
+              </button>
+              <button
+                onClick={() => switchLocale('en')}
+                className={`flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium transition-all ${
+                  locale === 'en' 
+                    ? 'bg-white shadow-sm' 
+                    : 'hover:bg-white/50'
+                }`}
+                style={{ 
+                  color: locale === 'en' ? '#1e3a8a' : '#64748b',
+                }}
+              >
+                <span>🇬🇧</span>
+                <span>EN</span>
+              </button>
+            </div>
           </div>
 
           {/* Mobile menu button */}

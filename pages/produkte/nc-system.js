@@ -6,32 +6,31 @@ import Script from 'next/script';
 import { useState } from 'react';
 import { useTranslation } from '../../hooks/useTranslation';
 
-// Card Style für Glassmorphism
 const cardStyle = {
   backgroundColor: 'rgba(255, 255, 255, 0.35)',
   borderColor: 'rgba(30, 58, 138, 0.2)'
 };
 
-export default function CAPASystem() {
+export default function NCSystem() {
   const [openFAQ, setOpenFAQ] = useState(null);
   const { t } = useTranslation();
 
   const pd = t('productDetail');
-  const capa = pd?.capa || {};
-  const documents = capa?.documents || [];
-  const whyItems = capa?.why || [];
-  const faqItems = capa?.faq || [];
+  const nc = pd?.nc || {};
+  const documents = nc?.documents || [];
+  const whyItems = nc?.why || [];
+  const faqItems = nc?.faq || [];
 
   return (
     <>
       <Head>
-        <title>{capa?.meta?.title || 'CAPA System Bundle | QCore'}</title>
-        <meta name="description" content={capa?.meta?.description || ''} />
-        <meta name="keywords" content="CAPA Template, CAPA SOP, ISO 13485 CAPA, FDA 21 CFR 820, CAPA System Medical Device, Corrective Action Preventive Action" />
-        <meta property="og:title" content={capa?.meta?.title || 'CAPA System Bundle | QCore Consulting'} />
-        <meta property="og:description" content={capa?.meta?.description || ''} />
+        <title>{nc?.meta?.title || 'NC Management Bundle | QCore'}</title>
+        <meta name="description" content={nc?.meta?.description || ''} />
+        <meta name="keywords" content="Nonconformance Template, NC Management, ISO 13485 Nonconformity, FDA 21 CFR 820.90, Control of Nonconforming Product" />
+        <meta property="og:title" content={nc?.meta?.title || 'NC Management Bundle | QCore Consulting'} />
+        <meta property="og:description" content={nc?.meta?.description || ''} />
         <meta property="og:type" content="product" />
-        <meta property="product:price:amount" content="129" />
+        <meta property="product:price:amount" content="99" />
         <meta property="product:price:currency" content="EUR" />
       </Head>
       
@@ -45,7 +44,7 @@ export default function CAPASystem() {
             <nav className="text-sm" style={{ color: '#64748b' }}>
               <Link href="/produkte" className="hover:underline">{pd?.breadcrumb || 'Products'}</Link>
               <span className="mx-2">→</span>
-              <span style={{ color: '#1e293b' }}>CAPA System Bundle</span>
+              <span style={{ color: '#1e293b' }}>NC Management Bundle</span>
             </nav>
           </div>
         </section>
@@ -58,7 +57,7 @@ export default function CAPASystem() {
               <div className="lg:col-span-3">
                 <div className="flex flex-wrap gap-2 mb-4">
                   <span className="px-3 py-1 rounded text-sm" style={{ backgroundColor: 'rgba(30, 58, 138, 0.15)', color: '#1e3a8a' }}>ISO 13485</span>
-                  <span className="px-3 py-1 rounded text-sm" style={{ backgroundColor: 'rgba(30, 58, 138, 0.15)', color: '#1e3a8a' }}>FDA 21 CFR 820.100</span>
+                  <span className="px-3 py-1 rounded text-sm" style={{ backgroundColor: 'rgba(30, 58, 138, 0.15)', color: '#1e3a8a' }}>FDA 21 CFR 820.90</span>
                   <span className="px-3 py-1 rounded text-sm" style={{ backgroundColor: 'rgba(30, 58, 138, 0.15)', color: '#1e3a8a' }}>EU MDR</span>
                 </div>
                 
@@ -71,11 +70,11 @@ export default function CAPASystem() {
                     textShadow: '0 1px 2px rgba(255,255,255,0.5)'
                   }}
                 >
-                  {capa?.title || 'CAPA System Bundle'}
+                  {nc?.title || 'NC Management Bundle'}
                 </h1>
                 
                 <p className="text-xl mb-6" style={{ color: '#334155' }}>
-                  {capa?.subtitle || '7 documents for a functional, audit-ready CAPA system.'}
+                  {nc?.subtitle || '7 documents for systematic nonconformance handling.'}
                 </p>
 
                 {/* Key Benefits */}
@@ -86,15 +85,15 @@ export default function CAPASystem() {
                   <div className="grid sm:grid-cols-3 gap-4">
                     <div className="text-center">
                       <div className="text-2xl font-bold" style={{ color: '#1e3a8a' }}>7</div>
-                      <div className="text-sm" style={{ color: '#475569' }}>{capa?.stats?.docs || 'Documents'}</div>
+                      <div className="text-sm" style={{ color: '#475569' }}>{nc?.stats?.docs || 'Documents'}</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-2xl font-bold" style={{ color: '#1e3a8a' }}>~45</div>
-                      <div className="text-sm" style={{ color: '#475569' }}>{capa?.stats?.pagesLabel || 'Pages'}</div>
+                      <div className="text-2xl font-bold" style={{ color: '#1e3a8a' }}>~40</div>
+                      <div className="text-sm" style={{ color: '#475569' }}>{nc?.stats?.pagesLabel || 'Pages'}</div>
                     </div>
                     <div className="text-center">
                       <div className="text-2xl font-bold" style={{ color: '#1e3a8a' }}>Word & Excel</div>
-                      <div className="text-sm" style={{ color: '#475569' }}>{capa?.stats?.format || 'Editable'}</div>
+                      <div className="text-sm" style={{ color: '#475569' }}>{nc?.stats?.format || 'Editable'}</div>
                     </div>
                   </div>
                 </div>
@@ -105,9 +104,9 @@ export default function CAPASystem() {
                     className="backdrop-blur-sm border-l-4 p-4 rounded-r-lg"
                     style={{ backgroundColor: 'rgba(254, 202, 202, 0.3)', borderColor: '#f87171' }}
                   >
-                    <p className="font-semibold mb-1" style={{ color: '#991b1b' }}>{capa?.problem?.title || 'The problem:'}</p>
+                    <p className="font-semibold mb-1" style={{ color: '#991b1b' }}>{nc?.problem?.title || 'The problem:'}</p>
                     <p className="text-sm" style={{ color: '#7f1d1d' }}>
-                      {capa?.problem?.text || 'CAPA has been the #1 FDA audit finding for years.'}
+                      {nc?.problem?.text || 'Many companies document NCs but lack systematic processing.'}
                     </p>
                   </div>
 
@@ -115,9 +114,9 @@ export default function CAPASystem() {
                     className="backdrop-blur-sm border-l-4 p-4 rounded-r-lg"
                     style={{ backgroundColor: 'rgba(187, 247, 208, 0.3)', borderColor: '#4ade80' }}
                   >
-                    <p className="font-semibold mb-1" style={{ color: '#166534' }}>{capa?.solution?.title || 'The solution:'}</p>
+                    <p className="font-semibold mb-1" style={{ color: '#166534' }}>{nc?.solution?.title || 'The solution:'}</p>
                     <p className="text-sm" style={{ color: '#15803d' }}>
-                      {capa?.solution?.text || 'A CAPA system that can do three things.'}
+                      {nc?.solution?.text || 'An NC system with clear decision logic.'}
                     </p>
                   </div>
                 </div>
@@ -130,12 +129,12 @@ export default function CAPASystem() {
                   style={{ backgroundColor: 'rgba(255, 255, 255, 0.7)', borderColor: 'rgba(30, 58, 138, 0.2)' }}
                 >
                   <div className="text-center mb-6">
-                    <span className="text-4xl font-bold" style={{ color: '#1e3a8a' }}>€129</span>
+                    <span className="text-4xl font-bold" style={{ color: '#1e3a8a' }}>€99</span>
                     <span className="text-sm ml-2" style={{ color: '#64748b' }}>{pd?.oneTime || 'one-time'}</span>
                   </div>
 
                   <a 
-                    href="https://qcore33.gumroad.com/l/capa-system"
+                    href="https://qcore33.gumroad.com/l/cgjwqa"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block w-full text-center px-6 py-4 rounded-lg text-lg font-semibold transition-all hover:opacity-90 mb-3"
@@ -151,13 +150,26 @@ export default function CAPASystem() {
                   <div className="border-t pt-4" style={{ borderColor: 'rgba(30, 58, 138, 0.15)' }}>
                     <p className="font-semibold mb-3 text-sm" style={{ color: '#1e293b' }}>{pd?.includedTitle || 'Included in the bundle:'}</p>
                     <ul className="text-sm space-y-2">
-                      {(pd?.includedItems || ['7 Documents', 'Completed example', 'Free updates', 'Company-wide license']).map((item, i) => (
+                      {(pd?.includedItems || ['7 Documents (Word, Excel, PDF)', 'Completed example', 'Free updates', 'Company-wide license']).map((item, i) => (
                         <li key={i} className="flex items-center" style={{ color: '#334155' }}>
                           <span className="mr-2" style={{ color: '#22c55e' }}>✓</span>
                           {item}
                         </li>
                       ))}
                     </ul>
+                  </div>
+
+                  {/* Bundle Hint */}
+                  <div 
+                    className="mt-4 p-3 rounded-lg text-sm"
+                    style={{ backgroundColor: 'rgba(30, 58, 138, 0.08)' }}
+                  >
+                    <p style={{ color: '#475569' }}>
+                      <strong style={{ color: '#1e3a8a' }}>💡 Tip:</strong> NC + CAPA Bundle together for a complete system.{' '}
+                      <Link href="/produkte/capa-system" className="underline" style={{ color: '#1e3a8a' }}>
+                        View CAPA Bundle →
+                      </Link>
+                    </p>
                   </div>
                 </div>
               </div>
@@ -172,7 +184,7 @@ export default function CAPASystem() {
               className="text-3xl mb-6"
               style={{ color: '#0f172a', fontFamily: "'Cormorant', serif", fontWeight: 600 }}
             >
-              {pd?.previewTitle || 'Preview'}: CAPA SOP
+              {pd?.previewTitle || 'Preview'}: NC Management SOP
             </h2>
             
             <div 
@@ -185,11 +197,11 @@ export default function CAPASystem() {
                 style={{ backgroundColor: 'rgba(30, 58, 138, 0.08)', borderColor: 'rgba(30, 58, 138, 0.15)' }}
               >
                 <div>
-                  <p className="font-semibold" style={{ color: '#1e293b' }}>{capa?.previewDoc || 'SOP-CAPA-001 | CAPA Procedure'}</p>
+                  <p className="font-semibold" style={{ color: '#1e293b' }}>{nc?.previewDoc || 'SOP-NC-001 | NC Procedure'}</p>
                   <p className="text-xs" style={{ color: '#64748b' }}>{pd?.samplePreview || 'Sample Preview – Table of contents & structure'}</p>
                 </div>
                 <a 
-                  href="/docs/samples/QCore_CAPA-SOP_Sample.pdf"
+                  href="/docs/samples/QCore_NC-SOP_Sample.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-3 py-1 rounded text-xs font-medium flex items-center gap-1 hover:opacity-80 transition-opacity"
@@ -202,9 +214,9 @@ export default function CAPASystem() {
               {/* Embedded PDF */}
               <div className="relative" style={{ height: '600px' }}>
                 <iframe 
-                  src="/docs/samples/QCore_CAPA-SOP_Sample.pdf#view=FitH"
+                  src="/docs/samples/QCore_NC-SOP_Sample.pdf#view=FitH"
                   className="w-full h-full"
-                  title="CAPA SOP Sample Preview"
+                  title="NC SOP Sample Preview"
                   style={{ border: 'none' }}
                 />
               </div>
@@ -334,16 +346,16 @@ export default function CAPASystem() {
                 {pd?.ctaTitle || 'Ready for a system that works?'}
               </h2>
               <p className="mb-6" style={{ color: '#475569' }}>
-                {capa?.ctaText || '€129 for an audit-ready system that saves you weeks of development time.'}
+                {nc?.ctaText || '€99 for a systematic NC process.'}
               </p>
               <a 
-                href="https://qcore33.gumroad.com/l/capa-system"
+                href="https://qcore33.gumroad.com/l/cgjwqa"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block px-8 py-4 rounded-lg text-lg font-semibold transition-all hover:opacity-90"
                 style={{ backgroundColor: '#1e3a8a', color: '#ffffff' }}
               >
-                {pd?.ctaButton || 'Buy now'} – €129
+                {pd?.ctaButton || 'Buy now'} – €99
               </a>
             </div>
           </div>

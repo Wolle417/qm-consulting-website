@@ -1,10 +1,38 @@
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import { motion } from 'framer-motion';
+import { useTranslation } from '../hooks/useTranslation';
+import Head from 'next/head';
 
 export default function Kontakt() {
+  const { t, locale } = useTranslation();
+  
+  const meetingTopics = locale === 'de' 
+    ? ['Ihre aktuelle QM-Situation', 'Konkrete Herausforderungen & Ziele', 'Mögliche Lösungsansätze', 'Nächste Schritte & Aufwand']
+    : ['Your current QM situation', 'Specific challenges & goals', 'Possible solutions', 'Next steps & effort'];
+
+  const quote = locale === 'de'
+    ? '„Ich freue mich darauf, Ihre QM-Herausforderungen kennenzulernen – und gemeinsam pragmatische Lösungen zu finden."'
+    : '"I look forward to learning about your QM challenges – and finding pragmatic solutions together."';
+
+  const subtitle = locale === 'de' ? 'Sprechen wir über Ihr Projekt' : "Let's talk about your project";
+  const directContact = locale === 'de' ? 'Direkter Kontakt' : 'Direct Contact';
+  const phone = locale === 'de' ? 'Telefon' : 'Phone';
+  const freeConsultation = locale === 'de' ? 'Kostenloses Erstgespräch' : 'Free Consultation';
+  const consultationInfo = locale === 'de' ? '30 Minuten, unverbindlich via Teams' : '30 minutes, no obligation via Teams';
+  const whatWeDiscuss = locale === 'de' ? 'Was wir besprechen' : 'What we discuss';
+  const bookAppointment = locale === 'de' ? 'Termin buchen' : 'Book Appointment';
+  const writeEmail = locale === 'de' ? 'E-Mail schreiben' : 'Write Email';
+  const callNow = locale === 'de' ? 'Anrufen' : 'Call';
+  const yearsExp = locale === 'de' ? '17+ Jahre Erfahrung' : '17+ Years Experience';
+  const locationText = locale === 'de' ? 'Vor-Ort & Remote deutschlandweit' : 'On-site & Remote across Germany';
+
   return (
     <>
+      <Head>
+        <title>{t('contact.meta.title')}</title>
+        <meta name="description" content={t('contact.meta.description')} />
+      </Head>
       <Navigation />
       <main className="relative min-h-screen">
         {/* Hero Section with Logo */}
@@ -20,14 +48,13 @@ export default function Kontakt() {
                     color: '#1e293b',
                   }}
                 >
-                  Kontakt
+                  {t('contact.title')}
                 </h1>
                 <p className="text-xl mb-6" style={{ color: '#475569' }}>
-                  Sprechen wir über Ihr Projekt
+                  {subtitle}
                 </p>
                 <p className="text-lg italic max-w-xl" style={{ color: '#64748b' }}>
-                  „Ich freue mich darauf, Ihre QM-Herausforderungen kennenzulernen – 
-                  und gemeinsam pragmatische Lösungen zu finden."
+                  {quote}
                 </p>
                 <p className="mt-2 font-semibold" style={{ color: '#1e293b' }}>
                   Stefan Schönwälder
@@ -84,12 +111,12 @@ export default function Kontakt() {
             <div className="grid md:grid-cols-2 gap-6">
               
               {/* Left Container - Kontaktdaten */}
-              <div className="p-8 bg-qcore-navy bg-opacity-30 hover:bg-opacity-45 transition-all duration-300 rounded-lg cursor-default flex flex-col">
+              <div className="p-8 bg-qcore-navy bg-opacity-30 hover:bg-opacity-45 transition-all duration-300 backdrop-blur-[3px] rounded-lg cursor-default flex flex-col">
                 <h2 
                   className="text-2xl font-semibold mb-6"
                   style={{ color: '#1e293b', fontFamily: "'Cormorant', serif" }}
                 >
-                  Direkter Kontakt
+                  {directContact}
                 </h2>
                 
                 <div className="space-y-5 flex-1">
@@ -104,7 +131,7 @@ export default function Kontakt() {
                       </svg>
                     </div>
                     <div>
-                      <h3 className="text-sm font-semibold uppercase tracking-wide mb-1" style={{ color: '#64748b' }}>E-Mail</h3>
+                      <h3 className="text-sm font-semibold uppercase tracking-wide mb-1" style={{ color: '#64748b' }}>{t('contact.email')}</h3>
                       <a 
                         href="mailto:kontakt@qcore-consulting.de"
                         className="text-lg hover:underline"
@@ -126,13 +153,13 @@ export default function Kontakt() {
                       </svg>
                     </div>
                     <div>
-                      <h3 className="text-sm font-semibold uppercase tracking-wide mb-1" style={{ color: '#64748b' }}>Telefon</h3>
+                      <h3 className="text-sm font-semibold uppercase tracking-wide mb-1" style={{ color: '#64748b' }}>{phone}</h3>
                       <a 
                         href="tel:+491771940539"
                         className="text-lg hover:underline"
                         style={{ color: '#1e3a8a' }}
                       >
-                        0177 / 194 05 39
+                        +49 177 194 05 39
                       </a>
                     </div>
                   </div>
@@ -149,10 +176,10 @@ export default function Kontakt() {
                       </svg>
                     </div>
                     <div>
-                      <h3 className="text-sm font-semibold uppercase tracking-wide mb-1" style={{ color: '#64748b' }}>Standort</h3>
+                      <h3 className="text-sm font-semibold uppercase tracking-wide mb-1" style={{ color: '#64748b' }}>{t('contact.location')}</h3>
                       <p className="text-lg" style={{ color: '#334155' }}>
                         Herzogenaurach<br />
-                        <span className="text-base" style={{ color: '#64748b' }}>Vor-Ort & Remote deutschlandweit</span>
+                        <span className="text-base" style={{ color: '#64748b' }}>{locationText}</span>
                       </p>
                     </div>
                   </div>
@@ -160,7 +187,7 @@ export default function Kontakt() {
               </div>
 
               {/* Right Container - Erstgespräch + Foto */}
-              <div className="p-8 bg-qcore-navy bg-opacity-30 hover:bg-opacity-45 transition-all duration-300 rounded-lg cursor-default flex flex-col">
+              <div className="p-8 bg-qcore-navy bg-opacity-30 hover:bg-opacity-45 transition-all duration-300 backdrop-blur-[3px] rounded-lg cursor-default flex flex-col">
                 <div className="flex gap-6 mb-6">
                   <img 
                     src="/images/profile_free.png"
@@ -172,25 +199,20 @@ export default function Kontakt() {
                       className="text-2xl font-semibold mb-2"
                       style={{ color: '#1e293b', fontFamily: "'Cormorant', serif" }}
                     >
-                      Kostenloses Erstgespräch
+                      {freeConsultation}
                     </h2>
                     <p style={{ color: '#475569' }}>
-                      30 Minuten, unverbindlich via Teams
+                      {consultationInfo}
                     </p>
                   </div>
                 </div>
                 
                 <div className="mb-6 flex-1">
                   <h3 className="text-sm font-semibold uppercase tracking-wide mb-3" style={{ color: '#64748b' }}>
-                    Was wir besprechen
+                    {whatWeDiscuss}
                   </h3>
                   <ul className="space-y-2">
-                    {[
-                      'Ihre aktuelle QM-Situation',
-                      'Konkrete Herausforderungen & Ziele',
-                      'Mögliche Lösungsansätze',
-                      'Nächste Schritte & Aufwand',
-                    ].map((item, i) => (
+                    {meetingTopics.map((item, i) => (
                       <li key={i} className="flex items-center gap-3" style={{ color: '#334155' }}>
                         <span 
                           className="w-5 h-5 rounded-full flex items-center justify-center text-xs"
@@ -213,21 +235,21 @@ export default function Kontakt() {
                     className="px-6 py-3 rounded-lg text-center font-semibold transition-all hover:opacity-90"
                     style={{ backgroundColor: '#1e3a8a', color: '#ffffff' }}
                   >
-                    Termin buchen
+                    {bookAppointment}
                   </a>
                   <a
                     href="mailto:kontakt@qcore-consulting.de?subject=Erstgespr%C3%A4ch%20QCore%20Consulting"
                     className="px-6 py-3 rounded-lg text-center font-semibold transition-all hover:opacity-90"
                     style={{ backgroundColor: 'transparent', color: '#1e3a8a', border: '2px solid #1e3a8a' }}
                   >
-                    E-Mail schreiben
+                    {writeEmail}
                   </a>
                   <a
                     href="tel:+491771940539"
                     className="px-6 py-3 rounded-lg text-center font-semibold transition-all hover:opacity-90"
                     style={{ backgroundColor: 'transparent', color: '#1e3a8a', border: '2px solid #1e3a8a' }}
                   >
-                    Anrufen
+                    {callNow}
                   </a>
                 </div>
               </div>
@@ -243,9 +265,9 @@ export default function Kontakt() {
                 className="px-4 py-2 rounded-full text-sm font-semibold"
                 style={{ backgroundColor: 'rgba(30, 58, 138, 0.1)', color: '#1e3a8a' }}
               >
-                17+ Jahre Erfahrung
+                {yearsExp}
               </span>
-              {['Pharma', 'MedTech', 'Nuklear', 'Fertigung'].map((tag) => (
+              {['Pharma', 'MedTech', locale === 'de' ? 'Nuklear' : 'Nuclear', locale === 'de' ? 'Fertigung' : 'Manufacturing'].map((tag) => (
                 <span 
                   key={tag}
                   className="px-4 py-2 rounded-full text-sm"

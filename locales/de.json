@@ -1,0 +1,432 @@
+{
+  "nav": {
+    "start": "Start",
+    "services": "Leistungen",
+    "caseStudy": "Praxisbeispiel",
+    "products": "Produkte",
+    "about": "Über mich",
+    "knowledge": "QM-Wissen",
+    "contact": "Kontakt"
+  },
+  "home": {
+    "hero": {
+      "tagline": "CONSULTING"
+    },
+    "services": {
+      "title1": "QM-System Aufbau & Zertifizierung",
+      "items1": [
+        "Quality Manual & QM-Handbuch (ISO 9001)",
+        "Prozessdokumentation (SOPs, Arbeitsanweisungen)",
+        "Management Review, Interne Audits",
+        "Vorbereitung auf Zertifizierungsaudit"
+      ],
+      "title2": "Branchenspezifische Anpassung",
+      "items2": [
+        "Pharma: GMP-Anforderungen, Validation, CAPA",
+        "Medical Devices: Technische Dokumentation, Risikoanalyse (ISO 14971)",
+        "Nuklear: KTA-Standards, Safety Analysis",
+        "Fertigung: Produktionssteuerung, Qualitätskontrolle"
+      ],
+      "title3": "Risk Management & Prozessoptimierung",
+      "items3": [
+        "FMEA (Failure Mode and Effects Analysis)",
+        "Root Cause Analysis (5-Why, Ishikawa)",
+        "Continuous Improvement (KVP, Lean)",
+        "Process Mapping und Optimization"
+      ],
+      "title4": "Dokumentation & Validation",
+      "items4": [
+        "Equipment Qualification (IQ/OQ/PQ)",
+        "Process Validation",
+        "Computer System Validation",
+        "Analytical Method Validation"
+      ]
+    }
+  },
+  "about": {
+    "meta": {
+      "title": "Über mich | QCore Consulting",
+      "description": "17+ Jahre QM-Erfahrung in MedTech, Pharma, Nuklear und Halbleiter."
+    },
+    "tagline": "Technisches Qualitätsmanagement für regulierte Industrien",
+    "intro1": "18 Jahre Erfahrung in hochregulierten Branchen – von Nukleartechnik über LED-Entwicklung bis Medizintechnik.",
+    "intro2": "Als Ingenieur mit QM-Expertise verstehe ich nicht nur die Norm, sondern auch die Technik dahinter.",
+    "intro3": "Mein Ansatz: Schlanke Prozesse die funktionieren, keine Bürokratie-Monster.",
+    "stations": [
+      {
+        "period": "2021 – 2025",
+        "company": "Siemens Healthineers",
+        "role": "Technischer Qualitätsmanager",
+        "items": [
+          "MRT InBore Patient Entertainment System",
+          "FMEA-Risikoanalysen",
+          "Koordination internationaler Teams"
+        ]
+      },
+      {
+        "period": "2018 – 2021",
+        "company": "Framatome GmbH",
+        "role": "Entwicklungsingenieur Kerninstrumentierung",
+        "items": [
+          "Positionssensoren für Reaktor-Regelstäbe",
+          "Safety-Critical Systems",
+          "Interface Management (Hinkley Point C)"
+        ]
+      },
+      {
+        "period": "2014 – 2017",
+        "company": "Osram / Ledvance",
+        "role": "Thermal Engineer",
+        "items": [
+          "LED-Retrofit Produktentwicklung",
+          "Design-FMEA",
+          "Thermische Simulation (FEM)"
+        ]
+      },
+      {
+        "period": "2007 – 2013",
+        "company": "TU Bergakademie Freiberg",
+        "role": "Wissenschaftlicher Mitarbeiter",
+        "items": [
+          "Numerische Simulation",
+          "Kristallzuchtprozesse (Photovoltaik)"
+        ]
+      }
+    ]
+  },
+  "contact": {
+    "meta": {
+      "title": "Kontakt | QCore Consulting",
+      "description": "Kontaktieren Sie QCore Consulting für QM-Beratung und Templates."
+    },
+    "title": "Kontakt",
+    "subtitle": "Schreiben Sie mir – ich antworte in der Regel innerhalb von 24 Stunden.",
+    "email": "E-Mail",
+    "linkedin": "LinkedIn",
+    "location": "Standort",
+    "locationValue": "Herzogenaurach / Remote"
+  },
+  "services": {
+    "meta": {
+      "title": "Leistungen | QCore Consulting",
+      "description": "QM-Beratung für MedTech, Pharma und regulierte Industrien."
+    },
+    "title": "Leistungen",
+    "subtitle": "Fokussierte QM-Unterstützung – von der Prozessanalyse bis zur Zertifizierung."
+  },
+  "caseStudy": {
+    "meta": {
+      "title": "Praxisbeispiel | QCore Consulting",
+      "description": "Pharma QM Projekt: API-Registrierung für den japanischen Markt."
+    },
+    "title": "Praxisbeispiel",
+    "subtitle": "Pharma QM Projekt: API-Registrierung Japan"
+  },
+  "products": {
+    "meta": {
+      "title": "QM Templates | MedTech & Pharma | QCore Consulting",
+      "description": "Audit-sichere QM-Vorlagen für Medizinprodukte und Pharma. CAPA, NC Management, Internes Audit. ISO 13485, FDA 21 CFR 820, EU MDR konform."
+    },
+    "hero": {
+      "title": "QM Templates",
+      "subtitle": "Audit-sichere Dokumentation für MedTech & Pharma. ISO 13485, FDA 21 CFR 820, EU MDR konform.",
+      "expertise": "Basierend auf 17+ Jahren praktischer Erfahrung in regulierten Industrien. Von Praktikern erstellt, in echten Audits getestet.",
+      "learnMore": "Mehr erfahren →"
+    },
+    "trust": {
+      "auditBased": "Basierend auf echten Audit-Erfahrungen",
+      "noGeneric": "Keine generischen Templates",
+      "readyToUse": "Sofort einsatzbereit",
+      "transparent": "Transparente Preise – kein Abo"
+    },
+    "tabs": {
+      "medtech": "Medizinprodukte",
+      "pharma": "Pharma",
+      "planned": "– in Planung"
+    },
+    "bundle": {
+      "buy": "Kaufen",
+      "soon": "Bald",
+      "detailsPreview": "📄 Details & Vorschau ansehen",
+      "faqTitle": "Häufige Fragen",
+      "showDocs": "Alle Dokumente anzeigen",
+      "hideDocs": "Dokumentenliste ausblenden",
+      "docsCount": "Dokumente",
+      "pages": "Seiten"
+    },
+    "included": {
+      "title": "In jedem Bundle enthalten",
+      "editable": "Editierbare Word & Excel",
+      "example": "Ausgefülltes Beispiel",
+      "license": "Firmenweite Lizenz",
+      "updates": "Kostenlose Updates"
+    },
+    "upcoming": {
+      "title": "In Entwicklung:",
+      "risk": "Risikomanagement",
+      "docControl": "Dokumentenlenkung",
+      "supplier": "Lieferantenqualität",
+      "design": "Design Control"
+    },
+    "cta": {
+      "custom": "Brauchen Sie ein individuelles Template oder Beratungsunterstützung?",
+      "contact": "Kontakt aufnehmen →"
+    },
+    "capa": {
+      "title": "CAPA System",
+      "oneLiner": "Korrektur- & Vorbeugemaßnahmen",
+      "highlights": [
+        "SOP mit Eskalationslogik",
+        "RCA-Toolkit (5-Why, Ishikawa)",
+        "Tracking-Log mit KPIs",
+        "Ausgefülltes Beispiel enthalten"
+      ],
+      "documents": [
+        "CAPA-SOP (Word)",
+        "CAPA-Formular (Word)",
+        "CAPA-Log mit Dashboard (Excel)",
+        "RCA-Toolkit: 5-Why & Ishikawa (Excel)",
+        "Effectiveness Verification Checklist (Word)",
+        "Ausgefülltes Beispiel-CAPA (PDF)",
+        "Quick Reference Card (PDF)"
+      ],
+      "faq": [
+        {
+          "q": "Ist das Bundle FDA-konform?",
+          "a": "Ja. Die Dokumente erfüllen FDA 21 CFR 820.100 und ISO 13485:2016 Clause 8.5.2/8.5.3."
+        },
+        {
+          "q": "Kann ich die Templates anpassen?",
+          "a": "Alle Word- und Excel-Dateien sind vollständig editierbar. Keine Passwörter, keine Einschränkungen."
+        },
+        {
+          "q": "Für wie viele Benutzer gilt die Lizenz?",
+          "a": "Firmenweite Nutzung – einmal kaufen, beliebig viele Mitarbeiter können die Templates nutzen."
+        }
+      ]
+    },
+    "nc": {
+      "title": "NC Management",
+      "oneLiner": "Lenkung fehlerhafter Produkte",
+      "highlights": [
+        "SOP mit Dispositions-Workflow",
+        "Risikobasierte Bewertungsmatrix",
+        "NC-zu-CAPA Eskalationsleitfaden",
+        "Ausgefülltes Beispiel enthalten"
+      ],
+      "documents": [
+        "NC-SOP (Word)",
+        "NC-Formular (Word)",
+        "NC-Log mit Dashboard (Excel)",
+        "NC-Bewertungsmatrix (Excel)",
+        "NC-zu-CAPA Eskalationsleitfaden (Word)",
+        "Ausgefülltes Beispiel-NC (PDF)",
+        "Quick Reference Card (PDF)"
+      ],
+      "faq": [
+        {
+          "q": "Was ist der Unterschied zwischen NC und CAPA?",
+          "a": "NC dokumentiert das Problem und die sofortige Disposition. CAPA adressiert die Ursache und verhindert Wiederholung."
+        },
+        {
+          "q": "Enthält das Bundle eine Bewertungsmatrix?",
+          "a": "Ja. Die Excel-Matrix hilft bei der risikobasierten Klassifizierung (kritisch/major/minor)."
+        },
+        {
+          "q": "Brauche ich beide Bundles (NC + CAPA)?",
+          "a": "Für ein vollständiges System ja. Das NC-Bundle enthält aber einen Eskalationsleitfaden."
+        }
+      ]
+    },
+    "audit": {
+      "title": "Audit Preparation Kit",
+      "oneLiner": "Systematische Auditvorbereitung",
+      "highlights": [
+        "8-Wochen-Zeitplan für externe Audits",
+        "Self-Assessment Checkliste",
+        "Mitarbeiter-Briefing Templates",
+        "Dokumenten-Readiness-Tracker"
+      ],
+      "documents": [
+        "Audit-Vorbereitungs-SOP (Word)",
+        "8-Wochen Vorbereitungsplan (Excel)",
+        "Self-Assessment Checkliste (Excel)",
+        "Mitarbeiter-Briefing Guide (Word)",
+        "Dokumenten-Readiness-Tracker (Excel)",
+        "Day-of-Audit Checkliste (Word)",
+        "Post-Audit Response Template (Word)",
+        "Quick Reference Card (PDF)"
+      ],
+      "faq": [
+        {
+          "q": "Ist dieses Kit für externe Audits geeignet?",
+          "a": "Ja, speziell für die Vorbereitung auf Zertifizierungs- und Überwachungsaudits durch Benannte Stellen entwickelt."
+        },
+        {
+          "q": "Wie viel Vorlaufzeit sollte ich einplanen?",
+          "a": "Der 8-Wochen-Plan ist ideal. Bei kürzerer Zeit können Sie die Prioritäten-Checkliste für eine Schnellvorbereitung nutzen."
+        },
+        {
+          "q": "Deckt das Kit auch ISO 13485 ab?",
+          "a": "Ja. Die Self-Assessment Checkliste enthält alle ISO 13485 Klauseln und typische Auditor-Fragen."
+        }
+      ]
+    }
+  },
+  "productDetail": {
+    "breadcrumb": "Produkte",
+    "buyNow": "Jetzt kaufen",
+    "oneTime": "einmalig",
+    "securePayment": "Sichere Zahlung via Gumroad · Sofortiger Download",
+    "includedTitle": "Im Bundle enthalten:",
+    "includedItems": ["7 Dokumente (Word, Excel, PDF)", "Ausgefülltes Beispiel", "Kostenlose Updates", "Firmenweite Lizenz"],
+    "previewTitle": "Vorschau",
+    "samplePreview": "Sample Preview – Inhaltsverzeichnis & Struktur",
+    "openPdf": "PDF öffnen ↗",
+    "allDocsTitle": "Alle Dokumente im Bundle",
+    "page": "Seite",
+    "pages": "Seiten",
+    "whyTitle": "Warum dieses Bundle?",
+    "faqTitle": "Häufige Fragen",
+    "ctaTitle": "Bereit für ein System, das funktioniert?",
+    "ctaButton": "Jetzt kaufen",
+    "capa": {
+      "meta": {
+        "title": "CAPA System Bundle | ISO 13485 & FDA konforme Templates | QCore",
+        "description": "Audit-fertiges CAPA-System für MedTech: SOP, Formulare, Tracking, Root Cause Toolkit. ISO 13485, FDA 21 CFR 820.100, EU MDR konform. €129."
+      },
+      "title": "CAPA System Bundle",
+      "subtitle": "7 Dokumente für ein funktionierendes, audit-fertiges CAPA-System. Sofort einsetzbar, mit ausgefülltem Beispiel.",
+      "stats": {
+        "docs": "Dokumente",
+        "pagesLabel": "Seiten",
+        "format": "Editierbar"
+      },
+      "problem": {
+        "title": "Das Problem:",
+        "text": "CAPA ist der #1 FDA Audit Finding seit Jahren. Nicht weil QM-Teams ihre Arbeit nicht machen – sondern weil viele CAPA-Systeme so aufgebaut sind, dass sie im Alltag scheitern."
+      },
+      "solution": {
+        "title": "Die Lösung:",
+        "text": "Ein CAPA-System, das drei Dinge kann: Sofort nutzbar (ohne Schulung), Auditor überzeugen (Nachvollziehbarkeit), im echten Alltag funktionieren."
+      },
+      "previewDoc": "SOP-CAPA-001 | CAPA Procedure",
+      "documents": [
+        { "name": "CAPA SOP", "desc": "Standard Operating Procedure mit klarer Prozesslogik, Verantwortlichkeiten und Eskalationsstufen.", "format": "Word (.docx)", "pages": "8" },
+        { "name": "CAPA Form", "desc": "Strukturiertes Formular für die CAPA-Erfassung mit allen Pflichtfeldern nach ISO 13485 und FDA.", "format": "Word (.docx)", "pages": "4" },
+        { "name": "CAPA Tracking Log", "desc": "Übersicht aller laufenden und abgeschlossenen CAPAs mit Dashboard, Status, Fristen und KPIs.", "format": "Excel (.xlsx)", "pages": "3 Sheets" },
+        { "name": "Root Cause Analysis Toolkit", "desc": "5-Why Template, Ishikawa-Diagramm mit Anleitung zur systematischen Ursachenanalyse.", "format": "Excel (.xlsx)", "pages": "2 Sheets" },
+        { "name": "Effectiveness Verification Checklist", "desc": "Strukturierte Checkliste zur Verifizierung der CAPA-Wirksamkeit.", "format": "Word (.docx)", "pages": "2" },
+        { "name": "Ausgefülltes Beispiel-CAPA", "desc": "Realistische Beispiel-CAPA durchgespielt – zeigt wie die Dokumente im Alltag funktionieren.", "format": "PDF", "pages": "6" },
+        { "name": "Quick Reference Card", "desc": "Ein-Seiten-Übersicht für den Schreibtisch: Prozess, Fristen, Eskalation auf einen Blick.", "format": "PDF", "pages": "1" }
+      ],
+      "why": [
+        { "icon": "🎯", "title": "Praxiserprobt", "desc": "Entwickelt aus 17 Jahren QM-Erfahrung in regulierten Industrien. Nicht aus Lehrbüchern kopiert, sondern aus echten Audits gelernt." },
+        { "icon": "⚡", "title": "Sofort nutzbar", "desc": "Keine 2-Tages-Schulung nötig. Das ausgefüllte Beispiel zeigt genau, wie die Dokumente im Alltag funktionieren." },
+        { "icon": "✓", "title": "Audit-ready", "desc": "Erfüllt die Anforderungen von ISO 13485, FDA 21 CFR 820.100 und EU MDR. Basierend auf echten Audit-Erfahrungen." }
+      ],
+      "faq": [
+        { "q": "Kann ich die Templates anpassen?", "a": "Ja, alle Dokumente sind in Word und Excel – vollständig editierbar. Logo, Begriffe, Prozessschritte können Sie an Ihr Unternehmen anpassen." },
+        { "q": "Für welche Unternehmensgröße ist das Bundle geeignet?", "a": "Primär für MedTech-Startups und KMU (10-200 Mitarbeiter), die ein strukturiertes CAPA-System aufbauen oder ihr bestehendes verbessern wollen." },
+        { "q": "Ist die Sprache Englisch oder Deutsch?", "a": "Die Dokumente sind auf Englisch – der Industriestandard für internationale Zertifizierungen und FDA-Submissions." },
+        { "q": "Wie funktioniert die Zahlung?", "a": "Die Zahlung läuft über Gumroad (Kreditkarte, PayPal). Nach der Zahlung erhalten Sie sofort den Download-Link per E-Mail." },
+        { "q": "Gibt es Support bei Fragen?", "a": "Ja, bei Fragen zur Implementierung können Sie mich per E-Mail kontaktieren. Für umfangreichere Anpassungen biete ich auch Beratung an." }
+      ],
+      "ctaText": "€129 für ein audit-fertiges System, das Ihnen Wochen an Entwicklungszeit spart."
+    },
+    "nc": {
+      "meta": {
+        "title": "NC Management Bundle | ISO 13485 & FDA konforme Templates | QCore",
+        "description": "Vollständiges NC-System für MedTech: SOP, Formulare, Tracking, Bewertungsmatrix. ISO 13485, FDA 21 CFR 820.90, EU MDR konform. €99."
+      },
+      "title": "NC Management Bundle",
+      "subtitle": "7 Dokumente für systematische Fehlerbehandlung. Mit Bewertungsmatrix, Eskalationsleitfaden und ausgefülltem Beispiel.",
+      "stats": {
+        "docs": "Dokumente",
+        "pagesLabel": "Seiten",
+        "format": "Editierbar"
+      },
+      "problem": {
+        "title": "Das Problem:",
+        "text": "Viele Unternehmen dokumentieren NCs, aber die systematische Bearbeitung fehlt. Das Ergebnis: Wiederkehrende Fehler, undokumentierte Dispositionen, Audit-Findings."
+      },
+      "solution": {
+        "title": "Die Lösung:",
+        "text": "Ein NC-System mit klarer Entscheidungslogik: Risikobasierte Klassifizierung, dokumentierte Disposition, klare Eskalation zu CAPA wenn nötig."
+      },
+      "previewDoc": "SOP-NC-001 | NC Procedure",
+      "documents": [
+        { "name": "NC SOP", "desc": "Standard Operating Procedure mit vollständigem Dispositions-Workflow und Verantwortlichkeiten.", "format": "Word (.docx)", "pages": "7" },
+        { "name": "NC Form", "desc": "Strukturiertes Formular für NC-Dokumentation mit allen Pflichtfeldern nach ISO 13485.", "format": "Word (.docx)", "pages": "3" },
+        { "name": "NC Tracking Log", "desc": "Übersicht aller NCs mit Dashboard, Status-Tracking und Trend-Analyse.", "format": "Excel (.xlsx)", "pages": "3 Sheets" },
+        { "name": "NC Assessment Matrix", "desc": "Risikobasierte Klassifizierung (kritisch/major/minor) mit klaren Entscheidungskriterien.", "format": "Excel (.xlsx)", "pages": "2 Sheets" },
+        { "name": "NC-to-CAPA Escalation Guide", "desc": "Wann braucht eine NC ein CAPA? Klare Eskalationskriterien und Entscheidungsbaum.", "format": "Word (.docx)", "pages": "3" },
+        { "name": "Ausgefülltes Beispiel-NC", "desc": "Realistische Beispiel-NC durchgespielt – zeigt wie die Dokumente im Alltag funktionieren.", "format": "PDF", "pages": "5" },
+        { "name": "Quick Reference Card", "desc": "Ein-Seiten-Übersicht: NC-Prozess, Klassifizierung, Eskalationskriterien auf einen Blick.", "format": "PDF", "pages": "1" }
+      ],
+      "why": [
+        { "icon": "🎯", "title": "Risikobasiert", "desc": "Nicht jede NC ist kritisch. Die Bewertungsmatrix stellt sicher, dass der Aufwand dem tatsächlichen Risiko entspricht." },
+        { "icon": "⚡", "title": "Klare Eskalation", "desc": "Der NC-zu-CAPA Leitfaden verhindert sowohl Über-Eskalation als auch Unter-Dokumentation." },
+        { "icon": "✓", "title": "Audit-ready", "desc": "Erfüllt die Anforderungen von ISO 13485:2016 §8.3, FDA 21 CFR 820.90 und EU MDR." }
+      ],
+      "faq": [
+        { "q": "Was ist der Unterschied zwischen NC und CAPA?", "a": "NC dokumentiert das Problem und die sofortige Disposition. CAPA adressiert die Ursache und verhindert Wiederholung. Dieses Bundle deckt NC ab – das CAPA Bundle ist separat erhältlich." },
+        { "q": "Kann ich die Templates anpassen?", "a": "Ja, alle Dokumente sind in Word und Excel – vollständig editierbar. Logo, Begriffe, Prozessschritte können Sie an Ihr Unternehmen anpassen." },
+        { "q": "Brauche ich beide Bundles (NC + CAPA)?", "a": "Für ein vollständiges System ja. Dieses Bundle enthält aber einen Eskalationsleitfaden, der erklärt, wann ein CAPA eingeleitet werden sollte." },
+        { "q": "Ist die Sprache Englisch oder Deutsch?", "a": "Die Dokumente sind auf Englisch – der Industriestandard für internationale Zertifizierungen und FDA-Submissions." },
+        { "q": "Wie funktioniert die Zahlung?", "a": "Die Zahlung läuft über Gumroad (Kreditkarte, PayPal). Nach der Zahlung erhalten Sie sofort den Download-Link per E-Mail." }
+      ],
+      "ctaText": "€99 für einen systematischen NC-Prozess, der konsistente Fehlerbehandlung sicherstellt."
+    },
+    "audit": {
+      "meta": {
+        "title": "Internes Audit Kit | ISO 13485 & FDA konforme Templates | QCore",
+        "description": "Vollständiges Audit-System für MedTech: SOP, Checklisten, Interviewfragen, Berichtsvorlagen. ISO 13485, FDA 21 CFR 820.22 konform. €79."
+      },
+      "title": "Internes Audit Kit",
+      "subtitle": "8 Dokumente für professionelle interne Audits. Mit 80+ Prüfpunkten, 50+ Interviewfragen und Finding-Klassifizierung.",
+      "stats": {
+        "docs": "Dokumente",
+        "pagesLabel": "Seiten",
+        "format": "Editierbar"
+      },
+      "problem": {
+        "title": "Das Problem:",
+        "text": "Interne Audits sind oft reine Checkbox-Übungen. Auditoren stellen oberflächliche Fragen, Findings sind vage, und echte Verbesserungsmöglichkeiten werden verpasst."
+      },
+      "solution": {
+        "title": "Die Lösung:",
+        "text": "Ein Audit-System mit Tiefe: Gezielte Interviewfragen, systematische Checklisten und klare Finding-Klassifizierung, die echte Verbesserung antreibt."
+      },
+      "previewDoc": "SOP-AUDIT-001 | Internal Audit Procedure",
+      "documents": [
+        { "name": "Audit SOP", "desc": "Vollständige Prozedur für Planung, Durchführung und Nachverfolgung interner Audits.", "format": "Word (.docx)", "pages": "8" },
+        { "name": "Audit-Programm Jahresplanung", "desc": "Risikobasierte Jahresplanung mit allen erforderlichen Elementen für ISO 13485.", "format": "Excel (.xlsx)", "pages": "2 Sheets" },
+        { "name": "Audit-Plan Template", "desc": "Individuelle Auditplanung mit Scope, Kriterien und Zeitplan.", "format": "Word (.docx)", "pages": "2" },
+        { "name": "QMS Audit-Checkliste", "desc": "80+ Prüfpunkte nach ISO 13485 Kapiteln mit Audit-Anleitung.", "format": "Excel (.xlsx)", "pages": "4 Sheets" },
+        { "name": "Interviewfragen-Leitfaden", "desc": "50+ gezielte Fragen mit erwarteten Antworten und Warnsignalen.", "format": "Word (.docx)", "pages": "8" },
+        { "name": "Audit-Berichtsvorlage", "desc": "Professionelles Berichtsformat mit Executive Summary und Finding-Details.", "format": "Word (.docx)", "pages": "4" },
+        { "name": "Finding-Klassifizierungsmatrix", "desc": "Klare Kriterien für Major/Minor/Observation Klassifizierung.", "format": "Excel (.xlsx)", "pages": "1 Sheet" },
+        { "name": "Quick Reference Card", "desc": "Ein-Seiten-Übersicht: Audit-Prozess, Klassifizierungskriterien, wichtige Termine.", "format": "PDF", "pages": "1" }
+      ],
+      "why": [
+        { "icon": "🎯", "title": "Tiefe statt Breite", "desc": "50+ gezielte Interviewfragen, die echte Probleme aufdecken, nicht nur Checkbox-Compliance." },
+        { "icon": "⚡", "title": "Sofort auditbereit", "desc": "Alles was Sie brauchen von Planung bis Berichterstattung. Keine zusätzliche Vorbereitung nötig." },
+        { "icon": "✓", "title": "Audit-ready", "desc": "Erfüllt die Anforderungen von ISO 13485:2016 §8.2.4, FDA 21 CFR 820.22 und ISO 19011." }
+      ],
+      "faq": [
+        { "q": "Deckt die Checkliste alle ISO 13485 Anforderungen ab?", "a": "Ja. Die Excel-Checkliste enthält 80+ Prüfpunkte nach ISO 13485 Kapiteln und deckt alle wichtigen Anforderungen ab." },
+        { "q": "Kann ich die Interviewfragen für externe Audits nutzen?", "a": "Die Fragen sind primär für interne Audits konzipiert, helfen aber auch bei der Vorbereitung auf Zertifizierungsaudits durch Ihre Benannte Stelle." },
+        { "q": "Wie klassifiziere ich Findings korrekt?", "a": "Die Finding-Matrix enthält klare Definitionen und Beispiele für Major-, Minor- und Observation-Klassifizierungen." },
+        { "q": "Ist die Sprache Englisch oder Deutsch?", "a": "Die Dokumente sind auf Englisch – der Industriestandard für internationale Zertifizierungen und FDA-Submissions." },
+        { "q": "Wie funktioniert die Zahlung?", "a": "Die Zahlung läuft über Gumroad (Kreditkarte, PayPal). Nach der Zahlung erhalten Sie sofort den Download-Link per E-Mail." }
+      ],
+      "ctaText": "€79 für ein komplettes Audit-Toolkit, das Ihre internen Audits von Checkbox-Übungen zu echten Verbesserungstreibern macht."
+    }
+  },
+  "footer": {
+    "rights": "Alle Rechte vorbehalten",
+    "brand": "Spezialist für Quality Management in hochregulierten Industrien",
+    "knowledgeTitle": "Wissen & Training"
+  }
+}

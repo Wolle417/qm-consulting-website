@@ -1,7 +1,11 @@
 'use client';
 
+import { useTranslation } from '../hooks/useTranslation';
+
 export default function ForWho() {
-  const clients = [
+  const { locale } = useTranslation();
+
+  const clientsDE = [
     {
       title: 'Regulierte Umgebungen',
       industries: 'Pharma • Medical • Nuklear • Biotech',
@@ -22,6 +26,32 @@ export default function ForWho() {
     },
   ];
 
+  const clientsEN = [
+    {
+      title: 'Regulated Environments',
+      industries: 'Pharma • Medical • Nuclear • Biotech',
+      need: 'Audit-ready QMS, formal methods, complete documentation.',
+      solution: 'Reproducible, traceable, compliance-ready. Without overhead.',
+    },
+    {
+      title: 'Tech-focused SMEs',
+      industries: 'Semiconductor & Optoelectronics • Manufacturing • Electronics',
+      need: 'Structured processes, clean documentation, certification-ready.',
+      solution: 'Stable process landscape. Fault-resilient. Scalable.',
+    },
+    {
+      title: 'Scale-ups & Growth',
+      industries: 'From 10 to 100 employees. From ad-hoc to structured.',
+      need: 'Systems that grow with you – without slowing down your team.',
+      solution: 'Lean, scalable, not bureaucratic.',
+    },
+  ];
+
+  const clients = locale === 'de' ? clientsDE : clientsEN;
+  const title = locale === 'de' ? 'Für wen wir arbeiten' : 'Who We Work With';
+  const youNeed = locale === 'de' ? 'Sie brauchen:' : 'You need:';
+  const weDeliver = locale === 'de' ? 'Wir liefern:' : 'We deliver:';
+
   return (
     <section id="forwho" className="section-padding relative z-10">
       <div className="max-w-[90%] mx-auto px-6">
@@ -32,14 +62,14 @@ export default function ForWho() {
             fontFamily: "'Cormorant', serif",
           }}
         >
-          Für wen wir arbeiten
+          {title}
         </h2>
 
         <div className="grid md:grid-cols-3 gap-4">
           {clients.map((client, index) => (
             <div
               key={index}
-              className="p-8 rounded-lg transition-all duration-300 bg-qcore-navy bg-opacity-30 hover:bg-opacity-45 cursor-default"
+              className="p-8 rounded-lg transition-all duration-300 bg-qcore-navy bg-opacity-30 hover:bg-opacity-45 backdrop-blur-[3px] cursor-default"
             >
               <h3 className="text-xl font-semibold mb-2" style={{ color: '#1e293b' }}>
                 {client.title}
@@ -52,7 +82,7 @@ export default function ForWho() {
               <div className="space-y-3">
                 <div>
                   <p className="text-xs uppercase tracking-wide mb-1 font-semibold" style={{ color: '#1e3a8a' }}>
-                    Sie brauchen:
+                    {youNeed}
                   </p>
                   <p className="text-sm leading-relaxed" style={{ color: '#334155' }}>
                     {client.need}
@@ -61,7 +91,7 @@ export default function ForWho() {
                 
                 <div>
                   <p className="text-xs uppercase tracking-wide mb-1 font-semibold" style={{ color: '#1e3a8a' }}>
-                    Wir liefern:
+                    {weDeliver}
                   </p>
                   <p className="text-sm leading-relaxed" style={{ color: '#334155' }}>
                     {client.solution}
