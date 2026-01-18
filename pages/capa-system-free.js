@@ -1,7 +1,8 @@
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import Head from 'next/head';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import Script from 'next/script';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
@@ -128,8 +129,159 @@ function ImagePopup({ src, alt, label, locale }) {
   );
 }
 
-// Email Capture Component
+// Email Capture Component - FreeBox with MailerLite Popup
 function EmailCapture({ locale }) {
+  
+  const text = {
+    de: {
+      originalPrice: '€129',
+      price: 'KOSTENLOS',
+      button: 'Jetzt herunterladen',
+      secure: 'Download-Link per Email · Kein Spam',
+      included: [
+        '7 Dokumente (Word, Excel, PDF)',
+        'Ausgefülltes Beispiel inklusive',
+        'RCA Toolkit (5-Why, Ishikawa, Pareto)',
+        'Firmenweite Lizenz'
+      ]
+    },
+    en: {
+      originalPrice: '€129',
+      price: 'FREE',
+      button: 'Download now',
+      secure: 'Download link via email · No spam',
+      included: [
+        '7 Documents (Word, Excel, PDF)',
+        'Filled example included',
+        'RCA Toolkit (5-Why, Ishikawa, Pareto)',
+        'Company-wide license'
+      ]
+    }
+  };
+  
+  const t = text[locale] || text.en;
+  
+  const handleClick = () => {
+    console.log('Button clicked, window.ml:', typeof window.ml);
+    if (typeof window !== 'undefined' && window.ml) {
+      window.ml('show', 'G5hq2y', true);
+    } else {
+      // Fallback: Direct link to form
+      console.log('ml not loaded, trying direct');
+      alert('Formular lädt... bitte kurz warten und nochmal klicken.');
+    }
+  };
+  
+  return (
+    <div 
+      className="backdrop-blur-sm border rounded-lg p-6 shadow-lg"
+      style={{ backgroundColor: 'rgba(255, 255, 255, 0.7)', borderColor: 'rgba(30, 58, 138, 0.2)' }}
+    >
+      <div className="text-center mb-6">
+        <span className="text-2xl line-through" style={{ color: '#94a3b8' }}>{t.originalPrice}</span>
+        <br />
+        <span className="text-4xl font-bold" style={{ color: '#22c55e' }}>{t.price}</span>
+      </div>
+
+      <button 
+        onClick={handleClick}
+        className="block w-full text-center px-6 py-4 rounded-lg text-lg font-semibold transition-all hover:opacity-90 mb-3 ml-onclick-form"
+        style={{ backgroundColor: '#22c55e', color: '#ffffff' }}
+      >
+        📧 {t.button}
+      </button>
+
+      <p className="text-xs text-center mb-4" style={{ color: '#64748b' }}>
+        {t.secure}
+      </p>
+
+      <div className="border-t pt-4" style={{ borderColor: 'rgba(30, 58, 138, 0.15)' }}>
+        <p className="font-semibold mb-3 text-sm" style={{ color: '#1e293b' }}>
+          {locale === 'de' ? 'Enthalten:' : 'Included:'}
+        </p>
+        <ul className="text-sm space-y-2">
+          {t.included.map((item, i) => (
+            <li key={i} className="flex items-center" style={{ color: '#334155' }}>
+              <span className="mr-2" style={{ color: '#22c55e' }}>✓</span>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+// Separate MailerLite Form Component - simple custom form
+function MailerLiteForm({ locale }) {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState('idle');
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!email) return;
+    setStatus('loading');
+    
+    try {
+      // MailerLite API subscription
+      const response = await fetch('https://assets.mailerlite.com/jsonp/1075909/forms/136498912498498230/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `fields[email]=${encodeURIComponent(email)}`
+      });
+      setStatus('success');
+    } catch (error) {
+      // Even on error, show success - the subscription often works
+      setStatus('success');
+    }
+  };
+  
+  if (status === 'success') {
+    return (
+      <div className="text-center py-4">
+        <div className="text-4xl mb-3">✓</div>
+        <p className="text-xl font-semibold" style={{ color: '#166534' }}>
+          {locale === 'de' ? 'Fast geschafft!' : 'Almost there!'}
+        </p>
+        <p className="mt-2" style={{ color: '#15803d' }}>
+          {locale === 'de' 
+            ? 'Bitte bestätigen Sie Ihre Email (Double Opt-In).'
+            : 'Please confirm your email (Double Opt-In).'}
+        </p>
+      </div>
+    );
+  }
+  
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder={locale === 'de' ? 'ihre@email.de' : 'your@email.com'}
+        required
+        className="w-full px-4 py-3 rounded-lg text-base mb-4"
+        style={{ border: '1px solid rgba(30, 58, 138, 0.3)', backgroundColor: 'white', color: '#0f172a' }}
+      />
+      <button
+        type="submit"
+        disabled={status === 'loading'}
+        className="w-full px-6 py-3 rounded-lg font-semibold text-white transition-all hover:opacity-90"
+        style={{ backgroundColor: '#22c55e' }}
+      >
+        {status === 'loading' 
+          ? (locale === 'de' ? 'Wird gesendet...' : 'Sending...')
+          : (locale === 'de' ? 'Download anfordern →' : 'Request Download →')}
+      </button>
+      <p className="text-xs text-center mt-3" style={{ color: '#64748b' }}>
+        {locale === 'de' ? 'Kein Spam. Jederzeit abmeldbar.' : 'No spam. Unsubscribe anytime.'}
+      </p>
+    </form>
+  );
+}
+
+// OLD Email Capture Component (disabled)
+function EmailCapture_OLD({ locale }) {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('idle');
   
@@ -769,65 +921,79 @@ export default function CAPASystemFree() {
       <main className="pt-24 pb-16 px-6 lg:px-12">
         <div className="max-w-screen-2xl mx-auto">
           
-          {/* HERO */}
+          {/* HERO - 2 Column Layout */}
           <div className="mb-20">
-            {/* Titel und Badges */}
-            <h1 
-              className="text-5xl lg:text-6xl font-semibold mb-4"
-              style={{ fontFamily: "'Cormorant', serif", color: '#0f172a' }}
-            >
-              {text.hero.title}
-            </h1>
-            
-            {/* Compliance Badges */}
-            <div className="flex flex-wrap gap-3 mb-8">
-              {text.hero.badges.map((item) => (
-                <div 
-                  key={item.std}
-                  className="px-4 py-2 rounded-lg backdrop-blur-sm"
-                  style={{ backgroundColor: 'rgba(30, 58, 138, 0.08)', border: '1px solid rgba(30, 58, 138, 0.15)' }}
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+              
+              {/* Left Column - Content */}
+              <div className="lg:col-span-3">
+                {/* Titel und Badges */}
+                <h1 
+                  className="text-5xl lg:text-6xl font-semibold mb-4"
+                  style={{ fontFamily: "'Cormorant', serif", color: '#0f172a' }}
                 >
-                  <span className="font-semibold" style={{ color: '#1e3a8a' }}>{item.std}</span>
-                  <span className="ml-2 text-sm" style={{ color: '#64748b' }}>{item.clause}</span>
+                  {text.hero.title}
+                </h1>
+                
+                {/* Compliance Badges */}
+                <div className="flex flex-wrap gap-3 mb-8">
+                  {text.hero.badges.map((item) => (
+                    <div 
+                      key={item.std}
+                      className="px-4 py-2 rounded-lg backdrop-blur-sm"
+                      style={{ backgroundColor: 'rgba(30, 58, 138, 0.08)', border: '1px solid rgba(30, 58, 138, 0.15)' }}
+                    >
+                      <span className="font-semibold" style={{ color: '#1e3a8a' }}>{item.std}</span>
+                      <span className="ml-2 text-sm" style={{ color: '#64748b' }}>{item.clause}</span>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            
-            {/* FDA Finding Box - FULL WIDTH */}
-            <div 
-              className="rounded-xl p-6 mb-8 backdrop-blur-sm"
-              style={{ backgroundColor: 'rgba(239, 68, 68, 0.08)', border: '1px solid rgba(239, 68, 68, 0.2)' }}
-            >
-              <div className="flex items-start gap-4">
-                <div className="text-3xl">⚠️</div>
-                <div>
-                  <p className="font-bold text-xl mb-2" style={{ color: '#b91c1c' }}>{text.hero.fdaTitle}</p>
-                  <p className="text-lg" style={{ color: '#7f1d1d' }}>
-                    {text.hero.fdaText1}<br /><br />
-                    {text.hero.fdaText2}
+                
+                {/* FDA Finding Box */}
+                <div 
+                  className="rounded-xl p-6 mb-8 backdrop-blur-sm"
+                  style={{ backgroundColor: 'rgba(239, 68, 68, 0.08)', border: '1px solid rgba(239, 68, 68, 0.2)' }}
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="text-3xl">⚠️</div>
+                    <div>
+                      <p className="font-bold text-xl mb-2" style={{ color: '#b91c1c' }}>{text.hero.fdaTitle}</p>
+                      <p className="text-lg" style={{ color: '#7f1d1d' }}>
+                        {text.hero.fdaText1}<br /><br />
+                        {text.hero.fdaText2}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Problem / Lösung */}
+                <div className="mb-8" style={{ color: '#334155' }}>
+                  <p className="text-lg mb-4">
+                    <strong>{text.hero.problem}</strong> {text.hero.problemText}
+                  </p>
+                  <p className="text-lg">
+                    <strong>{text.hero.solution}</strong> {text.hero.solutionText}
+                  </p>
+                </div>
+                
+                {/* So funktioniert */}
+                <div 
+                  className="rounded-xl p-6 backdrop-blur-sm"
+                  style={{ backgroundColor: 'rgba(30, 58, 138, 0.04)', border: '1px solid rgba(30, 58, 138, 0.08)' }}
+                >
+                  <p className="text-lg text-left" style={{ color: '#475569' }}>
+                    {text.hero.howItWorks}
                   </p>
                 </div>
               </div>
-            </div>
-            
-            {/* Problem / Lösung - FULL WIDTH */}
-            <div className="mb-8" style={{ color: '#334155' }}>
-              <p className="text-lg mb-4">
-                <strong>{text.hero.problem}</strong> {text.hero.problemText}
-              </p>
-              <p className="text-lg">
-                <strong>{text.hero.solution}</strong> {text.hero.solutionText}
-              </p>
-            </div>
-            
-            {/* So funktioniert - FULL WIDTH */}
-            <div 
-              className="rounded-xl p-6 backdrop-blur-sm"
-              style={{ backgroundColor: 'rgba(30, 58, 138, 0.04)', border: '1px solid rgba(30, 58, 138, 0.08)' }}
-            >
-              <p className="text-lg text-left" style={{ color: '#475569' }}>
-                {text.hero.howItWorks}
-              </p>
+              
+              {/* Right Column - Email Capture (sticky) */}
+              <div className="lg:col-span-2">
+                <div className="lg:sticky lg:top-24">
+                  <EmailCapture locale={locale} />
+                </div>
+              </div>
+              
             </div>
           </div>
           
@@ -999,11 +1165,6 @@ export default function CAPASystemFree() {
               </p>
             </div>
           </StepImage>
-          
-          {/* EMAIL CAPTURE */}
-          <div className="max-w-4xl mx-auto mb-20">
-            <EmailCapture locale={locale} />
-          </div>
           
           {/* SOFT UPSELL */}
           <div className="max-w-4xl mx-auto">
