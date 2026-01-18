@@ -69,7 +69,12 @@ export default function ForWho() {
           {clients.map((client, index) => (
             <div
               key={index}
-              className="p-8 rounded-lg transition-all duration-300 bg-qcore-navy bg-opacity-30 hover:bg-opacity-45 backdrop-blur-[3px] cursor-default"
+              className="p-8 rounded-xl transition-all duration-300 cursor-default hover:shadow-lg"
+              style={{
+                backgroundColor: 'rgba(30, 58, 138, 0.06)',
+                border: '1px solid rgba(30, 58, 138, 0.1)',
+                backdropFilter: 'blur(3px)',
+              }}
             >
               <h3 className="text-xl font-semibold mb-2" style={{ color: '#1e293b' }}>
                 {client.title}

@@ -156,7 +156,7 @@ function StepPDF({ number, title, children, pdfPath, pdfHeight = 600 }) {
         <div className="lg:col-span-2">
           <div 
             className="rounded-xl p-6 h-full backdrop-blur-sm"
-            style={{ backgroundColor: 'rgba(30, 58, 138, 0.06)', border: '1px solid rgba(30, 58, 138, 0.1)' }}
+            style={{ backgroundColor: 'rgba(30, 58, 138, 0.06)', border: '1px solid rgba(30, 58, 138, 0.1)', backdropFilter: 'blur(3px)' }}
           >
             {children}
           </div>
@@ -243,7 +243,7 @@ function StepImages({ number, title, children, images, popupImages, locale }) {
         <div className="lg:col-span-2">
           <div 
             className="rounded-xl p-6 backdrop-blur-sm lg:sticky lg:top-24"
-            style={{ backgroundColor: 'rgba(30, 58, 138, 0.06)', border: '1px solid rgba(30, 58, 138, 0.1)' }}
+            style={{ backgroundColor: 'rgba(30, 58, 138, 0.06)', border: '1px solid rgba(30, 58, 138, 0.1)', backdropFilter: 'blur(3px)' }}
           >
             {children}
           </div>
@@ -667,9 +667,9 @@ export default function NCSystem() {
                   <div 
                     key={item.std}
                     className="px-4 py-2 rounded-lg backdrop-blur-sm"
-                    style={{ backgroundColor: 'rgba(30, 58, 138, 0.08)', border: '1px solid rgba(30, 58, 138, 0.15)' }}
+                    style={{ backgroundColor: 'rgba(30, 58, 138, 0.06)', border: '1px solid rgba(30, 58, 138, 0.1)' }}
                   >
-                    <span className="font-semibold" style={{ color: '#1e3a8a' }}>{item.std}</span>
+                    <span className="font-semibold" style={{ color: '#0f172a' }}>{item.std}</span>
                     <span className="ml-2 text-sm" style={{ color: '#64748b' }}>{item.clause}</span>
                   </div>
                 ))}
@@ -677,18 +677,13 @@ export default function NCSystem() {
               
               {/* Pain Point Box */}
               <div 
-                className="rounded-xl p-6 mb-8"
-                style={{ backgroundColor: 'rgba(239, 68, 68, 0.08)', border: '1px solid rgba(239, 68, 68, 0.2)' }}
+                className="rounded-xl p-6 mb-8 backdrop-blur-sm"
+                style={{ backgroundColor: 'rgba(239, 68, 68, 0.08)', border: '1px solid rgba(239, 68, 68, 0.2)', backdropFilter: 'blur(3px)' }}
               >
-                <div className="flex items-start gap-4">
-                  <div className="text-3xl">⚠️</div>
-                  <div>
-                    <p className="font-bold text-xl mb-2" style={{ color: '#b91c1c' }}>{text.hero.painTitle}</p>
-                    <p className="text-lg" style={{ color: '#7f1d1d' }}>
-                      {text.hero.painText}
-                    </p>
-                  </div>
-                </div>
+                <p className="font-bold text-xl mb-2" style={{ color: '#b91c1c' }}>{text.hero.painTitle}</p>
+                <p className="text-lg" style={{ color: '#7f1d1d' }}>
+                  {text.hero.painText}
+                </p>
               </div>
               
               {/* Problem / Solution */}
@@ -703,8 +698,8 @@ export default function NCSystem() {
               
               {/* How it works */}
               <div 
-                className="rounded-xl p-6"
-                style={{ backgroundColor: 'rgba(30, 58, 138, 0.04)', border: '1px solid rgba(30, 58, 138, 0.08)' }}
+                className="rounded-xl p-6 backdrop-blur-sm"
+                style={{ backgroundColor: 'rgba(30, 58, 138, 0.04)', border: '1px solid rgba(30, 58, 138, 0.08)', backdropFilter: 'blur(3px)' }}
               >
                 <p className="text-lg" style={{ color: '#475569' }}>
                   {text.hero.howItWorks}
@@ -715,8 +710,8 @@ export default function NCSystem() {
             {/* Right: Buy Box */}
             <div className="lg:col-span-2 lg:sticky lg:top-24">
               <div 
-                className="backdrop-blur-sm border rounded-lg p-6 shadow-lg"
-                style={{ backgroundColor: 'rgba(255, 255, 255, 0.7)', borderColor: 'rgba(30, 58, 138, 0.2)' }}
+                className="rounded-xl p-6"
+                style={{ backgroundColor: 'rgba(30, 58, 138, 0.06)', border: '1px solid rgba(30, 58, 138, 0.1)', backdropFilter: 'blur(3px)' }}
               >
                 <div className="text-center mb-6">
                   <span className="text-4xl font-bold" style={{ color: '#1e3a8a' }}>{text.buyBox.price}</span>
@@ -727,8 +722,13 @@ export default function NCSystem() {
                   href="https://qcore33.gumroad.com/l/cgjwqa"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full text-center px-6 py-4 rounded-lg text-lg font-semibold transition-all hover:opacity-90 mb-3"
-                  style={{ backgroundColor: '#1e3a8a', color: '#ffffff' }}
+                  className="block w-full text-center px-6 py-4 rounded-lg text-lg font-semibold transition-all hover:scale-105 mb-3"
+                  style={{ 
+                    backgroundColor: 'rgba(191, 219, 254, 0.35)',
+                    backdropFilter: 'blur(3px)',
+                    border: '1px solid rgba(191, 219, 254, 0.5)',
+                    color: '#1e3a8a'
+                  }}
                 >
                   🇬🇧 {text.buyBox.button}
                 </a>
@@ -963,8 +963,13 @@ export default function NCSystem() {
                 href="https://qcore33.gumroad.com/l/cgjwqa"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block px-10 py-4 rounded-lg text-xl font-semibold transition-all hover:opacity-90"
-                style={{ backgroundColor: '#1e3a8a', color: '#ffffff' }}
+                className="inline-block px-10 py-4 rounded-lg text-xl font-semibold transition-all hover:scale-105"
+                style={{ 
+                  backgroundColor: 'rgba(191, 219, 254, 0.35)',
+                  backdropFilter: 'blur(3px)',
+                  border: '1px solid rgba(191, 219, 254, 0.5)',
+                  color: '#1e3a8a'
+                }}
               >
                 {text.cta.buyNow} – €99
               </a>
@@ -986,15 +991,25 @@ export default function NCSystem() {
               <div className="flex flex-wrap justify-center gap-4">
                 <a 
                   href={isEn ? '/en/capa-system-free' : '/capa-system-free'}
-                  className="px-6 py-3 rounded-lg font-medium transition-all hover:opacity-90"
-                  style={{ backgroundColor: '#1e3a8a', color: 'white' }}
+                  className="px-6 py-3 rounded-lg font-medium transition-all hover:scale-105"
+                  style={{ 
+                    backgroundColor: 'rgba(191, 219, 254, 0.35)',
+                    backdropFilter: 'blur(3px)',
+                    border: '1px solid rgba(191, 219, 254, 0.5)',
+                    color: '#1e3a8a'
+                  }}
                 >
                   {text.upsell.capaBundle}
                 </a>
                 <a 
                   href={isEn ? '/en/produkte/audit-prep-kit' : '/produkte/audit-prep-kit'}
-                  className="px-6 py-3 rounded-lg font-medium transition-all"
-                  style={{ backgroundColor: 'white', color: '#1e3a8a', border: '2px solid #1e3a8a' }}
+                  className="px-6 py-3 rounded-lg font-medium transition-all hover:scale-105"
+                  style={{ 
+                    backgroundColor: 'rgba(191, 219, 254, 0.35)',
+                    backdropFilter: 'blur(3px)',
+                    border: '1px solid rgba(191, 219, 254, 0.5)',
+                    color: '#1e3a8a'
+                  }}
                 >
                   {text.upsell.auditKit}
                 </a>

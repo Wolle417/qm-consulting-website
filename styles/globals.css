@@ -3,6 +3,11 @@
 @tailwind utilities;
 
 @layer base {
+  /* Scroll offset für Anchor-Links (wegen fixer Navigation) */
+  [id] {
+    scroll-margin-top: 80px;
+  }
+
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-size: 18px;

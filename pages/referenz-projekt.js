@@ -185,9 +185,9 @@ export default function ReferenzProjekt() {
     viewPdf: 'PDF ansehen',
     resultTitle: 'Ergebnis & Übertragbarkeit',
     results: [
-      { icon: '✅', title: 'Audit-fähig', text: 'Jedes Dokument erfüllt die formalen Anforderungen für GMP-Inspektionen' },
-      { icon: '🔄', title: 'Übertragbar', text: 'Die Methodik funktioniert für jeden Wirkstoff und jede Zielregion' },
-      { icon: '⚡', title: 'Effizient', text: 'Moderne Methoden reduzieren den Dokumentationsaufwand um 70-80%' },
+      { title: 'Audit-fähig', text: 'Jedes Dokument erfüllt die formalen Anforderungen für GMP-Inspektionen' },
+      { title: 'Übertragbar', text: 'Die Methodik funktioniert für jeden Wirkstoff und jede Zielregion' },
+      { title: 'Effizient', text: 'Moderne Methoden reduzieren den Dokumentationsaufwand um 70-80%' },
     ],
     ctaTitle: 'Sie brauchen GMP-Dokumentation?',
     ctaText: 'Ich erstelle audit-fähige Dokumentation für Ihr Produkt – systematisch, effizient, compliance-ready.',
@@ -221,9 +221,9 @@ export default function ReferenzProjekt() {
     viewPdf: 'View PDF',
     resultTitle: 'Results & Transferability',
     results: [
-      { icon: '✅', title: 'Audit-Ready', text: 'Each document meets formal requirements for GMP inspections' },
-      { icon: '🔄', title: 'Transferable', text: 'The methodology works for any API and any target region' },
-      { icon: '⚡', title: 'Efficient', text: 'Modern methods reduce documentation effort by 70-80%' },
+      { title: 'Audit-Ready', text: 'Each document meets formal requirements for GMP inspections' },
+      { title: 'Transferable', text: 'The methodology works for any API and any target region' },
+      { title: 'Efficient', text: 'Modern methods reduce documentation effort by 70-80%' },
     ],
     ctaTitle: 'Need GMP Documentation?',
     ctaText: 'I create audit-ready documentation for your product – systematic, efficient, compliance-ready.',
@@ -273,7 +273,8 @@ export default function ReferenzProjekt() {
               {labels.stats.map((stat, index) => (
                 <div 
                   key={index}
-                  className="bg-qcore-navy bg-opacity-20 hover:bg-opacity-35 transition-all duration-300 backdrop-blur-[3px] rounded-lg p-6 flex items-baseline justify-center cursor-default"
+                  className="rounded-lg p-6 flex items-baseline justify-center cursor-default transition-all duration-300 hover:shadow-lg"
+                  style={{ backgroundColor: 'rgba(30, 58, 138, 0.06)', border: '1px solid rgba(30, 58, 138, 0.1)', backdropFilter: 'blur(3px)' }}
                 >
                   <span 
                     className="text-4xl font-bold mr-3"
@@ -293,7 +294,8 @@ export default function ReferenzProjekt() {
         {/* Kontext Section */}
         <section className="relative pt-4 pb-8">
           <div className="relative z-10 max-w-[90%] mx-auto px-8">
-            <div className="bg-qcore-navy bg-opacity-30 hover:bg-opacity-45 transition-all duration-300 backdrop-blur-[3px] rounded-lg p-8 cursor-default">
+            <div className="rounded-lg p-8 cursor-default transition-all duration-300 hover:shadow-lg"
+              style={{ backgroundColor: 'rgba(30, 58, 138, 0.06)', border: '1px solid rgba(30, 58, 138, 0.1)', backdropFilter: 'blur(3px)' }}>
               <h2 
                 className="text-2xl font-semibold mb-6"
                 style={{ color: '#1e293b', fontFamily: "'Cormorant', serif" }}
@@ -357,7 +359,8 @@ export default function ReferenzProjekt() {
               {documents.map((doc) => (
                 <div 
                   key={doc.id}
-                  className="bg-qcore-navy bg-opacity-20 hover:bg-opacity-35 backdrop-blur-[3px] rounded-lg p-6 transition-all duration-300 cursor-default"
+                  className="rounded-lg p-6 transition-all duration-300 cursor-default hover:shadow-lg"
+                  style={{ backgroundColor: 'rgba(30, 58, 138, 0.06)', border: '1px solid rgba(30, 58, 138, 0.1)', backdropFilter: 'blur(3px)' }}
                 >
                   <div className="flex justify-between items-start mb-3">
                     <div>
@@ -427,12 +430,12 @@ export default function ReferenzProjekt() {
             >
               {labels.resultTitle}
             </h2>
-            <div className="bg-qcore-navy bg-opacity-30 hover:bg-opacity-45 transition-all duration-300 backdrop-blur-[3px] rounded-lg p-8 cursor-default">
+            <div className="rounded-lg p-8 cursor-default transition-all duration-300 hover:shadow-lg"
+              style={{ backgroundColor: 'rgba(30, 58, 138, 0.06)', border: '1px solid rgba(30, 58, 138, 0.1)', backdropFilter: 'blur(3px)' }}>
               
               <div className="grid md:grid-cols-3 gap-6">
                 {labels.results.map((r, i) => (
                   <div key={i} className="text-center p-4">
-                    <div className="text-4xl mb-3">{r.icon}</div>
                     <h3 className="font-semibold mb-2" style={{ color: '#1e293b' }}>{r.title}</h3>
                     <p className="text-sm" style={{ color: '#475569' }}>{r.text}</p>
                   </div>
@@ -457,21 +460,24 @@ export default function ReferenzProjekt() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/kontakt"
-                className="inline-block px-8 py-4 rounded-lg text-lg font-semibold transition-all hover:opacity-90"
+                className="inline-block px-8 py-4 rounded-lg text-lg font-semibold transition-all hover:scale-105"
                 style={{ 
-                  backgroundColor: '#1e3a8a',
-                  color: '#ffffff',
+                  backgroundColor: 'rgba(191, 219, 254, 0.35)',
+                  backdropFilter: 'blur(3px)',
+                  border: '1px solid rgba(191, 219, 254, 0.5)',
+                  color: '#1e3a8a'
                 }}
               >
                 {labels.ctaButton}
               </Link>
               <Link
                 href="/leistungen"
-                className="inline-block px-8 py-4 rounded-lg text-lg font-semibold transition-all hover:opacity-90"
+                className="inline-block px-8 py-4 rounded-lg text-lg font-semibold transition-all hover:scale-105"
                 style={{ 
-                  backgroundColor: 'transparent',
-                  color: '#1e3a8a',
-                  border: '2px solid #1e3a8a',
+                  backgroundColor: 'rgba(191, 219, 254, 0.35)',
+                  backdropFilter: 'blur(3px)',
+                  border: '1px solid rgba(191, 219, 254, 0.5)',
+                  color: '#1e3a8a'
                 }}
               >
                 {labels.ctaButton2}

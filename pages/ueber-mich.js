@@ -63,7 +63,12 @@ export default function UeberMich() {
               {stations.map((station, index) => (
                 <div 
                   key={index}
-                  className="bg-qcore-navy bg-opacity-30 hover:bg-opacity-45 transition-all duration-300 backdrop-blur-[3px] p-5 rounded-lg cursor-default"
+                  className="transition-all duration-300 p-5 rounded-lg cursor-default hover:shadow-lg"
+                  style={{
+                    backgroundColor: 'rgba(30, 58, 138, 0.06)',
+                    border: '1px solid rgba(30, 58, 138, 0.1)',
+                    backdropFilter: 'blur(3px)',
+                  }}
                 >
                   <div className="flex items-start gap-3">
                     <span 

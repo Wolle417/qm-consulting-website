@@ -126,8 +126,8 @@ function StepPDF({ number, title, pdfPath, pdfHeight = 650, children }) {
         </div>
         <div className="lg:col-span-2">
           <div 
-            className="lg:sticky lg:top-24 p-6 rounded-lg"
-            style={{ backgroundColor: 'rgba(30, 58, 138, 0.06)', border: '1px solid rgba(30, 58, 138, 0.1)' }}
+            className="lg:sticky lg:top-24 p-6 rounded-lg backdrop-blur-sm"
+            style={{ backgroundColor: 'rgba(30, 58, 138, 0.06)', border: '1px solid rgba(30, 58, 138, 0.1)', backdropFilter: 'blur(3px)' }}
           >
             {children}
           </div>
@@ -577,23 +577,18 @@ export default function AuditPrepKit() {
                 <div className="flex flex-wrap gap-3 mb-8">
                   {text.hero.badges.map((item, i) => (
                     <div key={i} className="px-4 py-2 rounded-lg backdrop-blur-sm" 
-                         style={{ backgroundColor: 'rgba(30, 58, 138, 0.08)', border: '1px solid rgba(30, 58, 138, 0.15)' }}>
-                      <span className="font-semibold" style={{ color: '#1e3a8a' }}>{item.std}</span>
+                         style={{ backgroundColor: 'rgba(30, 58, 138, 0.06)', border: '1px solid rgba(30, 58, 138, 0.1)' }}>
+                      <span className="font-semibold" style={{ color: '#0f172a' }}>{item.std}</span>
                       <span className="ml-2 text-sm" style={{ color: '#64748b' }}>{item.clause}</span>
                     </div>
                   ))}
                 </div>
                 
                 {/* Warning Box */}
-                <div className="rounded-xl p-6 mb-8" 
-                     style={{ backgroundColor: 'rgba(239, 68, 68, 0.08)', border: '1px solid rgba(239, 68, 68, 0.2)' }}>
-                  <div className="flex items-start gap-4">
-                    <div className="text-3xl">⚠️</div>
-                    <div>
-                      <p className="font-bold text-xl mb-2" style={{ color: '#b91c1c' }}>{text.hero.warning.title}</p>
-                      <p className="text-lg" style={{ color: '#7f1d1d' }}>{text.hero.warning.text}</p>
-                    </div>
-                  </div>
+                <div className="rounded-xl p-6 mb-8 backdrop-blur-sm" 
+                     style={{ backgroundColor: 'rgba(239, 68, 68, 0.08)', border: '1px solid rgba(239, 68, 68, 0.2)', backdropFilter: 'blur(3px)' }}>
+                  <p className="font-bold text-xl mb-2" style={{ color: '#b91c1c' }}>{text.hero.warning.title}</p>
+                  <p className="text-lg" style={{ color: '#7f1d1d' }}>{text.hero.warning.text}</p>
                 </div>
                 
                 {/* Problem / Solution */}
@@ -603,8 +598,8 @@ export default function AuditPrepKit() {
                 </div>
                 
                 {/* How It Works */}
-                <div className="rounded-xl p-6" 
-                     style={{ backgroundColor: 'rgba(30, 58, 138, 0.04)', border: '1px solid rgba(30, 58, 138, 0.1)' }}>
+                <div className="rounded-xl p-6 backdrop-blur-sm" 
+                     style={{ backgroundColor: 'rgba(30, 58, 138, 0.04)', border: '1px solid rgba(30, 58, 138, 0.1)', backdropFilter: 'blur(3px)' }}>
                   <p className="text-lg" style={{ color: '#475569' }}>{text.hero.howItWorks}</p>
                 </div>
               </div>
@@ -612,8 +607,8 @@ export default function AuditPrepKit() {
               {/* Right: Buy Box */}
               <div className="lg:col-span-2 lg:sticky lg:top-24">
                 <div 
-                  className="backdrop-blur-sm border rounded-lg p-6 shadow-lg"
-                  style={{ backgroundColor: 'rgba(255, 255, 255, 0.7)', borderColor: 'rgba(30, 58, 138, 0.2)' }}
+                  className="rounded-xl p-6"
+                  style={{ backgroundColor: 'rgba(30, 58, 138, 0.06)', border: '1px solid rgba(30, 58, 138, 0.1)', backdropFilter: 'blur(3px)' }}
                 >
                   <div className="text-center mb-6">
                     <span className="text-4xl font-bold" style={{ color: '#1e3a8a' }}>{text.buyBox.price}</span>
@@ -624,8 +619,13 @@ export default function AuditPrepKit() {
                     href="https://qcore33.gumroad.com/l/wcevjy"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block w-full text-center px-6 py-4 rounded-lg text-lg font-semibold transition-all hover:opacity-90 mb-3"
-                    style={{ backgroundColor: '#1e3a8a', color: '#ffffff' }}
+                    className="block w-full text-center px-6 py-4 rounded-lg text-lg font-semibold transition-all hover:scale-105 mb-3"
+                    style={{ 
+                      backgroundColor: 'rgba(191, 219, 254, 0.35)',
+                      backdropFilter: 'blur(3px)',
+                      border: '1px solid rgba(191, 219, 254, 0.5)',
+                      color: '#1e3a8a'
+                    }}
                   >
                     🇬🇧 {text.buyBox.button}
                   </a>
@@ -843,8 +843,8 @@ export default function AuditPrepKit() {
         <section className="relative py-12">
           <div className="relative z-10 max-w-[90%] mx-auto px-8 text-center">
             <div 
-              className="backdrop-blur-sm rounded-lg border p-8 max-w-2xl mx-auto"
-              style={{ backgroundColor: 'rgba(255, 255, 255, 0.5)', borderColor: 'rgba(30, 58, 138, 0.2)' }}
+              className="rounded-xl p-8 max-w-2xl mx-auto"
+              style={{ backgroundColor: 'rgba(30, 58, 138, 0.06)', border: '1px solid rgba(30, 58, 138, 0.1)', backdropFilter: 'blur(3px)' }}
             >
               <h2 
                 className="text-3xl mb-4"
@@ -859,8 +859,13 @@ export default function AuditPrepKit() {
                 href="https://qcore33.gumroad.com/l/wcevjy"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block px-8 py-4 rounded-lg text-lg font-semibold transition-all hover:opacity-90"
-                style={{ backgroundColor: '#1e3a8a', color: '#ffffff' }}
+                className="inline-block px-8 py-4 rounded-lg text-lg font-semibold transition-all hover:scale-105"
+                style={{ 
+                  backgroundColor: 'rgba(191, 219, 254, 0.35)',
+                  backdropFilter: 'blur(3px)',
+                  border: '1px solid rgba(191, 219, 254, 0.5)',
+                  color: '#1e3a8a'
+                }}
               >
                 {text.cta.button} – €79
               </a>
@@ -884,8 +889,8 @@ export default function AuditPrepKit() {
                 <Link 
                   key={i}
                   href={bundle.link}
-                  className="backdrop-blur-sm p-5 rounded-lg border flex justify-between items-center hover:opacity-80 transition-opacity"
-                  style={{ backgroundColor: 'rgba(255, 255, 255, 0.35)', borderColor: 'rgba(30, 58, 138, 0.2)' }}
+                  className="p-5 rounded-xl flex justify-between items-center hover:opacity-80 transition-opacity"
+                  style={{ backgroundColor: 'rgba(30, 58, 138, 0.06)', border: '1px solid rgba(30, 58, 138, 0.1)', backdropFilter: 'blur(3px)' }}
                 >
                   <span className="font-semibold" style={{ color: '#1e293b' }}>{bundle.name}</span>
                   <span className="font-bold" style={{ color: '#1e3a8a' }}>{bundle.price}</span>

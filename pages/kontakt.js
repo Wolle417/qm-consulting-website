@@ -111,7 +111,14 @@ export default function Kontakt() {
             <div className="grid md:grid-cols-2 gap-6">
               
               {/* Left Container - Kontaktdaten */}
-              <div className="p-8 bg-qcore-navy bg-opacity-30 hover:bg-opacity-45 transition-all duration-300 backdrop-blur-[3px] rounded-lg cursor-default flex flex-col">
+              <div 
+                className="p-8 transition-all duration-300 rounded-lg cursor-default flex flex-col hover:shadow-lg"
+                style={{
+                  backgroundColor: 'rgba(30, 58, 138, 0.06)',
+                  border: '1px solid rgba(30, 58, 138, 0.1)',
+                  backdropFilter: 'blur(3px)',
+                }}
+              >
                 <h2 
                   className="text-2xl font-semibold mb-6"
                   style={{ color: '#1e293b', fontFamily: "'Cormorant', serif" }}
@@ -187,7 +194,14 @@ export default function Kontakt() {
               </div>
 
               {/* Right Container - Erstgespräch + Foto */}
-              <div className="p-8 bg-qcore-navy bg-opacity-30 hover:bg-opacity-45 transition-all duration-300 backdrop-blur-[3px] rounded-lg cursor-default flex flex-col">
+              <div 
+                className="p-8 transition-all duration-300 rounded-lg cursor-default flex flex-col hover:shadow-lg"
+                style={{
+                  backgroundColor: 'rgba(30, 58, 138, 0.06)',
+                  border: '1px solid rgba(30, 58, 138, 0.1)',
+                  backdropFilter: 'blur(3px)',
+                }}
+              >
                 <div className="flex gap-6 mb-6">
                   <img 
                     src="/images/profile_free.png"
@@ -232,22 +246,37 @@ export default function Kontakt() {
                     href="https://outlook.office.com/bookwithme/user/8e639e840dd2445e8c515141ac028711@qcore-consulting.de/meetingtype/CtfqMrZkjUOXCKuGK2JP9w2?anonymous&ismsaljsauthenabled"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-6 py-3 rounded-lg text-center font-semibold transition-all hover:opacity-90"
-                    style={{ backgroundColor: '#1e3a8a', color: '#ffffff' }}
+                    className="px-6 py-3 rounded-lg text-center font-semibold transition-all hover:scale-105"
+                    style={{ 
+                      backgroundColor: 'rgba(191, 219, 254, 0.35)',
+                      backdropFilter: 'blur(3px)',
+                      border: '1px solid rgba(191, 219, 254, 0.5)',
+                      color: '#1e3a8a'
+                    }}
                   >
                     {bookAppointment}
                   </a>
                   <a
                     href="mailto:kontakt@qcore-consulting.de?subject=Erstgespr%C3%A4ch%20QCore%20Consulting"
-                    className="px-6 py-3 rounded-lg text-center font-semibold transition-all hover:opacity-90"
-                    style={{ backgroundColor: 'transparent', color: '#1e3a8a', border: '2px solid #1e3a8a' }}
+                    className="px-6 py-3 rounded-lg text-center font-semibold transition-all hover:scale-105"
+                    style={{ 
+                      backgroundColor: 'rgba(191, 219, 254, 0.35)',
+                      backdropFilter: 'blur(3px)',
+                      border: '1px solid rgba(191, 219, 254, 0.5)',
+                      color: '#1e3a8a'
+                    }}
                   >
                     {writeEmail}
                   </a>
                   <a
                     href="tel:+491771940539"
-                    className="px-6 py-3 rounded-lg text-center font-semibold transition-all hover:opacity-90"
-                    style={{ backgroundColor: 'transparent', color: '#1e3a8a', border: '2px solid #1e3a8a' }}
+                    className="px-6 py-3 rounded-lg text-center font-semibold transition-all hover:scale-105"
+                    style={{ 
+                      backgroundColor: 'rgba(191, 219, 254, 0.35)',
+                      backdropFilter: 'blur(3px)',
+                      border: '1px solid rgba(191, 219, 254, 0.5)',
+                      color: '#1e3a8a'
+                    }}
                   >
                     {callNow}
                   </a>

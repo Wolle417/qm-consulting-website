@@ -2,11 +2,23 @@
   "nav": {
     "start": "Home",
     "services": "Services",
-    "caseStudy": "Case Study",
     "products": "Products",
     "about": "About",
-    "knowledge": "QM Knowledge",
-    "contact": "Contact"
+    "contact": "Contact",
+    "dropdown": {
+      "qmKmu": "Custom QM for SMEs",
+      "riskMgmt": "Risk Management",
+      "auditPrep": "Audit Preparation",
+      "training": "Training & Workshops",
+      "gmpDoc": "Case Study (GMP)",
+      "capa": "CAPA System Bundle",
+      "nc": "NC Management Bundle",
+      "audit": "Audit Prep Kit",
+      "pharma": "Pharma Bundle",
+      "profile": "Profile",
+      "qmKnowledge": "QM Knowledge",
+      "qmTrainer": "QM Trainer"
+    }
   },
   "home": {
     "hero": {

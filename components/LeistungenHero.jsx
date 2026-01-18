@@ -31,7 +31,12 @@ export default function LeistungenHero() {
           {services.map((service, index) => (
             <div
               key={index}
-              className="p-8 rounded-lg transition-all duration-300 bg-qcore-navy bg-opacity-30 hover:bg-opacity-45 backdrop-blur-[3px] cursor-default"
+              className="p-8 rounded-xl transition-all duration-300 cursor-default hover:shadow-lg"
+              style={{
+                backgroundColor: 'rgba(30, 58, 138, 0.06)',
+                border: '1px solid rgba(30, 58, 138, 0.1)',
+                backdropFilter: 'blur(3px)',
+              }}
             >
               <h3 className="text-2xl font-semibold mb-3" style={{ color: '#1e293b' }}>
                 {service.title}

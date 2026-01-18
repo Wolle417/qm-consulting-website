@@ -199,7 +199,7 @@ export default function Produkte() {
               {/* MedTech - Active */}
               <div 
                 className="backdrop-blur-sm px-6 py-4 rounded-lg flex-1 md:flex-none md:min-w-[280px] border"
-                style={{ backgroundColor: 'rgba(255, 255, 255, 0.35)', borderColor: 'rgba(30, 58, 138, 0.2)' }}
+                style={{ backgroundColor: 'rgba(30, 58, 138, 0.06)', borderColor: 'rgba(30, 58, 138, 0.1)' }}
               >
                 <p className="text-xl font-semibold mb-1" style={{ color: '#1e293b', fontFamily: "'Cormorant', serif" }}>
                   {t('products.tabs.medtech')}
@@ -214,7 +214,7 @@ export default function Produkte() {
               {/* Pharma - Coming Soon */}
               <div 
                 className="backdrop-blur-sm px-6 py-4 rounded-lg flex-1 md:flex-none md:min-w-[280px] opacity-60 border"
-                style={{ backgroundColor: 'rgba(255, 255, 255, 0.4)', borderColor: 'rgba(100, 116, 139, 0.1)' }}
+                style={{ backgroundColor: 'rgba(30, 58, 138, 0.04)', borderColor: 'rgba(30, 58, 138, 0.08)' }}
               >
                 <p className="text-xl font-semibold mb-1" style={{ color: '#64748b', fontFamily: "'Cormorant', serif" }}>
                   {t('products.tabs.pharma')}
@@ -238,11 +238,11 @@ export default function Produkte() {
                   key={product.id}
                   className="backdrop-blur-sm transition-all duration-300 p-5 rounded-lg flex flex-col shadow-sm border hover:shadow-md group"
                   style={{
-                    backgroundColor: 'rgba(255, 255, 255, 0.35)',
-                    borderColor: 'rgba(30, 58, 138, 0.2)'
+                    backgroundColor: 'rgba(30, 58, 138, 0.06)',
+                    borderColor: 'rgba(30, 58, 138, 0.1)'
                   }}
-                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.55)'}
-                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.35)'}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(30, 58, 138, 0.1)'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(30, 58, 138, 0.06)'}
                 >
                   {/* Header: Title + Price */}
                   <div className="flex items-start justify-between mb-2">
@@ -324,8 +324,13 @@ export default function Produkte() {
                         <div className="flex gap-2 mb-2">
                           <Link
                             href={product.freeHref}
-                            className="flex-1 text-center px-3 py-2 rounded text-sm font-medium transition-all hover:opacity-90"
-                            style={{ backgroundColor: '#16a34a', color: '#ffffff' }}
+                            className="flex-1 text-center px-3 py-2 rounded text-sm font-medium transition-all hover:scale-105"
+                            style={{ 
+                              backgroundColor: 'rgba(187, 247, 208, 0.4)',
+                              backdropFilter: 'blur(3px)',
+                              border: '1px solid rgba(134, 239, 172, 0.5)',
+                              color: '#166534'
+                            }}
                           >
                             🇬🇧 {t('products.bundle.buy')}
                           </Link>
@@ -338,8 +343,13 @@ export default function Produkte() {
                         </div>
                         <Link
                           href={product.freeHref}
-                          className="block text-center px-3 py-2.5 rounded text-sm font-semibold transition-all hover:bg-opacity-100 border-2"
-                          style={{ color: '#1e3a8a', borderColor: '#1e3a8a', backgroundColor: 'rgba(30, 58, 138, 0.12)' }}
+                          className="block text-center px-3 py-2.5 rounded text-sm font-semibold transition-all hover:scale-[1.02]"
+                          style={{ 
+                            backgroundColor: 'rgba(191, 219, 254, 0.35)',
+                            backdropFilter: 'blur(3px)',
+                            border: '1px solid rgba(191, 219, 254, 0.5)',
+                            color: '#1e3a8a'
+                          }}
                         >
                           {t('products.bundle.detailsPreview')}
                         </Link>
@@ -352,8 +362,13 @@ export default function Produkte() {
                             href={product.gumroad.en}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex-1 text-center px-3 py-2 rounded text-sm font-medium transition-all hover:opacity-90"
-                            style={{ backgroundColor: '#1e3a8a', color: '#ffffff' }}
+                            className="flex-1 text-center px-3 py-2 rounded text-sm font-medium transition-all hover:scale-105"
+                            style={{ 
+                              backgroundColor: 'rgba(191, 219, 254, 0.35)',
+                              backdropFilter: 'blur(3px)',
+                              border: '1px solid rgba(191, 219, 254, 0.5)',
+                              color: '#1e3a8a'
+                            }}
                           >
                             🇬🇧 {t('products.bundle.buy')}
                           </a>
@@ -362,8 +377,13 @@ export default function Produkte() {
                               href={product.gumroad.de}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex-1 text-center px-3 py-2 rounded text-sm font-medium transition-all hover:opacity-90"
-                              style={{ backgroundColor: '#1e3a8a', color: '#ffffff' }}
+                              className="flex-1 text-center px-3 py-2 rounded text-sm font-medium transition-all hover:scale-105"
+                              style={{ 
+                                backgroundColor: 'rgba(191, 219, 254, 0.35)',
+                                backdropFilter: 'blur(3px)',
+                                border: '1px solid rgba(191, 219, 254, 0.5)',
+                                color: '#1e3a8a'
+                              }}
                             >
                               🇩🇪 {t('products.bundle.buy')}
                             </a>
@@ -378,8 +398,13 @@ export default function Produkte() {
                         </div>
                         <Link
                           href={product.href}
-                          className="block text-center px-3 py-2.5 rounded text-sm font-semibold transition-all hover:bg-opacity-100 border-2"
-                          style={{ color: '#1e3a8a', borderColor: '#1e3a8a', backgroundColor: 'rgba(30, 58, 138, 0.12)' }}
+                          className="block text-center px-3 py-2.5 rounded text-sm font-semibold transition-all hover:scale-[1.02]"
+                          style={{ 
+                            backgroundColor: 'rgba(191, 219, 254, 0.35)',
+                            backdropFilter: 'blur(3px)',
+                            border: '1px solid rgba(191, 219, 254, 0.5)',
+                            color: '#1e3a8a'
+                          }}
                         >
                           {t('products.bundle.detailsPreview')}
                         </Link>
@@ -397,7 +422,7 @@ export default function Produkte() {
           <div className="relative z-10 max-w-[90%] mx-auto px-8">
             <div 
               className="backdrop-blur-sm p-5 rounded-lg border"
-              style={{ backgroundColor: 'rgba(255, 255, 255, 0.35)', borderColor: 'rgba(30, 58, 138, 0.2)' }}
+              style={{ backgroundColor: 'rgba(30, 58, 138, 0.06)', borderColor: 'rgba(30, 58, 138, 0.1)' }}
             >
               <p className="font-semibold mb-3" style={{ color: '#1e293b' }}>
                 {t('products.included.title')}

@@ -2,11 +2,23 @@
   "nav": {
     "start": "Start",
     "services": "Leistungen",
-    "caseStudy": "Praxisbeispiel",
     "products": "Produkte",
     "about": "Über mich",
-    "knowledge": "QM-Wissen",
-    "contact": "Kontakt"
+    "contact": "Kontakt",
+    "dropdown": {
+      "qmKmu": "Individuelles QM für KMU",
+      "riskMgmt": "Risikomanagement",
+      "auditPrep": "Audit Vorbereitung",
+      "training": "Training & Workshops",
+      "gmpDoc": "Praxisbeispiel (GMP)",
+      "capa": "CAPA System Bundle",
+      "nc": "NC Management Bundle",
+      "audit": "Audit Prep Kit",
+      "pharma": "Pharma Bundle",
+      "profile": "Profil",
+      "qmKnowledge": "QM Wissen",
+      "qmTrainer": "QM Trainer"
+    }
   },
   "home": {
     "hero": {

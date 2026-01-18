@@ -6,6 +6,7 @@ import { useTranslation } from '../hooks/useTranslation';
 
 const servicesDE = [
   {
+    id: 'qms-setup',
     title: 'QM-System Aufbau & Zertifizierung',
     problem: 'Sie brauchen eine ISO-Zertifizierung – für Kunden, Ausschreibungen oder regulatorische Anforderungen. Aber intern fehlt die Zeit, das Know-how oder beides.',
     solution: 'Ich baue mit Ihnen ein QM-System, das zu Ihrem Unternehmen passt – schlank, praktikabel, zertifizierungsfähig. Keine Copy-Paste-Vorlagen, sondern Prozesse, die Ihre Mitarbeiter verstehen und leben können.',
@@ -21,6 +22,7 @@ const servicesDE = [
     tags: ['ISO 9001', 'ISO 13485', 'GMP'],
   },
   {
+    id: 'audit-prep',
     title: 'Audit-Vorbereitung & Begleitung',
     problem: 'Das Audit steht vor der Tür – in 4 Wochen, vielleicht 8. Die Dokumentation hat Lücken, die letzte Management-Bewertung ist überfällig, und niemand weiß genau, was der Auditor fragen wird.',
     solution: 'Systematische Vorbereitung statt Aktionismus. Ich identifiziere die kritischen Lücken, priorisiere nach Audit-Relevanz, und bereite Ihr Team auf typische Fragen vor. Optional: Mock-Audit.',
@@ -36,6 +38,7 @@ const servicesDE = [
     tags: ['Überwachungsaudits', 'Re-Zertifizierungen', 'Kundenaudits', 'Behördeninspektionen'],
   },
   {
+    id: 'tech-doc',
     title: 'Technische Dokumentation & Risikoanalyse',
     problem: 'Die Norm fordert eine FMEA, einen Validierungsbericht, eine technische Akte – aber wer soll das schreiben? Ihre Entwickler entwickeln lieber, als Dokumente zu wälzen.',
     solution: 'Ich erstelle oder überarbeite Ihre technische Dokumentation – als Ingenieur, der die Technik versteht. Keine Textbausteine, sondern Dokumente, die zum Produkt passen und vor Auditoren bestehen.',
@@ -51,6 +54,7 @@ const servicesDE = [
     stepsLabel: 'Leistungen',
   },
   {
+    id: 'training',
     title: 'Schulungen & Workshops',
     problem: 'QM-Systeme funktionieren nur, wenn die Mitarbeiter sie verstehen. Aber die letzte Schulung war vor drei Jahren, neue Kollegen wurden "nebenbei" eingewiesen.',
     solution: 'Praxisnahe Schulungen, die hängen bleiben. Keine PowerPoint-Marathons, sondern interaktive Workshops mit echten Beispielen aus Ihrer Branche.',
@@ -69,6 +73,7 @@ const servicesDE = [
 
 const servicesEN = [
   {
+    id: 'qms-setup',
     title: 'QMS Setup & Certification',
     problem: 'You need ISO certification – for customers, tenders, or regulatory requirements. But internally, there\'s no time, no know-how, or both.',
     solution: 'I\'ll build a QMS with you that fits your company – lean, practical, ready for certification. No copy-paste templates, but processes your employees understand and can actually follow.',
@@ -84,6 +89,7 @@ const servicesEN = [
     tags: ['ISO 9001', 'ISO 13485', 'GMP'],
   },
   {
+    id: 'audit-prep',
     title: 'Audit Preparation & Support',
     problem: 'The audit is coming – in 4 weeks, maybe 8. Documentation has gaps, the last management review is overdue, and nobody knows exactly what the auditor will ask.',
     solution: 'Systematic preparation instead of panic. I identify critical gaps, prioritize by audit relevance, and prepare your team for typical questions. Optional: Mock audit.',
@@ -99,6 +105,7 @@ const servicesEN = [
     tags: ['Surveillance audits', 'Re-certifications', 'Customer audits', 'Regulatory inspections'],
   },
   {
+    id: 'tech-doc',
     title: 'Technical Documentation & Risk Analysis',
     problem: 'The standard requires an FMEA, validation report, technical file – but who\'s going to write it? Your engineers prefer developing to wrestling with documents.',
     solution: 'I create or revise your technical documentation – as an engineer who understands the technology. No boilerplate, but documents that fit your product and pass auditor scrutiny.',
@@ -114,6 +121,7 @@ const servicesEN = [
     stepsLabel: 'Services',
   },
   {
+    id: 'training',
     title: 'Training & Workshops',
     problem: 'QMS only work when employees understand them. But the last training was three years ago, new colleagues were trained "on the side".',
     solution: 'Practical training that sticks. No PowerPoint marathons, but interactive workshops with real examples from your industry.',
@@ -166,7 +174,7 @@ export default function Leistungen() {
 
         {/* Services */}
         {services.map((service, index) => (
-          <section key={index} className="relative py-6">
+          <section key={index} id={service.id} className="relative py-6">
             <div className="relative z-10 max-w-[90%] mx-auto px-8">
               <h2 
                 className="text-3xl md:text-4xl font-bold mb-6"
@@ -175,7 +183,14 @@ export default function Leistungen() {
                 {service.title}
               </h2>
               
-              <div className="bg-qcore-navy bg-opacity-30 hover:bg-opacity-45 transition-all duration-300 backdrop-blur-[3px] p-8 rounded-lg cursor-default">
+              <div 
+                className="transition-all duration-300 p-8 rounded-lg cursor-default hover:shadow-lg"
+                style={{
+                  backgroundColor: 'rgba(30, 58, 138, 0.06)',
+                  border: '1px solid rgba(30, 58, 138, 0.1)',
+                  backdropFilter: 'blur(3px)',
+                }}
+              >
                 <div className="grid md:grid-cols-2 gap-8">
                   {/* Links: Problem & Lösung */}
                   <div>
@@ -199,7 +214,13 @@ export default function Leistungen() {
                   </div>
                   
                   {/* Rechts: Ablauf/Leistungen */}
-                  <div className="bg-white bg-opacity-20 p-6 rounded-lg">
+                  <div 
+                    className="p-6 rounded-lg"
+                    style={{
+                      backgroundColor: 'rgba(30, 58, 138, 0.04)',
+                      border: '1px solid rgba(30, 58, 138, 0.08)',
+                    }}
+                  >
                     <h3 className="text-lg font-semibold mb-4" style={{ color: '#1e293b' }}>
                       {service.stepsLabel || labels.typicalProcess}
                     </h3>
@@ -249,8 +270,13 @@ export default function Leistungen() {
             </p>
             <Link
               href="/kontakt"
-              className="inline-block px-8 py-4 rounded-lg text-lg font-semibold transition-all hover:opacity-90"
-              style={{ backgroundColor: '#1e3a8a', color: '#ffffff' }}
+              className="inline-block px-8 py-4 rounded-lg text-lg font-semibold transition-all hover:scale-105"
+              style={{ 
+                backgroundColor: 'rgba(191, 219, 254, 0.35)',
+                backdropFilter: 'blur(3px)',
+                border: '1px solid rgba(191, 219, 254, 0.5)',
+                color: '#1e3a8a'
+              }}
             >
               {labels.ctaButton}
             </Link>
