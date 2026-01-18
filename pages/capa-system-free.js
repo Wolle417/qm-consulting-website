@@ -129,14 +129,21 @@ function ImagePopup({ src, alt, label, locale }) {
   );
 }
 
-// Email Capture Component - FreeBox with MailerLite Popup
+// Email Capture Component - FreeBox with embedded MailerLite Form
 function EmailCapture({ locale }) {
+  const formRef = useRef(null);
+  
+  useEffect(() => {
+    // Load MailerLite form
+    if (formRef.current && window.ml) {
+      window.ml('account', '2045707');
+    }
+  }, []);
   
   const text = {
     de: {
       originalPrice: '€129',
       price: 'KOSTENLOS',
-      button: 'Jetzt herunterladen',
       secure: 'Download-Link per Email · Kein Spam',
       included: [
         '7 Dokumente (Word, Excel, PDF)',
@@ -148,7 +155,6 @@ function EmailCapture({ locale }) {
     en: {
       originalPrice: '€129',
       price: 'FREE',
-      button: 'Download now',
       secure: 'Download link via email · No spam',
       included: [
         '7 Documents (Word, Excel, PDF)',
@@ -161,36 +167,24 @@ function EmailCapture({ locale }) {
   
   const t = text[locale] || text.en;
   
-  const handleClick = () => {
-    console.log('Button clicked, window.ml:', typeof window.ml);
-    if (typeof window !== 'undefined' && window.ml) {
-      window.ml('show', 'G5hq2y', true);
-    } else {
-      // Fallback: Direct link to form
-      console.log('ml not loaded, trying direct');
-      alert('Formular lädt... bitte kurz warten und nochmal klicken.');
-    }
-  };
-  
   return (
     <div 
       className="backdrop-blur-sm border rounded-lg p-6 shadow-lg"
       style={{ backgroundColor: 'rgba(255, 255, 255, 0.7)', borderColor: 'rgba(30, 58, 138, 0.2)' }}
     >
-      <div className="text-center mb-6">
+      <div className="text-center mb-4">
         <span className="text-2xl line-through" style={{ color: '#94a3b8' }}>{t.originalPrice}</span>
         <br />
         <span className="text-4xl font-bold" style={{ color: '#22c55e' }}>{t.price}</span>
       </div>
 
-      <button 
-        onClick={handleClick}
-        className="block w-full text-center px-6 py-4 rounded-lg text-lg font-semibold transition-all hover:opacity-90 mb-3 ml-onclick-form"
-        style={{ backgroundColor: '#22c55e', color: '#ffffff' }}
-      >
-        📧 {t.button}
-      </button>
-
+      {/* MailerLite Embedded Form */}
+      <div 
+        ref={formRef}
+        className="ml-embedded mb-4" 
+        data-form="G5hq2y"
+      />
+      
       <p className="text-xs text-center mb-4" style={{ color: '#64748b' }}>
         {t.secure}
       </p>
