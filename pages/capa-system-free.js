@@ -132,12 +132,29 @@ function ImagePopup({ src, alt, label, locale }) {
 // Email Capture Component - FreeBox with embedded MailerLite Form
 function EmailCapture({ locale }) {
   const formRef = useRef(null);
+  const [formKey, setFormKey] = useState(0);
   
   useEffect(() => {
-    // Load MailerLite form
-    if (formRef.current && window.ml) {
-      window.ml('account', '2045707');
-    }
+    // Force re-render of MailerLite form on every mount (fixes SPA navigation issue)
+    setFormKey(prev => prev + 1);
+    
+    // Re-initialize MailerLite after navigation
+    const timer = setTimeout(() => {
+      if (typeof window !== 'undefined' && window.ml) {
+        // Clear any existing forms and reload
+        const container = formRef.current;
+        if (container) {
+          container.innerHTML = '';
+          const formDiv = document.createElement('div');
+          formDiv.className = 'ml-embedded';
+          formDiv.setAttribute('data-form', 'G5hq2y');
+          container.appendChild(formDiv);
+        }
+        window.ml('account', '2045707');
+      }
+    }, 100);
+    
+    return () => clearTimeout(timer);
   }, []);
   
   const text = {
@@ -178,11 +195,11 @@ function EmailCapture({ locale }) {
         <span className="text-4xl font-bold" style={{ color: '#22c55e' }}>{t.price}</span>
       </div>
 
-      {/* MailerLite Embedded Form */}
+      {/* MailerLite Embedded Form - Container only, form added dynamically */}
       <div 
         ref={formRef}
-        className="ml-embedded mb-4" 
-        data-form="G5hq2y"
+        className="mb-4"
+        style={{ minHeight: '120px' }}
       />
       
       <p className="text-xs text-center mb-4" style={{ color: '#64748b' }}>
