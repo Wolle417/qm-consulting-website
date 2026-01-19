@@ -58,6 +58,19 @@ function NavDropdown({ label, items, isOpen, onToggle, onClose, minWidth = 220 }
           {items.map((item, idx) => (
             item.divider ? (
               <div key={idx} className="my-2 border-t" style={{ borderColor: 'rgba(30, 58, 138, 0.1)' }} />
+            ) : item.isHeader ? (
+              <div
+                key={idx}
+                className="px-4 py-2 flex items-center justify-between"
+                style={{ backgroundColor: 'rgba(30, 58, 138, 0.04)' }}
+              >
+                <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#1e3a8a' }}>
+                  {item.label}
+                </span>
+                {item.badge && (
+                  <span className="text-xs" style={{ color: '#64748b' }}>{item.badge}</span>
+                )}
+              </div>
             ) : item.disabled ? (
               <div
                 key={idx}
@@ -141,10 +154,12 @@ export default function Navigation() {
   ];
 
   const produkteItems = [
+    { label: 'MedTech', isHeader: true, badge: 'ISO 13485 · FDA' },
     { label: t('nav.dropdown.capa'), href: '/produkte/capa-system', oldPrice: '€129', freeTag: true },
     { label: t('nav.dropdown.nc'), href: '/produkte/nc-system', price: '€99' },
     { label: t('nav.dropdown.audit'), href: '/produkte/audit-prep-kit', price: '€79' },
     { divider: true },
+    { label: 'Pharma', isHeader: true, badge: 'GMP · GDP' },
     { label: t('nav.dropdown.pharma'), href: '#', disabled: true },
   ];
 
@@ -318,7 +333,20 @@ export default function Navigation() {
                 {t('nav.products')}
               </div>
               {produkteItems.filter(i => !i.divider).map((item, idx) => (
-                item.disabled ? (
+                item.isHeader ? (
+                  <div 
+                    key={idx} 
+                    className="px-4 py-2 mt-2 flex items-center justify-between"
+                    style={{ backgroundColor: 'rgba(30, 58, 138, 0.04)' }}
+                  >
+                    <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#1e3a8a' }}>
+                      {item.label}
+                    </span>
+                    {item.badge && (
+                      <span className="text-xs" style={{ color: '#64748b' }}>{item.badge}</span>
+                    )}
+                  </div>
+                ) : item.disabled ? (
                   <div key={idx} className="px-4 py-2 text-sm" style={{ color: '#94a3b8' }}>
                     {item.label} (Soon)
                   </div>
@@ -331,7 +359,11 @@ export default function Navigation() {
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <span>{item.label}</span>
-                    {item.price && <span style={{ color: '#1e3a8a' }}>{item.price}</span>}
+                    <span className="flex items-center gap-2">
+                      {item.oldPrice && <span className="text-sm line-through" style={{ color: '#94a3b8' }}>{item.oldPrice}</span>}
+                      {item.freeTag && <span className="text-sm font-bold" style={{ color: '#22c55e' }}>FREE</span>}
+                      {item.price && <span style={{ color: '#1e3a8a' }}>{item.price}</span>}
+                    </span>
                   </Link>
                 )
               ))}

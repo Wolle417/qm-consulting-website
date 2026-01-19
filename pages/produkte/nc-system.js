@@ -438,7 +438,7 @@ export default function NCSystem() {
       },
       cta: {
         title: 'Bereit für ein NC-System, das Audits besteht?',
-        text: '7 Dokumente, sofort einsetzbar, €99 einmalig.',
+        text: '6 Dokumente, sofort einsetzbar, €99 einmalig.',
         buyNow: 'Jetzt kaufen'
       },
       upsell: {
@@ -453,7 +453,7 @@ export default function NCSystem() {
         button: 'Jetzt kaufen',
         secure: 'Sichere Zahlung via Gumroad · Sofortiger Download',
         included: [
-          '7 Dokumente (SOP, Form, Example, Log, Matrix, Guide, QuickRef)',
+          '6 Dokumente (SOP, Form, Example, Log, Matrix, Guide)',
           'Ausgefülltes Beispiel inklusive',
           'Assessment Matrix für NC-Klassifizierung',
           'Unternehmensweite Lizenz'
@@ -590,7 +590,7 @@ export default function NCSystem() {
       },
       cta: {
         title: 'Ready for an NC system that passes audits?',
-        text: '7 documents, ready to use, €99 one-time.',
+        text: '6 documents, ready to use, €99 one-time.',
         buyNow: 'Buy now'
       },
       upsell: {
@@ -605,7 +605,7 @@ export default function NCSystem() {
         button: 'Buy now',
         secure: 'Secure payment via Gumroad · Instant download',
         included: [
-          '7 Documents (SOP, Form, Example, Log, Matrix, Guide, QuickRef)',
+          '6 Documents (SOP, Form, Example, Log, Matrix, Guide)',
           'Filled example included',
           'Assessment Matrix for NC classification',
           'Company-wide license'
@@ -917,32 +917,6 @@ export default function NCSystem() {
               </p>
             </div>
           </StepPDF>
-          
-          {/* STEP 7: QuickRef (Image) */}
-          <StepImage 
-            number={7} 
-            title={text.step7.title}
-            imageSrc="/docs/nc/images/NC_QuickRef.png"
-            imageAlt="NC Quick Reference Card"
-          >
-            <h4 className="font-semibold text-lg mb-3" style={{ color: '#0f172a' }}>{text.step7.onePage}</h4>
-            <p className="mb-4" style={{ color: '#475569' }}>
-              {text.step7.onePageText}
-            </p>
-            
-            <h4 className="font-semibold text-lg mb-3 mt-6" style={{ color: '#0f172a' }}>{text.step7.idealFor}</h4>
-            <ul className="space-y-2" style={{ color: '#475569' }}>
-              {text.step7.idealItems.map((item, idx) => (
-                <li key={idx}>• {item}</li>
-              ))}
-            </ul>
-            
-            <div className="mt-6 p-4 rounded-lg" style={{ backgroundColor: 'rgba(59, 130, 246, 0.1)' }}>
-              <p className="text-sm font-medium" style={{ color: '#1e40af' }}>
-                🖨️ {text.step7.tip}
-              </p>
-            </div>
-          </StepImage>
           
           {/* CTA */}
           <div className="max-w-4xl mx-auto mb-20">

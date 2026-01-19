@@ -140,8 +140,7 @@ const boxStyle = {
 function EmailCapture({ locale }) {
   const text = {
     de: {
-      price: '€0',
-      priceNote: 'Lead Magnet',
+      heroText: 'Komplettes CAPA-Bundle – kostenlos gegen Email-Registrierung.',
       secure: 'Download-Link per Email · Kein Spam',
       included: [
         '7 Dokumente (Word, Excel, PDF)',
@@ -151,8 +150,7 @@ function EmailCapture({ locale }) {
       ]
     },
     en: {
-      price: '€0',
-      priceNote: 'Lead Magnet',
+      heroText: 'Complete CAPA bundle – free with email registration.',
       secure: 'Download link via email · No spam',
       included: [
         '7 Documents (Word, Excel, PDF)',
@@ -170,10 +168,16 @@ function EmailCapture({ locale }) {
       className="rounded-xl p-6"
       style={boxStyle}
     >
-      <div className="text-center mb-4">
-        <span className="text-4xl font-bold" style={{ color: '#22c55e' }}>{t.price}</span>
-        <span className="text-sm ml-2" style={{ color: '#64748b' }}>{t.priceNote}</span>
+      {/* Price: Strikethrough €129 → FREE */}
+      <div className="text-center mb-2">
+        <span className="text-2xl line-through" style={{ color: '#94a3b8' }}>€129</span>
+        <span className="text-4xl font-bold ml-3" style={{ color: '#22c55e' }}>FREE</span>
       </div>
+      
+      {/* Hero Text */}
+      <p className="text-center text-sm mb-5" style={{ color: '#475569' }}>
+        {t.heroText}
+      </p>
 
       {/* MailerLite Form */}
       <MailerLiteForm locale={locale} />
