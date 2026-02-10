@@ -154,13 +154,18 @@ export default function Navigation() {
   ];
 
   const produkteItems = [
+    { label: 'Tools', isHeader: true, badge: 'FREE' },
+    { label: t('nav.dropdown.readinessCheck'), href: '/readiness-check', subtitle: 'ISO 13485 · FDA QMSR · EU MDR', freeTag: true },
+    { divider: true },
     { label: 'MedTech', isHeader: true, badge: 'ISO 13485 · FDA' },
     { label: t('nav.dropdown.capa'), href: '/produkte/capa-system', oldPrice: '€129', freeTag: true },
     { label: t('nav.dropdown.nc'), href: '/produkte/nc-system', price: '€99' },
     { label: t('nav.dropdown.audit'), href: '/produkte/audit-prep-kit', price: '€79' },
     { divider: true },
     { label: 'Pharma', isHeader: true, badge: 'GMP · GDP' },
-    { label: t('nav.dropdown.pharma'), href: '#', disabled: true },
+    { label: 'Data Integrity Kit', href: '/produkte/data-integrity-kit', price: '€299', highlight: true },
+    { label: 'CAPA System', href: '#', disabled: true },
+    { label: 'Deviation Management', href: '#', disabled: true },
   ];
 
   const aboutItems = [
