@@ -8,7 +8,7 @@ import {
 } from 'recharts';
 import {
   categories, calculateResults, maturityLevels, radarLabels, ui, getTotalQuestionCount,
-  scopeQuestions, assessmentProfiles, getFilteredCategories, getFilteredQuestionCount,
+  assessmentProfiles,
 } from '../data/readiness-check';
 
 
@@ -195,49 +195,79 @@ function EvidenceCollapsible({ question, locale, t }) {
 }
 
 
-// ─── Scope Wizard ────────────────────────────────────────────────────────
-function ScopeWizard({ locale, scopeAnswers, onUpdate, onStart, onSkip }) {
+
+
+// ─── Intro Landing ──────────────────────────────────────────────────
+function IntroLanding({ locale, onStart }) {
   const t = ui[locale];
   return (
     <div className="flex items-center justify-center" style={{ height: '100%' }}>
-      <div className="w-full max-w-xl">
-        <h2 className="text-3xl font-semibold mb-2" style={{ fontFamily: "'Cormorant', serif", color: '#0f172a' }}>
-          {t.scopeTitle}
-        </h2>
-        <p className="text-sm mb-8" style={{ color: '#64748b' }}>{t.scopeSubtitle}</p>
-        <div className="space-y-3">
-          {scopeQuestions.map((sq) => (
-            <div key={sq.id} className="flex items-center justify-between px-4 py-3 rounded-[12px]"
-              style={{ backgroundColor: 'rgba(30,58,138,0.04)', border: '1px solid rgba(30,58,138,0.08)' }}>
-              <span className="text-sm font-medium" style={{ color: '#0f172a' }}>{sq.question[locale]}</span>
-              <div className="flex gap-2 ml-4 flex-shrink-0">
-                {[true, false].map(val => (
-                  <button key={String(val)} onClick={() => onUpdate(sq.id, val)}
-                    className="px-3 py-1.5 rounded-[10px] text-xs font-bold transition-all duration-150"
-                    style={{
-                      backgroundColor: scopeAnswers[sq.id] === val ? '#1e3a8a' : 'rgba(30,58,138,0.06)',
-                      color: scopeAnswers[sq.id] === val ? '#fff' : '#64748b',
-                      border: scopeAnswers[sq.id] === val ? '1px solid #1e3a8a' : '1px solid rgba(30,58,138,0.1)',
-                    }}>
-                    {val ? t.scopeYes : t.scopeNo}
-                  </button>
-                ))}
-              </div>
+      <div className="w-full max-w-2xl overflow-y-auto px-2" style={{ maxHeight: '100%', paddingTop: 24, paddingBottom: 24 }}>
+
+        {/* Headline */}
+        <h1 className="text-4xl font-semibold leading-tight mb-3"
+          style={{ fontFamily: "'Cormorant', serif", color: '#0f172a' }}>
+          {t.introHeadline}
+        </h1>
+        <p className="text-base mb-8 leading-relaxed" style={{ color: '#475569' }}>
+          {t.introSubline}
+        </p>
+
+        {/* Feature Grid */}
+        <div className="grid grid-cols-2 gap-3 mb-8">
+          {t.introFeatures.map((f, i) => (
+            <div key={i} className="rounded-[12px] px-4 py-3"
+              style={{ backgroundColor: 'rgba(30,58,138,0.03)', border: '1px solid rgba(30,58,138,0.06)' }}>
+              <div className="text-xl mb-1">{f.icon}</div>
+              <div className="text-sm font-semibold mb-0.5" style={{ color: '#0f172a' }}>{f.title}</div>
+              <div className="text-xs leading-relaxed" style={{ color: '#64748b' }}>{f.desc}</div>
             </div>
           ))}
         </div>
-        <div className="flex items-center gap-4 mt-8">
-          <button onClick={onStart}
-            className="px-6 py-3 rounded-[10px] text-sm font-bold transition-all duration-150 hover:scale-[1.01]"
-            style={{ backgroundColor: '#1e3a8a', color: '#fff', boxShadow: '0 2px 8px rgba(30,58,138,0.18)' }}>
-            {t.scopeStart} →
-          </button>
-          <button onClick={onSkip}
-            className="text-sm font-medium transition-colors duration-150 hover:underline"
-            style={{ color: '#64748b' }}>
-            {t.scopeSkip}
-          </button>
+
+        {/* How it works */}
+        <div className="mb-8">
+          <h3 className="text-sm font-bold uppercase tracking-wider mb-3" style={{ color: '#1e3a8a' }}>
+            {t.introHowTitle}
+          </h3>
+          <div className="flex gap-3">
+            {t.introHowSteps.map((s, i) => (
+              <div key={i} className="flex-1 flex gap-2.5">
+                <span className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
+                  style={{ backgroundColor: '#1e3a8a', color: '#fff' }}>
+                  {s.step}
+                </span>
+                <div className="min-w-0">
+                  <div className="text-xs font-semibold" style={{ color: '#0f172a' }}>{s.title}</div>
+                  <div className="text-xs leading-relaxed mt-0.5" style={{ color: '#64748b' }}>{s.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
+
+        {/* For whom */}
+        <div className="rounded-[12px] px-4 py-3 mb-8"
+          style={{ backgroundColor: 'rgba(30,58,138,0.03)', border: '1px solid rgba(30,58,138,0.06)' }}>
+          <h3 className="text-xs font-bold uppercase tracking-wider mb-2" style={{ color: '#64748b' }}>
+            {t.introForWhom}
+          </h3>
+          <ul className="space-y-1">
+            {t.introForWhomList.map((item, i) => (
+              <li key={i} className="flex items-start gap-2 text-sm" style={{ color: '#334155' }}>
+                <span className="flex-shrink-0 mt-0.5" style={{ color: '#1e3a8a' }}>&#x2713;</span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* CTA */}
+        <button onClick={onStart}
+          className="px-7 py-3.5 rounded-[10px] text-sm font-bold transition-all duration-150 hover:scale-[1.01]"
+          style={{ backgroundColor: '#1e3a8a', color: '#fff', boxShadow: '0 2px 12px rgba(30,58,138,0.22)' }}>
+          {t.introCta} &rarr;
+        </button>
       </div>
     </div>
   );
@@ -245,14 +275,14 @@ function ScopeWizard({ locale, scopeAnswers, onUpdate, onStart, onSkip }) {
 
 
 // ─── Gap Backlog – Expandable Rows ──────────────────────────────────
-function GapBacklog({ answers, notes, filteredCategories, locale, profile, onJumpToQuestion }) {
+function GapBacklog({ answers, notes, categories, locale, profile, onJumpToQuestion }) {
   const t = ui[locale];
   const activeProfile = assessmentProfiles[profile] || assessmentProfiles.iso13485;
   const [expandedId, setExpandedId] = useState(null);
 
   const gaps = useMemo(() => {
     const list = [];
-    filteredCategories.forEach(cat => {
+    categories.forEach(cat => {
       cat.questions.forEach(q => {
         const score = answers[q.id];
         if (score !== undefined && score <= 2) {
@@ -283,7 +313,7 @@ function GapBacklog({ answers, notes, filteredCategories, locale, profile, onJum
       return b.weight - a.weight;
     });
     return list;
-  }, [answers, notes, filteredCategories, locale, activeProfile]);
+  }, [answers, notes, categories, locale, activeProfile]);
 
   const answeredCount = Object.keys(answers).length;
 
@@ -454,13 +484,13 @@ function TrendView({ history, locale }) {
 
 
 // ─── Action Plan ─────────────────────────────────────────────────────────
-function ActionPlan({ answers, notes, filteredCategories, locale, profile, actionPlanData, onUpdatePlanData, onBack, onJumpToQuestion }) {
+function ActionPlan({ answers, notes, categories, locale, profile, actionPlanData, onUpdatePlanData, onBack, onJumpToQuestion }) {
   const t = ui[locale];
   const activeProfile = assessmentProfiles[profile] || assessmentProfiles.iso13485;
 
   const gaps = useMemo(() => {
     const list = [];
-    filteredCategories.forEach(cat => {
+    categories.forEach(cat => {
       cat.questions.forEach(q => {
         const score = answers[q.id];
         if (score !== undefined && score <= 2) {
@@ -480,7 +510,7 @@ function ActionPlan({ answers, notes, filteredCategories, locale, profile, actio
     const riskOrder = { critical: 0, high: 1, medium: 2, low: 3 };
     list.sort((a, b) => (riskOrder[a.auditRiskLevel] - riskOrder[b.auditRiskLevel]) || (b.weight - a.weight));
     return list;
-  }, [answers, notes, filteredCategories, locale, activeProfile]);
+  }, [answers, notes, categories, locale, activeProfile]);
 
   if (Object.keys(answers).length === 0) {
     return <div className="flex items-center justify-center h-full text-sm" style={{ color: '#94a3b8' }}>{t.actionPlanNoData}</div>;
@@ -565,19 +595,19 @@ function ActionPlan({ answers, notes, filteredCategories, locale, profile, actio
 
 
 // ─── Recommendations ────────────────────────────────────────────────────
-function Recommendations({ results, filteredCategories, answers, locale, profile, onBack, onJumpToCategory }) {
+function Recommendations({ results, categories, answers, locale, profile, onBack, onJumpToCategory }) {
   const t = ui[locale];
   const activeProfile = assessmentProfiles[profile] || assessmentProfiles.iso13485;
 
   const recs = useMemo(() => {
     return results.categories
       .filter(cat => {
-        const fc = filteredCategories.find(c => c.key === cat.key);
+        const fc = categories.find(c => c.key === cat.key);
         return fc && cat.percentScore !== null && cat.percentScore < 75;
       })
       .sort((a, b) => (a.percentScore || 0) - (b.percentScore || 0))
       .map(cat => {
-        const fc = filteredCategories.find(c => c.key === cat.key);
+        const fc = categories.find(c => c.key === cat.key);
         // Collect all evidence items from questions in this category
         const evidenceItems = [];
         fc.questions.forEach(q => {
@@ -595,7 +625,7 @@ function Recommendations({ results, filteredCategories, answers, locale, profile
           evidenceItems,
         };
       });
-  }, [results, filteredCategories, answers, locale, activeProfile]);
+  }, [results, categories, answers, locale, activeProfile]);
 
   if (Object.keys(answers).length === 0) {
     return <div className="flex items-center justify-center h-full text-sm" style={{ color: '#94a3b8' }}>{t.recsNoData}</div>;
@@ -676,9 +706,8 @@ export default function ReadinessCheck() {
   // ── State ────────────────────────────────────────────────────────────
   const [answers, setAnswers] = useState({});
   const [notes, setNotes] = useState({});
-  const [scopeAnswers, setScopeAnswers] = useState({});
   const [profile, setProfile] = useState('iso13485');
-  const [showWizard, setShowWizard] = useState(true);
+  const [showIntro, setShowIntro] = useState(true);
   const [activeCat, setActiveCat] = useState(null);
   const [activeQIdx, setActiveQIdx] = useState(0);
   const [dashTab, setDashTab] = useState('gaps');
@@ -694,12 +723,11 @@ export default function ReadinessCheck() {
     if (saved) {
       if (saved.answers) setAnswers(saved.answers);
       if (saved.notes) setNotes(saved.notes);
-      if (saved.scopeAnswers) setScopeAnswers(saved.scopeAnswers);
       if (saved.profile) setProfile(saved.profile);
       if (saved.history) setHistory(saved.history);
       if (saved.actionPlanData) setActionPlanData(saved.actionPlanData);
       if (saved.answers && Object.keys(saved.answers).length > 0) {
-        setShowWizard(false);
+        setShowIntro(false);
       }
     }
     initialLoadDone.current = true;
@@ -708,31 +736,22 @@ export default function ReadinessCheck() {
   // ── Save to LocalStorage on change ───────────────────────────────────
   useEffect(() => {
     if (!initialLoadDone.current) return;
-    saveState({ answers, notes, scopeAnswers, profile, history, actionPlanData });
-  }, [answers, notes, scopeAnswers, profile, history, actionPlanData]);
+    saveState({ answers, notes, profile, history, actionPlanData });
+  }, [answers, notes, profile, history, actionPlanData]);
 
-  // ── Filtered categories based on scope ───────────────────────────────
-  const filteredCategories = useMemo(
-    () => getFilteredCategories(scopeAnswers),
-    [scopeAnswers]
-  );
+  const totalQuestionCount = getTotalQuestionCount();
 
-  const filteredQuestionCount = useMemo(
-    () => getFilteredQuestionCount(scopeAnswers),
-    [scopeAnswers]
-  );
-
-  // Set initial active category when wizard completes
+  // Set initial active category
   useEffect(() => {
-    if (!showWizard && !activeCat && filteredCategories.length > 0) {
-      setActiveCat(filteredCategories[0].key);
+    if (!showIntro && !activeCat && categories.length > 0) {
+      setActiveCat(categories[0].key);
     }
-  }, [showWizard, activeCat, filteredCategories]);
+  }, [showIntro, activeCat]);
 
   // Jump to first unanswered when switching category
   useEffect(() => {
     if (!activeCat) return;
-    const cat = filteredCategories.find(c => c.key === activeCat);
+    const cat = categories.find(c => c.key === activeCat);
     if (!cat) return;
     const first = cat.questions.findIndex(q => answers[q.id] === undefined);
     setActiveQIdx(first >= 0 ? first : 0);
@@ -745,7 +764,7 @@ export default function ReadinessCheck() {
   const selectAnswerAndAdvance = useCallback((qId, level) => {
     setAnswers((prev) => {
       const next = { ...prev, [qId]: level };
-      const cat = filteredCategories.find(c => c.key === activeCat);
+      const cat = categories.find(c => c.key === activeCat);
       if (!cat) return next;
 
       // Check for unanswered questions in CURRENT chapter
@@ -764,9 +783,9 @@ export default function ReadinessCheck() {
       setTimeout(() => {
         setCompletedCatFlash(null);
         // Find next chapter with unanswered questions
-        const catIdx = filteredCategories.findIndex(c => c.key === activeCat);
-        for (let i = 1; i < filteredCategories.length; i++) {
-          const nextCat = filteredCategories[(catIdx + i) % filteredCategories.length];
+        const catIdx = categories.findIndex(c => c.key === activeCat);
+        for (let i = 1; i < categories.length; i++) {
+          const nextCat = categories[(catIdx + i) % categories.length];
           const hasUnanswered = nextCat.questions.some(q => next[q.id] === undefined);
           if (hasUnanswered) {
             setActiveCat(nextCat.key);
@@ -778,7 +797,7 @@ export default function ReadinessCheck() {
 
       return next;
     });
-  }, [activeCat, filteredCategories]);
+  }, [activeCat]);
 
   // ── Notes handler ────────────────────────────────────────────────────
   const updateNote = useCallback((qId, text) => {
@@ -789,7 +808,7 @@ export default function ReadinessCheck() {
   const resetAll = useCallback(() => {
     setAnswers({});
     setNotes({});
-    setShowWizard(true);
+    setShowIntro(true);
     setActiveCat(null);
   }, []);
 
@@ -819,24 +838,24 @@ export default function ReadinessCheck() {
   // ── Jump to specific question from Gap Backlog ───────────────────────
   const jumpToQuestion = useCallback((catKey, questionId) => {
     setActiveCat(catKey);
-    const cat = filteredCategories.find(c => c.key === catKey);
+    const cat = categories.find(c => c.key === catKey);
     if (cat) {
       const idx = cat.questions.findIndex(q => q.id === questionId);
       if (idx >= 0) setActiveQIdx(idx);
     }
-  }, [filteredCategories]);
+  }, [categories]);
 
   // ── Results ──────────────────────────────────────────────────────────
   const results = useMemo(() => calculateResults(answers), [answers]);
 
   const radarData = useMemo(() => {
-    return filteredCategories.map((cat) => {
+    return categories.map((cat) => {
       const cr = results.categories.find(c => c.key === cat.key);
       return { subject: radarLabels[locale][cat.key], score: cr?.percentScore ?? 0, fullMark: 100 };
     });
-  }, [results, locale, filteredCategories]);
+  }, [results, locale, categories]);
 
-  const activeCatData = filteredCategories.find(c => c.key === activeCat);
+  const activeCatData = categories.find(c => c.key === activeCat);
   const activeCatResult = activeCatData ? results.categories.find(c => c.key === activeCat) : null;
   const activeProfile = assessmentProfiles[profile] || assessmentProfiles.iso13485;
 
@@ -875,7 +894,7 @@ export default function ReadinessCheck() {
       html += `<h2 style="font-size:14px;font-weight:700;margin:20px 0 8px;color:#1e3a8a;">${tt.categoryScores}</h2>`;
       let tableRows = '';
       results.categories.forEach(cat => {
-        const fc = filteredCategories.find(c => c.key === cat.key);
+        const fc = categories.find(c => c.key === cat.key);
         if (!fc) return;
         const catMl = cat.maturityKey ? maturityLevels[cat.maturityKey] : null;
         tableRows += `<tr>
@@ -894,7 +913,7 @@ export default function ReadinessCheck() {
         </tr></thead><tbody>${tableRows}</tbody></table>`;
 
       const gapList = [];
-      filteredCategories.forEach(cat => {
+      categories.forEach(cat => {
         cat.questions.forEach(q => {
           const score = answers[q.id];
           if (score !== undefined && score <= 2) gapList.push({ cat, q, score });
@@ -946,7 +965,7 @@ export default function ReadinessCheck() {
     } finally {
       setPdfLoading(false);
     }
-  }, [results, answers, notes, filteredCategories, locale, profile, pdfLoading]);
+  }, [results, answers, notes, categories, locale, profile, pdfLoading]);
 
 
   // ═══ RENDER ═══════════════════════════════════════════════════════════
@@ -985,7 +1004,7 @@ export default function ReadinessCheck() {
             </span>
 
             {/* Profile Switcher */}
-            {!showWizard && (
+            {!showIntro && (
               <div className="flex items-center gap-1 ml-4">
                 {Object.values(assessmentProfiles).map(p => (
                   <button key={p.key} onClick={() => setProfile(p.key)}
@@ -1007,14 +1026,14 @@ export default function ReadinessCheck() {
               🔒 <span className="hidden xl:inline">{t.privacyBadge}</span>
               <span className="xl:hidden">{locale === 'de' ? 'Lokal' : 'Local'}</span>
             </span>
-            {!showWizard && (
+            {!showIntro && (
               <>
                 <span className="text-sm" style={{ color: '#64748b' }}>
-                  {interpolate(t.questionsAnswered, { n: String(results.totalAnswered), total: String(filteredQuestionCount) })}
+                  {interpolate(t.questionsAnswered, { n: String(results.totalAnswered), total: String(totalQuestionCount) })}
                 </span>
                 <div className="w-24 h-2 rounded-full" style={{ backgroundColor: 'rgba(30,58,138,0.08)' }}>
                   <div className="h-2 rounded-full" style={{
-                    width: `${(results.totalAnswered / filteredQuestionCount) * 100}%`,
+                    width: `${(results.totalAnswered / totalQuestionCount) * 100}%`,
                     backgroundColor: '#1e3a8a', transition: 'width 0.4s ease-out',
                   }} />
                 </div>
@@ -1029,18 +1048,15 @@ export default function ReadinessCheck() {
           </div>
         </div>
 
-        {/* ═══ WIZARD or THREE COLUMNS ═══ */}
-        {showWizard ? (
+        {/* ═══ INTRO → ASSESSMENT ═══ */}
+        {showIntro ? (
           <div className="flex-1 px-10 py-8" style={{
             background: 'rgba(255,255,255,0.78)',
             backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
           }}>
-            <ScopeWizard
+            <IntroLanding
               locale={locale}
-              scopeAnswers={scopeAnswers}
-              onUpdate={(id, val) => setScopeAnswers(prev => ({ ...prev, [id]: val }))}
-              onStart={() => setShowWizard(false)}
-              onSkip={() => { setScopeAnswers({}); setShowWizard(false); }}
+              onStart={() => setShowIntro(false)}
             />
           </div>
         ) : (
@@ -1055,7 +1071,7 @@ export default function ReadinessCheck() {
                 border: '1px solid rgba(255,255,255,0.45)',
               }}>
               <div className="py-3 px-2.5 space-y-0.5">
-                {filteredCategories.map((cat) => {
+                {categories.map((cat) => {
                   const cr = results.categories.find(c => c.key === cat.key);
                   const ml = cr?.maturityKey ? maturityLevels[cr.maturityKey] : null;
                   const isActive = activeCat === cat.key;
@@ -1114,13 +1130,7 @@ export default function ReadinessCheck() {
                   );
                 })}
               </div>
-              {/* Scope change link */}
-              <div className="mt-auto px-3 py-2 space-y-1.5 border-t" style={{ borderColor: 'rgba(30,58,138,0.07)' }}>
-                <button onClick={() => setShowWizard(true)}
-                  className="text-xs flex items-center gap-1.5 transition-colors hover:underline"
-                  style={{ color: '#94a3b8' }}>
-                  ⚙ {t.scopeChange}
-                </button>
+              <div className="mt-auto px-3 py-2 border-t" style={{ borderColor: 'rgba(30,58,138,0.07)' }}>
                 <a href="/" className="text-xs flex items-center gap-1.5 transition-colors hover:underline"
                   style={{ color: '#94a3b8' }}>
                   ← qcore-consulting.de
@@ -1263,8 +1273,8 @@ export default function ReadinessCheck() {
 
                     {/* Next category link */}
                     {activeCatResult?.answeredCount === activeCatData.questions.length && (() => {
-                      const idx = filteredCategories.findIndex(c => c.key === activeCat);
-                      const next = filteredCategories[idx + 1];
+                      const idx = categories.findIndex(c => c.key === activeCat);
+                      const next = categories[idx + 1];
                       if (!next) return null;
                       return (
                         <button onClick={() => setActiveCat(next.key)}
@@ -1337,7 +1347,7 @@ export default function ReadinessCheck() {
                   <GapBacklog
                     answers={answers}
                     notes={notes}
-                    filteredCategories={filteredCategories}
+                    categories={categories}
                     locale={locale}
                     profile={profile}
                     onJumpToQuestion={jumpToQuestion}
@@ -1350,10 +1360,10 @@ export default function ReadinessCheck() {
                       {t.categoryScores}
                     </div>
                     {results.categories
-                      .filter(cat => filteredCategories.some(fc => fc.key === cat.key))
+                      .filter(cat => categories.some(fc => fc.key === cat.key))
                       .map((cat) => {
                         const ml = cat.maturityKey ? maturityLevels[cat.maturityKey] : null;
-                        const catData = filteredCategories.find(c => c.key === cat.key);
+                        const catData = categories.find(c => c.key === cat.key);
                         return (
                           <button key={cat.key} onClick={() => setActiveCat(cat.key)}
                             className="w-full flex items-center gap-2 py-1 px-1 rounded transition-all hover:bg-white/40 text-left">
@@ -1387,7 +1397,7 @@ export default function ReadinessCheck() {
                         </div>
                         {results.topGaps.map((gap) => {
                           const ml = maturityLevels[gap.maturityKey];
-                          const catData = filteredCategories.find(c => c.key === gap.key);
+                          const catData = categories.find(c => c.key === gap.key);
                           return (
                             <div key={gap.key} className="flex items-center gap-2 py-1">
                               <span className="text-sm">{gap.icon}</span>
@@ -1434,7 +1444,7 @@ export default function ReadinessCheck() {
                   <ActionPlan
                     answers={answers}
                     notes={notes}
-                    filteredCategories={filteredCategories}
+                    categories={categories}
                     locale={locale}
                     profile={profile}
                     actionPlanData={actionPlanData}
@@ -1452,7 +1462,7 @@ export default function ReadinessCheck() {
                 {dashTab === 'recommendations' && (
                   <Recommendations
                     results={results}
-                    filteredCategories={filteredCategories}
+                    categories={categories}
                     answers={answers}
                     locale={locale}
                     profile={profile}

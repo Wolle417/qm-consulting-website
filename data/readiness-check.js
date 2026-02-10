@@ -1011,17 +1011,6 @@ export const categories = [
 ];
 
 
-// ─── Scope-Wizard Questions ──────────────────────────────────────────────
-export const scopeQuestions = [
-  { id: 'scope-design', tags: ['design'], question: { de: 'Entwickeln Sie Medizinprodukte (Design Controls)?', en: 'Do you design medical devices (Design Controls)?' } },
-  { id: 'scope-sterile', tags: ['sterile'], question: { de: 'Stellen Sie sterile Produkte her?', en: 'Do you manufacture sterile products?' } },
-  { id: 'scope-software', tags: ['software'], question: { de: 'Entwickeln Sie Software als Medizinprodukt (SaMD)?', en: 'Do you develop Software as Medical Device (SaMD)?' } },
-  { id: 'scope-implant', tags: ['implant'], question: { de: 'Stellen Sie implantierbare Produkte her?', en: 'Do you manufacture implantable devices?' } },
-  { id: 'scope-fda', tags: ['fda'], question: { de: 'Vertreiben Sie Produkte auf dem US-Markt (FDA)?', en: 'Do you market products in the US (FDA)?' } },
-  { id: 'scope-mdr', tags: ['mdr'], question: { de: 'Vertreiben Sie Produkte in der EU (MDR/IVDR)?', en: 'Do you market products in the EU (MDR/IVDR)?' } },
-];
-
-
 // ─── Assessment Profiles ─────────────────────────────────────────────────
 export const assessmentProfiles = {
   iso13485: {
@@ -1054,26 +1043,6 @@ export const assessmentProfiles = {
     showMdr: true,
   },
 };
-
-
-// ─── Scope Filter: which questions are relevant given user scope ─────────
-export function getFilteredCategories(scopeAnswers) {
-  if (!scopeAnswers || Object.keys(scopeAnswers).length === 0) return categories;
-  const activeTags = new Set(['all']);
-  scopeQuestions.forEach(sq => {
-    if (scopeAnswers[sq.id]) sq.tags.forEach(t => activeTags.add(t));
-  });
-  return categories.map(cat => ({
-    ...cat,
-    questions: cat.questions.filter(q =>
-      q.scope.some(tag => activeTags.has(tag))
-    ),
-  })).filter(cat => cat.questions.length > 0);
-}
-
-export function getFilteredQuestionCount(scopeAnswers) {
-  return getFilteredCategories(scopeAnswers).reduce((sum, cat) => sum + cat.questions.length, 0);
-}
 
 
 // ─── Flat list helper ───────────────────────────────────────────────────
@@ -1187,14 +1156,28 @@ export const ui = {
     startHint: 'Klicken Sie auf eine Kategorie, um mit der Bewertung zu beginnen.',
     expandAll: 'Alle aufklappen',
     collapseAll: 'Alle zuklappen',
-    // Scope Wizard
-    scopeTitle: 'Organisations-Profil',
-    scopeSubtitle: 'Beantworten Sie diese Fragen, um das Assessment auf Ihre Organisation zuzuschneiden.',
-    scopeStart: 'Assessment starten',
-    scopeSkip: 'Alle Fragen anzeigen',
-    scopeYes: 'Ja',
-    scopeNo: 'Nein',
-    scopeChange: 'Profil anpassen',
+    // Intro / Landing
+    introHeadline: 'Wie audit-ready ist Ihr QM-System?',
+    introSubline: 'Finden Sie in 10 Minuten heraus, wo Ihr QMS nach ISO 13485 steht \u2014 und was ein Auditor als erstes beanstanden wird.',
+    introFeatures: [
+      { icon: '\uD83C\uDFAF', title: '27 Fragen, 9 Kategorien', desc: 'Basierend auf den pr\u00fcfungsrelevantesten Klauseln der ISO 13485:2016.' },
+      { icon: '\uD83D\uDCCA', title: 'Sofort-Ergebnis mit Gap-Analyse', desc: 'Score pro Kategorie, Maturity-Level, priorisierter Ma\u00dfnahmenplan \u2014 keine Wartezeit.' },
+      { icon: '\uD83D\uDD12', title: '100% lokal in Ihrem Browser', desc: 'Kein Login, kein Upload, keine Datenspeicherung auf Servern. Ihre Daten geh\u00f6ren Ihnen.' },
+      { icon: '\uD83C\uDFE5', title: 'Optional: FDA QMSR & EU MDR', desc: 'Erweitern Sie das Assessment um FDA 21 CFR 820 (QMSR) oder EU MDR 2017/745 Anforderungen.' },
+    ],
+    introForWhom: 'F\u00fcr wen ist das?',
+    introForWhomList: [
+      'QMBs die ein internes Pre-Audit vor der Zertifizierung durchf\u00fchren',
+      'Gesch\u00e4ftsf\u00fchrer die den Reifegrad ihres QMS einsch\u00e4tzen wollen',
+      'Berater die den Ist-Zustand beim Kunden schnell erfassen m\u00fcssen',
+    ],
+    introHowTitle: 'So funktioniert es',
+    introHowSteps: [
+      { step: '1', title: 'Profil wählen', desc: 'ISO 13485, FDA QMSR oder EU MDR — wählen Sie Ihren Regulierungskontext im Header.' },
+      { step: '2', title: 'Fragen beantworten', desc: '27 Fragen, 4 Reifegrad-Stufen — von „nicht vorhanden" bis „kontinuierlich verbessert".' },
+      { step: '3', title: 'Ergebnisse nutzen', desc: 'Gap-Backlog, Maßnahmenplan und PDF-Report — alles sofort verfügbar.' },
+    ],
+    introCta: 'Jetzt starten',
     // Notes
     notePlaceholder: 'Eigene Evidenz-Referenz, z.B. SOP-005',
     // Gap Backlog
@@ -1279,14 +1262,28 @@ export const ui = {
     startHint: 'Click a category to start the assessment.',
     expandAll: 'Expand all',
     collapseAll: 'Collapse all',
-    // Scope Wizard
-    scopeTitle: 'Organization Profile',
-    scopeSubtitle: 'Answer these questions to tailor the assessment to your organization.',
-    scopeStart: 'Start Assessment',
-    scopeSkip: 'Show all questions',
-    scopeChange: 'Adjust profile',
-    scopeYes: 'Yes',
-    scopeNo: 'No',
+    // Intro / Landing
+    introHeadline: 'How audit-ready is your QMS?',
+    introSubline: 'Find out in 10 minutes where your QMS stands against ISO 13485 \u2014 and what an auditor would flag first.',
+    introFeatures: [
+      { icon: '\uD83C\uDFAF', title: '27 Questions, 9 Categories', desc: 'Based on the most audit-relevant clauses of ISO 13485:2016.' },
+      { icon: '\uD83D\uDCCA', title: 'Instant Results with Gap Analysis', desc: 'Score per category, maturity level, prioritized action plan \u2014 no waiting.' },
+      { icon: '\uD83D\uDD12', title: '100% Local in Your Browser', desc: 'No login, no upload, no server-side data storage. Your data stays yours.' },
+      { icon: '\uD83C\uDFE5', title: 'Optional: FDA QMSR & EU MDR', desc: 'Extend the assessment with FDA 21 CFR 820 (QMSR) or EU MDR 2017/745 requirements.' },
+    ],
+    introForWhom: 'Who is this for?',
+    introForWhomList: [
+      'QM managers preparing for an internal pre-audit before certification',
+      'Executives who want to assess their QMS maturity level',
+      'Consultants who need to quickly capture a client\u2019s current state',
+    ],
+    introHowTitle: 'How it works',
+    introHowSteps: [
+      { step: '1', title: 'Choose profile', desc: 'ISO 13485, FDA QMSR or EU MDR — select your regulatory context in the header.' },
+      { step: '2', title: 'Answer questions', desc: '27 questions, 4 maturity levels — from "not established" to "continuously improved".' },
+      { step: '3', title: 'Use the results', desc: 'Gap backlog, action plan and PDF report — all instantly available.' },
+    ],
+    introCta: 'Get started',
     // Notes
     notePlaceholder: 'Your evidence reference, e.g. SOP-005',
     // Gap Backlog
