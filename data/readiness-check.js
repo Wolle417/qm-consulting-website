@@ -1151,14 +1151,14 @@ export const ui = {
     selectAnswer: 'Wählen Sie eine Antwort',
     levelLabels: ['', 'Reaktiv', 'Definiert', 'Etabliert', 'Optimierend'],
     resetAll: 'Alle Antworten zurücksetzen',
-    seoTitle: 'ISO 13485 Readiness Check \u2014 Kostenloser QMS-Reifegrad-Test | QCore',
-    seoDescription: 'Bewerten Sie Ihr QMS nach ISO 13485 mit unserem kostenlosen Readiness Check. 27 Fragen, Live-Dashboard, Radar-Chart. Desktop-optimiert f\u00fcr QM-Profis.',
+    seoTitle: 'Wo Ihr nächstes Audit weh tut \u2014 ISO 13485 Readiness Check | QCore',
+    seoDescription: 'Kostenloser ISO 13485 Readiness Check: Identifizieren Sie Ihre QMS-Schwachstellen in 10 Minuten. 27 Fragen, 9 Kategorien, sofortige Gap-Analyse mit Maßnahmenplan. 100% anonym, kein Login.',
     startHint: 'Klicken Sie auf eine Kategorie, um mit der Bewertung zu beginnen.',
     expandAll: 'Alle aufklappen',
     collapseAll: 'Alle zuklappen',
     // Intro / Landing
-    introHeadline: 'Wie audit-ready ist Ihr QM-System?',
-    introSubline: 'Finden Sie in 10 Minuten heraus, wo Ihr QMS nach ISO 13485 steht \u2014 und was ein Auditor als erstes beanstanden wird.',
+    introHeadline: 'Wo Ihr nächstes Audit weh tut \u2014 in 10 Minuten herausfinden',
+    introSubline: 'Kostenloses Self-Assessment für QM-Verantwortliche in der Medizintechnik. 27 Fragen. 9 Kategorien. Sofortige Gap-Analyse.',
     introFeatures: [
       { icon: '\uD83C\uDFAF', title: '27 Fragen, 9 Kategorien', desc: 'Basierend auf den pr\u00fcfungsrelevantesten Klauseln der ISO 13485:2016.' },
       { icon: '\uD83D\uDCCA', title: 'Sofort-Ergebnis mit Gap-Analyse', desc: 'Score pro Kategorie, Maturity-Level, priorisierter Ma\u00dfnahmenplan \u2014 keine Wartezeit.' },
@@ -1178,6 +1178,40 @@ export const ui = {
       { step: '3', title: 'Ergebnisse nutzen', desc: 'Gap-Backlog, Maßnahmenplan und PDF-Report — alles sofort verfügbar.' },
     ],
     introCta: 'Jetzt starten',
+    transparencyNote: '100% anonym & kostenlos. Keine Daten verlassen Ihren Browser. Kein Login. Kein Account. Wir finanzieren dieses Tool durch den Verkauf unserer Premium-Dokumentenvorlagen für QM-Profis.',
+    // Hero
+    heroSubline: 'Finden Sie in 10 Minuten heraus, welche Bereiche Ihres QMS die nächste Auditierung nicht überstehen — und was Sie zuerst angehen sollten.',
+    heroTrust: ['Alle Daten bleiben in Ihrem Browser', 'Keine Anmeldung', 'Kostenlos', '~10 Minuten'],
+    heroProfileLabel: 'Profil wählen:',
+    heroProfileNew: 'NEU',
+    // QMSR Banner
+    qmsrBanner: 'Seit 02/2026: FDA QMSR in Kraft — ISO 13485 wird Pflicht für US-Exporte.',
+    qmsrBannerLink: 'Jetzt QMSR-Readiness prüfen',
+    // Preview (right column)
+    previewScore: 'Handlungsbedarf',
+    previewGapLabel: 'Prioritäre Gaps',
+    previewGaps: [
+      { risk: 'critical', cat: 'CAPA-Prozess', clause: 'Kl. 8.5.2' },
+      { risk: 'high', cat: 'Design & Entwicklung', clause: 'Kl. 7.3' },
+      { risk: 'medium', cat: 'Audit & Review', clause: 'Kl. 8.2.4' },
+    ],
+    // What You Get
+    whatYouGetTitle: 'Was Sie erhalten',
+    whatYouGet1Title: 'Gap-Analyse',
+    whatYouGet1Desc: 'Priorisierte Schwachstellen, sortiert nach Audit-Risiko (Critical → Low).',
+    whatYouGet2Title: 'Maßnahmenplan',
+    whatYouGet2Desc: 'Konkrete nächste Schritte für jede Lücke — editierbar.',
+    whatYouGet3Title: 'PDF-Report',
+    whatYouGet3Desc: 'Kompletter Report zum Teilen mit Ihrem Team — lokal generiert.',
+    // 9 Categories
+    categoriesTitle: 'Geprüfte Kategorien',
+    categoriesSubtitle: 'ISO 13485:2016',
+    // FAQ (2 items — data/profile questions handled by tooltips & trust line)
+    faqTitle: 'Häufige Fragen',
+    faqItems: [
+      { q: 'Wie lange dauert das Assessment?', a: 'Ca. 10 Minuten. Sie können jederzeit unterbrechen — Ihr Fortschritt wird automatisch im Browser gespeichert.' },
+      { q: 'Ist das wirklich kostenlos?', a: 'Ja. Das Assessment, die Auswertung und der PDF-Export sind vollständig kostenlos. Wir bieten ergänzend professionelle QM-Dokumentenvorlagen an — damit finanzieren wir dieses Tool.' },
+    ],
     // Notes
     notePlaceholder: 'Eigene Evidenz-Referenz, z.B. SOP-005',
     // Gap Backlog
@@ -1257,14 +1291,14 @@ export const ui = {
     selectAnswer: 'Select an answer',
     levelLabels: ['', 'Reactive', 'Defined', 'Established', 'Optimizing'],
     resetAll: 'Reset all answers',
-    seoTitle: 'ISO 13485 Readiness Check \u2014 Free QMS Maturity Assessment | QCore',
-    seoDescription: 'Assess your QMS against ISO 13485 with our free Readiness Check. 27 questions, live dashboard, radar chart. Desktop-optimized for QM professionals.',
+    seoTitle: 'Where Your Next Audit Will Hurt \u2014 ISO 13485 Readiness Check | QCore',
+    seoDescription: 'Free ISO 13485 Readiness Check: Identify your QMS weaknesses in 10 minutes. 27 questions, 9 categories, instant gap analysis with action plan. 100% anonymous, no login.',
     startHint: 'Click a category to start the assessment.',
     expandAll: 'Expand all',
     collapseAll: 'Collapse all',
     // Intro / Landing
-    introHeadline: 'How audit-ready is your QMS?',
-    introSubline: 'Find out in 10 minutes where your QMS stands against ISO 13485 \u2014 and what an auditor would flag first.',
+    introHeadline: 'Where Your Next Audit Will Hurt \u2014 Find Out in 10 Minutes',
+    introSubline: 'Free self-assessment for quality managers in medical devices. 27 questions. 9 categories. Instant gap analysis.',
     introFeatures: [
       { icon: '\uD83C\uDFAF', title: '27 Questions, 9 Categories', desc: 'Based on the most audit-relevant clauses of ISO 13485:2016.' },
       { icon: '\uD83D\uDCCA', title: 'Instant Results with Gap Analysis', desc: 'Score per category, maturity level, prioritized action plan \u2014 no waiting.' },
@@ -1284,6 +1318,40 @@ export const ui = {
       { step: '3', title: 'Use the results', desc: 'Gap backlog, action plan and PDF report — all instantly available.' },
     ],
     introCta: 'Get started',
+    transparencyNote: '100% anonymous & free. No data leaves your browser. No login. No account required. We fund this tool through sales of our premium document templates for QM professionals.',
+    // Hero
+    heroSubline: 'Find out in 10 minutes which areas of your QMS won\'t survive the next audit — and what to tackle first.',
+    heroTrust: ['All data stays in your browser', 'No login required', 'Free', '~10 minutes'],
+    heroProfileLabel: 'Choose profile:',
+    heroProfileNew: 'NEW',
+    // QMSR Banner
+    qmsrBanner: 'Since 02/2026: FDA QMSR in effect — ISO 13485 now mandatory for US exports.',
+    qmsrBannerLink: 'Check your QMSR readiness now',
+    // Preview (right column)
+    previewScore: 'Needs Action',
+    previewGapLabel: 'Priority Gaps',
+    previewGaps: [
+      { risk: 'critical', cat: 'CAPA Process', clause: 'Cl. 8.5.2' },
+      { risk: 'high', cat: 'Design & Development', clause: 'Cl. 7.3' },
+      { risk: 'medium', cat: 'Audit & Review', clause: 'Cl. 8.2.4' },
+    ],
+    // What You Get
+    whatYouGetTitle: 'What you get',
+    whatYouGet1Title: 'Gap Analysis',
+    whatYouGet1Desc: 'Prioritized weaknesses, sorted by audit risk (Critical → Low).',
+    whatYouGet2Title: 'Action Plan',
+    whatYouGet2Desc: 'Concrete next steps for each gap — editable.',
+    whatYouGet3Title: 'PDF Report',
+    whatYouGet3Desc: 'Complete report to share with your team — generated locally.',
+    // 9 Categories
+    categoriesTitle: 'Assessed Categories',
+    categoriesSubtitle: 'ISO 13485:2016',
+    // FAQ (2 items)
+    faqTitle: 'Frequently Asked Questions',
+    faqItems: [
+      { q: 'How long does the assessment take?', a: 'About 10 minutes. You can pause anytime — your progress is automatically saved in the browser.' },
+      { q: 'Is it really free?', a: 'Yes. The assessment, evaluation and PDF export are completely free. We also offer professional QM document templates — that\'s how we fund this tool.' },
+    ],
     // Notes
     notePlaceholder: 'Your evidence reference, e.g. SOP-005',
     // Gap Backlog

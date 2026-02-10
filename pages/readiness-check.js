@@ -17,6 +17,30 @@ const LEVEL_COLORS = ['', '#DC3545', '#F59E0B', '#84CC16', '#22C55E'];
 const RISK_COLORS = { critical: '#DC3545', high: '#F59E0B', medium: '#84CC16', low: '#94a3b8' };
 const LS_KEY = 'qcore-readiness-v2';
 
+// ─── Product Mapping (Category → QCore Product) ─────────────────────────
+const PRODUCT_MAP = {
+  'capa': {
+    de: { label: 'CAPA System Bundle', desc: 'Fertige SOPs, Formulare und Wirksamkeitsnachweise — auditbereit in 24h.', price: '€129' },
+    en: { label: 'CAPA System Bundle', desc: 'Complete SOPs, forms and effectiveness records — audit-ready in 24h.', price: '€129' },
+    href: 'https://qcoreconsulting.gumroad.com/l/capa-system',
+  },
+  'document-control': {
+    de: { label: 'NC Management Kit', desc: 'Vorlagen für Dokumentenlenkung, Änderungsmanagement und Aufzeichnungen.', price: '€99' },
+    en: { label: 'NC Management Kit', desc: 'Templates for document control, change management and records.', price: '€99' },
+    href: 'https://qcoreconsulting.gumroad.com/l/nc-management',
+  },
+  'audit-mgmt-review': {
+    de: { label: 'Audit Prep Kit', desc: 'Checklisten, Auditprogramm-Vorlagen und Management-Review-Templates.', price: '€79' },
+    en: { label: 'Audit Prep Kit', desc: 'Checklists, audit program templates and management review templates.', price: '€79' },
+    href: 'https://qcoreconsulting.gumroad.com/l/audit-prep-kit',
+  },
+};
+
+const GENERIC_CTA = {
+  de: { label: 'Individuelle Beratung zu diesem Thema', linkText: 'Kontakt aufnehmen' },
+  en: { label: 'Individual consulting on this topic', linkText: 'Get in touch' },
+};
+
 function interpolate(str, vars) {
   return Object.entries(vars).reduce((s, [k, v]) => s.replace(`{${k}}`, v), str);
 }
@@ -197,88 +221,377 @@ function EvidenceCollapsible({ question, locale, t }) {
 
 
 
-// ─── Intro Landing ──────────────────────────────────────────────────
-function IntroLanding({ locale, onStart }) {
-  const t = ui[locale];
+// ─── FAQ Accordion Item ─────────────────────────────────────────────
+function FaqItem({ question, answer }) {
+  const [open, setOpen] = useState(false);
   return (
-    <div className="flex items-center justify-center" style={{ height: '100%' }}>
-      <div className="w-full max-w-2xl overflow-y-auto px-2" style={{ maxHeight: '100%', paddingTop: 24, paddingBottom: 24 }}>
+    <div style={{ borderBottom: '1px solid rgba(30,58,138,0.06)' }}>
+      <button onClick={() => setOpen(!open)}
+        className="w-full flex items-center justify-between py-3 text-left"
+        style={{ cursor: 'pointer' }}>
+        <span className="text-sm font-medium" style={{ color: '#0f172a' }}>{question}</span>
+        <span className="flex-shrink-0 ml-3 text-base" style={{ color: '#1e3a8a', transform: open ? 'rotate(45deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }}>+</span>
+      </button>
+      <AnimatePresence>
+        {open && (
+          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }} style={{ overflow: 'hidden' }}>
+            <p className="text-sm leading-relaxed pb-3" style={{ color: '#64748b' }}>{answer}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
 
-        {/* Headline */}
-        <h1 className="text-4xl font-semibold leading-tight mb-3"
-          style={{ fontFamily: "'Cormorant', serif", color: '#0f172a' }}>
-          {t.introHeadline}
-        </h1>
-        <p className="text-base mb-8 leading-relaxed" style={{ color: '#475569' }}>
-          {t.introSubline}
-        </p>
-
-        {/* Feature Grid */}
-        <div className="grid grid-cols-2 gap-3 mb-8">
-          {t.introFeatures.map((f, i) => (
-            <div key={i} className="rounded-[12px] px-4 py-3"
-              style={{ backgroundColor: 'rgba(30,58,138,0.03)', border: '1px solid rgba(30,58,138,0.06)' }}>
-              <div className="text-xl mb-1">{f.icon}</div>
-              <div className="text-sm font-semibold mb-0.5" style={{ color: '#0f172a' }}>{f.title}</div>
-              <div className="text-xs leading-relaxed" style={{ color: '#64748b' }}>{f.desc}</div>
-            </div>
-          ))}
+// ─── Profile Tooltip ────────────────────────────────────────────────
+function ProfileTooltip({ text, children }) {
+  const [show, setShow] = useState(false);
+  const timerRef = useRef(null);
+  return (
+    <div className="relative"
+      onMouseEnter={() => { timerRef.current = setTimeout(() => setShow(true), 200); }}
+      onMouseLeave={() => { clearTimeout(timerRef.current); setShow(false); }}>
+      {children}
+      {show && (
+        <div className="absolute left-1/2 top-full mt-2 z-50"
+          style={{ transform: 'translateX(-50%)', whiteSpace: 'nowrap', pointerEvents: 'none' }}>
+          <div className="px-3 py-2 rounded-lg text-[11px] leading-snug"
+            style={{ backgroundColor: '#1a2332', color: '#fff', boxShadow: '0 4px 16px rgba(0,0,0,0.2)', maxWidth: 260, whiteSpace: 'normal' }}>
+            {text}
+          </div>
         </div>
+      )}
+    </div>
+  );
+}
 
-        {/* How it works */}
-        <div className="mb-8">
-          <h3 className="text-sm font-bold uppercase tracking-wider mb-3" style={{ color: '#1e3a8a' }}>
-            {t.introHowTitle}
-          </h3>
-          <div className="flex gap-3">
-            {t.introHowSteps.map((s, i) => (
-              <div key={i} className="flex-1 flex gap-2.5">
-                <span className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
-                  style={{ backgroundColor: '#1e3a8a', color: '#fff' }}>
-                  {s.step}
-                </span>
-                <div className="min-w-0">
-                  <div className="text-xs font-semibold" style={{ color: '#0f172a' }}>{s.title}</div>
-                  <div className="text-xs leading-relaxed mt-0.5" style={{ color: '#64748b' }}>{s.desc}</div>
-                </div>
-              </div>
+// ─── Intro Landing — Two-Column Hero Redesign ───────────────────────
+function IntroLanding({ locale, onStart, onStartWithProfile }) {
+  const t = ui[locale];
+  const [selectedProfile, setSelectedProfile] = useState('iso13485');
+
+  const profileTooltips = locale === 'de'
+    ? { iso13485: 'Standard-Assessment für alle Medizintechnik-Hersteller', fdaQmsr: 'Für Hersteller mit US-Export — prüft die neuen QMSR-Anforderungen (seit 02/2026)', euMdr: 'Schwerpunkt auf MDR-Übergangsfristen, PMS und klinische Bewertung' }
+    : { iso13485: 'Standard assessment for all medical device manufacturers', fdaQmsr: 'For US-exporting manufacturers — checks new QMSR requirements (since 02/2026)', euMdr: 'Focus on MDR transition deadlines, PMS and clinical evaluation' };
+
+  const profiles = [
+    { key: 'iso13485', label: 'ISO 13485', isNew: false },
+    { key: 'fdaQmsr', label: 'FDA QMSR', isNew: true },
+    { key: 'euMdr', label: 'EU MDR', isNew: false },
+  ];
+
+  const handleStart = () => {
+    if (onStartWithProfile) onStartWithProfile(selectedProfile);
+    else onStart();
+  };
+
+  // Radar chart data for preview (static, decorative)
+  const radarPoints = [
+    { angle: 0, r: 0.78 },     // Dokumente
+    { angle: 40, r: 0.42 },    // CAPA
+    { angle: 80, r: 0.85 },    // Risiko
+    { angle: 120, r: 0.55 },   // Design
+    { angle: 160, r: 0.68 },   // Lieferanten
+    { angle: 200, r: 0.38 },   // Audit
+    { angle: 240, r: 0.72 },   // Regulatorik
+    { angle: 280, r: 0.60 },   // Schulung
+    { angle: 320, r: 0.45 },   // PMS
+  ];
+
+  const radarLabelsArr = locale === 'de'
+    ? ['Dokumente', 'CAPA', 'Risiko', 'Design', 'Lieferanten', 'Audit', 'Regulatorik', 'Schulung', 'PMS']
+    : ['Documents', 'CAPA', 'Risk', 'Design', 'Suppliers', 'Audit', 'Regulatory', 'Training', 'PMS'];
+
+  // Convert polar to SVG coordinates (center at 80,80, max radius 60)
+  const cx = 80, cy = 80, maxR = 60;
+  const toXY = (angleDeg, rNorm) => {
+    const a = (angleDeg - 90) * Math.PI / 180;
+    return { x: cx + maxR * rNorm * Math.cos(a), y: cy + maxR * rNorm * Math.sin(a) };
+  };
+  const radarPath = radarPoints.map((p, i) => {
+    const { x, y } = toXY(p.angle, p.r);
+    return `${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(' ') + ' Z';
+
+  const riskLabel = { critical: 'Critical', high: 'High', medium: 'Medium' };
+
+  return (
+    <div className="overflow-y-auto" style={{ height: '100%' }}>
+
+      {/* ═══ HERO — Two Column ═══ */}
+      <div className="flex items-center gap-10" style={{ padding: '36px 48px 28px', minHeight: 0 }}>
+
+        {/* LEFT COLUMN (55%) — H1 + Subtext + Profile + CTA + Trust */}
+        <div style={{ flex: '0 0 55%', maxWidth: '55%' }}>
+          <h1 className="font-semibold leading-tight mb-3"
+            style={{ fontFamily: "'Cormorant', serif", color: '#0f172a', fontSize: 38, lineHeight: 1.12 }}>
+            {t.introHeadline}
+          </h1>
+          <p className="leading-relaxed mb-5" style={{ color: '#475569', fontSize: 14, lineHeight: 1.6 }}>
+            {t.heroSubline}
+          </p>
+
+          {/* Profile Selector with Tooltips */}
+          <div className="mb-5">
+            <div className="text-xs font-semibold mb-2" style={{ color: '#64748b' }}>{t.heroProfileLabel}</div>
+            <div className="flex gap-2">
+              {profiles.map(p => (
+                <ProfileTooltip key={p.key} text={profileTooltips[p.key]}>
+                  <button onClick={() => setSelectedProfile(p.key)}
+                    className="flex items-center gap-1.5 px-4 py-2 rounded-[10px] text-xs font-semibold transition-all duration-150"
+                    style={{
+                      backgroundColor: selectedProfile === p.key ? '#1e3a8a' : 'rgba(255,255,255,0.7)',
+                      color: selectedProfile === p.key ? '#fff' : '#475569',
+                      border: selectedProfile === p.key ? '1px solid #1e3a8a' : '1px solid rgba(30,58,138,0.12)',
+                      cursor: 'pointer',
+                    }}>
+                    {p.label}
+                    {p.isNew && (
+                      <span className="px-1.5 py-0.5 rounded text-[9px] font-bold"
+                        style={{ backgroundColor: selectedProfile === p.key ? 'rgba(255,255,255,0.25)' : '#F59E0B', color: '#fff' }}>
+                        {t.heroProfileNew}
+                      </span>
+                    )}
+                  </button>
+                </ProfileTooltip>
+              ))}
+            </div>
+          </div>
+
+          {/* CTA Button */}
+          <button onClick={handleStart}
+            className="text-sm font-bold transition-all duration-200 hover:scale-[1.03] hover:shadow-xl"
+            style={{
+              backgroundColor: '#1e3a8a', color: '#fff',
+              padding: '14px 36px', borderRadius: 50,
+              boxShadow: '0 4px 24px rgba(30,58,138,0.3)',
+              cursor: 'pointer', border: 'none',
+            }}>
+            {t.introCta} →
+          </button>
+
+          {/* Trust Signals — SINGLE place for privacy/cost/duration info */}
+          <div className="flex items-center gap-3 mt-4 flex-wrap">
+            {t.heroTrust.map((item, i) => (
+              <span key={i} className="flex items-center gap-1 text-xs" style={{ color: '#64748b' }}>
+                <span style={{ color: '#22C55E' }}>✓</span> {item}
+              </span>
             ))}
           </div>
         </div>
 
-        {/* For whom */}
-        <div className="rounded-[12px] px-4 py-3 mb-8"
-          style={{ backgroundColor: 'rgba(30,58,138,0.03)', border: '1px solid rgba(30,58,138,0.06)' }}>
-          <h3 className="text-xs font-bold uppercase tracking-wider mb-2" style={{ color: '#64748b' }}>
-            {t.introForWhom}
-          </h3>
-          <ul className="space-y-1">
-            {t.introForWhomList.map((item, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm" style={{ color: '#334155' }}>
-                <span className="flex-shrink-0 mt-0.5" style={{ color: '#1e3a8a' }}>&#x2713;</span>
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
+        {/* RIGHT COLUMN (45%) — Ergebnis-Preview (STRAIGHT, no rotation) */}
+        <div style={{ flex: '0 0 42%', maxWidth: '42%' }}>
+          <div className="rounded-2xl overflow-hidden"
+            style={{
+              background: 'rgba(255,255,255,0.7)',
+              border: '1px solid rgba(30,58,138,0.08)',
+              boxShadow: '0 12px 40px rgba(30,58,138,0.08)',
+              position: 'relative',
+            }}>
 
-        {/* CTA */}
-        <button onClick={onStart}
-          className="px-7 py-3.5 rounded-[10px] text-sm font-bold transition-all duration-150 hover:scale-[1.01]"
-          style={{ backgroundColor: '#1e3a8a', color: '#fff', boxShadow: '0 2px 12px rgba(30,58,138,0.22)' }}>
-          {t.introCta} &rarr;
-        </button>
+            {/* Header bar */}
+            <div className="flex items-center gap-2 px-4 py-2" style={{ borderBottom: '1px solid rgba(30,58,138,0.06)', background: 'rgba(248,250,252,0.9)' }}>
+              <div className="flex gap-1.5">
+                <span className="w-2 h-2 rounded-full" style={{ backgroundColor: '#f87171' }} />
+                <span className="w-2 h-2 rounded-full" style={{ backgroundColor: '#fbbf24' }} />
+                <span className="w-2 h-2 rounded-full" style={{ backgroundColor: '#34d399' }} />
+              </div>
+              <span className="text-[10px] font-medium ml-2" style={{ color: '#94a3b8' }}>
+                {locale === 'de' ? 'Readiness Assessment — Ergebnis' : 'Readiness Assessment — Results'}
+              </span>
+            </div>
+
+            {/* Score Ring + Radar side by side */}
+            <div className="flex items-center gap-4 px-5 pt-4 pb-2">
+              {/* Score Ring */}
+              <div className="flex flex-col items-center flex-shrink-0">
+                <div className="relative flex items-center justify-center" style={{ width: 90, height: 90 }}>
+                  <svg className="w-full h-full" viewBox="0 0 100 100" style={{ transform: 'rotate(-90deg)' }}>
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(30,58,138,0.06)" strokeWidth="6" />
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="#F59E0B" strokeWidth="6" strokeLinecap="round"
+                      strokeDasharray={2 * Math.PI * 40} strokeDashoffset={2 * Math.PI * 40 * (1 - 0.62)} />
+                  </svg>
+                  <div className="absolute flex flex-col items-center">
+                    <span className="text-xl font-bold" style={{ fontFamily: "'Cormorant', serif", color: '#0f172a' }}>62%</span>
+                    <span className="text-[8px] font-semibold" style={{ color: '#F59E0B' }}>{t.previewScore}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Mini Radar Chart (pure SVG) */}
+              <div className="flex-1" style={{ minWidth: 0 }}>
+                <svg viewBox="0 0 160 160" style={{ width: '100%', height: 'auto', maxHeight: 130 }}>
+                  {[0.33, 0.66, 1].map((r, i) => (
+                    <circle key={i} cx={cx} cy={cy} r={maxR * r} fill="none" stroke="rgba(30,58,138,0.06)" strokeWidth="0.5" />
+                  ))}
+                  {radarPoints.map((p, i) => {
+                    const { x, y } = toXY(p.angle, 1);
+                    return <line key={i} x1={cx} y1={cy} x2={x} y2={y} stroke="rgba(30,58,138,0.06)" strokeWidth="0.5" />;
+                  })}
+                  <path d={radarPath} fill="rgba(30,58,138,0.08)" stroke="#1e3a8a" strokeWidth="1.5" />
+                  {radarPoints.map((p, i) => {
+                    const { x, y } = toXY(p.angle, p.r);
+                    return <circle key={i} cx={x} cy={y} r="2" fill="#1e3a8a" />;
+                  })}
+                  {radarPoints.map((p, i) => {
+                    const { x, y } = toXY(p.angle, 1.22);
+                    return <text key={i} x={x} y={y} textAnchor="middle" dominantBaseline="middle"
+                      style={{ fontSize: 6.5, fill: '#64748b', fontFamily: 'Inter, sans-serif' }}>{radarLabelsArr[i]}</text>;
+                  })}
+                </svg>
+              </div>
+            </div>
+
+            {/* Gap Items */}
+            <div className="px-5 pb-2">
+              <div className="text-[9px] font-bold uppercase tracking-wider mb-1.5" style={{ color: '#64748b' }}>{t.previewGapLabel}</div>
+              {t.previewGaps.map((g, i) => (
+                <div key={i} className="flex items-center gap-2 py-1" style={{ borderBottom: i < 2 ? '1px solid rgba(30,58,138,0.04)' : 'none' }}>
+                  <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: RISK_COLORS[g.risk] }} />
+                  <span className="text-xs flex-1" style={{ color: '#334155' }}>{g.cat}</span>
+                  <span className="text-[10px] font-bold" style={{ color: '#1e3a8a' }}>{g.clause}</span>
+                  <span className="text-[9px] px-1.5 py-0.5 rounded font-semibold"
+                    style={{ backgroundColor: RISK_COLORS[g.risk] + '18', color: RISK_COLORS[g.risk] }}>
+                    {riskLabel[g.risk]}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            {/* Bottom fade gradient */}
+            <div style={{ height: 32, background: 'linear-gradient(to bottom, transparent, rgba(255,255,255,0.95))' }} />
+          </div>
+        </div>
       </div>
+
+
+      {/* ═══ BELOW THE FOLD — Compact info sections ═══ */}
+
+      {/* What You Get — 3 Cards, one row */}
+      <div style={{ padding: '24px 48px 20px' }}>
+        <h2 className="text-[10px] font-bold uppercase tracking-widest mb-4" style={{ color: '#1e3a8a', letterSpacing: 2 }}>
+          {t.whatYouGetTitle}
+        </h2>
+        <div className="flex gap-3">
+          {[
+            { icon: '🎯', title: t.whatYouGet1Title, desc: t.whatYouGet1Desc },
+            { icon: '✅', title: t.whatYouGet2Title, desc: t.whatYouGet2Desc },
+            { icon: '📄', title: t.whatYouGet3Title, desc: t.whatYouGet3Desc },
+          ].map((item, i) => (
+            <div key={i} className="flex-1 rounded-xl px-4 py-3"
+              style={{ backgroundColor: 'rgba(255,255,255,0.5)', border: '1px solid rgba(30,58,138,0.06)' }}>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-base">{item.icon}</span>
+                <span className="text-xs font-bold" style={{ color: '#0f172a' }}>{item.title}</span>
+              </div>
+              <p className="text-[11px] leading-relaxed" style={{ color: '#64748b' }}>{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Category Pills */}
+      <div style={{ padding: '12px 48px 20px' }}>
+        <div className="flex items-center gap-3 mb-3">
+          <h2 className="text-[10px] font-bold uppercase tracking-widest" style={{ color: '#1e3a8a', letterSpacing: 2 }}>
+            {t.categoriesTitle}
+          </h2>
+          <span className="text-[10px]" style={{ color: '#94a3b8' }}>· {t.categoriesSubtitle}</span>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {categories.map((cat) => (
+            <span key={cat.key} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs"
+              style={{ backgroundColor: 'rgba(255,255,255,0.6)', border: '1px solid rgba(30,58,138,0.08)', color: '#334155' }}>
+              <span>{cat.icon}</span>
+              <span className="font-medium">{cat.label[locale]}</span>
+              <span className="font-bold" style={{ color: '#1e3a8a', fontSize: 10 }}>{cat.clauseRef.replace('ISO 13485 ', '')}</span>
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* FAQ — 2 items, side by side */}
+      <div style={{ padding: '16px 48px 16px' }}>
+        <h2 className="text-[10px] font-bold uppercase tracking-widest mb-3" style={{ color: '#1e3a8a', letterSpacing: 2 }}>
+          {t.faqTitle}
+        </h2>
+        <div className="grid grid-cols-2 gap-x-6 rounded-xl px-5"
+          style={{ backgroundColor: 'rgba(255,255,255,0.5)', border: '1px solid rgba(30,58,138,0.06)' }}>
+          {t.faqItems.map((item, i) => (
+            <FaqItem key={i} question={item.q} answer={item.a} />
+          ))}
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div className="flex items-center justify-center gap-3 text-[10px]" style={{ padding: '12px 48px 20px', color: '#94a3b8' }}>
+        <span>&copy; QCore Consulting</span>
+        <span>·</span>
+        <a href="/impressum" style={{ color: '#94a3b8', textDecoration: 'none' }}>Impressum</a>
+        <span>·</span>
+        <a href="/datenschutz" style={{ color: '#94a3b8', textDecoration: 'none' }}>Datenschutz</a>
+      </div>
+
     </div>
   );
 }
 
 
 // ─── Gap Backlog – Expandable Rows ──────────────────────────────────
+function ProductCta({ catKey, locale }) {
+  const product = PRODUCT_MAP[catKey];
+  if (product) {
+    const p = product[locale];
+    return (
+      <a href={product.href} target="_blank" rel="noopener noreferrer"
+        className="flex items-start gap-2 px-3 py-2 rounded-[10px] transition-all duration-150 hover:scale-[1.005] no-underline"
+        style={{ backgroundColor: 'rgba(30,58,138,0.03)', border: '1px solid rgba(30,58,138,0.08)', textDecoration: 'none' }}>
+        <span className="flex-shrink-0 text-sm mt-0.5">💡</span>
+        <div className="min-w-0">
+          <span className="text-[10px] font-bold" style={{ color: '#1e3a8a' }}>
+            {locale === 'de' ? 'Sofort-Lösung:' : 'Ready-made solution:'}
+          </span>
+          <span className="text-[10px] ml-1" style={{ color: '#475569' }}>
+            {p.desc}
+          </span>
+          <span className="text-[10px] font-bold ml-1" style={{ color: '#1e3a8a' }}>
+            → {p.label} ({p.price})
+          </span>
+        </div>
+      </a>
+    );
+  }
+  return (
+    <a href="/kontakt"
+      className="flex items-center gap-2 px-3 py-2 rounded-[10px] transition-all duration-150 hover:scale-[1.005] no-underline"
+      style={{ backgroundColor: 'rgba(30,58,138,0.02)', border: '1px solid rgba(30,58,138,0.06)', textDecoration: 'none' }}>
+      <span className="flex-shrink-0 text-xs">💬</span>
+      <span className="text-[10px]" style={{ color: '#64748b' }}>
+        {GENERIC_CTA[locale].label} → <span className="font-semibold" style={{ color: '#1e3a8a' }}>{GENERIC_CTA[locale].linkText}</span>
+      </span>
+    </a>
+  );
+}
+
+
 function GapBacklog({ answers, notes, categories, locale, profile, onJumpToQuestion }) {
   const t = ui[locale];
   const activeProfile = assessmentProfiles[profile] || assessmentProfiles.iso13485;
   const [expandedId, setExpandedId] = useState(null);
+
+  // Compute category scores for CTA threshold
+  const catScores = useMemo(() => {
+    const scores = {};
+    categories.forEach(cat => {
+      const answered = cat.questions.filter(q => answers[q.id] !== undefined);
+      if (answered.length > 0) {
+        const avg = answered.reduce((s, q) => s + answers[q.id], 0) / answered.length;
+        scores[cat.key] = Math.round(((avg - 1) / 3) * 100);
+      }
+    });
+    return scores;
+  }, [answers, categories]);
 
   const gaps = useMemo(() => {
     const list = [];
@@ -416,6 +729,13 @@ function GapBacklog({ answers, notes, categories, locale, profile, onJumpToQuest
                       style={{ color: '#1e3a8a' }}>
                       → {locale === 'de' ? 'Zur Frage' : 'Go to question'}
                     </button>
+
+                    {/* Contextual product CTA — show if category score < 60% */}
+                    {catScores[gap.catKey] !== undefined && catScores[gap.catKey] < 60 && (
+                      <div className="mt-2">
+                        <ProductCta catKey={gap.catKey} locale={locale} />
+                      </div>
+                    )}
                   </div>
                 </motion.div>
               )}
@@ -682,6 +1002,36 @@ function Recommendations({ results, categories, answers, locale, profile, onBack
                 </div>
               </div>
             )}
+            {/* Product tip — if matching product exists */}
+            {(() => {
+              const product = PRODUCT_MAP[rec.key];
+              if (product) {
+                const p = product[locale];
+                return (
+                  <a href={product.href} target="_blank" rel="noopener noreferrer"
+                    className="flex items-start gap-2 px-3 py-2 rounded-[10px] transition-all duration-150 hover:scale-[1.005] no-underline"
+                    style={{ backgroundColor: 'rgba(30,58,138,0.04)', border: '1px solid rgba(30,58,138,0.08)', textDecoration: 'none' }}>
+                    <span className="flex-shrink-0 text-sm">📦</span>
+                    <div className="min-w-0">
+                      <span className="text-[10px] font-bold" style={{ color: '#1e3a8a' }}>
+                        {locale === 'de' ? 'Tipp:' : 'Tip:'}
+                      </span>
+                      <span className="text-[10px] ml-1" style={{ color: '#475569' }}>
+                        {locale === 'de'
+                          ? `Mit unserem ${p.label} können Sie diese Lücke sofort schließen — fertige Vorlagen, sofort einsetzbar.`
+                          : `Close this gap immediately with our ${p.label} — ready-to-use templates, deploy today.`
+                        }
+                      </span>
+                      <span className="text-[10px] font-bold ml-1" style={{ color: '#1e3a8a' }}>
+                        → {locale === 'de' ? 'Zum Bundle' : 'View Bundle'} ({p.price})
+                      </span>
+                    </div>
+                  </a>
+                );
+              }
+              return null;
+            })()}
+
             {/* Jump to category */}
             <button onClick={() => onJumpToCategory(rec.key)}
               className="text-[10px] font-semibold transition-colors duration-150 hover:underline" style={{ color: '#1e3a8a' }}>
@@ -937,6 +1287,52 @@ export default function ReadinessCheck() {
 
       html += `<div style="margin-top:32px;padding-top:12px;border-top:1px solid #e2e8f0;font-size:10px;color:#94a3b8;text-align:center;">${tt.pdfGenerated}</div>`;
 
+      // ── Last page: QCore offer based on results ──
+      const nextStepsTitle = loc === 'de' ? 'Nächste Schritte — So schließen Sie Ihre Gaps' : 'Next Steps — How to Close Your Gaps';
+      const yourResultsShow = loc === 'de' ? 'Ihre Ergebnisse zeigen Handlungsbedarf bei:' : 'Your results indicate action needed in:';
+
+      // Find categories below 60%
+      const weakCats = results.categories.filter(c => c.percentScore !== null && c.percentScore < 60);
+      let lastPageHtml = `<div style="page-break-before:always;padding-top:40px;">`;
+      lastPageHtml += `<h2 style="font-size:18px;font-weight:700;color:#1e3a8a;margin:0 0 16px 0;">${nextStepsTitle}</h2>`;
+
+      if (weakCats.length > 0) {
+        lastPageHtml += `<div style="margin-bottom:24px;padding:16px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;">`;
+        lastPageHtml += `<div style="font-size:12px;font-weight:600;color:#0f172a;margin-bottom:12px;">${yourResultsShow}</div>`;
+        weakCats.forEach(wc => {
+          const fc = categories.find(c => c.key === wc.key);
+          if (!fc) return;
+          const product = PRODUCT_MAP[wc.key];
+          lastPageHtml += `<div style="padding:8px 0;border-bottom:1px solid #f1f5f9;">`;
+          lastPageHtml += `<div style="font-size:12px;font-weight:600;color:#0f172a;">${fc.icon} ${fc.label[loc]} (${loc === 'de' ? 'Ihr Score' : 'Your Score'}: ${wc.percentScore}%)</div>`;
+          if (product) {
+            const p = product[loc];
+            lastPageHtml += `<div style="font-size:11px;color:#1e3a8a;margin-top:4px;">→ ${p.label} — ${p.desc} (${p.price})</div>`;
+            lastPageHtml += `<div style="font-size:10px;color:#64748b;margin-top:2px;">${product.href}</div>`;
+          }
+          lastPageHtml += `</div>`;
+        });
+        lastPageHtml += `</div>`;
+      }
+
+      // Consultation CTA
+      const consultTitle = loc === 'de' ? 'Persönliche Unterstützung gewünscht?' : 'Want personal support?';
+      const consultDesc = loc === 'de'
+        ? 'Buchen Sie ein kostenloses 15-Minuten Ergebnis-Review.'
+        : 'Book a free 15-minute results review.';
+      lastPageHtml += `<div style="padding:16px;background:#f0f4ff;border-radius:8px;border:1px solid rgba(30,58,138,0.15);margin-bottom:24px;">`;
+      lastPageHtml += `<div style="font-size:13px;font-weight:700;color:#1e3a8a;">${consultTitle}</div>`;
+      lastPageHtml += `<div style="font-size:12px;color:#475569;margin-top:4px;">${consultDesc}</div>`;
+      lastPageHtml += `<div style="font-size:11px;color:#1e3a8a;margin-top:6px;font-weight:600;">→ https://qcore-consulting.de/kontakt</div>`;
+      lastPageHtml += `</div>`;
+
+      // Footer
+      lastPageHtml += `<div style="padding-top:16px;border-top:1px solid #e2e8f0;font-size:10px;color:#94a3b8;text-align:center;">`;
+      lastPageHtml += `QCore Consulting | qcore-consulting.de | ${loc === 'de' ? 'Qualitätsmanagement für Medizintechnik-KMUs' : 'Quality Management for Medical Device SMEs'}`;
+      lastPageHtml += `</div></div>`;
+
+      html += lastPageHtml;
+
       container.innerHTML = html;
       document.body.appendChild(container);
       const canvas = await html2canvas(container, { scale: 2, useCORS: true, backgroundColor: '#ffffff' });
@@ -974,6 +1370,10 @@ export default function ReadinessCheck() {
       <Head>
         <title>{t.seoTitle}</title>
         <meta name="description" content={t.seoDescription} />
+        <meta property="og:title" content={t.seoTitle} />
+        <meta property="og:description" content={t.seoDescription} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://qcore-consulting.de/readiness-check" />
         <link rel="canonical" href="https://qcore-consulting.de/readiness-check" />
         <style>{`
           html, body { overflow: hidden; height: 100%; }
@@ -1021,11 +1421,8 @@ export default function ReadinessCheck() {
             )}
           </div>
           <div className="flex items-center gap-4">
-            {/* Privacy Badge */}
-            <span className="text-xs flex items-center gap-1" style={{ color: '#64748b' }}>
-              🔒 <span className="hidden xl:inline">{t.privacyBadge}</span>
-              <span className="xl:hidden">{locale === 'de' ? 'Lokal' : 'Local'}</span>
-            </span>
+            {/* Lock icon only — trust details are in Hero trust line */}
+            {showIntro && <span className="text-xs" style={{ color: '#94a3b8' }}>🔒</span>}
             {!showIntro && (
               <>
                 <span className="text-sm" style={{ color: '#64748b' }}>
@@ -1050,13 +1447,14 @@ export default function ReadinessCheck() {
 
         {/* ═══ INTRO → ASSESSMENT ═══ */}
         {showIntro ? (
-          <div className="flex-1 px-10 py-8" style={{
+          <div className="flex-1 min-h-0" style={{
             background: 'rgba(255,255,255,0.78)',
             backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
           }}>
             <IntroLanding
               locale={locale}
               onStart={() => setShowIntro(false)}
+              onStartWithProfile={(p) => { setProfile(p); setShowIntro(false); }}
             />
           </div>
         ) : (
