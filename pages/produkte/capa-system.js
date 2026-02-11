@@ -136,12 +136,13 @@ const boxStyle = {
   backdropFilter: 'blur(3px)',
 };
 
-// Email Capture Component - Lead Magnet Box
-function EmailCapture({ locale }) {
+// Purchase Box Component - Gumroad
+function PurchaseBox({ locale }) {
   const text = {
     de: {
-      heroText: 'Komplettes CAPA-Bundle – kostenlos gegen Email-Registrierung.',
-      secure: 'Download-Link per Email · Kein Spam',
+      heroText: 'Komplettes CAPA-Bundle — sofort einsatzbereit.',
+      buy: 'Jetzt kaufen',
+      secure: 'Sichere Zahlung via Gumroad · Sofort-Download',
       included: [
         '7 Dokumente (Word, Excel, PDF)',
         'Ausgefülltes Beispiel inklusive',
@@ -150,8 +151,9 @@ function EmailCapture({ locale }) {
       ]
     },
     en: {
-      heroText: 'Complete CAPA bundle – free with email registration.',
-      secure: 'Download link via email · No spam',
+      heroText: 'Complete CAPA bundle — ready to use immediately.',
+      buy: 'Buy now',
+      secure: 'Secure payment via Gumroad · Instant download',
       included: [
         '7 Documents (Word, Excel, PDF)',
         'Filled example included',
@@ -160,29 +162,40 @@ function EmailCapture({ locale }) {
       ]
     }
   };
-  
+
   const t = text[locale] || text.en;
-  
+
   return (
-    <div 
+    <div
       className="rounded-xl p-6"
       style={boxStyle}
     >
-      {/* Price: Strikethrough €129 → FREE */}
+      {/* Price */}
       <div className="text-center mb-2">
-        <span className="text-2xl line-through" style={{ color: '#94a3b8' }}>€129</span>
-        <span className="text-4xl font-bold ml-3" style={{ color: '#22c55e' }}>FREE</span>
+        <span className="text-4xl font-bold" style={{ color: '#1e3a8a' }}>€129</span>
       </div>
-      
+
       {/* Hero Text */}
       <p className="text-center text-sm mb-5" style={{ color: '#475569' }}>
         {t.heroText}
       </p>
 
-      {/* MailerLite Form */}
-      <MailerLiteForm locale={locale} />
-      
-      <p className="text-xs text-center mb-4" style={{ color: '#64748b' }}>
+      {/* Gumroad Buy Button */}
+      <a
+        href="https://qcore33.gumroad.com/l/capa-system"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block w-full py-3 rounded-lg font-semibold text-center transition-all hover:scale-[1.02]"
+        style={{
+          backgroundColor: '#1e3a8a',
+          color: '#ffffff',
+          border: '1px solid #1e3a8a',
+        }}
+      >
+        {t.buy}
+      </a>
+
+      <p className="text-xs text-center mt-3 mb-4" style={{ color: '#64748b' }}>
         {t.secure}
       </p>
 
@@ -193,7 +206,7 @@ function EmailCapture({ locale }) {
         <ul className="text-sm space-y-2">
           {t.included.map((item, i) => (
             <li key={i} className="flex items-center" style={{ color: '#334155' }}>
-              <span className="mr-2" style={{ color: '#22c55e' }}>✓</span>
+              <span className="mr-2" style={{ color: '#1e3a8a' }}>✓</span>
               {item}
             </li>
           ))}
@@ -203,89 +216,6 @@ function EmailCapture({ locale }) {
   );
 }
 
-// MailerLite Form Component - custom form with API route
-function MailerLiteForm({ locale }) {
-  const [email, setEmail] = useState('');
-  const [status, setStatus] = useState('idle'); // idle, loading, success, error
-  const [errorMsg, setErrorMsg] = useState('');
-  
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!email) return;
-    
-    setStatus('loading');
-    
-    try {
-      const res = await fetch('/api/subscribe', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
-      });
-      
-      const data = await res.json();
-      
-      if (res.ok && data.success) {
-        setStatus('success');
-      } else {
-        setStatus('error');
-        setErrorMsg(data.error || 'Something went wrong');
-      }
-    } catch (err) {
-      setStatus('error');
-      setErrorMsg('Network error');
-    }
-  };
-  
-  if (status === 'success') {
-    return (
-      <div className="text-center py-4 mb-4">
-        <div className="text-4xl mb-3">✓</div>
-        <p className="text-lg font-semibold" style={{ color: '#166534' }}>
-          {locale === 'de' ? 'Fast geschafft!' : 'Almost there!'}
-        </p>
-        <p className="text-sm mt-2" style={{ color: '#15803d' }}>
-          {locale === 'de' 
-            ? 'Bitte bestätigen Sie Ihre Email (Double Opt-In).'
-            : 'Please confirm your email (Double Opt-In).'}
-        </p>
-      </div>
-    );
-  }
-  
-  return (
-    <form onSubmit={handleSubmit} className="mb-4">
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
-        required
-        className="w-full px-4 py-3 rounded-lg border mb-3 text-base"
-        style={{ borderColor: status === 'error' ? '#ef4444' : 'rgba(30, 58, 138, 0.2)' }}
-        disabled={status === 'loading'}
-      />
-      {status === 'error' && (
-        <p className="text-sm mb-2" style={{ color: '#ef4444' }}>{errorMsg}</p>
-      )}
-      <button
-        type="submit"
-        disabled={status === 'loading'}
-        className="w-full py-3 rounded-lg font-semibold transition-all hover:scale-[1.02]"
-        style={{ 
-          backgroundColor: status === 'loading' ? 'rgba(148, 163, 184, 0.4)' : 'rgba(191, 219, 254, 0.35)',
-          backdropFilter: 'blur(3px)',
-          border: '1px solid rgba(191, 219, 254, 0.5)',
-          color: '#1e3a8a',
-          cursor: status === 'loading' ? 'wait' : 'pointer'
-        }}
-      >
-        {status === 'loading' 
-          ? '...' 
-          : (locale === 'de' ? 'Kostenlos herunterladen' : 'Download Free')}
-      </button>
-    </form>
-  );
-}
 
 // Step Component - PDF Version
 function StepPDF({ number, title, children, pdfPath, pdfHeight = 600 }) {
@@ -479,7 +409,7 @@ export default function CAPASystem() {
         problemText: 'Die meisten CAPA-Systeme scheitern nicht an fehlenden Dokumenten – sondern an oberflächlicher Ursachenanalyse, unklaren Eskalationskriterien und fehlender Wirksamkeitsprüfung. Auditoren erkennen das sofort.',
         solution: 'Die Lösung:',
         solutionText: 'Ein durchdachtes System mit klarer Struktur. Diese Anleitung zeigt Ihnen Schritt für Schritt, wie Sie ein CAPA-System aufbauen, das Audits besteht – mit Templates, die Sie sofort einsetzen können.',
-        howItWorks: 'Scrollen Sie durch die 6 Schritte. Links sehen Sie das jeweilige Dokument als Vorschau, rechts die Erklärung zur Anwendung. Am Ende können Sie alle Dateien herunterladen.'
+        howItWorks: 'Scrollen Sie durch die 6 Schritte. Links sehen Sie das jeweilige Dokument als Vorschau, rechts die Erklärung zur Anwendung.'
       },
       step1: {
         title: 'Den Prozess definieren – CAPA SOP',
@@ -605,7 +535,7 @@ export default function CAPASystem() {
         problemText: 'Most CAPA systems don\'t fail because of missing documents – they fail because of superficial root cause analysis, unclear escalation criteria, and missing effectiveness verification. Auditors spot this immediately.',
         solution: 'The solution:',
         solutionText: 'A well-designed system with clear structure. This guide shows you step by step how to build a CAPA system that passes audits – with templates you can use immediately.',
-        howItWorks: 'Scroll through the 6 steps. On the left you\'ll see a preview of each document, on the right the explanation for use. At the end you can download all files.'
+        howItWorks: 'Scroll through the 6 steps. On the left you\'ll see a preview of each document, on the right the explanation for use.'
       },
       step1: {
         title: 'Define the Process – CAPA SOP',
@@ -803,7 +733,7 @@ export default function CAPASystem() {
               {/* Right Column - Email Capture (sticky) */}
               <div className="lg:col-span-2">
                 <div className="lg:sticky lg:top-24">
-                  <EmailCapture locale={locale} />
+                  <PurchaseBox locale={locale} />
                 </div>
               </div>
               

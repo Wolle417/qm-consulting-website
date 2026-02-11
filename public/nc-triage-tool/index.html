@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QCore · NC-Triage + Justifier</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+body{font-family:system-ui,-apple-system,sans-serif;background:#f9fafb;color:#374151}
+.radio-card{border:2px solid #e5e7eb;border-radius:8px;padding:12px 16px;cursor:pointer;transition:all .15s}
+.radio-card:hover{border-color:#93c5fd;background:#eff6ff}
+.radio-card.selected{border-color:#2563eb;background:#eff6ff;box-shadow:0 0 0 1px #2563eb}
+.radio-card.selected-red{border-color:#dc2626;background:#fef2f2;box-shadow:0 0 0 1px #dc2626}
+.checkbox-card{border:2px solid #e5e7eb;border-radius:8px;padding:10px 14px;cursor:pointer;transition:all .15s}
+.checkbox-card:hover{border-color:#93c5fd;background:#eff6ff}
+.checkbox-card.selected{border-color:#2563eb;background:#eff6ff}
+.bar-green{background:#059669}.bar-yellow{background:#d97706}.bar-red{background:#dc2626}.bar-gray{background:#d1d5db}
+.step-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0}
+.step-done{background:#059669;color:#fff;cursor:pointer}.step-done:hover{background:#047857}
+.step-current{background:#2563eb;color:#fff}
+.step-pending{background:#e5e7eb;color:#9ca3af}
+.step-line{height:2px;flex:1;min-width:12px;margin:0 2px}
+.dashboard-bar{height:6px;border-radius:3px;background:#e5e7eb;overflow:hidden}
+.dashboard-bar-fill{height:100%;border-radius:3px;transition:width .3s}
+.tendency-track{height:14px;border-radius:7px;background:linear-gradient(to right,#059669 0%,#059669 30%,#d97706 30%,#d97706 55%,#dc2626 55%,#dc2626 100%);position:relative}
+.tendency-track.pharma{background:linear-gradient(to right,#059669 0%,#059669 27%,#d97706 27%,#d97706 51%,#dc2626 51%,#dc2626 100%)}
+.tendency-marker{position:absolute;top:-2px;width:6px;height:18px;background:#1f2937;border-radius:3px;transition:left .3s;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.4)}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1f2937;color:#fff;padding:10px 24px;border-radius:8px;font-size:14px;z-index:50;opacity:0;transition:opacity .3s}
+.toast.show{opacity:1}
+.guidance-box{background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:14px;font-size:14px;color:#0c4a6e}
+.guidance-box.pharma{background:#fdf4ff;border-color:#e9d5ff;color:#581c87}
+[contenteditable]:focus{outline:2px solid #2563eb;outline-offset:2px;border-radius:4px}
+@media(max-width:1023px){.wizard-layout{flex-direction:column!important}.dashboard-panel{position:static!important;width:100%!important;max-height:none!important}}
+@media(max-width:1279px){.wizard-content-split{flex-direction:column!important}}
+.tooltip-custom{position:relative}.tooltip-text{display:none;position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:#1f2937;color:#fff;padding:6px 10px;border-radius:6px;font-size:12px;white-space:nowrap;z-index:10;margin-bottom:4px}
+.tooltip-custom:hover .tooltip-text{display:block}
+</style>
+</head>
+<body class="min-h-screen">
+<div id="app"></div>
+<div id="toast" class="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// STATE MODEL
+// ═══════════════════════════════════════════════════════════
+function createState(){return{
+  industry:null,pharma_source:null,
+  gates:{g1:null,g2:null,g3:null},
+  wizard:{
+    W01:{text:'',category:'',source:''},
+    W02:{severity:'',ctq:''},
+    W03:{actions:[],text:''},
+    W04:{repeat:''},
+    W05:{cause:''},
+    W06:{impact:'',batch_ids:''},
+    W07:{evidence:[],sonstiges_text:''},
+    W10:{process:'',sop:'',training:'',environment:'',others:''}
+  },
+  header:{date:new Date().toISOString().split('T')[0],id:'NC-'+new Date().toISOString().split('T')[0].replace(/-/g,'')+'-'+Math.random().toString(36).substr(2,4),product:'',responsible:'',reference_id:'',version:'v1.0',doc_status:'entwurf',edited_by:'',edited_date:'',reviewed_by:'',reviewed_date:''},
+  result:{decision:null,score:0,hard_rule:null,scores_detail:{},risk_labels:{},trace_text:''},
+  checklist:{},customChecklistItems:[],
+  currentStep:'landing',heTriggered:false
+}}
+let state=createState();
+
+// ═══════════════════════════════════════════════════════════
+// SCORING ENGINE (v1.1 — DO NOT MODIFY SCORES)
+// ═══════════════════════════════════════════════════════════
+const SEVERITY_SCORES={kritisch:30,critical:30,erheblich:18,major:18,gering:6,minor:6};
+const REPEAT_SCORES={bekannt:30,'12m':22,erstmalig:3};
+const SYSTEMIC_SCORES={design_software:20,prozess_system:18,training_sop:14,lieferant:14,unklar:12,prozess_drift:10,einzelfehler:4};
+const CONTAINMENT_SCORES={keine_massnahme:10,use_as_is:7,info_kunde:7,nacharbeit:5,sortierung:3,sperre:2};
+const EVIDENCE_MAP={none:8,one:6,two_three:3,four_plus:1};
+const BATCH_SCORES={gesperrt:15,erweiterte_pruefung:8,freigabe_begruendung:3,keine_betroffen:0};
+// SaMD containment additions (PRIO 6)
+const SAMD_CONTAINMENT_SCORES={hotfix:2,rollback:3,feature_toggle:3,kommunikation:5};
+
+function countHEOverride(w10){
+  let c=0;
+  if(w10.process==='no')c++;if(w10.sop==='no')c++;if(w10.training==='no')c++;if(w10.environment==='no')c++;if(w10.others==='yes')c++;
+  return c;
+}
+function scoreSeverity(w02){let s=SEVERITY_SCORES[w02.severity]||0;if(w02.ctq==='yes')s+=5;return Math.min(s,35);}
+function scoreRepeat(w04){return REPEAT_SCORES[w04.repeat]||0;}
+function scoreSystemic(w05,w10){let s=SYSTEMIC_SCORES[w05.cause]||0;if(w05.cause==='einzelfehler'&&countHEOverride(w10)>=2)s=16;return s;}
+function scoreContainment(w03){
+  if(!w03.actions||w03.actions.length===0)return 10;
+  const allScores={...CONTAINMENT_SCORES,...SAMD_CONTAINMENT_SCORES};
+  return Math.min(...w03.actions.map(a=>allScores[a]!==undefined?allScores[a]:10));
+}
+function scoreEvidence(w07){
+  const count=w07.evidence.filter(e=>e!=='none'&&e!=='sonstiges').length+(w07.evidence.includes('sonstiges')?1:0);
+  if(count===0||w07.evidence.includes('none'))return 8;if(count===1)return 6;if(count<=3)return 3;return 1;
+}
+function scoreBatch(w06){return BATCH_SCORES[w06.impact]||0;}
+
+function calcScores(){
+  const w=state.wizard;const ind=state.industry;
+  const scores={
+    severity:w.W02.severity?scoreSeverity(w.W02):null,
+    repeat:w.W04.repeat?scoreRepeat(w.W04):null,
+    systemic:w.W05.cause?scoreSystemic(w.W05,w.W10):null,
+    containment:w.W03.actions&&w.W03.actions.length>0?scoreContainment(w.W03):null,
+    evidence:w.W07.evidence&&w.W07.evidence.length>0?scoreEvidence(w.W07):null,
+    batch:ind==='pharma'&&w.W06.impact?scoreBatch(w.W06):null
+  };
+  return scores;
+}
+
+function getRiskLabel(criterion,score){
+  if(score===null||score===undefined)return null;
+  const t={severity:{low:10,high:23},repeat:{low:5,high:18},systemic:{low:8,high:15},containment:{low:4,high:7},evidence:{low:3,high:6},batch:{low:3,high:10}};
+  const th=t[criterion];if(!th)return null;
+  if(score<=th.low)return'niedrig';if(score>=th.high)return'hoch';return'mittel';
+}
+
+// Hard Rules
+const HARD_RULES=[
+  {id:'HR-01',name:'Repeat + Severity erheblich',check:()=>['12m','bekannt'].includes(state.wizard.W04.repeat)&&['kritisch','erheblich','critical','major'].includes(state.wizard.W02.severity),
+   text:{medtech:'Wiederholtes Auftreten bei erheblichem/kritischem Impact → CAPA gemäß ISO 13485:2016 Kl. 8.5.2.',pharma:'Wiederholtes Auftreten bei Major/Critical Impact → CAPA gemäß EU-GMP Kap. 1 und Kap. 8.'}},
+  {id:'HR-02',name:'Bekanntes wiederkehrendes Problem',check:()=>state.wizard.W04.repeat==='bekannt',
+   text:{medtech:'Bekanntes wiederkehrendes Problem — bisherige Maßnahmen waren nicht wirksam → CAPA gemäß ISO 13485:2016 Kl. 8.5.2 f).',pharma:'Bekanntes wiederkehrendes Problem — bisherige Maßnahmen waren nicht wirksam → CAPA gemäß EU-GMP Kap. 8.'}},
+  {id:'HR-03',name:'Severity Kritisch/Critical',check:()=>['kritisch','critical'].includes(state.wizard.W02.severity),
+   text:{medtech:'Kritische Abweichung → CAPA gemäß ISO 13485:2016 Kl. 8.5.2.',pharma:'Critical Deviation → CAPA gemäß EU-GMP Kap. 1.'}},
+  {id:'HR-04',name:'Design/Software Ursache',check:()=>state.wizard.W05.cause==='design_software',
+   text:{medtech:'Design-/Software-Ursache → CAPA + Design Change gemäß ISO 13485:2016 Kl. 7.3.9 und ggf. IEC 62304.',pharma:'Design-/Software-Ursache → CAPA + Change Control gemäß ICH Q10.'}},
+  {id:'HR-05',name:'Human Error Override',check:()=>state.wizard.W05.cause==='einzelfehler'&&countHEOverride(state.wizard.W10)>=2,
+   text:{medtech:'Human-Error-Prüfung zeigt systemische Indikatoren → CAPA gemäß ISO 13485:2016 Kl. 8.5.2.',pharma:'Human-Error-Prüfung zeigt systemische Indikatoren → CAPA gemäß EU-GMP Kap. 1.'}},
+  {id:'HR-06',name:'Pharma Batch gesperrt',check:()=>state.industry==='pharma'&&state.wizard.W06.impact==='gesperrt',
+   text:{pharma:'Chargen müssen gesperrt bleiben — schwerwiegende Abweichung → CAPA gemäß EU-GMP Kap. 8.'}}
+];
+
+const HARD_RULE_WHY={
+  'HR-01':{medtech:'Wiederholung bei hohem Impact zeigt, dass bisherige Korrekturen nicht wirksam waren (ISO 13485 Kl. 8.5.2).',pharma:'Wiederholte Abweichungen bei hohem Impact erfordern Ursachenanalyse — bisherige CAPAs waren nicht wirksam (EU-GMP Kap. 1).'},
+  'HR-02':{medtech:'Bekannte Probleme ohne wirksame Abhilfe sind ein systematisches Versagen der Korrekturmaßnahmen.',pharma:'Bekannte Abweichungen ohne Abhilfe sind ein kritischer GMP-Befund — Maßnahmen-Eskalation ist zwingend.'},
+  'HR-03':{medtech:'Kritische Abweichungen haben Potenzial für Patientenschaden — systematische Ursachenanalyse ist Pflicht.',pharma:'Kritische Abweichungen erfordern immer eine formale Investigation mit Root-Cause-Analyse (ICH Q10).'},
+  'HR-04':{medtech:'Designfehler stecken systemisch in jeder Einheit — nur ein formaler Design-Change (IEC 62304 / ISO 13485 Kl. 7.3.9) kann die Ursache beseitigen.',pharma:'Design-/Prozessdesign-Ursachen erfordern eine strukturierte Änderung über den Change-Control-Prozess (ICH Q10).'},
+  'HR-05':{medtech:'Systemische Indikatoren widerlegen den Einzelfehler — das Problem liegt im Prozess, nicht beim Mitarbeiter.',pharma:'Systemische Indikatoren bei Human Error deuten auf Prozess-/Systemversagen — reine Nachschulung reicht nicht.'},
+  'HR-06':{medtech:'Gesperrte Chargen signalisieren schwerwiegenden Qualitätsmangel.',pharma:'Chargensperre ist ein schwerwiegender Qualitätsmangel — QP-Entscheidung und formale Investigation sind Pflicht (EU-GMP Annex 16).'}
+};
+
+function evaluate(){
+  const w=state.wizard;const ind=state.industry;
+  // 1. Hard Rules
+  for(const rule of HARD_RULES){
+    try{if(rule.check()){
+      const scores=calcScores();const total=Object.values(scores).filter(v=>v!==null).reduce((a,b)=>a+b,0);
+      return{decision:'capa_required',hard_rule:rule.id,hard_rule_text:rule.text[ind]||rule.text.medtech,score:total,scores_detail:scores};
+    }}catch(e){}
+  }
+  // 2. Score
+  const scores=calcScores();
+  const total=Object.values(scores).filter(v=>v!==null).reduce((a,b)=>a+b,0);
+  // 3. SR-01
+  const sr01=w.W04.repeat==='erstmalig'&&['gering','minor'].includes(w.W02.severity)&&w.W05.cause==='einzelfehler'&&w.W03.actions.length>0&&!w.W03.actions.includes('keine_massnahme');
+  if(sr01&&total<=35)return{decision:'correction',hard_rule:null,hard_rule_text:null,score:total,scores_detail:scores};
+  // 4. Thresholds
+  const th=ind==='pharma'?{correction:30,capa:59}:{correction:30,capa:56};
+  let decision;
+  if(total<=th.correction)decision='correction';
+  else if(total>=th.capa)decision='capa_required';
+  else decision='capa_recommended';
+  return{decision,hard_rule:null,hard_rule_text:null,score:total,scores_detail:scores};
+}
+
+// ═══════════════════════════════════════════════════════════
+// NAVIGATION LOGIC (PRIO 7: Pharma reorder W-06 after W-02)
+// ═══════════════════════════════════════════════════════════
+function getWizardSteps(){
+  const steps=[];
+  steps.push({id:'wizard_1',label:'Sachverhalt',wKey:'W01'});
+  steps.push({id:'wizard_2',label:'Schweregrad',wKey:'W02'});
+  if(state.industry==='pharma')steps.push({id:'wizard_6',label:'Chargenimpact',wKey:'W06'});
+  steps.push({id:'wizard_3',label:'Containment',wKey:'W03'});
+  steps.push({id:'wizard_4',label:'Trend',wKey:'W04'});
+  steps.push({id:'wizard_5',label:'Ursache',wKey:'W05'});
+  if(state.heTriggered||['einzelfehler','training_sop'].includes(state.wizard.W05.cause))steps.push({id:'wizard_10',label:'HE-Prüfung',wKey:'W10'});
+  if(state.industry!=='pharma'){}// W06 already added for pharma
+  steps.push({id:'wizard_7',label:'Evidenz',wKey:'W07'});
+  return steps;
+}
+
+const FLOW={
+  landing:()=>state.industry==='pharma'?'pharma_source':'gate_1',
+  pharma_source:()=>'gate_1',
+  gate_1:()=>state.gates.g1===true?'exit_vigilanz':(state.industry==='pharma'?'gate_2':'gate_3'),
+  gate_2:()=>state.gates.g2===true?'exit_oos':'gate_3',
+  gate_3:()=>state.gates.g3===true?'exit_change':'wizard_1',
+  wizard_1:()=>'wizard_2',
+  wizard_2:()=>state.industry==='pharma'?'wizard_6':'wizard_3',
+  wizard_6:()=>'wizard_3',
+  wizard_3:()=>'wizard_4',
+  wizard_4:()=>'wizard_5',
+  wizard_5:()=>{
+    if(['einzelfehler','training_sop'].includes(state.wizard.W05.cause)){state.heTriggered=true;return'wizard_10';}
+    return state.industry==='pharma'&&!getWizardSteps().find(s=>s.id==='wizard_6')?'wizard_6':'wizard_7';
+  },
+  wizard_10:()=>'wizard_7',
+  wizard_7:()=>'output'
+};
+
+const BACK_FLOW={
+  pharma_source:'landing',
+  gate_1:()=>state.industry==='pharma'?'pharma_source':'landing',
+  gate_2:'gate_1',
+  gate_3:()=>state.industry==='pharma'?'gate_2':'gate_1',
+  exit_vigilanz:'gate_1',
+  exit_oos:'gate_2',
+  exit_change:'gate_3',
+  wizard_1:'gate_3',
+  wizard_2:'wizard_1',
+  wizard_6:'wizard_2',
+  wizard_3:()=>state.industry==='pharma'?'wizard_6':'wizard_2',
+  wizard_4:'wizard_3',
+  wizard_5:'wizard_4',
+  wizard_10:'wizard_5',
+  wizard_7:()=>state.heTriggered?'wizard_10':'wizard_5'
+};
+
+function nextStep(){const fn=FLOW[state.currentStep];if(fn){state.currentStep=fn();render();}}
+function prevStep(){const fn=BACK_FLOW[state.currentStep];if(fn){state.currentStep=typeof fn==='function'?fn():fn;render();}}
+function goToStep(stepId){state.currentStep=stepId;render();}
+
+// ═══════════════════════════════════════════════════════════
+// ACTIVE HARD RULES CHECK (for Dashboard)
+// ═══════════════════════════════════════════════════════════
+function getActiveHardRules(){
+  const active=[];
+  for(const rule of HARD_RULES){try{if(rule.check())active.push(rule);}catch(e){}}
+  return active;
+}
+
+// ═══════════════════════════════════════════════════════════
+// AUDITOR PERSPECTIVE (PRIO 1)
+// ═══════════════════════════════════════════════════════════
+function getAuditorHint(){
+  const w=state.wizard;const ind=state.industry;
+  const hints=[];
+  if(['kritisch','erheblich','critical','major'].includes(w.W02.severity)&&w.W04.repeat==='erstmalig')
+    hints.push({text:'Können Sie belegen, dass der Vorfall tatsächlich erstmalig ist? Haben Sie Trend-Daten geprüft?',relevance:5});
+  if(['12m','bekannt'].includes(w.W04.repeat)&&!['kritisch','critical'].includes(w.W02.severity))
+    hints.push({text:'Warum waren bisherige Maßnahmen nicht wirksam? Wo ist die dokumentierte Wirksamkeitsprüfung?',relevance:7});
+  if(w.W05.cause==='einzelfehler')
+    hints.push({text:'Welche systemischen Ursachen haben Sie ausgeschlossen? Dokumentieren Sie die Ausschluss-Begründung.',relevance:6});
+  if(w.W05.cause==='design_software')
+    hints.push({text:'Ist ein Design-Change-Prozess eingeleitet? Wo ist die Verknüpfung zum Change Control?',relevance:8});
+  if(w.W03.actions&&w.W03.actions.includes('keine_massnahme'))
+    hints.push({text:'Welche Risikobewertung rechtfertigt den Verzicht auf Sofortmaßnahmen?',relevance:9});
+  if(w.W07.evidence&&(w.W07.evidence.includes('none')||w.W07.evidence.length===0))
+    hints.push({text:'Auf welcher Datenbasis stützen Sie Ihre Entscheidung? Fehlende Evidenz ist ein Audit-Risiko.',relevance:7});
+  if(ind==='pharma'&&w.W06.impact==='gesperrt')
+    hints.push({text:'Ist eine Behördenmeldung (Rapid Alert / Quality Defect Notification) erforderlich?',relevance:9});
+  if(w.W04.repeat==='bekannt')
+    hints.push({text:'Warum wurden bisherige CAPAs nicht wirksam? Zeigen Sie die Eskalation im CAPA-Register.',relevance:8});
+  // Kontext-Boost
+  hints.forEach(h=>{
+    if(w.W05.cause==='design_software'&&h.text.includes('Design-Change'))h.relevance+=3;
+    if(['12m','bekannt'].includes(w.W04.repeat)&&h.text.includes('bisherige Maßnahmen'))h.relevance+=2;
+    if(ind==='pharma'&&h.text.includes('Behördenmeldung'))h.relevance+=2;
+  });
+  hints.sort((a,b)=>b.relevance-a.relevance);
+  return hints.length>0?hints.slice(0,3).map(h=>h.text):['Bisher keine kritischen Audit-Fragen erkennbar.'];
+}
+
+// ═══════════════════════════════════════════════════════════
+// LABELS & MAPPINGS
+// ═══════════════════════════════════════════════════════════
+const SEV_LABELS={kritisch:'Kritisch',critical:'Critical',erheblich:'Erheblich',major:'Major',gering:'Gering',minor:'Minor'};
+const REPEAT_LABELS={erstmalig:'Erstmalig','12m':'Wiederholt (12 Mon.)',bekannt:'Bekanntes Problem'};
+const CAUSE_LABELS={einzelfehler:'Einzelfehler',prozess_drift:'Prozess-Drift',prozess_system:'Prozess-Systemversagen',training_sop:'Training/SOP',lieferant:'Lieferant',design_software:'Design/Software',unklar:'Unklar'};
+const CONTAINMENT_LABELS={sperre:'Ware/Charge gesperrt',sortierung:'Sortierung/Sichtprüfung',nacharbeit:'Nacharbeit',use_as_is:'Sonderfreigabe',info_kunde:'Info an Kunden',keine_massnahme:'Keine Maßnahme',hotfix:'Hotfix/Patch deployed',rollback:'Rollback',feature_toggle:'Feature deaktiviert',kommunikation:'Kundeninformation/FSN'};
+const BATCH_LABELS={keine_betroffen:'Keine betroffen',freigabe_begruendung:'Freigabe mit Begründung',erweiterte_pruefung:'Erweiterte Prüfung',gesperrt:'Gesperrt'};
+const SOURCE_LABELS={produktion:'Produktion (In-Prozess)',qc:'Qualitätskontrolle',audit_intern:'Internes Audit',complaint:'Kundenbeschwerde',supplier:'Lieferant',authority:'Behörde/Benannte Stelle'};
+const CAT_LABELS={produkt:'Produktabweichung',prozess:'Prozessabweichung',dokument:'Dokument/Schulung',lieferant:'Lieferant',reklamation:'Reklamation/Beschwerde',audit:'Audit-Finding',software:'Software-Fehler'};
+
+// ═══════════════════════════════════════════════════════════
+// RENDER ENGINE
+// ═══════════════════════════════════════════════════════════
+function render(){
+  if(state.currentStep!=='output')document.title='QCore · NC-Triage + Justifier';
+  const app=document.getElementById('app');
+  const renderers={
+    landing:renderLanding,pharma_source:renderPharmaSource,
+    gate_1:renderGate1,gate_2:renderGate2,gate_3:renderGate3,
+    exit_vigilanz:renderExitVigilanz,exit_oos:renderExitOOS,exit_change:renderExitChange,
+    wizard_1:renderWizard1,wizard_2:renderWizard2,wizard_3:renderWizard3,
+    wizard_4:renderWizard4,wizard_5:renderWizard5,wizard_6:renderWizard6,
+    wizard_7:renderWizard7,wizard_10:renderWizard10,output:renderOutput
+  };
+  const fn=renderers[state.currentStep];
+  if(fn)app.innerHTML=wrapPage(fn());
+  attachListeners();
+}
+
+const isEmbedded=window!==window.top;
+function wrapPage(content){
+  const indLabel=state.industry==='pharma'?'<span class="text-purple-600 text-sm font-medium ml-2">Pharma</span>':state.industry==='medtech'?'<span class="text-blue-600 text-sm font-medium ml-2">MedTech</span>':'';
+  if(isEmbedded){
+    return`<div class="min-h-screen flex flex-col">
+<main class="flex-1">${content}</main></div>`;
+  }
+  return`<div class="min-h-screen flex flex-col">
+<header class="bg-white border-b border-gray-200 px-4 py-3">
+  <div class="max-w-7xl mx-auto flex items-center justify-between">
+    <div class="flex items-center gap-2"><span class="font-bold text-gray-900">QCore</span><span class="text-gray-400">·</span><span class="text-gray-600 text-sm">NC-Triage + Justifier</span>${indLabel}</div>
+    ${state.currentStep!=='landing'?'<button onclick="if(confirm(\'Aktuelle Bewertung verwerfen?\')){state=createState();render();}" class="text-sm text-gray-500 hover:text-gray-700">Neue Bewertung</button>':''}
+  </div>
+</header>
+<main class="flex-1">${content}</main>
+<footer class="bg-white border-t border-gray-200 px-4 py-3 text-center text-xs text-gray-400">
+  © QCore Consulting · Entscheidungshilfe, keine Rechtsberatung · Daten bleiben lokal
+</footer></div>`;
+}
+
+function isWizardStep(step){return step&&step.startsWith('wizard_');}
+
+// ═══════════════════════════════════════════════════════════
+// STEP INDICATOR (PRIO 3)
+// ═══════════════════════════════════════════════════════════
+function renderStepIndicator(){
+  const steps=getWizardSteps();
+  const currentIdx=steps.findIndex(s=>s.id===state.currentStep);
+  return`<div class="flex items-center justify-center gap-1 py-3 px-2 flex-wrap">${steps.map((s,i)=>{
+    const answered=isStepAnswered(s.wKey);
+    const isCurrent=s.id===state.currentStep;
+    const summary=getStepSummary(s.wKey);
+    let dotClass='step-pending';let icon=i+1;
+    if(isCurrent){dotClass='step-current';}
+    else if(answered){dotClass='step-done';icon='✓';}
+    const clickAttr=answered&&!isCurrent?`onclick="goToStep('${s.id}')"`:''
+    return`<div class="flex items-center gap-1">
+      <div class="tooltip-custom"><div class="step-dot ${dotClass}" ${clickAttr}>${icon}</div>${answered&&summary?`<div class="tooltip-text">${summary}</div>`:''}</div>
+      <span class="text-xs ${isCurrent?'text-blue-700 font-semibold':'text-gray-500'} hidden sm:inline">${s.label}</span>
+      ${i<steps.length-1?'<div class="step-line '+(answered?'bg-green-500':'bg-gray-300')+'"></div>':''}
+    </div>`;
+  }).join('')}</div>`;
+}
+
+function isStepAnswered(wKey){
+  const w=state.wizard;
+  switch(wKey){
+    case'W01':return!!(w.W01.text||w.W01.category);
+    case'W02':return!!w.W02.severity;
+    case'W03':return w.W03.actions&&w.W03.actions.length>0;
+    case'W04':return!!w.W04.repeat;
+    case'W05':return!!w.W05.cause;
+    case'W06':return!!w.W06.impact;
+    case'W07':return w.W07.evidence&&w.W07.evidence.length>0;
+    case'W10':return!!(w.W10.process&&w.W10.sop&&w.W10.training&&w.W10.environment&&w.W10.others);
+    default:return false;
+  }
+}
+function getStepSummary(wKey){
+  const w=state.wizard;
+  switch(wKey){
+    case'W01':return w.W01.text?(w.W01.text.substring(0,30)+'...'):(CAT_LABELS[w.W01.category]||'');
+    case'W02':return(SEV_LABELS[w.W02.severity]||'')+(w.W02.ctq==='yes'?', CTQ':'');
+    case'W03':return w.W03.actions.map(a=>CONTAINMENT_LABELS[a]||a).join(', ').substring(0,40);
+    case'W04':return REPEAT_LABELS[w.W04.repeat]||'';
+    case'W05':return CAUSE_LABELS[w.W05.cause]||'';
+    case'W06':return BATCH_LABELS[w.W06.impact]||'';
+    case'W07':return w.W07.evidence.length+' Nachweise';
+    case'W10':return countHEOverride(w.W10)>=2?'Systemisch':'Einzelfehler bestätigt';
+    default:return'';
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// LIVE DASHBOARD (PRIO 1)
+// ═══════════════════════════════════════════════════════════
+function renderDashboard(){
+  const scores=calcScores();
+  const total=Object.entries(scores).filter(([k,v])=>v!==null).reduce((a,[k,v])=>a+v,0);
+  const maxScore=state.industry==='pharma'?113:98;
+  const pct=Math.min(100,Math.round(total/maxScore*100));
+  const activeRules=getActiveHardRules();
+  const auditorHint=getAuditorHint();
+  const isPharma=state.industry==='pharma';
+  const th=isPharma?{corr:30,capa:59}:{corr:30,capa:56};
+
+  // Tendency label
+  let tendencyLabel='—';let tendencyColor='text-gray-500';
+  if(Object.values(scores).some(v=>v!==null)){
+    if(activeRules.length>0){tendencyLabel='CAPA ERFORDERLICH';tendencyColor='text-red-700';}
+    else if(total<=th.corr){tendencyLabel='KORREKTUR';tendencyColor='text-green-700';}
+    else if(total>=th.capa){tendencyLabel='CAPA ERFORDERLICH';tendencyColor='text-red-700';}
+    else{tendencyLabel='CAPA WAHRSCHEINLICH';tendencyColor='text-amber-700';}
+  }
+
+  const dims=[
+    {key:'severity',label:'Schweregrad',max:35},
+    {key:'repeat',label:'Trend/Repeat',max:30},
+    {key:'systemic',label:'Ursache',max:20},
+    {key:'containment',label:'Containment',max:10},
+    {key:'evidence',label:'Evidenz',max:8},
+  ];
+  if(isPharma)dims.push({key:'batch',label:'Chargenimpact',max:15});
+
+  return`<div class="dashboard-panel bg-white border border-gray-200 rounded-lg p-4 space-y-4" style="width:320px;position:sticky;top:16px;max-height:calc(100vh - 120px);overflow-y:auto">
+  <div class="text-sm font-semibold text-gray-700 flex items-center gap-1">📊 Einschätzung</div>
+  <div>
+    <div class="tendency-track ${isPharma?'pharma':''}"><div class="tendency-marker" style="left:${Math.min(97,pct)}%"></div></div>
+    <div class="flex justify-between mt-1 text-xs" style="opacity:.6"><span class="text-green-700">Korrektur</span><span class="text-amber-700">Empfohlen</span><span class="text-red-700">CAPA</span></div>
+    <div class="mt-1 text-center font-bold text-sm ${tendencyColor}">${tendencyLabel}</div>
+  </div>
+  <hr class="border-gray-200">
+  <div class="space-y-2">${dims.map(d=>{
+    const val=scores[d.key];const rl=getRiskLabel(d.key,val);
+    const pctBar=val!==null?Math.round(val/d.max*100):0;
+    const color=rl==='hoch'?'bar-red':rl==='mittel'?'bar-yellow':rl==='niedrig'?'bar-green':'bar-gray';
+    return`<div class="flex items-center gap-2 text-xs">
+      <span class="w-24 text-gray-600 truncate">${d.label}</span>
+      <div class="dashboard-bar flex-1"><div class="dashboard-bar-fill ${color}" style="width:${val!==null?pctBar:0}%"></div></div>
+      <span class="w-20 text-right ${val!==null?'text-gray-700 font-medium':'text-gray-400'}">${val!==null?val+'/'+d.max+' '+(rl||''):'—'}</span>
+    </div>`;
+  }).join('')}</div>
+  <hr class="border-gray-200">
+  <div class="text-xs"><div class="font-semibold text-gray-700 mb-1">⚡ Aktive Regeln:</div>
+  ${activeRules.length>0?activeRules.map(r=>`<div class="text-red-700 mb-1">• ${r.id}: ${r.name}</div><div class="text-gray-500 mb-2 ml-3" style="font-size:11px">${(HARD_RULE_WHY[r.id]&&HARD_RULE_WHY[r.id][state.industry||'medtech'])||''}</div>`).join(''):'<div class="text-gray-400">Keine zwingenden Regeln aktiv.</div>'}</div>
+  <hr class="border-gray-200">
+  <div class="text-xs"><div class="font-semibold text-gray-700 mb-1">💡 Auditor würde fragen:</div>
+  ${auditorHint.length===1&&auditorHint[0]==='Bisher keine kritischen Audit-Fragen erkennbar.'?`<div class="text-gray-400 italic">${auditorHint[0]}</div>`:`<ol class="list-decimal ml-4 space-y-1">${auditorHint.map(h=>`<li class="text-gray-600 italic">"${h}"</li>`).join('')}</ol>`}</div>
+</div>`;
+}
+
+// Update dashboard without full re-render (PRIO 1 performance)
+function updateDashboard(){
+  const el=document.querySelector('.dashboard-panel');
+  if(!el)return;
+  const tmp=document.createElement('div');tmp.innerHTML=renderDashboard();
+  const newPanel=tmp.firstElementChild;
+  el.innerHTML=newPanel.innerHTML;
+}
+
+// ═══════════════════════════════════════════════════════════
+// WIZARD LAYOUT WRAPPER (2-column with dashboard)
+// ═══════════════════════════════════════════════════════════
+function wizardLayout(questionHTML,guidanceHTML){
+  return`<div class="max-w-7xl mx-auto px-4 py-4">
+  ${renderStepIndicator()}
+  <div class="flex gap-6 wizard-layout" style="align-items:flex-start">
+    <div class="flex-1 min-w-0">
+      <div class="flex gap-6 wizard-content-split" style="align-items:flex-start">
+        <div class="flex-1 min-w-0">${questionHTML}</div>
+        ${guidanceHTML?`<div class="w-80 flex-shrink-0">${guidanceHTML}</div>`:''}
+      </div>
+    </div>
+    ${renderDashboard()}
+  </div></div>`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// SCREEN: LANDING
+// ═══════════════════════════════════════════════════════════
+function renderLanding(){
+  return`<div class="w-full px-6 lg:px-16 py-10">
+
+  <!-- Hero Row: Headline links, Branchenwahl rechts -->
+  <div class="flex flex-col lg:flex-row gap-10 lg:gap-16 items-start max-w-7xl mx-auto">
+
+    <!-- Left: Was ist das Tool? -->
+    <div class="flex-1 min-w-0">
+      <div class="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-3">Kostenloses Entscheidungstool</div>
+      <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4" style="line-height:1.2">NC-Triage + Justifier</h1>
+      <p class="text-lg text-gray-600 mb-6" style="max-width:520px">Abweichung erkannt — und jetzt? Dieses Tool führt Sie in unter 3 Minuten zur dokumentierten, audit-sicheren Entscheidung: <strong>CAPA oder Korrektur</strong>.</p>
+
+      <!-- Was das Tool macht — 3 kompakte Punkte -->
+      <div class="space-y-3 mb-6">
+        <div class="flex items-start gap-3">
+          <div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center flex-shrink-0 text-sm">🎯</div>
+          <div><div class="text-sm font-semibold text-gray-800">Bewertung in 7 Schritten</div><div class="text-sm text-gray-500">Schweregrad, Wiederholung, Ursache, Containment — gewichtet nach Branchenstandard</div></div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center flex-shrink-0 text-sm">📋</div>
+          <div><div class="text-sm font-semibold text-gray-800">Fertige Begründung</div><div class="text-sm text-gray-500">Copy-paste-fähiger Freitext mit Scoring-Nachvollzug, Checkliste und Auditor-Hinweisen</div></div>
+        </div>
+        <div class="flex items-start gap-3">
+          <div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center flex-shrink-0 text-sm">🛡️</div>
+          <div><div class="text-sm font-semibold text-gray-800">Hard Rules</div><div class="text-sm text-gray-500">6 Regelprüfungen (z.B. Patient Safety, Rückruf, Behördenmeldung) — bei Treffer direkt CAPA</div></div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4 text-xs text-gray-400">
+        <span>🔒 Kein Login · Keine Cloud · Daten bleiben im Browser</span>
+      </div>
+    </div>
+
+    <!-- Right: Branchenwahl -->
+    <div class="lg:w-80 w-full flex-shrink-0">
+      <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+        <div class="text-sm font-semibold text-gray-700 mb-4">Branche wählen & starten</div>
+        <div class="space-y-3">
+          <button onclick="state.industry='medtech';nextStep();" class="w-full border-2 border-gray-200 rounded-xl p-5 hover:border-blue-500 hover:shadow-md transition text-left group">
+            <div class="flex items-center gap-3">
+              <div class="text-2xl">🔬</div>
+              <div>
+                <div class="font-semibold text-gray-900 group-hover:text-blue-700">MedTech</div>
+                <div class="text-xs text-gray-500 mt-0.5">ISO 13485 · FDA 21 CFR 820 · MDR</div>
+              </div>
+            </div>
+          </button>
+          <button onclick="state.industry='pharma';nextStep();" class="w-full border-2 border-gray-200 rounded-xl p-5 hover:border-purple-500 hover:shadow-md transition text-left group">
+            <div class="flex items-center gap-3">
+              <div class="text-2xl">💊</div>
+              <div>
+                <div class="font-semibold text-gray-900 group-hover:text-purple-700">Pharma</div>
+                <div class="text-xs text-gray-500 mt-0.5">EU-GMP Kap. 1/8 · ICH Q10</div>
+              </div>
+            </div>
+          </button>
+        </div>
+        <div class="mt-4 pt-3 border-t border-gray-100 text-xs text-gray-400 text-center">Scoring + Checkliste branchenspezifisch</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Untere Info-Zeile: Kompakte Fakten -->
+  <div class="max-w-7xl mx-auto mt-8 pt-6 border-t border-gray-100">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="text-center"><div class="text-2xl font-bold text-gray-900">7</div><div class="text-xs text-gray-500">Bewertungs-Schritte</div></div>
+      <div class="text-center"><div class="text-2xl font-bold text-gray-900">6</div><div class="text-xs text-gray-500">Hard Rules (auto-CAPA)</div></div>
+      <div class="text-center"><div class="text-2xl font-bold text-gray-900">&lt; 3 Min.</div><div class="text-xs text-gray-500">Durchschnittliche Dauer</div></div>
+      <div class="text-center"><div class="text-2xl font-bold text-gray-900">PDF + Text</div><div class="text-xs text-gray-500">Export für QM-Akte</div></div>
+    </div>
+  </div>
+
+</div>`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// SCREEN: PHARMA SOURCE
+// ═══════════════════════════════════════════════════════════
+function renderPharmaSource(){
+  return`<div class="max-w-2xl mx-auto px-4 py-8">
+  <h2 class="text-xl font-semibold text-gray-900 mb-6">Woher kommt die Abweichung?</h2>
+  <div class="space-y-3">
+    <div class="radio-card ${state.pharma_source==='intern'?'selected':''}" onclick="state.pharma_source='intern';render();">
+      <div class="font-medium">🏭 Interne Abweichung</div><div class="text-sm text-gray-500">Produktion, Labor, Verpackung</div>
+    </div>
+    <div class="radio-card ${state.pharma_source==='extern'?'selected':''}" onclick="state.pharma_source='extern';render();">
+      <div class="font-medium">📨 Externe Meldung</div><div class="text-sm text-gray-500">Kundenbeschwerde, Quality Defect, Partnermeldung</div>
+    </div>
+  </div>
+  <div class="guidance-box pharma mt-4"><strong>Hinweis:</strong> EU-GMP Kap. 8 trennt interne Deviations von externen Quality Defects/Complaints. Diese Unterscheidung beeinflusst den Bewertungspfad.</div>
+  <div class="flex justify-between mt-6">
+    <button onclick="prevStep()" class="px-4 py-2 text-gray-600 hover:text-gray-800">← Zurück</button>
+    <button onclick="nextStep()" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed h-11" ${!state.pharma_source?'disabled':''}>Weiter →</button>
+  </div></div>`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// SCREENS: GATES (PRIO 4 — with "Unsicher" option + card design)
+// ═══════════════════════════════════════════════════════════
+function renderGateScreen(num,total,question,helpText,unsicherHelp){
+  const gKey='g'+num;const val=state.gates[gKey];
+  const unsicherShown=val==='unsicher';
+  return`<div class="max-w-2xl mx-auto px-4 py-8">
+  <div class="text-sm text-gray-500 mb-2">🛡️ Sicherheits-Check ${num}/${total}</div>
+  <h2 class="text-xl font-semibold text-gray-900 mb-2">${question}</h2>
+  <p class="text-sm text-gray-500 mb-6">(Auch wenn im konkreten Fall nichts passiert ist.)</p>
+  <div class="space-y-3">
+    <div class="radio-card ${val===true?'selected-red':''}" onclick="state.gates.${gKey}=true;render();">
+      <div class="font-medium text-red-700">Ja</div><div class="text-sm text-gray-500">→ Dieses Tool ist nicht der richtige Prozess</div>
+    </div>
+    <div class="radio-card ${val===false?'selected':''}" onclick="state.gates.${gKey}=false;render();">
+      <div class="font-medium text-green-700">Nein</div><div class="text-sm text-gray-500">→ Weiter mit der NC/CAPA-Bewertung</div>
+    </div>
+    <div class="radio-card ${val==='unsicher'?'selected':''}" onclick="state.gates.${gKey}='unsicher';render();" style="border-style:dashed">
+      <div class="font-medium text-amber-700">Nicht sicher — benötige Einschätzung</div>
+    </div>
+  </div>
+  ${unsicherShown?`<div class="mt-4 bg-amber-50 border border-amber-200 rounded-lg p-4 text-sm text-amber-800">${unsicherHelp}</div>`:''}
+  <div class="guidance-box mt-4">${helpText}</div>
+  <div class="flex justify-between mt-6">
+    <button onclick="prevStep()" class="px-4 py-2 text-gray-600 hover:text-gray-800">← Zurück</button>
+    <button onclick="nextStep()" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed h-11" ${val===null||val===undefined?'disabled':''}>Weiter →</button>
+  </div></div>`;
+}
+
+function renderGate1(){
+  const total=state.industry==='pharma'?3:2;
+  const q=state.industry==='pharma'?'Könnte die Abweichung zu einer Gefährdung von Patienten führen — oder stellt sie ein Serious-Incident-Signal dar?':'Könnte die Abweichung zu einer Gefährdung von Patienten oder Anwendern führen — oder stellt sie ein Serious-Incident-/FSCA-Signal dar?';
+  return renderGateScreen(1,total,q,
+    '<strong>Was zählt als Gefährdung?</strong> Fehlfunktion, falsche Diagnose, Verletzungsrisiko, fehlende Sterilität, Kontamination etc.',
+    'Wenn Sie sich nicht sicher sind, prüfen Sie Ihre Risikoanalyse (ISO 14971 / FMEA). Falls dort für den betroffenen Fehlertyp ein Schweregrad ≥ "Schwer" vergeben ist, sollten Sie "Ja" wählen. <strong>Im Zweifel: Wählen Sie "Ja"</strong> — der Vigilanz-Prozess klärt die Details.'
+  );
+}
+function renderGate2(){
+  return renderGateScreen(2,3,
+    'Liegt ein Mess- oder Analyseergebnis außerhalb der Spezifikation (OOS) oder zeigt einen unerwarteten Trend (OOT)?',
+    '<strong>OOS</strong> = Ergebnis verletzt Akzeptanzkriterien. <strong>OOT</strong> = ungewöhnlicher Trend, noch innerhalb der Spezifikation.',
+    'Prüfen Sie: Liegt ein Messwert außerhalb der registrierten Spezifikation (= OOS) oder außerhalb des statistischen Trends (= OOT)? Wenn ja: Wählen Sie "Ja". Eine OOS-Investigation ist ein eigener Prozess.'
+  );
+}
+function renderGate3(){
+  const total=state.industry==='pharma'?3:2;
+  return renderGateScreen(total===3?3:2,total,
+    'Handelt es sich um eine geplante Änderung OHNE zugrundeliegende Abweichung oder Qualitätsproblem?',
+    'Wenn eine Deviation die Änderung ausgelöst hat: "Nein" wählen. Dann bewerten wir die NC/CAPA.',
+    'Liegt die Ursache in einer geplanten Änderung (neues Material, neue Methode, neuer Lieferant)? Dann gehört der Vorfall in den Change-Control-Prozess, nicht in die NC-Bewertung.'
+  );
+}
+
+// ═══════════════════════════════════════════════════════════
+// EXIT SCREENS
+// ═══════════════════════════════════════════════════════════
+function exitScreen(icon,title,color,content){
+  return`<div class="max-w-2xl mx-auto px-4 py-8">
+  <div class="bg-white border-l-4 ${color} rounded-lg p-6 shadow-sm">
+    <div class="text-2xl mb-2">${icon}</div>
+    <h2 class="text-xl font-bold mb-4">${title}</h2>
+    <div class="text-gray-700 space-y-3">${content}</div>
+  </div>
+  <div class="flex justify-between mt-6">
+    <button onclick="prevStep()" class="px-4 py-2 text-gray-600 hover:text-gray-800">← Zurück zur Frage</button>
+    <button onclick="if(confirm('Aktuelle Bewertung verwerfen?')){state=createState();render();}" class="px-4 py-2 text-gray-600 hover:text-gray-800">🔄 Neue Bewertung</button>
+  </div></div>`;
+}
+
+function renderExitVigilanz(){return exitScreen('⛔','VIGILANZ-MELDEPFLICHT PRÜFEN','border-red-500',`
+<p>Dieser Vorfall könnte meldepflichtig sein. Das NC-Triage-Tool deckt Vigilanz nicht ab.</p>
+<div class="bg-red-50 border border-red-200 rounded p-3 text-sm text-red-800">⏰ <strong>Beachten:</strong> Awareness Date = HEUTE. Meldefrist läuft ab diesem Zeitpunkt!</div>
+<p class="font-semibold">Nächste Schritte:</p><ol class="list-decimal ml-5 space-y-1"><li>Internen Vigilanz-Prozess starten</li><li>Awareness Date dokumentieren</li><li>Meldepflicht gemäß ${state.industry==='pharma'?'AMG/AMWHV':'MDR Art. 87 / MedWatch (FDA)'} prüfen</li></ol>
+<p class="text-sm text-gray-500 mt-2">Referenz: ${state.industry==='pharma'?'EU-GMP, AMG':'MDCG 2023-3'}</p>`);}
+
+function renderExitOOS(){return exitScreen('⛔','OOS-INVESTIGATION ERFORDERLICH','border-red-500',`
+<p>Bei Ergebnissen außerhalb der Spezifikation ist eine strukturierte OOS-Investigation Pflicht.</p>
+<p class="font-semibold">Nächste Schritte:</p><ol class="list-decimal ml-5 space-y-1"><li>Charge sperren</li><li>Phase-I-Investigation (Lab Error Assessment)</li><li>CAPA-Frage kommt erst nach Root Cause</li></ol>
+<p class="text-sm text-gray-500 mt-2">Referenz: FDA OOS Guidance, ICH Q7</p>`);}
+
+function renderExitChange(){return exitScreen('⛔','CHANGE-CONTROL-VORGANG','border-amber-500',`
+<p>Bei geplanten Änderungen ohne zugrundeliegende Abweichung gilt der Change-Control-Prozess.</p>
+<p class="font-semibold">Nächste Schritte:</p><ol class="list-decimal ml-5 space-y-1"><li>Change Request erstellen</li><li>Impact Assessment durchführen</li><li>Prospektive Risikobewertung</li></ol>
+<p class="text-sm text-gray-500 mt-2">Wenn die Änderung durch ein Problem ausgelöst wurde: ← Zurück und "Nein" wählen.</p>`);}
+
+// ═══════════════════════════════════════════════════════════
+// WIZARD SCREENS
+// ═══════════════════════════════════════════════════════════
+
+// W-01: Sachverhalt + Quelle
+function renderWizard1(){
+  const w=state.wizard.W01;
+  const catOptions=[{v:'produkt',l:'Produktabweichung'},{v:'prozess',l:'Prozessabweichung'},{v:'dokument',l:'Dokument/Schulung'},{v:'lieferant',l:'Lieferant'},{v:'reklamation',l:'Reklamation/Beschwerde'},{v:'audit',l:'Audit-Finding'},{v:'software',l:'Software-Fehler'}];
+  const srcOptions=[{v:'produktion',l:'Produktion (In-Prozess)'},{v:'qc',l:'Qualitätskontrolle (QC)'},{v:'audit_intern',l:'Internes Audit'},{v:'complaint',l:'Kundenbeschwerde/Reklamation'},{v:'supplier',l:'Lieferantenaudit/-meldung'},{v:'authority',l:'Behörde/Benannte Stelle'}];
+  const canNext=!!(w.text||(w.category&&w.source));
+  const q=`<div class="bg-white rounded-lg shadow-sm p-6">
+    <h2 class="text-lg font-semibold text-gray-900 mb-4">Was ist passiert?</h2>
+    <textarea id="w01text" class="w-full border border-gray-300 rounded-lg p-3 text-sm" rows="3" placeholder="z.B. Schweißnaht außerhalb der Spezifikation bei Charge 2024-087">${w.text}</textarea>
+    <p class="text-sm text-gray-500 my-3">Oder: Kategorie wählen</p>
+    <div class="grid grid-cols-2 gap-2 mb-4">${catOptions.map(o=>`<div class="radio-card text-sm ${w.category===o.v?'selected':''}" data-cat="${o.v}">${o.l}</div>`).join('')}</div>
+    <p class="text-sm font-medium text-gray-700 mb-2">Wie wurde es entdeckt?</p>
+    <div class="grid grid-cols-2 gap-2">${srcOptions.map(o=>`<div class="radio-card text-sm ${w.source===o.v?'selected':''}" data-src="${o.v}">${o.l}</div>`).join('')}</div>
+    <div class="flex justify-between mt-6">
+      <button onclick="prevStep()" class="px-4 py-2 text-gray-600 hover:text-gray-800">← Zurück</button>
+      <button id="btnNext" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 h-11" ${canNext?'':'disabled'}>Weiter →</button>
+    </div></div>`;
+  const g=`<div class="guidance-box">
+    <strong>Tipp:</strong> Geben Sie einen kurzen Sachverhalt ein — dieser wird im Begründungstext übernommen und ist dort editierbar. Die Kategorie hilft bei der Zuordnung von Textbausteinen.
+  </div>`;
+  return wizardLayout(q,g);
+}
+
+// W-02: Severity (PRIO 6b: SaMD examples in guidance)
+function renderWizard2(){
+  const w=state.wizard.W02;const ip=state.industry==='pharma';
+  const sevOptions=ip?[
+    {v:'critical',l:'Critical',d:'Batch-/Patientensicherheit, GMP-Critical-Verstoß'},
+    {v:'major',l:'Major',d:'GMP-Verstoß, beherrschbar'},
+    {v:'minor',l:'Minor',d:'Geringfügig, kein Impact auf Produktqualität'}
+  ]:[
+    {v:'kritisch',l:'Kritisch',d:'Patientensicherheit oder Produktfunktion betroffen'},
+    {v:'erheblich',l:'Erheblich',d:'Prozess/Spezifikation verletzt, keine direkte Patientengefährdung'},
+    {v:'gering',l:'Gering',d:'Kosmetisch, dokumentarisch, keine funktionale Auswirkung'}
+  ];
+  const ctqLabel=ip?'Ist ein kritischer Prozessparameter (CPP) oder kritisches Qualitätsattribut (CQA) verletzt?':'Ist ein kritisches Qualitätsmerkmal (CTQ) verletzt?';
+  const canNext=!!(w.severity&&w.ctq);
+  const q=`<div class="bg-white rounded-lg shadow-sm p-6">
+    <h2 class="text-lg font-semibold text-gray-900 mb-4">Wie schwer wiegt die Abweichung?</h2>
+    <div class="space-y-2 mb-4">${sevOptions.map(o=>`<div class="radio-card ${w.severity===o.v?'selected':''}" data-sev="${o.v}"><div class="font-medium">${o.l}</div><div class="text-sm text-gray-500">${o.d}</div></div>`).join('')}</div>
+    <p class="text-sm font-medium text-gray-700 mb-2">${ctqLabel}</p>
+    <div class="flex gap-2">${['yes','no','na'].map(v=>`<div class="radio-card text-sm flex-1 text-center ${w.ctq===v?'selected':''}" data-ctq="${v}">${v==='yes'?'Ja':v==='no'?'Nein':'N/A'}</div>`).join('')}</div>
+    <div class="flex justify-between mt-6">
+      <button onclick="prevStep()" class="px-4 py-2 text-gray-600 hover:text-gray-800">← Zurück</button>
+      <button id="btnNext" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 h-11" ${canNext?'':'disabled'}>Weiter →</button>
+    </div></div>`;
+  // Guidance with SaMD examples (PRIO 6b)
+  const samdExamples=!ip?`<div class="mt-3 pt-3 border-t border-sky-200"><strong>Software-Beispiele:</strong><ul class="mt-1 space-y-1 text-xs"><li><strong>Kritisch:</strong> Diagnostik-SW liefert falsches Ergebnis, das Therapieentscheidung beeinflusst</li><li><strong>Erheblich:</strong> UI-Fehler führt zu Fehlbedienung, Workaround möglich</li><li><strong>Gering:</strong> Kosmetischer Darstellungsfehler ohne funktionale Auswirkung</li></ul></div>`:'';
+  const g=`<div class="guidance-box ${ip?'pharma':''}">
+    ${ip?'<strong>Pharma-Klassifizierung:</strong> Critical = Charge muss gesperrt werden. Major = GMP-Abweichung, beherrschbar. Minor = z.B. Dokumentationsfehler ohne Impact.':'<strong>MedTech-Klassifizierung:</strong> Kritisch = könnte Patient schaden. Erheblich = Spezifikation verletzt, Funktion nicht beeinträchtigt. Gering = z.B. Kratzer, Tippfehler.'}
+    ${samdExamples}</div>`;
+  return wizardLayout(q,g);
+}
+
+// W-03: Containment (PRIO 6a: SaMD options)
+function renderWizard3(){
+  const w=state.wizard.W03;
+  let opts=[
+    {v:'sperre',l:'Ware/Charge gesperrt'},{v:'sortierung',l:'Sortierung / Sichtprüfung'},
+    {v:'nacharbeit',l:'Nacharbeit (Rework)'},{v:'use_as_is',l:'Sonderfreigabe / Use-as-is'},
+    {v:'info_kunde',l:'Information an Kunden/Partner'},{v:'keine_massnahme',l:'Noch keine Maßnahme möglich'}
+  ];
+  // SaMD additions (PRIO 6a)
+  const showSaMD=state.wizard.W01.category==='software'||state.wizard.W01.source==='complaint';
+  if(showSaMD&&state.industry==='medtech'){
+    opts.splice(1,0,{v:'hotfix',l:'Hotfix / Patch deployed'},{v:'rollback',l:'Rollback auf vorherige Version'},{v:'feature_toggle',l:'Feature deaktiviert (Kill Switch)'},{v:'kommunikation',l:'Kundeninformation / Field Safety Notice'});
+  }
+  const canNext=w.actions&&w.actions.length>0;
+  const q=`<div class="bg-white rounded-lg shadow-sm p-6">
+    <h2 class="text-lg font-semibold text-gray-900 mb-4">Was wurde sofort getan?</h2>
+    <div class="space-y-2 mb-4">${opts.map(o=>{
+      const sel=w.actions.includes(o.v);
+      return`<div class="checkbox-card ${sel?'selected':''}" data-cont="${o.v}"><span class="mr-2">${sel?'☑':'☐'}</span>${o.l}</div>`;
+    }).join('')}</div>
+    <p class="text-sm font-medium text-gray-700 mb-2">Kurzbeschreibung der Maßnahme:</p>
+    <textarea id="w03text" class="w-full border border-gray-300 rounded-lg p-3 text-sm" rows="2" placeholder="z.B. Charge 2024-087 gesperrt, Sortierung eingeleitet">${w.text}</textarea>
+    <div class="flex justify-between mt-6">
+      <button onclick="prevStep()" class="px-4 py-2 text-gray-600 hover:text-gray-800">← Zurück</button>
+      <button id="btnNext" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 h-11" ${canNext?'':'disabled'}>Weiter →</button>
+    </div></div>`;
+  const g=`<div class="guidance-box"><strong>Containment</strong> = Sofortmaßnahme zur Schadensbegrenzung. Auditoren prüfen als erstes, ob der Produktfluss gesichert ist. "Noch keine Maßnahme" ist ok — aber begründen warum.</div>`;
+  return wizardLayout(q,g);
+}
+
+// W-04: Repeat/Trend
+function renderWizard4(){
+  const w=state.wizard.W04;
+  const opts=[{v:'erstmalig',l:'Nein, erstmalig'},{v:'12m',l:'Ja, innerhalb der letzten 12 Monate'},{v:'bekannt',l:'Ja, bekanntes wiederkehrendes Problem'}];
+  const canNext=!!w.repeat;
+  const q=`<div class="bg-white rounded-lg shadow-sm p-6">
+    <h2 class="text-lg font-semibold text-gray-900 mb-4">Ist dieser Typ von Abweichung schon einmal aufgetreten?</h2>
+    <div class="space-y-2">${opts.map(o=>`<div class="radio-card ${w.repeat===o.v?'selected':''}" data-rep="${o.v}">${o.l}</div>`).join('')}</div>
+    <div class="flex justify-between mt-6">
+      <button onclick="prevStep()" class="px-4 py-2 text-gray-600 hover:text-gray-800">← Zurück</button>
+      <button id="btnNext" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 h-11" ${canNext?'':'disabled'}>Weiter →</button>
+    </div></div>`;
+  const g=`<div class="guidance-box"><strong>Trend-Hinweis:</strong> Als wiederkehrend gilt z.B. ≥3 gleichartige Ereignisse in 6 Monaten oder signifikanter Anstieg gegenüber Vorjahr. Auch mehrfache Funde innerhalb eines Audits zählen.</div>`;
+  return wizardLayout(q,g);
+}
+
+// W-05: Systemic
+function renderWizard5(){
+  const w=state.wizard.W05;
+  const opts=[{v:'einzelfehler',l:'Einzelfehler (Person / Zufall)'},{v:'prozess_drift',l:'Prozess-Drift (Equipment-Verschleiß, Kalibrierung, Wartung)'},{v:'prozess_system',l:'Prozess-Systemversagen (fehlende Validierung, fehlende Barriere, SOP-Design)'},{v:'training_sop',l:'Training / Qualifikation / SOP-Lücke'},{v:'lieferant',l:'Lieferant / externes Material'},{v:'design_software',l:'Design / Software'},{v:'unklar',l:'Unklar — weitere Investigation nötig'}];
+  const canNext=!!w.cause;
+  const q=`<div class="bg-white rounded-lg shadow-sm p-6">
+    <h2 class="text-lg font-semibold text-gray-900 mb-4">Was ist die wahrscheinlichste Ursache?</h2>
+    <div class="space-y-2">${opts.map(o=>`<div class="radio-card ${w.cause===o.v?'selected':''}" data-cause="${o.v}">${o.l}</div>`).join('')}</div>
+    <div class="flex justify-between mt-6">
+      <button onclick="prevStep()" class="px-4 py-2 text-gray-600 hover:text-gray-800">← Zurück</button>
+      <button id="btnNext" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 h-11" ${canNext?'':'disabled'}>Weiter →</button>
+    </div></div>`;
+  const g=`<div class="guidance-box"><strong>Systemische Ursachen</strong> (Prozess, Training, Lieferant, Design) deuten stark auf CAPA hin. Bei "Einzelfehler": EU-GMP warnt, dass "Human Error" zu oft als einfache Erklärung genutzt wird — eine Zusatzprüfung folgt.</div>`;
+  return wizardLayout(q,g);
+}
+
+// W-06: Batch Impact (Pharma only)
+function renderWizard6(){
+  const w=state.wizard.W06;
+  const opts=[{v:'keine_betroffen',l:'Keine Chargen betroffen'},{v:'freigabe_begruendung',l:'Betroffen — Freigabe mit Begründung möglich'},{v:'erweiterte_pruefung',l:'Betroffen — erweiterte Prüfung erforderlich'},{v:'gesperrt',l:'Müssen gesperrt bleiben'}];
+  const canNext=!!w.impact;
+  const q=`<div class="bg-white rounded-lg shadow-sm p-6">
+    <h2 class="text-lg font-semibold text-gray-900 mb-4">Welche Chargen sind betroffen?</h2>
+    <div class="space-y-2 mb-4">${opts.map(o=>`<div class="radio-card ${w.impact===o.v?'selected':''}" data-batch="${o.v}">${o.l}</div>`).join('')}</div>
+    <p class="text-sm font-medium text-gray-700 mb-2">Betroffene Chargen-Nr. (optional):</p>
+    <input id="w06ids" type="text" class="w-full border border-gray-300 rounded-lg p-3 text-sm" placeholder="z.B. 2024-087, 2024-088" value="${w.batch_ids}">
+    <div class="flex justify-between mt-6">
+      <button onclick="prevStep()" class="px-4 py-2 text-gray-600 hover:text-gray-800">← Zurück</button>
+      <button id="btnNext" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 h-11" ${canNext?'':'disabled'}>Weiter →</button>
+    </div></div>`;
+  const g=`<div class="guidance-box pharma"><strong>Chargenfreigabe</strong> ist eine der wichtigsten QP-Entscheidungen. Gesperrte Chargen führen fast immer zu CAPA. Bei "Freigabe mit Begründung" muss die Risikobewertung dokumentiert werden (EU-GMP Annex 16).</div>`;
+  return wizardLayout(q,g);
+}
+
+// W-07: Evidence
+function renderWizard7(){
+  const w=state.wizard.W07;
+  const opts=[
+    {v:'stabilitaet',l:'Stabilitätsdaten / Haltbarkeit geprüft'},{v:'kalibrierung',l:'Re-Kalibrierung / Messmittelprüfung ok'},
+    {v:'spezifikation',l:'Spezifikation / Akzeptanzkriterien eingehalten'},{v:'risikoanalyse',l:'Risikoanalyse (FMEA/RM-File) ist aktuell'},
+    {v:'schulung',l:'Schulungsnachweise vorhanden'},{v:'lieferant_bewertung',l:'Lieferantenbewertung durchgeführt'},
+    {v:'sonstiges',l:'Sonstiges'},{v:'none',l:'Noch keine Nachweise vorhanden'}
+  ];
+  const canNext=w.evidence&&w.evidence.length>0;
+  const q=`<div class="bg-white rounded-lg shadow-sm p-6">
+    <h2 class="text-lg font-semibold text-gray-900 mb-4">Welche Fakten sind gesichert?</h2>
+    <div class="space-y-2 mb-4">${opts.map(o=>{
+      const sel=w.evidence.includes(o.v);
+      return`<div class="checkbox-card ${sel?'selected':''}" data-evi="${o.v}"><span class="mr-2">${sel?'☑':'☐'}</span>${o.l}</div>`;
+    }).join('')}</div>
+    ${w.evidence.includes('sonstiges')?`<input id="w07sonst" type="text" class="w-full border border-gray-300 rounded-lg p-3 text-sm mb-4" placeholder="Beschreibung" value="${w.sonstiges_text}">`:''}
+    <div class="flex justify-between mt-6">
+      <button onclick="prevStep()" class="px-4 py-2 text-gray-600 hover:text-gray-800">← Zurück</button>
+      <button id="btnNext" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 h-11" ${canNext?'':'disabled'}>Weiter →</button>
+    </div></div>`;
+  const g=`<div class="guidance-box"><strong>Fakten stärken Ihre Begründung.</strong> "Noch keine Nachweise" ist kein Problem — aber der Output wird auf fehlende Evidenz hinweisen. Je mehr gesicherte Fakten, desto stärker Ihre Argumentation.</div>`;
+  return wizardLayout(q,g);
+}
+
+// W-10: Human Error Drill-Down
+function renderWizard10(){
+  const w=state.wizard.W10;
+  const qs=[
+    {key:'process',label:'Prozessfehler ausgeschlossen?',yesL:'Ja, Prozess war korrekt definiert',noL:'Nein / Unklar'},
+    {key:'sop',label:'SOP verständlich und aktuell?',yesL:'Ja',noL:'Nein / Unklar'},
+    {key:'training',label:'Training/Qualifikation ausreichend?',yesL:'Ja',noL:'Nein / Unklar'},
+    {key:'environment',label:'Arbeitsumgebung angemessen?',yesL:'Ja',noL:'Nein / Unklar'},
+    {key:'others',label:'Ähnlicher Fehler bei anderen Personen aufgetreten?',yesL:'Nein',noL:'Ja',yesVal:'no',noVal:'yes'}
+  ];
+  const allAnswered=qs.every(q=>w[q.key]!=='');
+  const q=`<div class="bg-white rounded-lg shadow-sm p-6">
+    <h2 class="text-lg font-semibold text-gray-900 mb-2">⚡ ${state.wizard.W05.cause==='training_sop'?'Training/SOP':'Human Error'} — Zusatzprüfung</h2>
+    <p class="text-sm text-gray-600 mb-4">${state.wizard.W05.cause==='training_sop'?'Training/SOP als Ursache erfordert eine Prüfung, ob weitere systemische Faktoren vorliegen.':'EU-GMP warnt: "Human Error" ist nur akzeptabel, wenn System-/Prozessfehler ausgeschlossen sind.'}</p>
+    <div class="space-y-4">${qs.map(q=>{
+      const yv=q.yesVal||'yes';const nv=q.noVal||'no';
+      return`<div><p class="text-sm font-medium text-gray-700 mb-1">${q.label}</p>
+      <div class="flex gap-2"><div class="radio-card text-sm flex-1 text-center ${w[q.key]===yv?'selected':''}" data-he="${q.key}" data-hev="${yv}">${q.yesL}</div>
+      <div class="radio-card text-sm flex-1 text-center ${w[q.key]===nv?'selected':''}" data-he="${q.key}" data-hev="${nv}">${q.noL}</div></div></div>`;
+    }).join('')}</div>
+    ${countHEOverride(w)>=2?'<div class="mt-4 bg-amber-50 border border-amber-200 rounded-lg p-3 text-sm text-amber-800">⚠️ Systemische Indikatoren erkannt — "Einzelfehler" als alleinige Ursache ist möglicherweise nicht ausreichend begründet.</div>':''}
+    <div class="flex justify-between mt-6">
+      <button onclick="prevStep()" class="px-4 py-2 text-gray-600 hover:text-gray-800">← Zurück</button>
+      <button id="btnNext" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 h-11" ${allAnswered?'':'disabled'}>Weiter →</button>
+    </div></div>`;
+  const g=`<div class="guidance-box"><strong>Warum diese Prüfung?</strong> Auditoren akzeptieren "menschlicher Fehler" nur, wenn systemische Faktoren nachweislich ausgeschlossen wurden. ≥2 systemische Indikatoren → automatische Hochstufung der Ursachenbewertung.</div>`;
+  return wizardLayout(q,g);
+}
+
+// ═══════════════════════════════════════════════════════════
+// OUTPUT SCREEN (PRIO 2 + 5 + 6c + 7b + 8c)
+// ═══════════════════════════════════════════════════════════
+function renderOutput(){
+  const result=evaluate();
+  state.result=result;
+  // PRIO 8c: Set browser tab title on output
+  const decShort={correction:'Korrektur',capa_recommended:'CAPA empfohlen',capa_required:'CAPA erforderlich'};
+  document.title='NC-Triage · '+(state.header.id||'')+(decShort[result.decision]?' · '+decShort[result.decision]:'');
+  const scores=result.scores_detail;
+  const ip=state.industry==='pharma';
+  const w=state.wizard;
+
+  // Risk labels
+  const riskLabels={};
+  for(const[k,v]of Object.entries(scores)){if(v!==null)riskLabels[k]=getRiskLabel(k,v);}
+
+  // Decision display
+  const decConfig={
+    correction:{icon:'✅',label:ip?'KORREKTUR AUSREICHEND':'KORREKTUR AUSREICHEND',bg:'bg-green-50 border-green-500',text:'text-green-800'},
+    capa_recommended:{icon:'🔍',label:'CAPA EMPFOHLEN — Prüfung erforderlich',bg:'bg-amber-50 border-amber-500',text:'text-amber-800'},
+    capa_required:{icon:'⚠️',label:ip?'CAPA ERFORDERLICH':'CAPA ERFORDERLICH',bg:'bg-red-50 border-red-500',text:'text-red-800'}
+  };
+  const dc=decConfig[result.decision]||decConfig.capa_recommended;
+
+  return`<div class="max-w-5xl mx-auto px-4 py-6">
+  <!-- Action buttons top (PRIO 8c) -->
+  <div class="flex gap-3 mb-4 flex-wrap">
+    <button onclick="copyOutput()" class="px-5 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm font-medium h-11">📋 Text kopieren</button>
+    <button onclick="exportPDF()" class="px-5 py-2.5 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 text-sm font-medium h-11">📄 PDF exportieren</button>
+    <button onclick="if(confirm('Aktuelle Bewertung verwerfen?')){state=createState();render();}" class="px-5 py-2.5 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 text-sm font-medium h-11 ml-auto">🔄 Neue Bewertung</button>
+  </div>
+
+  <!-- Result Card -->
+  <div class="border-l-4 ${dc.bg} rounded-lg p-5 mb-6">
+    <div class="text-xl font-bold ${dc.text} mb-3">${dc.icon} ${dc.label}</div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm">
+      ${scores.severity!==null?`<div>Schweregrad: <span class="font-medium">${SEV_LABELS[w.W02.severity]||'—'}</span> <span class="text-xs text-gray-500">(${riskLabels.severity||'—'})</span></div>`:''}
+      ${scores.repeat!==null?`<div>Trend: <span class="font-medium">${REPEAT_LABELS[w.W04.repeat]||'—'}</span> <span class="text-xs text-gray-500">(${riskLabels.repeat||'—'})</span></div>`:''}
+      ${scores.systemic!==null?`<div>Ursache: <span class="font-medium">${CAUSE_LABELS[w.W05.cause]||'—'}</span> <span class="text-xs text-gray-500">(${riskLabels.systemic||'—'})</span></div>`:''}
+      ${scores.containment!==null?`<div>Containment: <span class="font-medium">${w.W03.actions.map(a=>CONTAINMENT_LABELS[a]).join(', ')||'—'}</span> <span class="text-xs text-gray-500">(${riskLabels.containment||'—'})</span></div>`:''}
+      ${ip&&scores.batch!==null?`<div>Chargenimpact: <span class="font-medium">${BATCH_LABELS[w.W06.impact]||'—'}</span> <span class="text-xs text-gray-500">(${riskLabels.batch||'—'})</span></div>`:''}
+    </div>
+    ${result.hard_rule?`<div class="mt-3 text-sm font-medium ${dc.text}">Entscheidungsregel: ${result.hard_rule_text||result.hard_rule}</div>`:''}
+  </div>
+
+  <!-- Header Fields (PRIO 8c) -->
+  <div class="bg-white rounded-lg shadow-sm p-5 mb-4">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div><label class="text-xs text-gray-500 block mb-1">Produkt/Bereich</label><input type="text" class="w-full border border-gray-300 rounded p-2 text-sm" id="hProduct" value="${state.header.product}" placeholder="z.B. Drucksensor DS-400"></div>
+      <div><label class="text-xs text-gray-500 block mb-1">Verantwortlich</label><input type="text" class="w-full border border-gray-300 rounded p-2 text-sm" id="hResponsible" value="${state.header.responsible}" placeholder="z.B. S. Meier (QMB)"></div>
+      <div><label class="text-xs text-gray-500 block mb-1">Referenz-ID</label><input type="text" class="w-full border border-gray-300 rounded p-2 text-sm" id="hRefId" value="${state.header.reference_id}" placeholder="z.B. Charge 2024-087"></div>
+    </div>
+  </div>
+
+  <!-- Document Status (v4.0 PRIO 1) -->
+  <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div>
+        <label class="text-xs text-gray-500 block mb-2">Dokumentenstatus</label>
+        <div class="flex gap-3">
+          <label class="flex items-center gap-1.5 text-sm cursor-pointer"><input type="radio" name="docStatus" value="entwurf" data-status class="text-blue-600" ${state.header.doc_status==='entwurf'?'checked':''}> Entwurf</label>
+          <label class="flex items-center gap-1.5 text-sm cursor-pointer"><input type="radio" name="docStatus" value="review" data-status class="text-blue-600" ${state.header.doc_status==='review'?'checked':''}> Review</label>
+          <label class="flex items-center gap-1.5 text-sm cursor-pointer"><input type="radio" name="docStatus" value="freigegeben" data-status class="text-blue-600" ${state.header.doc_status==='freigegeben'?'checked':''}> Freigegeben</label>
+        </div>
+      </div>
+      <div>
+        <label class="text-xs text-gray-500 block mb-1">Version</label>
+        <input type="text" class="w-24 border border-gray-300 rounded p-2 text-sm" id="hVersion" value="${state.header.version||'v1.0'}" placeholder="v1.0">
+      </div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-3">
+      <div>
+        <label class="text-xs text-gray-500 block mb-1">Bearbeitet von</label>
+        <div class="flex gap-2"><input type="text" class="flex-1 border border-gray-300 rounded p-2 text-sm" id="hEditedBy" value="${state.header.edited_by||''}" placeholder="Name, Funktion"><input type="date" class="border border-gray-300 rounded p-2 text-sm" id="hEditedDate" value="${state.header.edited_date||state.header.date}"></div>
+      </div>
+      <div>
+        <label class="text-xs text-gray-500 block mb-1">Geprüft / Freigegeben von</label>
+        <div class="flex gap-2"><input type="text" class="flex-1 border border-gray-300 rounded p-2 text-sm" id="hReviewedBy" value="${state.header.reviewed_by||''}" placeholder="Name, Funktion"><input type="date" class="border border-gray-300 rounded p-2 text-sm" id="hReviewedDate" value="${state.header.reviewed_date||''}"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Generated Text -->
+  <div class="bg-white rounded-lg shadow-sm p-6 mb-6" id="output-text">
+    <div contenteditable="true" id="output-editable" class="prose prose-sm max-w-none text-gray-800 leading-relaxed" style="font-family:'Courier New',Courier,monospace;font-size:13px;white-space:pre-wrap">${generateFullText(result,riskLabels)}</div>
+  </div>
+
+  ${ip?renderChargenfreigabe():''}
+
+  <!-- Interactive Checklist (PRIO 7 v3.0) -->
+  ${renderChecklistUI()}
+
+  <!-- Next Steps (PRIO 5) -->
+  ${generateNextStepsHTML(result)}
+
+  <!-- CTA -->
+  <div class="mt-8 pt-6 border-t border-gray-200 text-sm text-gray-500 space-y-2">
+    <p>💡 Benötigen Sie ein vollständiges CAPA-System? <a href="https://qcore-consulting.gumroad.com/l/capa-system" target="_blank" class="text-blue-600 hover:underline">→ QCore CAPA-Bundle</a></p>
+    <p>💬 Unsicher bei der Umsetzung? <a href="https://qcore-consulting.de/kontakt" target="_blank" class="text-blue-600 hover:underline">→ Kostenlose 15-Min-Erstberatung</a></p>
+  </div>
+</div>`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// ARGUMENTATIVE TEXT GENERATION (PRIO 2)
+// ═══════════════════════════════════════════════════════════
+function checkMark(itemId){return state.checklist[itemId]?'[X]':'[ ]';}
+
+function generateFullText(result,riskLabels){
+  const w=state.wizard;const ip=state.industry==='pharma';const h=state.header;
+  const ncTerm=ip?'ABWEICHUNG':'NICHTKONFORMITÄT';
+  const sevLabel=SEV_LABELS[w.W02.severity]||'—';
+  const causeLabel=CAUSE_LABELS[w.W05.cause]||'—';
+  const repeatLabel=REPEAT_LABELS[w.W04.repeat]||'—';
+  const containActions=w.W03.actions.map(a=>CONTAINMENT_LABELS[a]||a).join(', ');
+  const sachverhalt=w.W01.text||('Kategorie: '+(CAT_LABELS[w.W01.category]||'—')+'. Detektion: '+(SOURCE_LABELS[w.W01.source]||'—'));
+  const ctqText=w.W02.ctq==='yes'?(ip?'Ein kritischer Prozessparameter (CPP) oder kritisches Qualitätsattribut (CQA) ist verletzt.':'Ein kritisches Qualitätsmerkmal (CTQ) ist verletzt.'):'';
+
+  const timeNow=new Date().toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
+  let t=`BEWERTUNG DER ${ncTerm}
+${'='.repeat(50)}
+Datum:           ${h.date}  Uhrzeit: ${timeNow}
+Record-ID:       ${h.id}
+Quelle:          ${SOURCE_LABELS[w.W01.source]||'—'}
+Produkt/Bereich: ${h.product||'[________________]'}
+Verantwortlich:  ${h.responsible||'[________________]'}
+Referenz-ID:     ${h.reference_id||'[________________]'}
+Version:         ${h.version||'v1.0'}
+
+Status:          ${({entwurf:'[X] Entwurf  [ ] Review  [ ] Freigegeben',review:'[ ] Entwurf  [X] Review  [ ] Freigegeben',freigegeben:'[ ] Entwurf  [ ] Review  [X] Freigegeben'})[h.doc_status]||'[ ] Entwurf  [ ] Review  [ ] Freigegeben'}
+Bearbeitet von:  ${h.edited_by||'[________________]'}  Datum: ${h.edited_date||'[________]'}
+Geprüft von:     ${h.reviewed_by||'[________________]'}  Datum: ${h.reviewed_date||'[________]'}
+${'='.repeat(50)}
+
+1. SACHVERHALT
+
+${sachverhalt}
+
+2. KLASSIFIZIERUNG UND RISIKOBEWERTUNG
+
+Die Abweichung wird als ${sevLabel.toUpperCase()} eingestuft.`;
+
+  // Argumentative classification (PRIO 2)
+  if(w.W01.text){
+    t+=` Begründung: ${w.W01.text}.`;
+  }
+  if(['kritisch','critical'].includes(w.W02.severity)){
+    t+=`\nEs liegt eine ${ip?'GMP-kritische Abweichung':'Abweichung mit potenziellem Patientenrisiko'} vor.`;
+  } else if(['erheblich','major'].includes(w.W02.severity)){
+    t+=`\nEs liegt eine ${ip?'GMP-Abweichung':'Spezifikationsverletzung'} vor, eine unmittelbare ${ip?'Batch-Gefährdung':'Patientengefährdung'} ist jedoch nicht gegeben${containActions&&!w.W03.actions.includes('keine_massnahme')?', da als Sofortmaßnahme '+containActions+' eingeleitet wurde':''}.`;
+  } else {
+    t+=`\nDie Abweichung hat keine funktionale Auswirkung auf das ${ip?'Produkt':'Medizinprodukt'}.`;
+  }
+  if(ctqText)t+=`\n${ctqText}`;
+
+  // Containment (PRIO 2 — argumentative)
+  t+=`\n\n3. SOFORTMAßNAHME (CONTAINMENT)\n\n`;
+  if(w.W03.actions.includes('keine_massnahme')){
+    t+=`Zum Zeitpunkt der Bewertung wurde noch keine Sofortmaßnahme eingeleitet. Eine Risikobewertung zur Notwendigkeit von Containment-Maßnahmen ist zeitnah durchzuführen.`;
+  } else {
+    t+=`Als Sofortmaßnahme wurde ${containActions} eingeleitet`;
+    if(w.W03.text)t+=`: ${w.W03.text}`;
+    t+=`. Diese Maßnahme stellt sicher, dass kein nichtkonformes Produkt ${ip?'freigegeben wird':'das Unternehmen verlässt / an den Kunden gelangt'}.`;
+  }
+
+  // Trend
+  t+=`\n\n4. TREND-CHECK\n\n`;
+  if(w.W04.repeat==='erstmalig')t+=`Diese Abweichung ist erstmalig aufgetreten. Ein Trend ist derzeit nicht erkennbar.`;
+  else if(w.W04.repeat==='12m')t+=`Diese Art von Abweichung ist innerhalb der letzten 12 Monate wiederholt aufgetreten. Anzahl: [___] Vorkommnisse. Trend-Bewertung: [Gleiche Root Cause / Nur gleiches Symptom / Unklar].`;
+  else t+=`Dies ist ein bekanntes, wiederkehrendes Problem.\n⚠️ Trend bestätigt. Die bisherigen Maßnahmen waren offensichtlich nicht ausreichend wirksam.\nAnzahl: [___] Vorkommnisse in [___] Monaten.`;
+
+  // Cause
+  t+=`\n\n5. URSACHE\n\n`;
+  t+=`Ursache: ${causeLabel}`;
+  if(w.W05.cause==='einzelfehler'){
+    t+=` (Einzelereignis, nicht systemisch).`;
+    if(state.heTriggered){
+      const heCount=countHEOverride(w.W10);
+      if(heCount>=2){
+        t+=`\n\nHinweis: Die Ursachenanalyse ergab Indikatoren für systemische Schwächen:`;
+        if(w.W10.process==='no')t+=`\n- Prozessdefinition: mangelhaft oder unklar`;
+        if(w.W10.sop==='no')t+=`\n- SOP: nicht verständlich oder veraltet`;
+        if(w.W10.training==='no')t+=`\n- Qualifikation/Training: unzureichend`;
+        if(w.W10.environment==='no')t+=`\n- Arbeitsumgebung: nicht angemessen`;
+        if(w.W10.others==='yes')t+=`\n- Ähnlicher Fehler bei anderen Mitarbeitern aufgetreten`;
+        t+=`\n⚠️ "Human Error" ist unter diesen Umständen als alleinige Ursache nicht ausreichend begründet.`;
+      } else {
+        t+=`\n\nHuman Error als Ursache identifiziert. Folgende prozess-/systembasierte Fehlerquellen wurden geprüft und ausgeschlossen:`;
+        if(w.W10.process==='yes')t+=`\n- Prozessdefinition: korrekt und angemessen`;
+        if(w.W10.sop==='yes')t+=`\n- SOP: verständlich und aktuell`;
+        if(w.W10.training==='yes')t+=`\n- Qualifikation/Training: ausreichend`;
+        if(w.W10.environment==='yes')t+=`\n- Arbeitsumgebung: angemessen`;
+        if(w.W10.others==='no')t+=`\n- Keine Wiederholung bei anderen Mitarbeitern`;
+      }
+    }
+  } else if(w.W05.cause==='training_sop'){
+    t+=`.`;
+    if(state.heTriggered){
+      const heCount=countHEOverride(w.W10);
+      if(heCount>=2){
+        t+=`\n\nHinweis: Die Zusatzprüfung ergab weitere systemische Indikatoren neben der Training/SOP-Lücke:`;
+        if(w.W10.process==='no')t+=`\n- Prozessdefinition: mangelhaft oder unklar`;
+        if(w.W10.sop==='no')t+=`\n- SOP: nicht verständlich oder veraltet`;
+        if(w.W10.training==='no')t+=`\n- Qualifikation/Training: unzureichend`;
+        if(w.W10.environment==='no')t+=`\n- Arbeitsumgebung: nicht angemessen`;
+        if(w.W10.others==='yes')t+=`\n- Ähnlicher Fehler bei anderen Mitarbeitern aufgetreten`;
+        t+=`\n⚠️ Die Kombination aus Training/SOP-Lücke und weiteren systemischen Faktoren spricht stark für ein CAPA.`;
+      } else {
+        t+=`\n\nTraining/SOP als Ursache identifiziert. Zusatzprüfung auf weitere systemische Schwächen:`;
+        if(w.W10.process==='yes')t+=`\n- Prozessdefinition: korrekt und angemessen`;
+        if(w.W10.sop==='yes')t+=`\n- SOP: verständlich und aktuell`;
+        if(w.W10.training==='yes')t+=`\n- Qualifikation/Training: grundsätzlich ausreichend`;
+        if(w.W10.environment==='yes')t+=`\n- Arbeitsumgebung: angemessen`;
+        if(w.W10.others==='no')t+=`\n- Keine Wiederholung bei anderen Mitarbeitern`;
+        t+=`\nKeine zusätzlichen systemischen Indikatoren erkannt.`;
+      }
+    }
+  } else if(w.W05.cause==='design_software'){
+    t+=`.\n\nHinweis Design/Software: Bei software- oder designbedingter Ursache ist zu prüfen, ob ein Design-Change-Prozess einzuleiten ist. ${ip?'Referenz: ICH Q10 (Change Control).':'Referenz: IEC 62304 (SW-Lifecycle), ISO 13485 Kl. 7.3.9 (Design & Development Changes).'} Der CAPA-Prozess und der Design-Change-Prozess sind getrennte, aber verknüpfte Verfahren.`;
+  } else {
+    t+=`.`;
+  }
+
+  // Pharma Batch block (PRIO 7b)
+  if(ip&&w.W06.impact&&w.W06.impact!=='keine_betroffen'){
+    t+=`\n\n6. CHARGENFREIGABE-BEWERTUNG\n\n`;
+    t+=`Betroffene Charge(n): ${w.W06.batch_ids||'[Chargen-Nr. ergänzen]'}\nStatus: ${BATCH_LABELS[w.W06.impact]}\n\n`;
+    if(w.W06.impact==='gesperrt')t+=`Die betroffene(n) Charge(n) bleiben gesperrt. Disposition (Nacharbeit/Vernichtung/Rückruf) nach Abschluss der Investigation.`;
+    else if(w.W06.impact==='erweiterte_pruefung')t+=`Freigabe erst nach erweiterter Prüfung möglich. Zusätzliche Analytik/Stabilitätsdaten erforderlich.`;
+    else t+=`Die betroffene(n) Charge(n) können nach dokumentierter Risikobewertung freigegeben werden. Freigabe durch QP erforderlich.`;
+    t+=`\n\nQP-Freigabe: _________________ (Datum, Unterschrift)\nReferenz: EU-GMP Annex 16, AMWHV`;
+  }
+
+  // Decision + Argumentation (PRIO 2 — causal connectors, tipping points)
+  const blockNum=ip&&w.W06.impact&&w.W06.impact!=='keine_betroffen'?7:6;
+  t+=`\n\n${blockNum}. ENTSCHEIDUNG UND BEGRÜNDUNG\n\n`;
+
+  if(result.decision==='correction'){
+    t+=`Auf Basis der vorstehenden Bewertung ist eine Korrektur ausreichend.\n\nBegründung: Die Abweichung ist ${w.W04.repeat==='erstmalig'?'erstmalig aufgetreten':'aufgetreten'}, die Ursache ist ${['einzelfehler','prozess_drift'].includes(w.W05.cause)?'nicht systemischer Natur':'als '+causeLabel+' identifiziert'} (${causeLabel}), und wirksame Sofortmaßnahmen wurden eingeleitet. Die Faktenlage rechtfertigt keine Einleitung eines CAPA-Verfahrens, da der Schweregrad als ${sevLabel} bewertet wurde und keine Hinweise auf ein systemisches oder wiederkehrendes Problem vorliegen.`;
+    // Tipping point for correction (PRIO 2)
+    const thCorr=ip?{corr:30,capa:59}:{corr:30,capa:56};
+    const corrTotal=result.score;
+    const corrHeadroom=thCorr.corr-corrTotal;
+    const pctHeadroom=corrHeadroom>0?Math.round(corrHeadroom/thCorr.corr*100):0;
+    t+=`\n\nKipppunkt-Analyse: Der Score (${corrTotal}) liegt ${corrHeadroom>0?corrHeadroom+' Punkte unter':'an'} der Grenze zur CAPA-Empfehlung (>${thCorr.corr}). Das entspricht ca. ${pctHeadroom}% Puffer zur nächsten Eskalationsstufe.`;
+    if(w.W04.repeat==='erstmalig')t+=` Bei erneutem Auftreten (+${REPEAT_SCORES['12m']-REPEAT_SCORES.erstmalig} Punkte) würde die Bewertung in Richtung CAPA kippen.`;
+    if(['gering','minor'].includes(w.W02.severity))t+=` Bei höherem Schweregrad wäre ein CAPA wahrscheinlich.`;
+    t+=`\n\nReferenz: ${ip?'EU-GMP Kap. 1 (Abweichungsmanagement)':'ISO 13485:2016 Kl. 8.3 (Lenkung nichtkonformer Produkte), Kl. 8.5.2'}`;
+  } else if(result.decision==='capa_required'){
+    t+=`Auf Basis der vorstehenden Bewertung ist eine CAPA erforderlich.\n\nBegründung: `;
+    if(result.hard_rule){
+      t+=result.hard_rule_text||'';
+    } else {
+      t+=`Die Abweichung ist ${w.W04.repeat!=='erstmalig'?'wiederholt':'erstmalig'} aufgetreten, die Ursache ${['design_software','prozess_system'].includes(w.W05.cause)?'ist':'ist nicht'} systemischer Natur (${causeLabel})`;
+      if(w.W03.actions.includes('keine_massnahme'))t+=`, und es wurden keine wirksamen Sofortmaßnahmen eingeleitet`;
+      t+=`. Ein CAPA-Verfahren ist einzuleiten, weil die Kombination aus ${riskLabels.severity==='hoch'?'hohem Schweregrad':'Schweregrad'}${riskLabels.repeat==='hoch'?', wiederkehrendem Auftreten':''}${riskLabels.systemic==='hoch'?', systemischer Ursache':''} eine rein korrektive Maßnahme als nicht ausreichend erscheinen lässt.`;
+    }
+    // Tipping point for capa_required (PRIO 2)
+    if(result.hard_rule){
+      t+=`\n\nKipppunkt-Analyse: Die Entscheidung basiert auf Hard Rule ${result.hard_rule}. Solange diese Regel greift, ist ein CAPA zwingend — unabhängig vom Score (${result.score}).`;
+    } else {
+      const thCapa=ip?{corr:30,capa:59}:{corr:30,capa:56};
+      const capaOver=result.score-thCapa.capa;
+      const pctOver=Math.round(capaOver/thCapa.capa*100);
+      t+=`\n\nKipppunkt-Analyse: Der Score (${result.score}) liegt ${capaOver} Punkte über der CAPA-Schwelle (≥${thCapa.capa}). Das entspricht ${pctOver}% über der Schwelle.`;
+      if(w.W04.repeat!=='erstmalig')t+=` Wäre die Abweichung erstmalig (-${REPEAT_SCORES[w.W04.repeat]-REPEAT_SCORES.erstmalig} Punkte), könnte sich die Bewertung ändern.`;
+    }
+    t+=`\n\nReferenz: ${ip?'EU-GMP Kap. 1, ICH Q10':'ISO 13485:2016 Kl. 8.5.2, Kl. 8.3'}`;
+  } else {
+    // CAPA recommended — with tipping points (PRIO 2)
+    t+=`Auf Basis der vorstehenden Bewertung wird eine CAPA empfohlen. Die Bewertung liegt im Grenzbereich.\n\n`;
+    const proFactors=[];const contraFactors=[];
+    if(riskLabels.severity==='hoch')proFactors.push('hoher Schweregrad ('+sevLabel+')');
+    else contraFactors.push('moderater/geringer Schweregrad ('+sevLabel+')');
+    if(riskLabels.repeat==='hoch')proFactors.push('wiederkehrendes Auftreten ('+repeatLabel+')');
+    else contraFactors.push(w.W04.repeat==='erstmalig'?'erstmaliges Auftreten':'Wiederholung, aber nicht als chronisch eingestuft');
+    if(riskLabels.systemic==='hoch')proFactors.push('systemische Ursache ('+causeLabel+')');
+    else contraFactors.push('Ursache nicht eindeutig systemisch ('+causeLabel+')');
+    if(riskLabels.containment==='hoch')proFactors.push('unzureichendes Containment');
+    else if(riskLabels.containment==='niedrig')contraFactors.push('wirksames Containment');
+    t+=`Folgende Faktoren sprechen FÜR ein CAPA:\n${proFactors.length>0?proFactors.map(f=>'• '+f).join('\n'):'• Keine eindeutig starken Faktoren'}\n\nFolgende Faktoren sprechen dagegen:\n${contraFactors.length>0?contraFactors.map(f=>'• '+f).join('\n'):'• Keine entlastenden Faktoren'}\n\n`;
+    // Tipping point calculation
+    t+=`Kipppunkt-Analyse: `;
+    const th=ip?{corr:30,capa:59}:{corr:30,capa:56};
+    const totalScore=result.score;
+    const toCAPA=th.capa-totalScore;
+    const toCorr=totalScore-th.corr;
+    if(toCAPA>0)t+=`Der Score liegt ${toCAPA} Punkte unter der CAPA-Schwelle. `;
+    if(w.W04.repeat==='erstmalig')t+=`Wäre die Abweichung wiederholt aufgetreten (+${REPEAT_SCORES['12m']-REPEAT_SCORES.erstmalig} Punkte), läge der Score über der CAPA-Schwelle. `;
+    if(riskLabels.severity!=='hoch'&&w.W02.severity!=='gering'&&w.W02.severity!=='minor')t+=`Bei höherem Schweregrad wäre ein CAPA zwingend (Hard Rule HR-03). `;
+    const recPctToCorr=Math.round((totalScore-th.corr)/th.corr*100);
+    const recPctToCapa=th.capa>totalScore?Math.round((th.capa-totalScore)/th.capa*100):0;
+    t+=`Position im Grenzbereich: ${recPctToCorr}% über Korrektur-Schwelle, ${recPctToCapa}% unter CAPA-Schwelle.`;
+    t+=`\n\nDie endgültige Entscheidung liegt beim ${ip?'QA / QP':'QMB / PRRC'}.`;
+    t+=`\n\nReferenz: ${ip?'EU-GMP Kap. 1, ICH Q10':'ISO 13485:2016 Kl. 8.5.2'}`;
+  }
+
+  // Actions
+  t+=`\n\n${blockNum+1}. MAßNAHMEN\n\n`;
+  t+=`Sofortmaßnahme: ${w.W03.text||containActions||'[Details ergänzen]'}\n`;
+  if(result.decision!=='correction'){
+    t+=`\nCAPA-Scope:\n- Root Cause Analysis durchführen (z.B. 5-Why, Ishikawa)\n- Korrekturmaßnahme(n) definieren: [___]\n- Vorbeugemaßnahme(n) definieren: [___]\n- Verantwortlich: [___]\n- Frist: [___]\n`;
+    if(['einzelfehler','training_sop'].includes(w.W05.cause))t+=`\n⚠️ Hinweis: Retraining allein wird von Auditoren/Inspektoren selten als ausreichende CAPA akzeptiert. Ergänzende Maßnahmen prüfen: Poka-Yoke, SOP-Verbesserung, technische Barrieren.\n`;
+    if(w.W05.cause==='lieferant')t+=`\n⚠️ Hinweis: Bei Lieferanten-bedingter Ursache SCAR (Supplier Corrective Action Request) erwägen.\n`;
+  }
+
+  // Effectiveness
+  t+=`\n${blockNum+2}. WIRKSAMKEITSPRÜFUNG\n\n`;
+  if(result.decision==='correction'){
+    t+=`Bei reiner Korrektur ist eine formale Wirksamkeitsprüfung nicht zwingend erforderlich.\nEmpfehlung: Nachverfolgung im Rahmen der nächsten Trend-Auswertung.`;
+  } else {
+    t+=`Methode:    [z.B. Trend-Überprüfung, Audit, Stichprobe, Re-Validierung]\nZeitpunkt:  [z.B. 3 Monate nach Umsetzung]\nKriterium:  [z.B. "Kein erneutes Auftreten in 6 Monaten"]\nVerantwortlich: [___]\n\nReferenz: ${ip?'EU-GMP Kap. 8':'ISO 13485:2016 Kl. 8.5.2 f)'}`;
+  }
+
+  // Checks
+  t+=`\n\n${blockNum+3}. PRÜFUNGEN\n\n`;
+  t+=`[ ] Risikoanalyse-Update erforderlich?\n  ${ip?'Prüfen: Muss die Risikobewertung (QRM gemäß ICH Q9) aktualisiert werden?':'Prüfen: Muss die Risikoanalyse (FMEA gemäß ISO 14971) aktualisiert werden?'}`;
+  if(['kritisch','critical'].includes(w.W02.severity)||w.W04.repeat==='bekannt')t+=`\n  → Empfehlung: Ja — aufgrund der ${['kritisch','critical'].includes(w.W02.severity)?'Schwere':'Wiederholung'}.`;
+  t+=`\n\n[ ] Management Review erforderlich?\n  Prüfen: Muss dieser Vorfall im nächsten Management Review behandelt werden?`;
+  if(['kritisch','critical'].includes(w.W02.severity)||w.W04.repeat==='bekannt')t+=`\n  → Empfehlung: Ja.`;
+
+  // Checklist (v4.0: checkMark reflects interactive state)
+  t+=`\n\n${'-'.repeat(50)}\n\n📎 NACHWEIS-CHECKLISTE\nDiese Dokumente bereitlegen:\n`;
+  t+=`${checkMark('nc_form')} Ausgefülltes ${ip?'Abweichungsformular':'NC-Formular'} (dieses Dokument)\n`;
+  if(w.W03.actions.includes('sperre'))t+=`${checkMark('sperrprotokoll')} Sperrprotokoll / Quarantäne-Nachweis\n`;
+  if(w.W03.actions.includes('nacharbeit'))t+=`${checkMark('nacharbeit')} Nacharbeitsprotokoll inkl. Freigabe\n`;
+  if(w.W03.actions.includes('use_as_is'))t+=`${checkMark('sonderfreigabe')} Sonderfreigabe-Dokumentation mit Risikobewertung\n`;
+  if(w.W05.cause==='training_sop')t+=`${checkMark('schulung')} Schulungsnachweise (betroffene Mitarbeiter)\n`;
+  if(w.W05.cause==='lieferant')t+=`${checkMark('lieferant')} Lieferantenbewertung / SCAR\n`;
+  if(w.W05.cause==='design_software')t+=`${checkMark('design')} Design Review / Change Request\n`;
+  if(['12m','bekannt'].includes(w.W04.repeat))t+=`${checkMark('trend')} Trend-Auswertung (letzte 12 Monate)\n`;
+  if(['kritisch','critical'].includes(w.W02.severity))t+=`${checkMark('fotos')} Fotos / visuelle Dokumentation der Abweichung\n`;
+  if(result.decision!=='correction'){t+=`${checkMark('capa_plan')} CAPA-Plan (Maßnahmen, Verantwortlich, Fristen)\n${checkMark('wirksamkeit')} Wirksamkeitsprüfung terminiert\n`;}
+  if(ip&&w.W06.impact&&w.W06.impact!=='keine_betroffen')t+=`${checkMark('batch_record')} Chargenprotokoll / Batch Record\n`;
+  // Pharma-spezifisch (v4.0)
+  if(ip){
+    if(w.W02.ctq==='yes')t+=`${checkMark('oos_check')} OOS-Prüfung dokumentiert (falls analytische Abweichung)\n`;
+    if(w.W06.impact==='erweiterte_pruefung')t+=`${checkMark('stabilitaet')} Stabilitätsdaten geprüft / erweiterte Analytik beauftragt\n`;
+    if(['kritisch','critical'].includes(w.W02.severity))t+=`${checkMark('qp_info')} QP über kritische Abweichung informiert\n`;
+  }
+  t+=`${checkMark('risiko')} Risikoanalyse-Update ${ip?'(QRM / ICH Q9)':'(FMEA / ISO 14971)'} geprüft\n`;
+  t+=`${checkMark('mgmt_review')} Management Review Relevanz geprüft\n`;
+  // Custom items (v4.0)
+  state.customChecklistItems.forEach(item=>{t+=`${checkMark(item.id)} ${item.label}\n`;});
+
+  t+=`\n${'='.repeat(50)}\nErstellt mit NC-Triage + Justifier (QCore Consulting)\nEntscheidungshilfe — keine Rechtsberatung.\nFinale Verantwortung: ${ip?'QA / QP (Sachkundige Person)':'QMB / PRRC'}.\n${'='.repeat(50)}`;
+  return t;
+}
+
+// ═══════════════════════════════════════════════════════════
+// INTERACTIVE CHECKLIST (PRIO 7 v3.0)
+// ═══════════════════════════════════════════════════════════
+function getChecklistItems(){
+  const w=state.wizard;const ip=state.industry==='pharma';const result=state.result;
+  const items=[];
+  items.push({id:'nc_form',label:`Ausgefülltes ${ip?'Abweichungsformular':'NC-Formular'} (dieses Dokument)`});
+  if(w.W03.actions.includes('sperre'))items.push({id:'sperrprotokoll',label:'Sperrprotokoll / Quarantäne-Nachweis'});
+  if(w.W03.actions.includes('nacharbeit'))items.push({id:'nacharbeit',label:'Nacharbeitsprotokoll inkl. Freigabe'});
+  if(w.W03.actions.includes('use_as_is'))items.push({id:'sonderfreigabe',label:'Sonderfreigabe-Dokumentation mit Risikobewertung'});
+  if(w.W05.cause==='training_sop')items.push({id:'schulung',label:'Schulungsnachweise (betroffene Mitarbeiter)'});
+  if(w.W05.cause==='lieferant')items.push({id:'lieferant',label:'Lieferantenbewertung / SCAR'});
+  if(w.W05.cause==='design_software')items.push({id:'design',label:'Design Review / Change Request'});
+  if(['12m','bekannt'].includes(w.W04.repeat))items.push({id:'trend',label:'Trend-Auswertung (letzte 12 Monate)'});
+  if(['kritisch','critical'].includes(w.W02.severity))items.push({id:'fotos',label:'Fotos / visuelle Dokumentation der Abweichung'});
+  if(result&&result.decision!=='correction'){items.push({id:'capa_plan',label:'CAPA-Plan (Maßnahmen, Verantwortlich, Fristen)'});items.push({id:'wirksamkeit',label:'Wirksamkeitsprüfung terminiert'});}
+  if(ip&&w.W06.impact&&w.W06.impact!=='keine_betroffen')items.push({id:'batch_record',label:'Chargenprotokoll / Batch Record'});
+  // Pharma-spezifisch (v4.0 PRIO 6)
+  if(ip){
+    if(w.W02.ctq==='yes')items.push({id:'oos_check',label:'OOS-Prüfung dokumentiert (falls analytische Abweichung)'});
+    if(w.W06.impact==='erweiterte_pruefung')items.push({id:'stabilitaet',label:'Stabilitätsdaten geprüft / erweiterte Analytik beauftragt'});
+    if(['kritisch','critical'].includes(w.W02.severity))items.push({id:'qp_info',label:'QP über kritische Abweichung informiert'});
+  }
+  items.push({id:'risiko',label:`Risikoanalyse-Update ${ip?'(QRM / ICH Q9)':'(FMEA / ISO 14971)'} geprüft`});
+  items.push({id:'mgmt_review',label:'Management Review Relevanz geprüft'});
+  // Custom items (v4.0 PRIO 4)
+  state.customChecklistItems.forEach(item=>items.push(item));
+  return items;
+}
+
+function renderChecklistUI(){
+  const items=getChecklistItems();
+  const checked=Object.values(state.checklist).filter(Boolean).length;
+  const total=items.length;
+  const pct=total>0?Math.round(checked/total*100):0;
+  return`<div class="bg-white rounded-lg shadow-sm p-5 mb-6 border ${checked===total?'border-green-300':'border-gray-200'}">
+    <div class="flex items-center justify-between mb-3">
+      <h3 class="font-semibold text-gray-900">📎 Nachweis-Checkliste</h3>
+      <span class="text-xs font-medium ${checked===total?'text-green-700':'text-gray-500'}">${checked}/${total} (${pct}%)</span>
+    </div>
+    <div class="w-full bg-gray-200 rounded-full h-2 mb-3"><div class="h-2 rounded-full transition-all ${checked===total?'bg-green-500':'bg-blue-500'}" style="width:${pct}%"></div></div>
+    <div class="space-y-2">${items.map(item=>{
+      const isChecked=!!state.checklist[item.id];
+      return`<label class="flex items-start gap-2 cursor-pointer group">
+        <input type="checkbox" class="mt-0.5 w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" data-check="${item.id}" ${isChecked?'checked':''}>
+        <span class="text-sm ${isChecked?'text-gray-400 line-through':'text-gray-700'} group-hover:text-gray-900">${item.label}</span>
+      </label>`;
+    }).join('')}</div>
+    <div class="mt-3 pt-3 border-t border-gray-100">
+      <div class="flex gap-2">
+        <input type="text" id="customCheckInput" class="flex-1 border border-gray-200 rounded px-3 py-1.5 text-sm" placeholder="Eigenen Nachweis hinzufügen...">
+        <button onclick="addCustomCheckItem()" class="px-3 py-1.5 text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 rounded">+ Hinzufügen</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function addCustomCheckItem(){
+  const input=document.getElementById('customCheckInput');
+  if(!input||!input.value.trim())return;
+  const id='custom_'+Date.now();
+  state.customChecklistItems.push({id,label:input.value.trim()});
+  // Re-render checklist only
+  const container=input.closest('.bg-white.rounded-lg');
+  if(container){
+    const tmp=document.createElement('div');tmp.innerHTML=renderChecklistUI();
+    container.replaceWith(tmp.firstElementChild);
+    attachChecklistListeners();
+  }
+}
+
+function attachChecklistListeners(){
+  document.querySelectorAll('[data-check]').forEach(el=>el.addEventListener('change',()=>{
+    state.checklist[el.dataset.check]=el.checked;
+    const label=el.closest('label');const span=label?.querySelector('span');
+    if(span){
+      if(el.checked){span.classList.add('text-gray-400','line-through');span.classList.remove('text-gray-700');}
+      else{span.classList.remove('text-gray-400','line-through');span.classList.add('text-gray-700');}
+    }
+    const items=getChecklistItems();const checked=Object.values(state.checklist).filter(Boolean).length;const total=items.length;const pct=total>0?Math.round(checked/total*100):0;
+    const card=el.closest('.bg-white.rounded-lg');
+    if(card){
+      const counter=card.querySelector('.text-xs.font-medium');
+      if(counter){counter.textContent=checked+'/'+total+' ('+pct+'%)';counter.className='text-xs font-medium '+(checked===total?'text-green-700':'text-gray-500');}
+      const bar=card.querySelector('.h-2.rounded-full.transition-all');
+      if(bar){bar.style.width=pct+'%';bar.className='h-2 rounded-full transition-all '+(checked===total?'bg-green-500':'bg-blue-500');}
+      card.className='bg-white rounded-lg shadow-sm p-5 mb-6 border '+(checked===total?'border-green-300':'border-gray-200');
+    }
+  }));
+}
+
+// ═══════════════════════════════════════════════════════════
+// CHARGENFREIGABE BLOCK (PRIO 7b - Pharma only)
+// ═══════════════════════════════════════════════════════════
+function renderChargenfreigabe(){
+  const w=state.wizard;
+  if(w.W06.impact==='keine_betroffen')return'';
+  return`<div class="bg-purple-50 border border-purple-200 rounded-lg p-5 mb-6">
+    <h3 class="font-semibold text-purple-900 mb-3">📋 Chargenfreigabe-Bewertung</h3>
+    <div class="text-sm text-purple-800 space-y-2">
+      <div><strong>Betroffene Charge(n):</strong> ${w.W06.batch_ids||'[Chargen-Nr. ergänzen]'}</div>
+      <div><strong>Status:</strong> ${BATCH_LABELS[w.W06.impact]}</div>
+      <div><strong>Spezifikationskonformität:</strong> ${w.W07.evidence.includes('spezifikation')?'Nachgewiesen':'Nicht nachgewiesen / ausstehend'}</div>
+      <div><strong>CPP/CQA-Verletzung:</strong> ${w.W02.ctq==='yes'?'Ja':'Nein'}</div>
+      <div class="pt-2 border-t border-purple-200"><strong>Empfehlung:</strong> ${w.W06.impact==='gesperrt'?'Charge(n) bleiben gesperrt bis Abschluss der Investigation.':w.W06.impact==='erweiterte_pruefung'?'Freigabe erst nach erweiterter Prüfung möglich.':'Freigabe mit dokumentierter Begründung möglich.'}</div>
+      <div class="pt-2"><em>QP-Freigabe: _________________ (Datum, Unterschrift)</em></div>
+      <div class="text-xs text-purple-600">Referenz: EU-GMP Annex 16, AMWHV</div>
+    </div></div>`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// NEXT STEPS (PRIO 5)
+// ═══════════════════════════════════════════════════════════
+function generateNextStepsHTML(result){
+  const w=state.wizard;const ip=state.industry==='pharma';
+  let steps='';
+
+  if(result.decision==='correction'){
+    steps=`<li>Korrekturmaßnahme umsetzen und dokumentieren</li>
+<li>Wirksamkeit der Korrektur nach angemessenem Zeitraum prüfen</li>
+<li>NC-Record abschließen und im NC-Register vermerken</li>
+${ip?'<li>Abweichung in nächsten PQR/APR aufnehmen</li>':''}`;
+    steps+=`<li class="text-xs text-gray-500 mt-1">${ip?'Referenz: EU-GMP Kap. 1':'Referenz: ISO 13485:2016 Kl. 8.3 (Lenkung nichtkonformer Produkte)'}</li>`;
+  } else if(result.decision==='capa_recommended'){
+    steps=`<li>Entscheidung über CAPA-Eröffnung treffen und dokumentieren<br><span class="text-xs text-gray-500">→ Wenn CAPA: Weiter mit Schritt 2 | → Wenn kein CAPA: Begründung in NC-Record aufnehmen</span></li>
+<li>Root Cause Analysis durchführen (z.B. Ishikawa, 5-Why)</li>
+<li>Korrekturmaßnahme(n) definieren mit Verantwortlichkeit und Termin</li>
+<li>Wirksamkeitsprüfung planen (Kriterien VOR Umsetzung festlegen)</li>
+<li>CAPA im CAPA-Register tracken</li>`;
+    if(w.W05.cause==='design_software')steps+=`<li class="text-amber-700">⚠️ Design-Change-Prozess prüfen ${ip?'(Change Control per EU-GMP)':'(IEC 62304 / ISO 13485 Kl. 7.3.9)'}</li>`;
+    if(w.W04.repeat==='bekannt')steps+=`<li class="text-amber-700">⚠️ Bisherige Maßnahmen auf Wirksamkeit prüfen — warum war die Korrektur nicht nachhaltig?</li>`;
+  } else {
+    steps=`<li>CAPA eröffnen: ID vergeben, Verantwortlichen benennen</li>
+<li>Investigation: Root Cause Analysis durchführen</li>
+<li>Korrekturmaßnahme(n) definieren, genehmigen, terminieren</li>
+<li>Umsetzung überwachen</li>
+<li>Wirksamkeitsprüfung durchführen</li>
+<li>CAPA abschließen, Management Review informieren</li>`;
+    if(result.hard_rule)steps+=`<li class="text-red-700">→ Auslöser: ${result.hard_rule} — ${HARD_RULES.find(r=>r.id===result.hard_rule)?.name||''}</li>`;
+    if(w.W05.cause==='design_software'&&!ip)steps+=`<li class="text-amber-700">⚠️ Prüfen: Ist ein Design-Change nach IEC 62304 erforderlich? Muss die technische Dokumentation aktualisiert werden?</li>`;
+    if(ip&&w.W06.impact==='gesperrt')steps+=`<li class="text-amber-700">⚠️ Prüfen: Ist eine Rapid-Alert-Meldung / Quality Defect Notification erforderlich?</li>`;
+    if(['kritisch','critical'].includes(w.W02.severity))steps+=`<li class="text-amber-700">⚠️ Prüfen: Risikoanalyse (${ip?'QRM / ICH Q9':'FMEA / ISO 14971'}) aktualisieren</li>`;
+  }
+
+  return`<div class="bg-gray-50 border-l-4 border-blue-500 rounded-lg p-5 mb-6">
+    <h3 class="font-semibold text-gray-900 mb-3">📋 Nächste Schritte${result.decision==='capa_required'?' — CAPA ist einzuleiten':result.decision==='capa_recommended'?' (empfohlen)':''}</h3>
+    <ol class="list-decimal ml-5 space-y-2 text-sm text-gray-700">${steps}</ol>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════
+// COPY + PDF
+// ═══════════════════════════════════════════════════════════
+function syncHeaderFields(){
+  const p=document.getElementById('hProduct');if(p)state.header.product=p.value;
+  const r=document.getElementById('hResponsible');if(r)state.header.responsible=r.value;
+  const ref=document.getElementById('hRefId');if(ref)state.header.reference_id=ref.value;
+  // v4.0 fields
+  const hVersion=document.getElementById('hVersion');if(hVersion)state.header.version=hVersion.value;
+  const hEditedBy=document.getElementById('hEditedBy');if(hEditedBy)state.header.edited_by=hEditedBy.value;
+  const hEditedDate=document.getElementById('hEditedDate');if(hEditedDate)state.header.edited_date=hEditedDate.value;
+  const hReviewedBy=document.getElementById('hReviewedBy');if(hReviewedBy)state.header.reviewed_by=hReviewedBy.value;
+  const hReviewedDate=document.getElementById('hReviewedDate');if(hReviewedDate)state.header.reviewed_date=hReviewedDate.value;
+  const statusRadio=document.querySelector('[data-status]:checked');if(statusRadio)state.header.doc_status=statusRadio.value;
+}
+function copyOutput(){
+  syncHeaderFields();
+  // Re-generate text to capture checklist state + header changes
+  const result=state.result||evaluate();
+  const riskLabels={};for(const[k,v]of Object.entries(result.scores_detail)){if(v!==null)riskLabels[k]=getRiskLabel(k,v);}
+  const freshText=generateFullText(result,riskLabels);
+  const el=document.getElementById('output-editable');
+  if(el)el.textContent=freshText;
+  navigator.clipboard.writeText(freshText).then(()=>showToast('✓ Kopiert!'));
+}
+async function exportPDF(){
+  syncHeaderFields();
+  // Re-generate text to capture checklist state + header changes
+  const result=state.result||evaluate();
+  const riskLabels={};for(const[k,v]of Object.entries(result.scores_detail)){if(v!==null)riskLabels[k]=getRiskLabel(k,v);}
+  const freshText=generateFullText(result,riskLabels);
+  const el=document.getElementById('output-editable');
+  if(el)el.textContent=freshText;
+  const container=document.getElementById('output-text');
+  if(!container)return;
+  // Temporarily constrain width for A4 PDF rendering
+  const origStyle=el.style.cssText;
+  el.style.cssText=origStyle+';max-width:680px;word-break:break-word;overflow-wrap:break-word;font-size:12px;line-height:1.5;';
+  const opt={margin:[15,15,20,15],filename:(state.header.id||'NC-Bewertung')+'.pdf',html2canvas:{scale:2,useCORS:true,letterRendering:true,logging:false},jsPDF:{unit:'mm',format:'a4',orientation:'portrait'},pagebreak:{mode:['css','legacy']}};
+  await html2pdf().set(opt).from(container).save();
+  // Restore original style
+  el.style.cssText=origStyle;
+}
+function showToast(msg){
+  const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),2000);
+}
+
+// ═══════════════════════════════════════════════════════════
+// EVENT LISTENERS
+// ═══════════════════════════════════════════════════════════
+function attachListeners(){
+  // W-01
+  document.querySelectorAll('[data-cat]').forEach(el=>el.addEventListener('click',()=>{state.wizard.W01.category=el.dataset.cat;render();}));
+  document.querySelectorAll('[data-src]').forEach(el=>el.addEventListener('click',()=>{state.wizard.W01.source=el.dataset.src;render();}));
+  const w01t=document.getElementById('w01text');
+  if(w01t){w01t.addEventListener('input',()=>{state.wizard.W01.text=w01t.value;checkNextBtn();updateDashboard();});}
+
+  // W-02
+  document.querySelectorAll('[data-sev]').forEach(el=>el.addEventListener('click',()=>{state.wizard.W02.severity=el.dataset.sev;render();}));
+  document.querySelectorAll('[data-ctq]').forEach(el=>el.addEventListener('click',()=>{state.wizard.W02.ctq=el.dataset.ctq;render();}));
+
+  // W-03
+  document.querySelectorAll('[data-cont]').forEach(el=>el.addEventListener('click',()=>{
+    const v=el.dataset.cont;const a=state.wizard.W03.actions;
+    if(v==='keine_massnahme'){state.wizard.W03.actions=['keine_massnahme'];}
+    else{const idx=a.indexOf(v);if(idx>=0)a.splice(idx,1);else{const ni=a.indexOf('keine_massnahme');if(ni>=0)a.splice(ni,1);a.push(v);}}
+    render();
+  }));
+  const w03t=document.getElementById('w03text');
+  if(w03t)w03t.addEventListener('input',()=>{state.wizard.W03.text=w03t.value;});
+
+  // W-04
+  document.querySelectorAll('[data-rep]').forEach(el=>el.addEventListener('click',()=>{state.wizard.W04.repeat=el.dataset.rep;render();}));
+
+  // W-05
+  document.querySelectorAll('[data-cause]').forEach(el=>el.addEventListener('click',()=>{state.wizard.W05.cause=el.dataset.cause;if(['einzelfehler','training_sop'].includes(el.dataset.cause))state.heTriggered=true;else state.heTriggered=false;render();}));
+
+  // W-06
+  document.querySelectorAll('[data-batch]').forEach(el=>el.addEventListener('click',()=>{state.wizard.W06.impact=el.dataset.batch;render();}));
+  const w06ids=document.getElementById('w06ids');
+  if(w06ids)w06ids.addEventListener('input',()=>{state.wizard.W06.batch_ids=w06ids.value;});
+
+  // W-07
+  document.querySelectorAll('[data-evi]').forEach(el=>el.addEventListener('click',()=>{
+    const v=el.dataset.evi;const a=state.wizard.W07.evidence;
+    if(v==='none'){state.wizard.W07.evidence=['none'];}
+    else{const idx=a.indexOf(v);if(idx>=0)a.splice(idx,1);else{const ni=a.indexOf('none');if(ni>=0)a.splice(ni,1);a.push(v);}}
+    render();
+  }));
+  const w07s=document.getElementById('w07sonst');
+  if(w07s)w07s.addEventListener('input',()=>{state.wizard.W07.sonstiges_text=w07s.value;});
+
+  // W-10
+  document.querySelectorAll('[data-he]').forEach(el=>el.addEventListener('click',()=>{state.wizard.W10[el.dataset.he]=el.dataset.hev;render();}));
+
+  // Document status + signature fields (v4.0 PRIO 1)
+  document.querySelectorAll('[data-status]').forEach(el=>el.addEventListener('change',()=>{state.header.doc_status=el.value;}));
+  ['hVersion','hEditedBy','hEditedDate','hReviewedBy','hReviewedDate'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.addEventListener('input',()=>syncHeaderFields());
+  });
+
+  // Checklist (v4.0 — extracted to attachChecklistListeners)
+  attachChecklistListeners();
+
+  // Next button for all wizard screens
+  const btnNext=document.getElementById('btnNext');
+  if(btnNext)btnNext.addEventListener('click',()=>nextStep());
+}
+
+function checkNextBtn(){
+  const btn=document.getElementById('btnNext');if(!btn)return;
+  const step=state.currentStep;const w=state.wizard;
+  let canNext=false;
+  switch(step){
+    case'wizard_1':canNext=!!(w.W01.text||(w.W01.category&&w.W01.source));break;
+    case'wizard_2':canNext=!!(w.W02.severity&&w.W02.ctq);break;
+    case'wizard_3':canNext=w.W03.actions&&w.W03.actions.length>0;break;
+    case'wizard_4':canNext=!!w.W04.repeat;break;
+    case'wizard_5':canNext=!!w.W05.cause;break;
+    case'wizard_6':canNext=!!w.W06.impact;break;
+    case'wizard_7':canNext=w.W07.evidence&&w.W07.evidence.length>0;break;
+    case'wizard_10':canNext=['process','sop','training','environment','others'].every(k=>w.W10[k]!=='');break;
+  }
+  btn.disabled=!canNext;
+}
+
+// Initial render
+render();
+</script>
+</body>
+</html>
