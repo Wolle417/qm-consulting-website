@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useTranslation } from '../hooks/useTranslation';
+import { tools, toolStatusConfig } from '../data/tools';
 
 // Dropdown Component
 function NavDropdown({ label, items, isOpen, onToggle, onClose, minWidth = 220 }) {
@@ -153,10 +154,28 @@ export default function Navigation() {
     { label: t('nav.dropdown.gmpDoc'), href: '/referenz-projekt' },
   ];
 
-  const produkteItems = [
-    { label: 'Tools', isHeader: true, badge: 'FREE' },
-    { label: t('nav.dropdown.ncTriage'), href: '/nc-triage', subtitle: 'CAPA oder Korrektur? In 3 Min.', freeTag: true },
+  // Tools dropdown items - generated from data/tools.js
+  const isDE = locale === 'de';
+  const toolsItems = [
+    { label: isDE ? 'Kostenlose QM-Tools' : 'Free QM Tools', isHeader: true },
+    ...tools.filter(tool => tool.status === 'live').map(tool => ({
+      label: tool.name,
+      href: tool.slug,
+      subtitle: isDE ? tool.description : tool.descriptionEn,
+      freeTag: true,
+    })),
     { divider: true },
+    { label: isDE ? 'Geplante Tools' : 'Planned Tools', isHeader: true },
+    ...tools.filter(tool => tool.status === 'planned').map(tool => ({
+      label: isDE ? tool.name : (tool.nameEn || tool.name),
+      subtitle: isDE ? tool.description : tool.descriptionEn,
+      disabled: true,
+    })),
+    { divider: true },
+    { label: isDE ? 'Alle Tools anzeigen →' : 'View all tools →', href: '/tools', highlight: true },
+  ];
+
+  const produkteItems = [
     { label: 'MedTech', isHeader: true, badge: 'ISO 13485 · FDA' },
     { label: t('nav.dropdown.capa'), href: '/produkte/capa-system', price: '€129' },
     { label: t('nav.dropdown.nc'), href: '/produkte/nc-system', price: '€99' },
@@ -164,8 +183,8 @@ export default function Navigation() {
     { divider: true },
     { label: 'Pharma', isHeader: true, badge: 'GMP · GDP' },
     { label: 'Data Integrity Kit', href: '/produkte/data-integrity-kit', price: '€299', highlight: true },
-    { label: 'CAPA System', href: '#', disabled: true },
-    { label: 'Deviation Management', href: '#', disabled: true },
+    { label: 'CAPA System', disabled: true },
+    { label: 'Deviation Management', disabled: true },
   ];
 
   const aboutItems = [
@@ -208,7 +227,16 @@ export default function Navigation() {
               onClose={closeDropdown}
               minWidth={320}
             />
-            
+
+            <NavDropdown
+              label={t('nav.tools')}
+              items={toolsItems}
+              isOpen={openDropdown === 'tools'}
+              onToggle={() => toggleDropdown('tools')}
+              onClose={closeDropdown}
+              minWidth={320}
+            />
+
             <NavDropdown
               label={t('nav.products')}
               items={produkteItems}
@@ -327,6 +355,41 @@ export default function Navigation() {
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {item.label}
+                  </Link>
+                )
+              ))}
+            </div>
+
+            {/* Mobile: Tools */}
+            <div className="mb-4">
+              <div className="font-semibold mb-2 px-2" style={{ color: '#1e3a8a', fontFamily: "'Cormorant', serif" }}>
+                {t('nav.tools')}
+              </div>
+              {toolsItems.filter(i => !i.divider).map((item, idx) => (
+                item.isHeader ? (
+                  <div
+                    key={idx}
+                    className="px-4 py-2 mt-2 flex items-center justify-between"
+                    style={{ backgroundColor: 'rgba(30, 58, 138, 0.04)' }}
+                  >
+                    <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#1e3a8a' }}>
+                      {item.label}
+                    </span>
+                  </div>
+                ) : item.disabled ? (
+                  <div key={idx} className="px-4 py-2 text-sm" style={{ color: '#94a3b8' }}>
+                    {item.label} (Soon)
+                  </div>
+                ) : (
+                  <Link
+                    key={idx}
+                    href={item.href}
+                    className="block px-4 py-2 flex justify-between"
+                    style={{ color: item.highlight ? '#16a34a' : '#334155', fontFamily: "'Cormorant', serif", fontWeight: item.highlight ? 500 : 400 }}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <span>{item.label}</span>
+                    {item.freeTag && <span className="text-sm font-bold" style={{ color: '#22c55e' }}>FREE</span>}
                   </Link>
                 )
               ))}

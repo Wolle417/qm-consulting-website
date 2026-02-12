@@ -1270,6 +1270,12 @@ export const ui = {
     pdfGenerating: 'PDF wird erstellt...',
     pdfTitle: 'ISO 13485 Readiness Assessment — Report',
     pdfGenerated: 'Dieses PDF wurde lokal in Ihrem Browser generiert. Keine Daten wurden übertragen.',
+    // Feedback
+    feedbackTitle: 'Wie hilfreich war das Assessment?',
+    feedbackEmailPlaceholder: 'E-Mail (optional)',
+    feedbackMessagePlaceholder: 'Was können wir verbessern?',
+    feedbackSend: 'Absenden',
+    feedbackThanks: 'Danke für Ihr Feedback! 🙏',
     // Navigation
     backToResults: '← Zurück',
   },
@@ -1410,6 +1416,12 @@ export const ui = {
     pdfGenerating: 'Generating PDF...',
     pdfTitle: 'ISO 13485 Readiness Assessment — Report',
     pdfGenerated: 'This PDF was generated locally in your browser. No data was transmitted.',
+    // Feedback
+    feedbackTitle: 'How helpful was the assessment?',
+    feedbackEmailPlaceholder: 'Email (optional)',
+    feedbackMessagePlaceholder: 'What can we improve?',
+    feedbackSend: 'Submit',
+    feedbackThanks: 'Thank you for your feedback! 🙏',
     // Navigation
     backToResults: '← Back',
   },

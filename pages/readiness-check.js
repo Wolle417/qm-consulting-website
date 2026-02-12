@@ -20,8 +20,8 @@ const LS_KEY = 'qcore-readiness-v2';
 // ─── Product Mapping (Category → QCore Product) ─────────────────────────
 const PRODUCT_MAP = {
   'capa': {
-    de: { label: 'CAPA System Bundle', desc: 'Fertige SOPs, Formulare und Wirksamkeitsnachweise — auditbereit in 24h.', price: '€129' },
-    en: { label: 'CAPA System Bundle', desc: 'Complete SOPs, forms and effectiveness records — audit-ready in 24h.', price: '€129' },
+    de: { label: 'CAPA System Bundle', desc: 'Fertiges CAPA-System mit SOPs, Formularen und Wirksamkeitsnachweisen.', price: '€129' },
+    en: { label: 'CAPA System Bundle', desc: 'Complete CAPA system with SOPs, forms and effectiveness records.', price: '€129' },
     href: 'https://qcoreconsulting.gumroad.com/l/capa-system',
   },
   'document-control': {
@@ -32,14 +32,12 @@ const PRODUCT_MAP = {
   'audit-mgmt-review': {
     de: { label: 'Audit Prep Kit', desc: 'Checklisten, Auditprogramm-Vorlagen und Management-Review-Templates.', price: '€79' },
     en: { label: 'Audit Prep Kit', desc: 'Checklists, audit program templates and management review templates.', price: '€79' },
-    href: 'https://qcoreconsulting.gumroad.com/l/audit-prep-kit',
+    href: 'https://qcoreconsulting.gumroad.com/l/audit-prep',
   },
 };
 
-const GENERIC_CTA = {
-  de: { label: 'Individuelle Beratung zu diesem Thema', linkText: 'Kontakt aufnehmen' },
-  en: { label: 'Individual consulting on this topic', linkText: 'Get in touch' },
-};
+// ─── Feedback Endpoint ──────────────────────────────────────────────────
+const FEEDBACK_ENDPOINT = 'https://formspree.io/f/DEINE_FORM_ID'; // TODO: Formspree-ID eintragen
 
 function interpolate(str, vars) {
   return Object.entries(vars).reduce((s, [k, v]) => s.replace(`{${k}}`, v), str);
@@ -538,39 +536,112 @@ function IntroLanding({ locale, onStart, onStartWithProfile }) {
 }
 
 
-// ─── Gap Backlog – Expandable Rows ──────────────────────────────────
-function ProductCta({ catKey, locale }) {
+// ─── Gap Backlog – Product Hint (dezent, kontextuell) ────────────────
+function ProductHint({ catKey, locale }) {
   const product = PRODUCT_MAP[catKey];
-  if (product) {
-    const p = product[locale];
+  if (!product) return null;
+  const p = product[locale];
+  return (
+    <div className="flex items-start gap-2.5 mx-2 mb-1.5"
+      style={{ padding: '10px 14px', backgroundColor: '#f7f9fc', borderLeft: '2px solid #1e3a8a', borderRadius: '0 8px 8px 0' }}>
+      <span className="flex-shrink-0 text-sm mt-0.5">📋</span>
+      <div className="min-w-0">
+        <span style={{ fontSize: 13, color: '#555', lineHeight: 1.5 }}>
+          {p.desc}
+        </span>
+        <br />
+        <a href={product.href} target="_blank" rel="noopener noreferrer"
+          style={{ fontSize: 13, color: '#1e3a8a', textDecoration: 'none', fontWeight: 600 }}
+          onMouseEnter={(e) => { e.currentTarget.style.textDecoration = 'underline'; }}
+          onMouseLeave={(e) => { e.currentTarget.style.textDecoration = 'none'; }}>
+          {p.label} → {p.price}
+        </a>
+      </div>
+    </div>
+  );
+}
+
+
+// ─── Feedback Block (after PDF export) ──────────────────────────────────
+function FeedbackBlock({ locale, onClose }) {
+  const t = ui[locale];
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!message.trim() && !email.trim()) { onClose?.(); return; }
+    setSending(true);
+    try {
+      await fetch(FEEDBACK_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ email: email || '(not provided)', message, _subject: 'Readiness Check Feedback' }),
+      });
+    } catch { /* silent fail */ }
+    setSending(false);
+    setSubmitted(true);
+  };
+
+  if (submitted) {
     return (
-      <a href={product.href} target="_blank" rel="noopener noreferrer"
-        className="flex items-start gap-2 px-3 py-2 rounded-[10px] transition-all duration-150 hover:scale-[1.005] no-underline"
-        style={{ backgroundColor: 'rgba(30,58,138,0.03)', border: '1px solid rgba(30,58,138,0.08)', textDecoration: 'none' }}>
-        <span className="flex-shrink-0 text-sm mt-0.5">💡</span>
-        <div className="min-w-0">
-          <span className="text-[10px] font-bold" style={{ color: '#1e3a8a' }}>
-            {locale === 'de' ? 'Sofort-Lösung:' : 'Ready-made solution:'}
-          </span>
-          <span className="text-[10px] ml-1" style={{ color: '#475569' }}>
-            {p.desc}
-          </span>
-          <span className="text-[10px] font-bold ml-1" style={{ color: '#1e3a8a' }}>
-            → {p.label} ({p.price})
-          </span>
-        </div>
-      </a>
+      <motion.div
+        initial={{ opacity: 0, y: 6 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+        className="mx-4 mb-3 px-4 py-3 rounded-[10px] text-center"
+        style={{ backgroundColor: 'rgba(34,197,94,0.06)', border: '1px solid rgba(34,197,94,0.15)' }}>
+        <span className="text-sm" style={{ color: '#16a34a' }}>{t.feedbackThanks}</span>
+      </motion.div>
     );
   }
+
   return (
-    <a href="/kontakt"
-      className="flex items-center gap-2 px-3 py-2 rounded-[10px] transition-all duration-150 hover:scale-[1.005] no-underline"
-      style={{ backgroundColor: 'rgba(30,58,138,0.02)', border: '1px solid rgba(30,58,138,0.06)', textDecoration: 'none' }}>
-      <span className="flex-shrink-0 text-xs">💬</span>
-      <span className="text-[10px]" style={{ color: '#64748b' }}>
-        {GENERIC_CTA[locale].label} → <span className="font-semibold" style={{ color: '#1e3a8a' }}>{GENERIC_CTA[locale].linkText}</span>
-      </span>
-    </a>
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+      className="mx-4 mb-3 px-4 py-3 rounded-[10px]"
+      style={{ backgroundColor: 'rgba(30,58,138,0.03)', border: '1px solid rgba(30,58,138,0.08)' }}>
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-xs font-semibold" style={{ color: '#1e3a8a' }}>{t.feedbackTitle}</span>
+        <button onClick={onClose} className="text-xs" style={{ color: '#94a3b8', lineHeight: 1 }}
+          aria-label="Close">✕</button>
+      </div>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder={t.feedbackEmailPlaceholder}
+          className="w-full px-3 py-1.5 rounded-lg text-xs"
+          style={{ border: '1px solid rgba(30,58,138,0.1)', backgroundColor: '#fff', color: '#0f172a', outline: 'none' }}
+        />
+        <textarea
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          placeholder={t.feedbackMessagePlaceholder}
+          rows={2}
+          className="w-full px-3 py-1.5 rounded-lg text-xs resize-none"
+          style={{ border: '1px solid rgba(30,58,138,0.1)', backgroundColor: '#fff', color: '#0f172a', outline: 'none' }}
+        />
+        <button
+          type="submit"
+          disabled={sending}
+          className="self-end px-4 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150"
+          style={{
+            backgroundColor: 'rgba(30,58,138,0.08)',
+            color: '#1e3a8a',
+            border: '1px solid rgba(30,58,138,0.12)',
+          }}
+          onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'rgba(30,58,138,0.14)'; }}
+          onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'rgba(30,58,138,0.08)'; }}>
+          {sending ? '...' : t.feedbackSend}
+        </button>
+      </form>
+    </motion.div>
   );
 }
 
@@ -648,101 +719,104 @@ function GapBacklog({ answers, notes, categories, locale, profile, onJumpToQuest
         <span style={{ width: 32, textAlign: 'center' }}>{t.gapScore}</span>
       </div>
 
-      {/* Rows */}
-      {gaps.map((gap) => {
-        const isExpanded = expandedId === gap.questionId;
-        return (
-          <div key={gap.questionId}>
-            {/* Compact row */}
-            <button
-              onClick={() => setExpandedId(isExpanded ? null : gap.questionId)}
-              className="w-full flex items-center gap-2 py-2 px-2 text-left transition-colors"
-              style={{ borderBottom: '1px solid rgba(30,58,138,0.04)' }}
-              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'rgba(30,58,138,0.03)'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; }}>
-              {/* Risk dot */}
-              <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: RISK_COLORS[gap.auditRiskLevel] }} />
-              {/* Category + icon */}
-              <span className="flex-1 min-w-0 flex items-center gap-1.5">
-                <span className="text-xs">{gap.catIcon}</span>
-                <span className="text-xs font-medium truncate" style={{ color: '#334155' }}>{gap.catLabel}</span>
-              </span>
-              {/* ISO clause */}
-              <span className="text-xs font-bold flex-shrink-0" style={{ width: 70, color: '#1e3a8a' }}>
-                Kl. {gap.isoClause}
-              </span>
-              {/* Score pill */}
-              <span className="inline-flex items-center justify-center w-6 h-6 rounded-full text-[10px] font-bold flex-shrink-0"
-                style={{ backgroundColor: LEVEL_COLORS[gap.score] + '20', color: LEVEL_COLORS[gap.score] }}>
-                {gap.score}
-              </span>
-            </button>
+      {/* Rows — track which categories have shown product hints (max 3) */}
+      {(() => {
+        const shownHints = new Set();
+        return gaps.map((gap) => {
+          const isExpanded = expandedId === gap.questionId;
+          // Show product hint below this row if: category has product, score ≤67%, first occurrence, max 3 total
+          const showHint = PRODUCT_MAP[gap.catKey] && catScores[gap.catKey] !== undefined && catScores[gap.catKey] <= 67 && !shownHints.has(gap.catKey) && shownHints.size < 3;
+          if (showHint) shownHints.add(gap.catKey);
 
-            {/* Expanded detail */}
-            <AnimatePresence>
-              {isExpanded && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.15 }}
-                  style={{ overflow: 'hidden' }}>
-                  <div className="px-4 py-3 space-y-2" style={{ backgroundColor: 'rgba(30,58,138,0.02)', borderBottom: '1px solid rgba(30,58,138,0.06)' }}>
-                    {/* Full question text */}
-                    <p className="text-xs leading-relaxed" style={{ color: '#334155' }}>{gap.questionFull}</p>
+          return (
+            <div key={gap.questionId}>
+              {/* Compact row */}
+              <button
+                onClick={() => setExpandedId(isExpanded ? null : gap.questionId)}
+                className="w-full flex items-center gap-2 py-2 px-2 text-left transition-colors"
+                style={{ borderBottom: '1px solid rgba(30,58,138,0.04)' }}
+                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'rgba(30,58,138,0.03)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; }}>
+                {/* Risk dot */}
+                <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: RISK_COLORS[gap.auditRiskLevel] }} />
+                {/* Category + icon */}
+                <span className="flex-1 min-w-0 flex items-center gap-1.5">
+                  <span className="text-xs">{gap.catIcon}</span>
+                  <span className="text-xs font-medium truncate" style={{ color: '#334155' }}>{gap.catLabel}</span>
+                </span>
+                {/* ISO clause */}
+                <span className="text-xs font-bold flex-shrink-0" style={{ width: 70, color: '#1e3a8a' }}>
+                  Kl. {gap.isoClause}
+                </span>
+                {/* Score pill */}
+                <span className="inline-flex items-center justify-center w-6 h-6 rounded-full text-[10px] font-bold flex-shrink-0"
+                  style={{ backgroundColor: LEVEL_COLORS[gap.score] + '20', color: LEVEL_COLORS[gap.score] }}>
+                  {gap.score}
+                </span>
+              </button>
 
-                    {/* Clause title */}
-                    <div className="text-[10px]" style={{ color: '#64748b' }}>
-                      {gap.isoClause} — {gap.clauseTitle}
-                    </div>
+              {/* Product hint — below gap row, only for mapped categories ≤67% */}
+              {showHint && <ProductHint catKey={gap.catKey} locale={locale} />}
 
-                    {/* Evidence details */}
-                    <div className="space-y-1">
-                      {gap.expectedEvidence.map((ev, i) => (
-                        <div key={i} className="flex items-start gap-2 text-xs">
-                          <span className="font-semibold flex-shrink-0 px-1 rounded" style={{
-                            backgroundColor: ev.type === 'procedure' ? 'rgba(59,130,246,0.1)' : ev.type === 'record' ? 'rgba(139,92,246,0.1)' : 'rgba(245,158,11,0.1)',
-                            color: ev.type === 'procedure' ? '#3B82F6' : ev.type === 'record' ? '#8B5CF6' : '#F59E0B',
-                          }}>
-                            {ev.type === 'procedure' ? t.evidenceProcedure : ev.type === 'record' ? t.evidenceRecord : t.evidenceEffectiveness}
-                          </span>
-                          <span style={{ color: '#475569' }}>{ev[locale]}</span>
+              {/* Expanded detail */}
+              <AnimatePresence>
+                {isExpanded && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.15 }}
+                    style={{ overflow: 'hidden' }}>
+                    <div className="px-4 py-3 space-y-2" style={{ backgroundColor: 'rgba(30,58,138,0.02)', borderBottom: '1px solid rgba(30,58,138,0.06)' }}>
+                      {/* Full question text */}
+                      <p className="text-xs leading-relaxed" style={{ color: '#334155' }}>{gap.questionFull}</p>
+
+                      {/* Clause title */}
+                      <div className="text-[10px]" style={{ color: '#64748b' }}>
+                        {gap.isoClause} — {gap.clauseTitle}
+                      </div>
+
+                      {/* Evidence details */}
+                      <div className="space-y-1">
+                        {gap.expectedEvidence.map((ev, i) => (
+                          <div key={i} className="flex items-start gap-2 text-xs">
+                            <span className="font-semibold flex-shrink-0 px-1 rounded" style={{
+                              backgroundColor: ev.type === 'procedure' ? 'rgba(59,130,246,0.1)' : ev.type === 'record' ? 'rgba(139,92,246,0.1)' : 'rgba(245,158,11,0.1)',
+                              color: ev.type === 'procedure' ? '#3B82F6' : ev.type === 'record' ? '#8B5CF6' : '#F59E0B',
+                            }}>
+                              {ev.type === 'procedure' ? t.evidenceProcedure : ev.type === 'record' ? t.evidenceRecord : t.evidenceEffectiveness}
+                            </span>
+                            <span style={{ color: '#475569' }}>{ev[locale]}</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Note */}
+                      {gap.note && (
+                        <div className="text-xs italic" style={{ color: '#64748b' }}>📝 {gap.note}</div>
+                      )}
+
+                      {/* QMSR Delta */}
+                      {gap.qmsrDelta && (
+                        <div className="text-xs px-2 py-1.5 rounded" style={{ backgroundColor: 'rgba(245,158,11,0.08)', color: '#92400e' }}>
+                          <span className="font-bold">QMSR: </span>{gap.qmsrRef} — {gap.qmsrDelta[locale]}
                         </div>
-                      ))}
+                      )}
+
+                      {/* Jump link */}
+                      <button onClick={() => onJumpToQuestion(gap.catKey, gap.questionId)}
+                        className="text-xs font-semibold transition-colors hover:underline"
+                        style={{ color: '#1e3a8a' }}>
+                        → {locale === 'de' ? 'Zur Frage' : 'Go to question'}
+                      </button>
                     </div>
-
-                    {/* Note */}
-                    {gap.note && (
-                      <div className="text-xs italic" style={{ color: '#64748b' }}>📝 {gap.note}</div>
-                    )}
-
-                    {/* QMSR Delta */}
-                    {gap.qmsrDelta && (
-                      <div className="text-xs px-2 py-1.5 rounded" style={{ backgroundColor: 'rgba(245,158,11,0.08)', color: '#92400e' }}>
-                        <span className="font-bold">QMSR: </span>{gap.qmsrRef} — {gap.qmsrDelta[locale]}
-                      </div>
-                    )}
-
-                    {/* Jump link */}
-                    <button onClick={() => onJumpToQuestion(gap.catKey, gap.questionId)}
-                      className="text-xs font-semibold transition-colors hover:underline"
-                      style={{ color: '#1e3a8a' }}>
-                      → {locale === 'de' ? 'Zur Frage' : 'Go to question'}
-                    </button>
-
-                    {/* Contextual product CTA — show if category score < 60% */}
-                    {catScores[gap.catKey] !== undefined && catScores[gap.catKey] < 60 && (
-                      <div className="mt-2">
-                        <ProductCta catKey={gap.catKey} locale={locale} />
-                      </div>
-                    )}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        );
-      })}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          );
+        });
+      })()}
     </div>
   );
 }
@@ -1064,6 +1138,7 @@ export default function ReadinessCheck() {
   const [history, setHistory] = useState([]);
   const [savedFlash, setSavedFlash] = useState(false);
   const [pdfLoading, setPdfLoading] = useState(false);
+  const [showFeedback, setShowFeedback] = useState(false);
   const [actionPlanData, setActionPlanData] = useState({});  // { 'dc-1': { responsible: '', deadline: '' }, ... }
   const initialLoadDone = useRef(false);
 
@@ -1356,6 +1431,8 @@ export default function ReadinessCheck() {
       }
 
       pdf.save(`QCore-Readiness-Report-${new Date().toISOString().slice(0, 10)}.pdf`);
+      // Show feedback block after successful PDF download
+      setTimeout(() => setShowFeedback(true), 600);
     } catch (err) {
       console.error('PDF generation failed:', err);
     } finally {
@@ -1902,6 +1979,13 @@ export default function ReadinessCheck() {
                     💡 {t.premiumDetailRecs}
                   </button>
                 </div>
+
+                {/* Feedback after PDF export */}
+                <AnimatePresence>
+                  {showFeedback && (
+                    <FeedbackBlock locale={locale} onClose={() => setShowFeedback(false)} />
+                  )}
+                </AnimatePresence>
 
                 {/* CTA */}
                 {results.totalAnswered >= 5 && (
