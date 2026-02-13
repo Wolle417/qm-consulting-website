@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useTranslation } from '../hooks/useTranslation';
 import { tools, toolStatusConfig } from '../data/tools';
-import { categories } from '../data/qm-articles';
 
 export default function Home() {
   const { t, locale } = useTranslation();
@@ -43,7 +42,7 @@ export default function Home() {
       <main className="relative">
 
         {/* ─── HERO: Big Logo ─── */}
-        <section className="relative pt-28 pb-16 lg:pt-36 lg:pb-24">
+        <section className="relative pt-28 pb-20 lg:pt-36 lg:pb-28">
           <div className="relative z-10 max-w-[90%] mx-auto px-6 lg:px-16">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -67,7 +66,7 @@ export default function Home() {
                 style={{
                   width: '80px',
                   height: '2px',
-                  background: 'linear-gradient(to right, #64748b, transparent)',
+                  background: 'linear-gradient(to right, #1e293b, transparent)',
                 }}
               />
               <p
@@ -77,7 +76,7 @@ export default function Home() {
                   fontWeight: 400,
                   letterSpacing: '0.15em',
                   textTransform: 'uppercase',
-                  color: '#64748b',
+                  color: '#1e293b',
                 }}
               >
                 Consulting
@@ -109,7 +108,7 @@ export default function Home() {
                     Consulting
                   </h2>
                 </div>
-                <p className="text-sm mb-5" style={{ color: '#64748b' }}>
+                <p className="text-sm mb-5" style={{ color: '#0f172a' }}>
                   {isDE
                     ? 'QMS-Aufbau, Audit-Vorbereitung, Training.'
                     : 'QMS setup, audit preparation, training.'}
@@ -134,10 +133,10 @@ export default function Home() {
                     },
                   ].map(service => (
                     <div key={service.title}>
-                      <span className="text-sm font-medium" style={{ color: '#1e293b' }}>
+                      <span className="text-sm font-medium" style={{ color: '#0f172a' }}>
                         {service.title}
                       </span>
-                      <p className="text-xs mb-1" style={{ color: '#64748b' }}>
+                      <p className="text-xs mb-1" style={{ color: '#1e293b' }}>
                         {service.desc}
                       </p>
                       <div className="flex gap-1">
@@ -145,7 +144,7 @@ export default function Home() {
                           <span
                             key={tag}
                             className="text-[10px] px-1.5 py-0.5 rounded"
-                            style={{ backgroundColor: 'rgba(30, 58, 138, 0.06)', color: '#64748b' }}
+                            style={{ backgroundColor: 'rgba(30, 58, 138, 0.08)', color: '#1e293b' }}
                           >
                             {tag}
                           </span>
@@ -161,7 +160,7 @@ export default function Home() {
                   style={{
                     backgroundColor: 'rgba(191, 219, 254, 0.35)',
                     border: '1px solid rgba(191, 219, 254, 0.5)',
-                    color: '#1e3a8a',
+                    color: '#0f172a',
                   }}
                 >
                   {isDE ? 'Erstgespräch vereinbaren →' : 'Schedule a call →'}
@@ -186,7 +185,7 @@ export default function Home() {
                     Templates
                   </h2>
                 </div>
-                <p className="text-sm mb-5" style={{ color: '#64748b' }}>
+                <p className="text-sm mb-5" style={{ color: '#0f172a' }}>
                   {isDE
                     ? 'Audit-fertige QM-Dokumentation. Sofort einsetzbar.'
                     : 'Audit-ready QM documentation. Ready to use.'}
@@ -221,15 +220,15 @@ export default function Home() {
                       <div className="flex items-start justify-between">
                         <span
                           className="text-sm font-medium group-hover/item:underline"
-                          style={{ color: '#1e293b' }}
+                          style={{ color: '#0f172a' }}
                         >
                           {product.title}
                         </span>
-                        <span className="text-sm font-semibold flex-shrink-0 ml-2" style={{ color: '#1e3a8a' }}>
+                        <span className="text-sm font-semibold flex-shrink-0 ml-2" style={{ color: '#0f172a' }}>
                           {product.price}
                         </span>
                       </div>
-                      <p className="text-xs" style={{ color: '#64748b' }}>
+                      <p className="text-xs" style={{ color: '#1e293b' }}>
                         {product.desc}
                       </p>
                     </Link>
@@ -242,7 +241,7 @@ export default function Home() {
                   style={{
                     backgroundColor: 'rgba(191, 219, 254, 0.35)',
                     border: '1px solid rgba(191, 219, 254, 0.5)',
-                    color: '#1e3a8a',
+                    color: '#0f172a',
                   }}
                 >
                   {isDE ? 'Alle Templates →' : 'All Templates →'}
@@ -270,20 +269,19 @@ export default function Home() {
                     className="text-xs px-2.5 py-1 rounded-full font-medium"
                     style={{
                       backgroundColor: 'rgba(34, 197, 94, 0.1)',
-                      color: '#16a34a',
+                      color: '#0f172a',
                       border: '1px solid rgba(34, 197, 94, 0.25)',
                     }}
                   >
                     {isDE ? 'Kostenlos' : 'Free'}
                   </span>
                 </div>
-                <p className="text-sm mb-5" style={{ color: '#64748b' }}>
+                <p className="text-sm mb-5" style={{ color: '#0f172a' }}>
                   {isDE
                     ? 'Rechnen, lernen, testen — normgerecht.'
                     : 'Calculate, learn, test — standards-compliant.'}
                 </p>
 
-                {/* Live Tools */}
                 <div className="space-y-3 flex-grow">
                   {liveTools.map(tool => (
                     <Link
@@ -295,11 +293,11 @@ export default function Home() {
                       <div>
                         <span
                           className="text-sm font-medium group-hover/item:underline"
-                          style={{ color: '#1e293b' }}
+                          style={{ color: '#0f172a' }}
                         >
                           {isDE ? tool.name : (tool.nameEn || tool.name)}
                         </span>
-                        <p className="text-xs" style={{ color: '#64748b' }}>
+                        <p className="text-xs" style={{ color: '#1e293b' }}>
                           {isDE ? tool.description : tool.descriptionEn}
                         </p>
                       </div>
@@ -307,15 +305,13 @@ export default function Home() {
                   ))}
 
                   {plannedCount > 0 && (
-                    <p className="text-xs" style={{ color: '#94a3b8' }}>
+                    <p className="text-xs" style={{ color: '#475569' }}>
                       + {plannedCount} {isDE ? 'weitere Tools in Planung' : 'more tools planned'}
                     </p>
                   )}
 
-                  {/* Divider */}
-                  <div className="pt-1" style={{ borderTop: '1px solid rgba(30, 58, 138, 0.08)' }} />
+                  <div className="pt-1" style={{ borderTop: '1px solid rgba(30, 58, 138, 0.1)' }} />
 
-                  {/* QM-Wissen */}
                   <Link
                     href="/qm-wissen"
                     className="flex items-start gap-3 group/item"
@@ -324,17 +320,16 @@ export default function Home() {
                     <div>
                       <span
                         className="text-sm font-medium group-hover/item:underline"
-                        style={{ color: '#1e293b' }}
+                        style={{ color: '#0f172a' }}
                       >
                         {isDE ? 'QM-Wissen' : 'QM Knowledge'}
                       </span>
-                      <p className="text-xs" style={{ color: '#64748b' }}>
+                      <p className="text-xs" style={{ color: '#1e293b' }}>
                         {isDE ? 'Artikel zu ISO 13485, CAPA, FMEA & mehr' : 'Articles on ISO 13485, CAPA, FMEA & more'}
                       </p>
                     </div>
                   </Link>
 
-                  {/* QMB-Trainer */}
                   <Link
                     href="/qmb-trainer"
                     className="flex items-start gap-3 group/item"
@@ -343,11 +338,11 @@ export default function Home() {
                     <div>
                       <span
                         className="text-sm font-medium group-hover/item:underline"
-                        style={{ color: '#1e293b' }}
+                        style={{ color: '#0f172a' }}
                       >
                         {isDE ? 'QMB-Prüfungstrainer' : 'QMB Exam Trainer'}
                       </span>
-                      <p className="text-xs" style={{ color: '#64748b' }}>
+                      <p className="text-xs" style={{ color: '#1e293b' }}>
                         {isDE ? 'Multiple-Choice für die QMB-Zertifizierung' : 'Multiple choice for QMB certification'}
                       </p>
                     </div>
@@ -360,7 +355,7 @@ export default function Home() {
                   style={{
                     backgroundColor: 'rgba(34, 197, 94, 0.1)',
                     border: '1px solid rgba(34, 197, 94, 0.25)',
-                    color: '#16a34a',
+                    color: '#0f172a',
                   }}
                 >
                   {isDE ? 'Alle Tools →' : 'All Tools →'}

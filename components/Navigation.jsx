@@ -225,16 +225,16 @@ export default function Navigation() {
                 style={{
                   fontFamily: "'Cormorant', serif",
                   fontSize: '0.7rem',
-                  fontWeight: 400,
-                  color: '#64748b',
+                  fontWeight: 500,
+                  color: '#0f172a',
                   lineHeight: 1.2,
                   marginTop: '2px',
                   letterSpacing: '0.02em',
                 }}
               >
                 {isDE
-                  ? 'QM-Tools, Templates & Beratung'
-                  : 'QM Tools, Templates & Consulting'}
+                  ? 'QM-Consulting, Templates & Tools'
+                  : 'QM Consulting, Templates & Tools'}
               </span>
             </Link>
 
