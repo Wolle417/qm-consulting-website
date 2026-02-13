@@ -202,20 +202,40 @@ export default function Navigation() {
     >
       <div className="w-full pl-12 pr-6 lg:pl-24 lg:pr-12 xl:pl-32 xl:pr-24 py-3">
         <div className="flex items-center justify-between">
-          {/* Links: Start + Leistungen + Produkte + Über mich - gleichmäßig verteilt */}
-          <div className="hidden md:flex items-center gap-12 lg:gap-16">
+          {/* Links: Logo + Nav Items */}
+          <div className="hidden md:flex items-center gap-8 lg:gap-12">
+            {/* QCore Logo + Tagline - always visible */}
             <Link
               href="/"
-              style={{
-                fontFamily: "'Cormorant', serif",
-                fontSize: '1.15rem',
-                fontWeight: 500,
-                color: '#1e293b',
-                transition: 'color 0.3s ease',
-              }}
-              className="hover:text-slate-600"
+              className="flex flex-col hover:opacity-80 transition-opacity flex-shrink-0"
             >
-              {t('nav.start')}
+              <span
+                style={{
+                  fontFamily: "'Cormorant', serif",
+                  fontSize: '1.75rem',
+                  fontWeight: 600,
+                  color: '#0f172a',
+                  lineHeight: 1,
+                }}
+              >
+                QCore
+              </span>
+              <span
+                className="hidden lg:block"
+                style={{
+                  fontFamily: "'Cormorant', serif",
+                  fontSize: '0.7rem',
+                  fontWeight: 400,
+                  color: '#64748b',
+                  lineHeight: 1.2,
+                  marginTop: '2px',
+                  letterSpacing: '0.02em',
+                }}
+              >
+                {isDE
+                  ? 'QM-Tools, Templates & Beratung'
+                  : 'QM Tools, Templates & Consulting'}
+              </span>
             </Link>
 
             <NavDropdown
@@ -309,25 +329,43 @@ export default function Navigation() {
             </div>
           </div>
 
-          {/* Mobile menu button */}
-          <button 
-            className="md:hidden text-slate-700 p-2"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+          {/* Mobile: Logo + Hamburger */}
+          <div className="md:hidden flex items-center justify-between w-full">
+            <Link
+              href="/"
+              className="hover:opacity-80 transition-opacity"
+              onClick={() => setMobileMenuOpen(false)}
             >
-              {mobileMenuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
-          </button>
-        </div>
+              <span
+                style={{
+                  fontFamily: "'Cormorant', serif",
+                  fontSize: '1.5rem',
+                  fontWeight: 600,
+                  color: '#0f172a',
+                  lineHeight: 1,
+                }}
+              >
+                QCore
+              </span>
+            </Link>
+            <button 
+              className="text-slate-700 p-2"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                {mobileMenuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
+          </div>
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (

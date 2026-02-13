@@ -49,66 +49,8 @@ export default function Home() {
 
       <main className="relative">
 
-        {/* ─── HERO ─── */}
-        <section className="relative pt-28 pb-6 lg:pt-32 lg:pb-8">
-          <div className="relative z-10 max-w-[90%] mx-auto px-6 lg:px-16">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              {/* Brand */}
-              <h1
-                className="mb-1"
-                style={{
-                  fontFamily: "'Cormorant', serif",
-                  fontSize: 'clamp(3rem, 6vw, 5.5rem)',
-                  fontWeight: 500,
-                  color: '#1e293b',
-                  lineHeight: 1,
-                }}
-              >
-                QCore
-              </h1>
-
-              {/* Value Proposition */}
-              <p
-                className="mb-4"
-                style={{
-                  fontFamily: "'Cormorant', serif",
-                  fontSize: 'clamp(1.1rem, 2vw, 1.5rem)',
-                  fontWeight: 400,
-                  color: '#475569',
-                  lineHeight: 1.4,
-                }}
-              >
-                {isDE
-                  ? 'QM-Tools, Templates & Beratung für MedTech und Pharma.'
-                  : 'QM tools, templates & consulting for MedTech and Pharma.'}
-              </p>
-
-              {/* Norm Badges */}
-              <div className="flex flex-wrap gap-2">
-                {['ISO 13485', 'FDA 21 CFR 820', 'EU MDR', 'GMP'].map(norm => (
-                  <span
-                    key={norm}
-                    className="px-2.5 py-1 rounded text-xs font-medium"
-                    style={{
-                      backgroundColor: 'rgba(30, 58, 138, 0.08)',
-                      color: '#1e3a8a',
-                      border: '1px solid rgba(30, 58, 138, 0.12)',
-                    }}
-                  >
-                    {norm}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
         {/* ─── THREE PILLARS ─── */}
-        <section className="relative py-6 lg:py-10">
+        <section className="relative pt-20 pb-6 lg:pt-24 lg:pb-10">
           <div className="relative z-10 max-w-[90%] mx-auto px-6 lg:px-16">
             <div className="grid md:grid-cols-3 gap-5">
 
