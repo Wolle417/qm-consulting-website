@@ -49,7 +49,7 @@ export default function Home() {
 
         {/* ─── HERO: Big Logo ─── */}
         <section className="relative pt-28 pb-20 lg:pt-36 lg:pb-28">
-          <div className="relative z-10 w-full px-5">
+          <div className="relative z-10 max-w-[90%] mx-auto px-6 lg:px-16">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -92,7 +92,7 @@ export default function Home() {
         </section>
 
         {/* ─── THREE PILLARS ─── */}
-        <section className="relative pb-16 lg:pb-24">
+        <section className="relative pb-5">
           <div className="relative z-10 w-full px-5">
             <div className="grid md:grid-cols-3 gap-5">
 
@@ -101,7 +101,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="rounded-xl p-7 lg:p-10 flex flex-col transition-all duration-300 cursor-pointer"
+                className="rounded-xl p-8 lg:p-10 flex flex-col transition-all duration-300 cursor-pointer"
                 style={cardStyle}
                 onMouseEnter={e => cardHover(e, true)}
                 onMouseLeave={e => cardHover(e, false)}
@@ -109,19 +109,19 @@ export default function Home() {
               >
                 <div className="mb-2">
                   <h2
-                    className="text-3xl lg:text-4xl"
+                    className="text-3xl lg:text-[2.5rem]"
                     style={{ fontFamily: "'Cormorant', serif", fontWeight: 600, color: '#0f172a' }}
                   >
                     Consulting
                   </h2>
                 </div>
-                <p className="text-base mb-6" style={{ color: '#0f172a' }}>
+                <p className="text-base lg:text-lg mb-6" style={{ color: '#0f172a' }}>
                   {isDE
                     ? 'QMS-Aufbau, Audit-Vorbereitung, Training.'
                     : 'QMS setup, audit preparation, training.'}
                 </p>
 
-                <div className="space-y-4 flex-grow">
+                <div className="space-y-5 flex-grow">
                   {[
                     {
                       title: isDE ? 'QM-System Aufbau' : 'QMS Setup',
@@ -143,17 +143,17 @@ export default function Home() {
                     },
                   ].map(service => (
                     <Link key={service.title} href={service.href} className="block group/item">
-                      <span className="text-base font-medium group-hover/item:underline" style={{ color: '#0f172a' }}>
+                      <span className="text-lg font-medium group-hover/item:underline" style={{ color: '#0f172a' }}>
                         {service.title}
                       </span>
-                      <p className="text-sm mb-1.5" style={{ color: '#1e293b' }}>
+                      <p className="text-base mb-1.5" style={{ color: '#1e293b' }}>
                         {service.desc}
                       </p>
                       <div className="flex gap-1.5">
                         {service.tags.map(tag => (
                           <span
                             key={tag}
-                            className="text-xs px-2 py-0.5 rounded"
+                            className="text-sm px-2 py-0.5 rounded"
                             style={{ backgroundColor: 'rgba(30, 58, 138, 0.08)', color: '#1e293b' }}
                           >
                             {tag}
@@ -170,7 +170,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="rounded-xl p-7 lg:p-10 flex flex-col transition-all duration-300 cursor-pointer"
+                className="rounded-xl p-8 lg:p-10 flex flex-col transition-all duration-300 cursor-pointer"
                 style={cardStyle}
                 onMouseEnter={e => cardHover(e, true)}
                 onMouseLeave={e => cardHover(e, false)}
@@ -178,19 +178,19 @@ export default function Home() {
               >
                 <div className="mb-2">
                   <h2
-                    className="text-3xl lg:text-4xl"
+                    className="text-3xl lg:text-[2.5rem]"
                     style={{ fontFamily: "'Cormorant', serif", fontWeight: 600, color: '#0f172a' }}
                   >
                     Templates
                   </h2>
                 </div>
-                <p className="text-base mb-6" style={{ color: '#0f172a' }}>
+                <p className="text-base lg:text-lg mb-6" style={{ color: '#0f172a' }}>
                   {isDE
                     ? 'Audit-fertige QM-Dokumentation. Sofort einsetzbar.'
                     : 'Audit-ready QM documentation. Ready to use.'}
                 </p>
 
-                <div className="space-y-4 flex-grow">
+                <div className="space-y-5 flex-grow">
                   {[
                     {
                       title: 'CAPA System',
@@ -218,16 +218,16 @@ export default function Home() {
                     >
                       <div className="flex items-start justify-between">
                         <span
-                          className="text-base font-medium group-hover/item:underline"
+                          className="text-lg font-medium group-hover/item:underline"
                           style={{ color: '#0f172a' }}
                         >
                           {product.title}
                         </span>
-                        <span className="text-base font-semibold flex-shrink-0 ml-2" style={{ color: '#0f172a' }}>
+                        <span className="text-lg font-semibold flex-shrink-0 ml-2" style={{ color: '#0f172a' }}>
                           {product.price}
                         </span>
                       </div>
-                      <p className="text-sm" style={{ color: '#1e293b' }}>
+                      <p className="text-base" style={{ color: '#1e293b' }}>
                         {product.desc}
                       </p>
                     </Link>
@@ -240,7 +240,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className="rounded-xl p-7 lg:p-10 flex flex-col transition-all duration-300 cursor-pointer"
+                className="rounded-xl p-8 lg:p-10 flex flex-col transition-all duration-300 cursor-pointer"
                 style={cardStyle}
                 onMouseEnter={e => cardHover(e, true)}
                 onMouseLeave={e => cardHover(e, false)}
@@ -248,7 +248,7 @@ export default function Home() {
               >
                 <div className="flex items-center justify-between mb-2">
                   <h2
-                    className="text-3xl lg:text-4xl"
+                    className="text-3xl lg:text-[2.5rem]"
                     style={{ fontFamily: "'Cormorant', serif", fontWeight: 600, color: '#0f172a' }}
                   >
                     {isDE ? 'Tools & Wissen' : 'Tools & Knowledge'}
@@ -264,13 +264,13 @@ export default function Home() {
                     {isDE ? 'Kostenlos' : 'Free'}
                   </span>
                 </div>
-                <p className="text-base mb-6" style={{ color: '#0f172a' }}>
+                <p className="text-base lg:text-lg mb-6" style={{ color: '#0f172a' }}>
                   {isDE
                     ? 'Rechnen, lernen, testen — normgerecht.'
                     : 'Calculate, learn, test — standards-compliant.'}
                 </p>
 
-                <div className="space-y-4 flex-grow">
+                <div className="space-y-5 flex-grow">
                   {liveTools.map(tool => (
                     <Link
                       key={tool.id}
@@ -280,12 +280,12 @@ export default function Home() {
                       <span className="text-2xl flex-shrink-0 mt-0.5">{tool.icon}</span>
                       <div>
                         <span
-                          className="text-base font-medium group-hover/item:underline"
+                          className="text-lg font-medium group-hover/item:underline"
                           style={{ color: '#0f172a' }}
                         >
                           {isDE ? tool.name : (tool.nameEn || tool.name)}
                         </span>
-                        <p className="text-sm" style={{ color: '#1e293b' }}>
+                        <p className="text-base" style={{ color: '#1e293b' }}>
                           {isDE ? tool.description : tool.descriptionEn}
                         </p>
                       </div>
@@ -301,12 +301,12 @@ export default function Home() {
                     <span className="text-2xl flex-shrink-0 mt-0.5">📚</span>
                     <div>
                       <span
-                        className="text-base font-medium group-hover/item:underline"
+                        className="text-lg font-medium group-hover/item:underline"
                         style={{ color: '#0f172a' }}
                       >
                         {isDE ? 'QM-Wissen' : 'QM Knowledge'}
                       </span>
-                      <p className="text-sm" style={{ color: '#1e293b' }}>
+                      <p className="text-base" style={{ color: '#1e293b' }}>
                         {isDE ? 'Artikel zu ISO 13485, CAPA, FMEA & mehr' : 'Articles on ISO 13485, CAPA, FMEA & more'}
                       </p>
                     </div>
@@ -319,12 +319,12 @@ export default function Home() {
                     <span className="text-2xl flex-shrink-0 mt-0.5">🎓</span>
                     <div>
                       <span
-                        className="text-base font-medium group-hover/item:underline"
+                        className="text-lg font-medium group-hover/item:underline"
                         style={{ color: '#0f172a' }}
                       >
                         {isDE ? 'QMB-Prüfungstrainer' : 'QMB Exam Trainer'}
                       </span>
-                      <p className="text-sm" style={{ color: '#1e293b' }}>
+                      <p className="text-base" style={{ color: '#1e293b' }}>
                         {isDE ? 'Multiple-Choice für die QMB-Zertifizierung' : 'Multiple choice for QMB certification'}
                       </p>
                     </div>
