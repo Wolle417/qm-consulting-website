@@ -43,7 +43,7 @@ export default function Home() {
       <main className="relative">
 
         {/* ─── HERO: Big Logo ─── */}
-        <section className="relative pt-28 pb-10 lg:pt-36 lg:pb-14">
+        <section className="relative pt-28 pb-16 lg:pt-36 lg:pb-24">
           <div className="relative z-10 max-w-[90%] mx-auto px-6 lg:px-16">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -101,23 +101,13 @@ export default function Home() {
                 onMouseEnter={e => cardHover(e, true)}
                 onMouseLeave={e => cardHover(e, false)}
               >
-                <div className="flex items-center justify-between mb-1">
+                <div className="mb-1">
                   <h2
                     className="text-2xl lg:text-3xl"
                     style={{ fontFamily: "'Cormorant', serif", fontWeight: 600, color: '#0f172a' }}
                   >
                     Consulting
                   </h2>
-                  <span
-                    className="text-xs px-2.5 py-1 rounded-full font-medium"
-                    style={{
-                      backgroundColor: 'rgba(30, 58, 138, 0.08)',
-                      color: '#1e3a8a',
-                      border: '1px solid rgba(30, 58, 138, 0.15)',
-                    }}
-                  >
-                    {isDE ? 'Auf Anfrage' : 'On request'}
-                  </span>
                 </div>
                 <p className="text-sm mb-5" style={{ color: '#64748b' }}>
                   {isDE
@@ -188,23 +178,13 @@ export default function Home() {
                 onMouseEnter={e => cardHover(e, true)}
                 onMouseLeave={e => cardHover(e, false)}
               >
-                <div className="flex items-center justify-between mb-1">
+                <div className="mb-1">
                   <h2
                     className="text-2xl lg:text-3xl"
                     style={{ fontFamily: "'Cormorant', serif", fontWeight: 600, color: '#0f172a' }}
                   >
                     Templates
                   </h2>
-                  <span
-                    className="text-xs px-2.5 py-1 rounded-full font-medium"
-                    style={{
-                      backgroundColor: 'rgba(30, 58, 138, 0.08)',
-                      color: '#1e3a8a',
-                      border: '1px solid rgba(30, 58, 138, 0.15)',
-                    }}
-                  >
-                    {isDE ? 'ab €79' : 'from €79'}
-                  </span>
                 </div>
                 <p className="text-sm mb-5" style={{ color: '#64748b' }}>
                   {isDE
