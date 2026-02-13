@@ -43,7 +43,7 @@ export default function Home() {
       <main className="relative">
 
         {/* ─── HERO: Big Logo ─── */}
-        <section className="relative pt-24 pb-4 lg:pt-28 lg:pb-6">
+        <section className="relative pt-28 pb-10 lg:pt-36 lg:pb-14">
           <div className="relative z-10 max-w-[90%] mx-auto px-6 lg:px-16">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -87,7 +87,7 @@ export default function Home() {
         </section>
 
         {/* ─── THREE PILLARS: Consulting | Templates | Tools & Wissen ─── */}
-        <section className="relative pb-10 lg:pb-16">
+        <section className="relative pb-16 lg:pb-24">
           <div className="relative z-10 max-w-[90%] mx-auto px-6 lg:px-16">
             <div className="grid md:grid-cols-3 gap-5">
 

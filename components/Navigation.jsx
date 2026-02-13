@@ -200,7 +200,7 @@ export default function Navigation() {
       className="fixed top-0 left-0 right-0 bg-slate-900/40 backdrop-blur-sm"
       style={{ zIndex: 100 }}
     >
-      <div className="w-full pl-12 pr-6 lg:pl-24 lg:pr-12 xl:pl-32 xl:pr-24 py-3">
+      <div className="w-full pl-4 pr-6 lg:pl-8 lg:pr-12 xl:pl-12 xl:pr-24 py-3">
         <div className="flex items-center justify-between">
           {/* Links: Logo + Nav Items */}
           <div className="hidden md:flex items-center gap-8 lg:gap-12">
