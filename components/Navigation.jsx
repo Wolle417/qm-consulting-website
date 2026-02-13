@@ -366,6 +366,7 @@ export default function Navigation() {
               </svg>
             </button>
           </div>
+        </div>
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
