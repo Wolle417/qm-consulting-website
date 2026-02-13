@@ -14,13 +14,6 @@ export default function Home() {
   const liveTools = tools.filter(t => t.status === 'live');
   const plannedCount = tools.filter(t => t.status === 'planned').length;
 
-  // Pick 3 featured articles from different categories
-  const featuredArticles = [
-    categories.find(c => c.id === 'branchen')?.articles.find(a => a.id === 'iso-13485'),
-    categories.find(c => c.id === 'methoden')?.articles.find(a => a.id === 'capa'),
-    categories.find(c => c.id === 'validation')?.articles.find(a => a.id === 'process-validation'),
-  ].filter(Boolean);
-
   const cardStyle = {
     backgroundColor: 'rgba(30, 58, 138, 0.06)',
     border: '1px solid rgba(30, 58, 138, 0.1)',
@@ -38,23 +31,67 @@ export default function Home() {
     <>
       <Head>
         <title>{isDE
-          ? 'QCore Consulting | QM-Tools, Templates & Beratung für MedTech & Pharma'
-          : 'QCore Consulting | QM Tools, Templates & Consulting for MedTech & Pharma'}</title>
+          ? 'QCore Consulting | QM-Beratung, Templates & Tools für MedTech & Pharma'
+          : 'QCore Consulting | QM Consulting, Templates & Tools for MedTech & Pharma'}</title>
         <meta name="description" content={isDE
-          ? 'Kostenlose QM-Tools, audit-fertige Templates und Beratung für MedTech & Pharma. ISO 13485, FDA 21 CFR 820, EU MDR, GMP.'
-          : 'Free QM tools, audit-ready templates and consulting for MedTech & Pharma. ISO 13485, FDA 21 CFR 820, EU MDR, GMP.'} />
+          ? 'QM-Beratung, audit-fertige Templates und kostenlose Tools für MedTech & Pharma. ISO 13485, FDA 21 CFR 820, EU MDR, GMP.'
+          : 'QM consulting, audit-ready templates and free tools for MedTech & Pharma. ISO 13485, FDA 21 CFR 820, EU MDR, GMP.'} />
       </Head>
 
       <Navigation />
 
       <main className="relative">
 
-        {/* ─── THREE PILLARS ─── */}
-        <section className="relative pt-20 pb-6 lg:pt-24 lg:pb-10">
+        {/* ─── HERO: Big Logo ─── */}
+        <section className="relative pt-24 pb-4 lg:pt-28 lg:pb-6">
+          <div className="relative z-10 max-w-[90%] mx-auto px-6 lg:px-16">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
+              className="flex flex-col items-start"
+            >
+              <h1
+                style={{
+                  fontFamily: "'Cormorant', serif",
+                  fontSize: 'clamp(4rem, 8vw, 7rem)',
+                  fontWeight: 500,
+                  color: '#1e293b',
+                  lineHeight: 0.9,
+                }}
+              >
+                QCore
+              </h1>
+              <div
+                className="mt-2 mb-1"
+                style={{
+                  width: '80px',
+                  height: '2px',
+                  background: 'linear-gradient(to right, #64748b, transparent)',
+                }}
+              />
+              <p
+                style={{
+                  fontFamily: "'Cormorant', serif",
+                  fontSize: 'clamp(1rem, 1.8vw, 1.35rem)',
+                  fontWeight: 400,
+                  letterSpacing: '0.15em',
+                  textTransform: 'uppercase',
+                  color: '#64748b',
+                }}
+              >
+                Consulting
+              </p>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* ─── THREE PILLARS: Consulting | Templates | Tools & Wissen ─── */}
+        <section className="relative pb-10 lg:pb-16">
           <div className="relative z-10 max-w-[90%] mx-auto px-6 lg:px-16">
             <div className="grid md:grid-cols-3 gap-5">
 
-              {/* ── TOOLS ── */}
+              {/* ── 1. CONSULTING (links) ── */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -64,184 +101,6 @@ export default function Home() {
                 onMouseEnter={e => cardHover(e, true)}
                 onMouseLeave={e => cardHover(e, false)}
               >
-                {/* Header */}
-                <div className="flex items-center justify-between mb-1">
-                  <h2
-                    className="text-2xl lg:text-3xl"
-                    style={{ fontFamily: "'Cormorant', serif", fontWeight: 600, color: '#0f172a' }}
-                  >
-                    Tools
-                  </h2>
-                  <span
-                    className="text-xs px-2.5 py-1 rounded-full font-medium"
-                    style={{
-                      backgroundColor: 'rgba(34, 197, 94, 0.1)',
-                      color: '#16a34a',
-                      border: '1px solid rgba(34, 197, 94, 0.25)',
-                    }}
-                  >
-                    {isDE ? 'Kostenlos' : 'Free'}
-                  </span>
-                </div>
-                <p className="text-sm mb-5" style={{ color: '#64748b' }}>
-                  {isDE
-                    ? 'Normgerecht rechnen, bewerten, prüfen.'
-                    : 'Calculate, assess, verify — standards-compliant.'}
-                </p>
-
-                {/* Live Tools */}
-                <div className="space-y-3 flex-grow">
-                  {liveTools.map(tool => (
-                    <Link
-                      key={tool.id}
-                      href={tool.slug}
-                      className="flex items-start gap-3 group/item"
-                    >
-                      <span className="text-xl flex-shrink-0 mt-0.5">{tool.icon}</span>
-                      <div>
-                        <span
-                          className="text-sm font-medium group-hover/item:underline"
-                          style={{ color: '#1e293b' }}
-                        >
-                          {isDE ? tool.name : (tool.nameEn || tool.name)}
-                        </span>
-                        <p className="text-xs" style={{ color: '#64748b' }}>
-                          {isDE ? tool.description : tool.descriptionEn}
-                        </p>
-                      </div>
-                    </Link>
-                  ))}
-
-                  {/* Planned indicator */}
-                  {plannedCount > 0 && (
-                    <p className="text-xs pt-1" style={{ color: '#94a3b8' }}>
-                      + {plannedCount} {isDE ? 'weitere in Planung' : 'more planned'}
-                    </p>
-                  )}
-                </div>
-
-                {/* CTA */}
-                <Link
-                  href="/tools"
-                  className="mt-5 block text-center py-2.5 rounded-lg text-sm font-medium transition-all hover:scale-[1.02]"
-                  style={{
-                    backgroundColor: 'rgba(34, 197, 94, 0.1)',
-                    border: '1px solid rgba(34, 197, 94, 0.25)',
-                    color: '#16a34a',
-                  }}
-                >
-                  {isDE ? 'Alle Tools →' : 'All Tools →'}
-                </Link>
-              </motion.div>
-
-              {/* ── TEMPLATES ── */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className="rounded-xl p-6 lg:p-8 flex flex-col transition-all duration-300 cursor-default"
-                style={cardStyle}
-                onMouseEnter={e => cardHover(e, true)}
-                onMouseLeave={e => cardHover(e, false)}
-              >
-                {/* Header */}
-                <div className="flex items-center justify-between mb-1">
-                  <h2
-                    className="text-2xl lg:text-3xl"
-                    style={{ fontFamily: "'Cormorant', serif", fontWeight: 600, color: '#0f172a' }}
-                  >
-                    Templates
-                  </h2>
-                  <span
-                    className="text-xs px-2.5 py-1 rounded-full font-medium"
-                    style={{
-                      backgroundColor: 'rgba(30, 58, 138, 0.08)',
-                      color: '#1e3a8a',
-                      border: '1px solid rgba(30, 58, 138, 0.15)',
-                    }}
-                  >
-                    {isDE ? 'ab €79' : 'from €79'}
-                  </span>
-                </div>
-                <p className="text-sm mb-5" style={{ color: '#64748b' }}>
-                  {isDE
-                    ? 'Audit-fertige QM-Dokumentation. Sofort einsetzbar.'
-                    : 'Audit-ready QM documentation. Ready to use.'}
-                </p>
-
-                {/* Products */}
-                <div className="space-y-3 flex-grow">
-                  {[
-                    {
-                      title: 'CAPA System',
-                      price: '€129',
-                      desc: isDE ? '7 Dokumente · SOP, RCA-Toolkit, Tracking' : '7 documents · SOP, RCA toolkit, tracking',
-                      href: '/produkte/capa-system',
-                      standards: 'ISO 13485 · FDA 820.100',
-                    },
-                    {
-                      title: 'NC Management',
-                      price: '€99',
-                      desc: isDE ? '7 Dokumente · Bewertungsmatrix, Eskalation' : '7 documents · Assessment matrix, escalation',
-                      href: '/produkte/nc-system',
-                      standards: 'ISO 13485 · FDA 820.90',
-                    },
-                    {
-                      title: 'Audit Prep Kit',
-                      price: '€79',
-                      desc: isDE ? '8 Dokumente · Checklisten, Interviewfragen' : '8 documents · Checklists, interview questions',
-                      href: '/produkte/audit-prep-kit',
-                      standards: 'ISO 13485 · ISO 19011',
-                    },
-                  ].map(product => (
-                    <Link
-                      key={product.title}
-                      href={product.href}
-                      className="block group/item"
-                    >
-                      <div className="flex items-start justify-between">
-                        <span
-                          className="text-sm font-medium group-hover/item:underline"
-                          style={{ color: '#1e293b' }}
-                        >
-                          {product.title}
-                        </span>
-                        <span className="text-sm font-semibold flex-shrink-0 ml-2" style={{ color: '#1e3a8a' }}>
-                          {product.price}
-                        </span>
-                      </div>
-                      <p className="text-xs" style={{ color: '#64748b' }}>
-                        {product.desc}
-                      </p>
-                    </Link>
-                  ))}
-                </div>
-
-                {/* CTA */}
-                <Link
-                  href="/produkte"
-                  className="mt-5 block text-center py-2.5 rounded-lg text-sm font-medium transition-all hover:scale-[1.02]"
-                  style={{
-                    backgroundColor: 'rgba(191, 219, 254, 0.35)',
-                    border: '1px solid rgba(191, 219, 254, 0.5)',
-                    color: '#1e3a8a',
-                  }}
-                >
-                  {isDE ? 'Alle Templates →' : 'All Templates →'}
-                </Link>
-              </motion.div>
-
-              {/* ── CONSULTING ── */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                className="rounded-xl p-6 lg:p-8 flex flex-col transition-all duration-300 cursor-default"
-                style={cardStyle}
-                onMouseEnter={e => cardHover(e, true)}
-                onMouseLeave={e => cardHover(e, false)}
-              >
-                {/* Header */}
                 <div className="flex items-center justify-between mb-1">
                   <h2
                     className="text-2xl lg:text-3xl"
@@ -266,7 +125,6 @@ export default function Home() {
                     : 'QMS setup, audit preparation, training.'}
                 </p>
 
-                {/* Services */}
                 <div className="space-y-3 flex-grow">
                   {[
                     {
@@ -307,7 +165,6 @@ export default function Home() {
                   ))}
                 </div>
 
-                {/* CTA */}
                 <Link
                   href="/kontakt"
                   className="mt-5 block text-center py-2.5 rounded-lg text-sm font-medium transition-all hover:scale-[1.02]"
@@ -321,54 +178,215 @@ export default function Home() {
                 </Link>
               </motion.div>
 
-            </div>
-          </div>
-        </section>
-
-        {/* ─── QM-WISSEN TEASER ─── */}
-        <section className="relative py-8 lg:py-12">
-          <div className="relative z-10 max-w-[90%] mx-auto px-6 lg:px-16">
-
-            <div className="flex items-center justify-between mb-5">
-              <h2
-                className="text-xl lg:text-2xl"
-                style={{ fontFamily: "'Cormorant', serif", fontWeight: 600, color: '#1e293b' }}
+              {/* ── 2. TEMPLATES (Mitte) ── */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="rounded-xl p-6 lg:p-8 flex flex-col transition-all duration-300 cursor-default"
+                style={cardStyle}
+                onMouseEnter={e => cardHover(e, true)}
+                onMouseLeave={e => cardHover(e, false)}
               >
-                {isDE ? 'QM-Wissen' : 'QM Knowledge'}
-              </h2>
-              <Link
-                href="/qm-wissen"
-                className="text-sm hover:underline"
-                style={{ color: '#1e3a8a' }}
-              >
-                {isDE ? 'Alle Artikel →' : 'All articles →'}
-              </Link>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-4">
-              {featuredArticles.map(article => (
-                <Link
-                  key={article.id}
-                  href={article.url}
-                  className="rounded-lg p-5 transition-all duration-300 hover:shadow-md group/article"
-                  style={cardStyle}
-                  onMouseEnter={e => { e.currentTarget.style.backgroundColor = 'rgba(30, 58, 138, 0.10)'; }}
-                  onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'rgba(30, 58, 138, 0.06)'; }}
-                >
-                  <p
-                    className="text-base font-medium mb-1 group-hover/article:underline"
-                    style={{ fontFamily: "'Cormorant', serif", color: '#1e293b' }}
+                <div className="flex items-center justify-between mb-1">
+                  <h2
+                    className="text-2xl lg:text-3xl"
+                    style={{ fontFamily: "'Cormorant', serif", fontWeight: 600, color: '#0f172a' }}
                   >
-                    {article.title}
-                  </p>
-                  <div className="flex items-center gap-3 text-xs" style={{ color: '#64748b' }}>
-                    <span>{article.time}</span>
-                    <span>
-                      {'●'.repeat(article.level)}{'○'.repeat(3 - article.level)}
-                    </span>
-                  </div>
+                    Templates
+                  </h2>
+                  <span
+                    className="text-xs px-2.5 py-1 rounded-full font-medium"
+                    style={{
+                      backgroundColor: 'rgba(30, 58, 138, 0.08)',
+                      color: '#1e3a8a',
+                      border: '1px solid rgba(30, 58, 138, 0.15)',
+                    }}
+                  >
+                    {isDE ? 'ab €79' : 'from €79'}
+                  </span>
+                </div>
+                <p className="text-sm mb-5" style={{ color: '#64748b' }}>
+                  {isDE
+                    ? 'Audit-fertige QM-Dokumentation. Sofort einsetzbar.'
+                    : 'Audit-ready QM documentation. Ready to use.'}
+                </p>
+
+                <div className="space-y-3 flex-grow">
+                  {[
+                    {
+                      title: 'CAPA System',
+                      price: '€129',
+                      desc: isDE ? '7 Dokumente · SOP, RCA-Toolkit, Tracking' : '7 documents · SOP, RCA toolkit, tracking',
+                      href: '/produkte/capa-system',
+                    },
+                    {
+                      title: 'NC Management',
+                      price: '€99',
+                      desc: isDE ? '7 Dokumente · Bewertungsmatrix, Eskalation' : '7 documents · Assessment matrix, escalation',
+                      href: '/produkte/nc-system',
+                    },
+                    {
+                      title: 'Audit Prep Kit',
+                      price: '€79',
+                      desc: isDE ? '8 Dokumente · Checklisten, Interviewfragen' : '8 documents · Checklists, interview questions',
+                      href: '/produkte/audit-prep-kit',
+                    },
+                  ].map(product => (
+                    <Link
+                      key={product.title}
+                      href={product.href}
+                      className="block group/item"
+                    >
+                      <div className="flex items-start justify-between">
+                        <span
+                          className="text-sm font-medium group-hover/item:underline"
+                          style={{ color: '#1e293b' }}
+                        >
+                          {product.title}
+                        </span>
+                        <span className="text-sm font-semibold flex-shrink-0 ml-2" style={{ color: '#1e3a8a' }}>
+                          {product.price}
+                        </span>
+                      </div>
+                      <p className="text-xs" style={{ color: '#64748b' }}>
+                        {product.desc}
+                      </p>
+                    </Link>
+                  ))}
+                </div>
+
+                <Link
+                  href="/produkte"
+                  className="mt-5 block text-center py-2.5 rounded-lg text-sm font-medium transition-all hover:scale-[1.02]"
+                  style={{
+                    backgroundColor: 'rgba(191, 219, 254, 0.35)',
+                    border: '1px solid rgba(191, 219, 254, 0.5)',
+                    color: '#1e3a8a',
+                  }}
+                >
+                  {isDE ? 'Alle Templates →' : 'All Templates →'}
                 </Link>
-              ))}
+              </motion.div>
+
+              {/* ── 3. TOOLS & WISSEN (rechts) ── */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="rounded-xl p-6 lg:p-8 flex flex-col transition-all duration-300 cursor-default"
+                style={cardStyle}
+                onMouseEnter={e => cardHover(e, true)}
+                onMouseLeave={e => cardHover(e, false)}
+              >
+                <div className="flex items-center justify-between mb-1">
+                  <h2
+                    className="text-2xl lg:text-3xl"
+                    style={{ fontFamily: "'Cormorant', serif", fontWeight: 600, color: '#0f172a' }}
+                  >
+                    {isDE ? 'Tools & Wissen' : 'Tools & Knowledge'}
+                  </h2>
+                  <span
+                    className="text-xs px-2.5 py-1 rounded-full font-medium"
+                    style={{
+                      backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                      color: '#16a34a',
+                      border: '1px solid rgba(34, 197, 94, 0.25)',
+                    }}
+                  >
+                    {isDE ? 'Kostenlos' : 'Free'}
+                  </span>
+                </div>
+                <p className="text-sm mb-5" style={{ color: '#64748b' }}>
+                  {isDE
+                    ? 'Rechnen, lernen, testen — normgerecht.'
+                    : 'Calculate, learn, test — standards-compliant.'}
+                </p>
+
+                {/* Live Tools */}
+                <div className="space-y-3 flex-grow">
+                  {liveTools.map(tool => (
+                    <Link
+                      key={tool.id}
+                      href={tool.slug}
+                      className="flex items-start gap-3 group/item"
+                    >
+                      <span className="text-xl flex-shrink-0 mt-0.5">{tool.icon}</span>
+                      <div>
+                        <span
+                          className="text-sm font-medium group-hover/item:underline"
+                          style={{ color: '#1e293b' }}
+                        >
+                          {isDE ? tool.name : (tool.nameEn || tool.name)}
+                        </span>
+                        <p className="text-xs" style={{ color: '#64748b' }}>
+                          {isDE ? tool.description : tool.descriptionEn}
+                        </p>
+                      </div>
+                    </Link>
+                  ))}
+
+                  {plannedCount > 0 && (
+                    <p className="text-xs" style={{ color: '#94a3b8' }}>
+                      + {plannedCount} {isDE ? 'weitere Tools in Planung' : 'more tools planned'}
+                    </p>
+                  )}
+
+                  {/* Divider */}
+                  <div className="pt-1" style={{ borderTop: '1px solid rgba(30, 58, 138, 0.08)' }} />
+
+                  {/* QM-Wissen */}
+                  <Link
+                    href="/qm-wissen"
+                    className="flex items-start gap-3 group/item"
+                  >
+                    <span className="text-xl flex-shrink-0 mt-0.5">📚</span>
+                    <div>
+                      <span
+                        className="text-sm font-medium group-hover/item:underline"
+                        style={{ color: '#1e293b' }}
+                      >
+                        {isDE ? 'QM-Wissen' : 'QM Knowledge'}
+                      </span>
+                      <p className="text-xs" style={{ color: '#64748b' }}>
+                        {isDE ? 'Artikel zu ISO 13485, CAPA, FMEA & mehr' : 'Articles on ISO 13485, CAPA, FMEA & more'}
+                      </p>
+                    </div>
+                  </Link>
+
+                  {/* QMB-Trainer */}
+                  <Link
+                    href="/qmb-trainer"
+                    className="flex items-start gap-3 group/item"
+                  >
+                    <span className="text-xl flex-shrink-0 mt-0.5">🎓</span>
+                    <div>
+                      <span
+                        className="text-sm font-medium group-hover/item:underline"
+                        style={{ color: '#1e293b' }}
+                      >
+                        {isDE ? 'QMB-Prüfungstrainer' : 'QMB Exam Trainer'}
+                      </span>
+                      <p className="text-xs" style={{ color: '#64748b' }}>
+                        {isDE ? 'Multiple-Choice für die QMB-Zertifizierung' : 'Multiple choice for QMB certification'}
+                      </p>
+                    </div>
+                  </Link>
+                </div>
+
+                <Link
+                  href="/tools"
+                  className="mt-5 block text-center py-2.5 rounded-lg text-sm font-medium transition-all hover:scale-[1.02]"
+                  style={{
+                    backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                    border: '1px solid rgba(34, 197, 94, 0.25)',
+                    color: '#16a34a',
+                  }}
+                >
+                  {isDE ? 'Alle Tools →' : 'All Tools →'}
+                </Link>
+              </motion.div>
+
             </div>
           </div>
         </section>
