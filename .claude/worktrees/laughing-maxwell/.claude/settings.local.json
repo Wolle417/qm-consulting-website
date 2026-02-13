@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git worktree:*)",
+      "Bash(git branch:*)",
+      "mcp__55717643-9141-4d19-968d-aa66fa90da10__get_deployment"
+    ]
+  }
+}

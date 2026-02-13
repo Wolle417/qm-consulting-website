@@ -11,8 +11,8 @@ export default function QMBeratung() {
   const t = {
     de: {
       meta: {
-        title: 'Individuelles QM für KMU | MedTech · Pharma · Nuklear | QCore Consulting',
-        description: 'Maßgeschneiderte QM-Systeme für kleine und mittlere Unternehmen. ISO 13485, GMP, KTA – von einem Praktiker mit 17+ Jahren Erfahrung.'
+        title: 'Individuelles QM für KMU | MedTech · Pharma | QCore Consulting',
+        description: 'Maßgeschneiderte QM-Systeme für kleine und mittlere Unternehmen. ISO 13485, GMP – von einem Praktiker mit 17+ Jahren Erfahrung.'
       },
       hero: {
         title: 'Individuelles QM für KMU',
@@ -47,26 +47,13 @@ export default function QMBeratung() {
             'Supplier Qualification'
           ],
           caseStudy: 'Praxisbeispiel: GMP-Doku Fampridin →'
-        },
-        {
-          key: 'nuclear',
-          title: 'Nuklear',
-          subtitle: 'KTA · Höchste Sicherheit',
-          text: 'Die Nuklearindustrie hat die strengsten QM-Anforderungen überhaupt. Hier zählt jedes Detail.',
-          points: [
-            'KTA-konforme QS',
-            'Nukleare Dokumentation',
-            'Lieferantenqualifizierung',
-            'Rückverfolgbarkeit',
-            'Behörden-Audits'
-          ]
         }
       ]
     },
     en: {
       meta: {
-        title: 'Custom QM for SMEs | MedTech · Pharma · Nuclear | QCore Consulting',
-        description: 'Tailored QM systems for small and medium enterprises. ISO 13485, GMP, KTA – from a practitioner with 17+ years of experience.'
+        title: 'Custom QM for SMEs | MedTech · Pharma | QCore Consulting',
+        description: 'Tailored QM systems for small and medium enterprises. ISO 13485, GMP – from a practitioner with 17+ years of experience.'
       },
       hero: {
         title: 'Custom QM for SMEs',
@@ -101,19 +88,6 @@ export default function QMBeratung() {
             'Supplier Qualification'
           ],
           caseStudy: 'Case study: GMP docs Fampridine →'
-        },
-        {
-          key: 'nuclear',
-          title: 'Nuclear',
-          subtitle: 'KTA · Highest Safety',
-          text: 'The nuclear industry has the strictest QM requirements of all. Every detail counts.',
-          points: [
-            'KTA-compliant QA',
-            'Nuclear documentation',
-            'Supplier qualification',
-            'Traceability',
-            'Regulatory audits'
-          ]
         }
       ]
     }

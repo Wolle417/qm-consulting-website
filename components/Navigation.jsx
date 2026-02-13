@@ -145,7 +145,7 @@ export default function Navigation() {
 
   // Dropdown configurations
   const leistungenItems = [
-    { label: t('nav.dropdown.qmKmu'), href: '/qm-beratung', subtitle: 'MedTech · Pharma · Nuklear' },
+    { label: t('nav.dropdown.qmKmu'), href: '/qm-beratung', subtitle: 'MedTech · Pharma' },
     { label: t('nav.dropdown.riskMgmt'), href: '/risikomanagement', subtitle: 'FMEA · ISO 14971' },
     { divider: true },
     { label: t('nav.dropdown.auditPrep'), href: '/audit-vorbereitung' },
@@ -157,12 +157,11 @@ export default function Navigation() {
   // Tools dropdown items - generated from data/tools.js
   const isDE = locale === 'de';
   const toolsItems = [
-    { label: isDE ? 'Kostenlose QM-Tools' : 'Free QM Tools', isHeader: true },
+    { label: isDE ? 'QM-Tools' : 'QM Tools', isHeader: true },
     ...tools.filter(tool => tool.status === 'live').map(tool => ({
       label: tool.name,
       href: tool.slug,
       subtitle: isDE ? tool.description : tool.descriptionEn,
-      freeTag: true,
     })),
     { divider: true },
     { label: isDE ? 'Geplante Tools' : 'Planned Tools', isHeader: true },

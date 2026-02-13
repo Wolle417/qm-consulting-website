@@ -15,7 +15,6 @@ export default function Industries() {
     'Halbleiter & Optoelektronik',
     'Anlagenbau & Fertigung',
     'Elektronik & Sensorik',
-    'Nukleartechnik',
   ];
 
   const steps = [

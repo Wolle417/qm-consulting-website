@@ -11,8 +11,7 @@ const getProducts = (t) => [
     title: t('products.capa.title'),
     oneLiner: t('products.capa.oneLiner'),
     price: '129',
-    isFree: true,
-    freeHref: '/capa-system-free',
+
     docs: 7,
     pages: '~45',
     standards: ['ISO 13485', 'FDA 820.100', 'EU MDR'],

@@ -8,7 +8,7 @@ export default function ForWho() {
   const clientsDE = [
     {
       title: 'Regulierte Umgebungen',
-      industries: 'Pharma • Medical • Nuklear • Biotech',
+      industries: 'Pharma • MedTech • Biotech',
       need: 'Audit-fähige QM-Systeme, formale Methoden, lückenlose Dokumentation.',
       solution: 'Reproduzierbar, nachvollziehbar, compliance-ready. Ohne Overhead.',
     },
@@ -29,7 +29,7 @@ export default function ForWho() {
   const clientsEN = [
     {
       title: 'Regulated Environments',
-      industries: 'Pharma • Medical • Nuclear • Biotech',
+      industries: 'Pharma • MedTech • Biotech',
       need: 'Audit-ready QMS, formal methods, complete documentation.',
       solution: 'Reproducible, traceable, compliance-ready. Without overhead.',
     },

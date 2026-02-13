@@ -39,7 +39,6 @@
       "items2": [
         "Pharma: GMP-Anforderungen, Validation, CAPA",
         "Medical Devices: Technische Dokumentation, Risikoanalyse (ISO 14971)",
-        "Nuklear: KTA-Standards, Safety Analysis",
         "Fertigung: Produktionssteuerung, Qualitätskontrolle"
       ],
       "title3": "Risk Management & Prozessoptimierung",
@@ -61,10 +60,10 @@
   "about": {
     "meta": {
       "title": "Über mich | QCore Consulting",
-      "description": "17+ Jahre QM-Erfahrung in MedTech, Pharma, Nuklear und Halbleiter."
+      "description": "17+ Jahre QM-Erfahrung in MedTech, Pharma und hochregulierten Industrien."
     },
     "tagline": "Technisches Qualitätsmanagement für regulierte Industrien",
-    "intro1": "18 Jahre Erfahrung in hochregulierten Branchen – von Nukleartechnik über LED-Entwicklung bis Medizintechnik.",
+    "intro1": "18 Jahre Erfahrung in hochregulierten Branchen – von Halbleitertechnik über LED-Entwicklung bis Medizintechnik.",
     "intro2": "Als Ingenieur mit QM-Expertise verstehe ich nicht nur die Norm, sondern auch die Technik dahinter.",
     "intro3": "Mein Ansatz: Schlanke Prozesse die funktionieren, keine Bürokratie-Monster.",
     "stations": [
