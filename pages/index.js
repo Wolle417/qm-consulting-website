@@ -13,7 +13,6 @@ export default function Home() {
   const isDE = locale !== 'en';
 
   const liveTools = tools.filter(t => t.status === 'live');
-  const plannedCount = tools.filter(t => t.status === 'planned').length;
 
   const cardStyle = {
     backgroundColor: 'rgba(30, 58, 138, 0.06)',
@@ -28,9 +27,7 @@ export default function Home() {
     e.currentTarget.style.transform = enter ? 'translateY(-2px)' : 'translateY(0)';
   };
 
-  // Container click → overview page (only if not clicking a specific link inside)
   const handleCardClick = (href) => (e) => {
-    // Don't navigate if user clicked an inner link
     if (e.target.closest('a')) return;
     router.push(href);
   };
@@ -52,7 +49,7 @@ export default function Home() {
 
         {/* ─── HERO: Big Logo ─── */}
         <section className="relative pt-28 pb-20 lg:pt-36 lg:pb-28">
-          <div className="relative z-10 max-w-[90%] mx-auto px-6 lg:px-16">
+          <div className="relative z-10 w-full px-5">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -96,35 +93,35 @@ export default function Home() {
 
         {/* ─── THREE PILLARS ─── */}
         <section className="relative pb-16 lg:pb-24">
-          <div className="relative z-10 max-w-[90%] mx-auto px-6 lg:px-16">
+          <div className="relative z-10 w-full px-5">
             <div className="grid md:grid-cols-3 gap-5">
 
-              {/* ── 1. CONSULTING → /qm-beratung ── */}
+              {/* ── 1. CONSULTING ── */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="rounded-xl p-6 lg:p-8 flex flex-col transition-all duration-300 cursor-pointer"
+                className="rounded-xl p-7 lg:p-10 flex flex-col transition-all duration-300 cursor-pointer"
                 style={cardStyle}
                 onMouseEnter={e => cardHover(e, true)}
                 onMouseLeave={e => cardHover(e, false)}
                 onClick={handleCardClick('/qm-beratung')}
               >
-                <div className="mb-1">
+                <div className="mb-2">
                   <h2
-                    className="text-2xl lg:text-3xl"
+                    className="text-3xl lg:text-4xl"
                     style={{ fontFamily: "'Cormorant', serif", fontWeight: 600, color: '#0f172a' }}
                   >
                     Consulting
                   </h2>
                 </div>
-                <p className="text-sm mb-5" style={{ color: '#0f172a' }}>
+                <p className="text-base mb-6" style={{ color: '#0f172a' }}>
                   {isDE
                     ? 'QMS-Aufbau, Audit-Vorbereitung, Training.'
                     : 'QMS setup, audit preparation, training.'}
                 </p>
 
-                <div className="space-y-3 flex-grow">
+                <div className="space-y-4 flex-grow">
                   {[
                     {
                       title: isDE ? 'QM-System Aufbau' : 'QMS Setup',
@@ -146,17 +143,17 @@ export default function Home() {
                     },
                   ].map(service => (
                     <Link key={service.title} href={service.href} className="block group/item">
-                      <span className="text-sm font-medium group-hover/item:underline" style={{ color: '#0f172a' }}>
+                      <span className="text-base font-medium group-hover/item:underline" style={{ color: '#0f172a' }}>
                         {service.title}
                       </span>
-                      <p className="text-xs mb-1" style={{ color: '#1e293b' }}>
+                      <p className="text-sm mb-1.5" style={{ color: '#1e293b' }}>
                         {service.desc}
                       </p>
-                      <div className="flex gap-1">
+                      <div className="flex gap-1.5">
                         {service.tags.map(tag => (
                           <span
                             key={tag}
-                            className="text-[10px] px-1.5 py-0.5 rounded"
+                            className="text-xs px-2 py-0.5 rounded"
                             style={{ backgroundColor: 'rgba(30, 58, 138, 0.08)', color: '#1e293b' }}
                           >
                             {tag}
@@ -168,32 +165,32 @@ export default function Home() {
                 </div>
               </motion.div>
 
-              {/* ── 2. TEMPLATES → /produkte ── */}
+              {/* ── 2. TEMPLATES ── */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="rounded-xl p-6 lg:p-8 flex flex-col transition-all duration-300 cursor-pointer"
+                className="rounded-xl p-7 lg:p-10 flex flex-col transition-all duration-300 cursor-pointer"
                 style={cardStyle}
                 onMouseEnter={e => cardHover(e, true)}
                 onMouseLeave={e => cardHover(e, false)}
                 onClick={handleCardClick('/produkte')}
               >
-                <div className="mb-1">
+                <div className="mb-2">
                   <h2
-                    className="text-2xl lg:text-3xl"
+                    className="text-3xl lg:text-4xl"
                     style={{ fontFamily: "'Cormorant', serif", fontWeight: 600, color: '#0f172a' }}
                   >
                     Templates
                   </h2>
                 </div>
-                <p className="text-sm mb-5" style={{ color: '#0f172a' }}>
+                <p className="text-base mb-6" style={{ color: '#0f172a' }}>
                   {isDE
                     ? 'Audit-fertige QM-Dokumentation. Sofort einsetzbar.'
                     : 'Audit-ready QM documentation. Ready to use.'}
                 </p>
 
-                <div className="space-y-3 flex-grow">
+                <div className="space-y-4 flex-grow">
                   {[
                     {
                       title: 'CAPA System',
@@ -221,16 +218,16 @@ export default function Home() {
                     >
                       <div className="flex items-start justify-between">
                         <span
-                          className="text-sm font-medium group-hover/item:underline"
+                          className="text-base font-medium group-hover/item:underline"
                           style={{ color: '#0f172a' }}
                         >
                           {product.title}
                         </span>
-                        <span className="text-sm font-semibold flex-shrink-0 ml-2" style={{ color: '#0f172a' }}>
+                        <span className="text-base font-semibold flex-shrink-0 ml-2" style={{ color: '#0f172a' }}>
                           {product.price}
                         </span>
                       </div>
-                      <p className="text-xs" style={{ color: '#1e293b' }}>
+                      <p className="text-sm" style={{ color: '#1e293b' }}>
                         {product.desc}
                       </p>
                     </Link>
@@ -238,26 +235,26 @@ export default function Home() {
                 </div>
               </motion.div>
 
-              {/* ── 3. TOOLS & WISSEN → /tools ── */}
+              {/* ── 3. TOOLS & WISSEN ── */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className="rounded-xl p-6 lg:p-8 flex flex-col transition-all duration-300 cursor-pointer"
+                className="rounded-xl p-7 lg:p-10 flex flex-col transition-all duration-300 cursor-pointer"
                 style={cardStyle}
                 onMouseEnter={e => cardHover(e, true)}
                 onMouseLeave={e => cardHover(e, false)}
                 onClick={handleCardClick('/tools')}
               >
-                <div className="flex items-center justify-between mb-1">
+                <div className="flex items-center justify-between mb-2">
                   <h2
-                    className="text-2xl lg:text-3xl"
+                    className="text-3xl lg:text-4xl"
                     style={{ fontFamily: "'Cormorant', serif", fontWeight: 600, color: '#0f172a' }}
                   >
                     {isDE ? 'Tools & Wissen' : 'Tools & Knowledge'}
                   </h2>
                   <span
-                    className="text-xs px-2.5 py-1 rounded-full font-medium"
+                    className="text-sm px-3 py-1 rounded-full font-medium"
                     style={{
                       backgroundColor: 'rgba(34, 197, 94, 0.1)',
                       color: '#0f172a',
@@ -267,55 +264,49 @@ export default function Home() {
                     {isDE ? 'Kostenlos' : 'Free'}
                   </span>
                 </div>
-                <p className="text-sm mb-5" style={{ color: '#0f172a' }}>
+                <p className="text-base mb-6" style={{ color: '#0f172a' }}>
                   {isDE
                     ? 'Rechnen, lernen, testen — normgerecht.'
                     : 'Calculate, learn, test — standards-compliant.'}
                 </p>
 
-                <div className="space-y-3 flex-grow">
+                <div className="space-y-4 flex-grow">
                   {liveTools.map(tool => (
                     <Link
                       key={tool.id}
                       href={tool.slug}
                       className="flex items-start gap-3 group/item"
                     >
-                      <span className="text-xl flex-shrink-0 mt-0.5">{tool.icon}</span>
+                      <span className="text-2xl flex-shrink-0 mt-0.5">{tool.icon}</span>
                       <div>
                         <span
-                          className="text-sm font-medium group-hover/item:underline"
+                          className="text-base font-medium group-hover/item:underline"
                           style={{ color: '#0f172a' }}
                         >
                           {isDE ? tool.name : (tool.nameEn || tool.name)}
                         </span>
-                        <p className="text-xs" style={{ color: '#1e293b' }}>
+                        <p className="text-sm" style={{ color: '#1e293b' }}>
                           {isDE ? tool.description : tool.descriptionEn}
                         </p>
                       </div>
                     </Link>
                   ))}
 
-                  {plannedCount > 0 && (
-                    <p className="text-xs" style={{ color: '#475569' }}>
-                      + {plannedCount} {isDE ? 'weitere Tools in Planung' : 'more tools planned'}
-                    </p>
-                  )}
-
-                  <div className="pt-1" style={{ borderTop: '1px solid rgba(30, 58, 138, 0.1)' }} />
+                  <div className="pt-2" style={{ borderTop: '1px solid rgba(30, 58, 138, 0.1)' }} />
 
                   <Link
                     href="/qm-wissen"
                     className="flex items-start gap-3 group/item"
                   >
-                    <span className="text-xl flex-shrink-0 mt-0.5">📚</span>
+                    <span className="text-2xl flex-shrink-0 mt-0.5">📚</span>
                     <div>
                       <span
-                        className="text-sm font-medium group-hover/item:underline"
+                        className="text-base font-medium group-hover/item:underline"
                         style={{ color: '#0f172a' }}
                       >
                         {isDE ? 'QM-Wissen' : 'QM Knowledge'}
                       </span>
-                      <p className="text-xs" style={{ color: '#1e293b' }}>
+                      <p className="text-sm" style={{ color: '#1e293b' }}>
                         {isDE ? 'Artikel zu ISO 13485, CAPA, FMEA & mehr' : 'Articles on ISO 13485, CAPA, FMEA & more'}
                       </p>
                     </div>
@@ -325,15 +316,15 @@ export default function Home() {
                     href="/qmb-trainer"
                     className="flex items-start gap-3 group/item"
                   >
-                    <span className="text-xl flex-shrink-0 mt-0.5">🎓</span>
+                    <span className="text-2xl flex-shrink-0 mt-0.5">🎓</span>
                     <div>
                       <span
-                        className="text-sm font-medium group-hover/item:underline"
+                        className="text-base font-medium group-hover/item:underline"
                         style={{ color: '#0f172a' }}
                       >
                         {isDE ? 'QMB-Prüfungstrainer' : 'QMB Exam Trainer'}
                       </span>
-                      <p className="text-xs" style={{ color: '#1e293b' }}>
+                      <p className="text-sm" style={{ color: '#1e293b' }}>
                         {isDE ? 'Multiple-Choice für die QMB-Zertifizierung' : 'Multiple choice for QMB certification'}
                       </p>
                     </div>
