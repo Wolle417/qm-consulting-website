@@ -7,26 +7,12 @@ import { useTranslation } from '../hooks/useTranslation';
 import { tools, toolStatusConfig } from '../data/tools';
 
 // Dropdown Component
-function NavDropdown({ label, items, isOpen, onToggle, onClose, minWidth = 220 }) {
-  const dropdownRef = useRef(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        onClose();
-      }
-    };
-    if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [isOpen, onClose]);
-
+function NavDropdown({ label, href, items, isOpen, onOpen, onClose, minWidth = 220 }) {
   return (
-    <div className="relative" ref={dropdownRef}>
-      <button
-        onClick={onToggle}
-        className="flex items-center gap-1 hover:text-slate-600 transition-colors"
+    <div className="relative" onMouseEnter={onOpen} onMouseLeave={onClose}>
+      <Link
+        href={href || '#'}
+        className="hover:text-slate-600 transition-colors"
         style={{
           fontFamily: "'Cormorant', serif",
           fontSize: '1.15rem',
@@ -35,15 +21,7 @@ function NavDropdown({ label, items, isOpen, onToggle, onClose, minWidth = 220 }
         }}
       >
         {label}
-        <svg 
-          className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} 
-          fill="none" 
-          stroke="currentColor" 
-          viewBox="0 0 24 24"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
+      </Link>
       
       {isOpen && (
         <div 
@@ -125,6 +103,7 @@ export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const closeTimeoutRef = useRef(null);
   const { t, locale, switchLocale } = useTranslation();
 
   useEffect(() => {
@@ -132,15 +111,21 @@ export default function Navigation() {
       setScrolled(window.scrollY > 50);
     };
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
+    };
   }, []);
 
-  const toggleDropdown = (name) => {
-    setOpenDropdown(openDropdown === name ? null : name);
+  const openDropdownFn = (name) => {
+    if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
+    setOpenDropdown(name);
   };
 
   const closeDropdown = () => {
-    setOpenDropdown(null);
+    closeTimeoutRef.current = setTimeout(() => {
+      setOpenDropdown(null);
+    }, 150);
   };
 
   // Dropdown configurations
@@ -235,27 +220,30 @@ export default function Navigation() {
 
             <NavDropdown
               label="Consulting"
+              href="/qm-beratung"
               items={leistungenItems}
               isOpen={openDropdown === 'leistungen'}
-              onToggle={() => toggleDropdown('leistungen')}
+              onOpen={() => openDropdownFn('leistungen')}
               onClose={closeDropdown}
               minWidth={320}
             />
 
             <NavDropdown
               label="Templates"
+              href="/produkte"
               items={produkteItems}
               isOpen={openDropdown === 'produkte'}
-              onToggle={() => toggleDropdown('produkte')}
+              onOpen={() => openDropdownFn('produkte')}
               onClose={closeDropdown}
               minWidth={280}
             />
 
             <NavDropdown
               label={isDE ? 'Tools & Wissen' : 'Tools & Knowledge'}
+              href="/tools"
               items={toolsItems}
               isOpen={openDropdown === 'tools'}
-              onToggle={() => toggleDropdown('tools')}
+              onOpen={() => openDropdownFn('tools')}
               onClose={closeDropdown}
               minWidth={320}
             />
