@@ -2,12 +2,14 @@ import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import Head from 'next/head';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
 import { useTranslation } from '../hooks/useTranslation';
 import { tools, toolStatusConfig } from '../data/tools';
 
 export default function Home() {
   const { t, locale } = useTranslation();
+  const router = useRouter();
   const isDE = locale !== 'en';
 
   const liveTools = tools.filter(t => t.status === 'live');
@@ -24,6 +26,13 @@ export default function Home() {
       ? 'rgba(30, 58, 138, 0.10)'
       : 'rgba(30, 58, 138, 0.06)';
     e.currentTarget.style.transform = enter ? 'translateY(-2px)' : 'translateY(0)';
+  };
+
+  // Container click → overview page (only if not clicking a specific link inside)
+  const handleCardClick = (href) => (e) => {
+    // Don't navigate if user clicked an inner link
+    if (e.target.closest('a')) return;
+    router.push(href);
   };
 
   return (
@@ -85,20 +94,21 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ─── THREE PILLARS: Consulting | Templates | Tools & Wissen ─── */}
+        {/* ─── THREE PILLARS ─── */}
         <section className="relative pb-16 lg:pb-24">
           <div className="relative z-10 max-w-[90%] mx-auto px-6 lg:px-16">
             <div className="grid md:grid-cols-3 gap-5">
 
-              {/* ── 1. CONSULTING (links) ── */}
+              {/* ── 1. CONSULTING → /qm-beratung ── */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="rounded-xl p-6 lg:p-8 flex flex-col transition-all duration-300 cursor-default"
+                className="rounded-xl p-6 lg:p-8 flex flex-col transition-all duration-300 cursor-pointer"
                 style={cardStyle}
                 onMouseEnter={e => cardHover(e, true)}
                 onMouseLeave={e => cardHover(e, false)}
+                onClick={handleCardClick('/qm-beratung')}
               >
                 <div className="mb-1">
                   <h2
@@ -120,20 +130,23 @@ export default function Home() {
                       title: isDE ? 'QM-System Aufbau' : 'QMS Setup',
                       desc: isDE ? 'Von der Gap-Analyse bis zum Zertifizierungsaudit.' : 'From gap analysis to certification audit.',
                       tags: ['ISO 13485', 'GMP'],
+                      href: '/qm-beratung',
                     },
                     {
                       title: isDE ? 'Audit-Vorbereitung' : 'Audit Preparation',
                       desc: isDE ? 'Systematisch vorbereiten statt Aktionismus.' : 'Systematic preparation, not firefighting.',
                       tags: ['Mock-Audit', 'Gap-Analyse'],
+                      href: '/audit-vorbereitung',
                     },
                     {
                       title: isDE ? 'Training & Workshops' : 'Training & Workshops',
                       desc: isDE ? 'CAPA, FMEA, Root Cause — praxisnah.' : 'CAPA, FMEA, Root Cause — hands-on.',
                       tags: ['Inhouse', 'Remote'],
+                      href: '/training',
                     },
                   ].map(service => (
-                    <div key={service.title}>
-                      <span className="text-sm font-medium" style={{ color: '#0f172a' }}>
+                    <Link key={service.title} href={service.href} className="block group/item">
+                      <span className="text-sm font-medium group-hover/item:underline" style={{ color: '#0f172a' }}>
                         {service.title}
                       </span>
                       <p className="text-xs mb-1" style={{ color: '#1e293b' }}>
@@ -150,32 +163,21 @@ export default function Home() {
                           </span>
                         ))}
                       </div>
-                    </div>
+                    </Link>
                   ))}
                 </div>
-
-                <Link
-                  href="/kontakt"
-                  className="mt-5 block text-center py-2.5 rounded-lg text-sm font-medium transition-all hover:scale-[1.02]"
-                  style={{
-                    backgroundColor: 'rgba(191, 219, 254, 0.35)',
-                    border: '1px solid rgba(191, 219, 254, 0.5)',
-                    color: '#0f172a',
-                  }}
-                >
-                  {isDE ? 'Erstgespräch vereinbaren →' : 'Schedule a call →'}
-                </Link>
               </motion.div>
 
-              {/* ── 2. TEMPLATES (Mitte) ── */}
+              {/* ── 2. TEMPLATES → /produkte ── */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
-                className="rounded-xl p-6 lg:p-8 flex flex-col transition-all duration-300 cursor-default"
+                className="rounded-xl p-6 lg:p-8 flex flex-col transition-all duration-300 cursor-pointer"
                 style={cardStyle}
                 onMouseEnter={e => cardHover(e, true)}
                 onMouseLeave={e => cardHover(e, false)}
+                onClick={handleCardClick('/produkte')}
               >
                 <div className="mb-1">
                   <h2
@@ -234,29 +236,18 @@ export default function Home() {
                     </Link>
                   ))}
                 </div>
-
-                <Link
-                  href="/produkte"
-                  className="mt-5 block text-center py-2.5 rounded-lg text-sm font-medium transition-all hover:scale-[1.02]"
-                  style={{
-                    backgroundColor: 'rgba(191, 219, 254, 0.35)',
-                    border: '1px solid rgba(191, 219, 254, 0.5)',
-                    color: '#0f172a',
-                  }}
-                >
-                  {isDE ? 'Alle Templates →' : 'All Templates →'}
-                </Link>
               </motion.div>
 
-              {/* ── 3. TOOLS & WISSEN (rechts) ── */}
+              {/* ── 3. TOOLS & WISSEN → /tools ── */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className="rounded-xl p-6 lg:p-8 flex flex-col transition-all duration-300 cursor-default"
+                className="rounded-xl p-6 lg:p-8 flex flex-col transition-all duration-300 cursor-pointer"
                 style={cardStyle}
                 onMouseEnter={e => cardHover(e, true)}
                 onMouseLeave={e => cardHover(e, false)}
+                onClick={handleCardClick('/tools')}
               >
                 <div className="flex items-center justify-between mb-1">
                   <h2
@@ -348,18 +339,6 @@ export default function Home() {
                     </div>
                   </Link>
                 </div>
-
-                <Link
-                  href="/tools"
-                  className="mt-5 block text-center py-2.5 rounded-lg text-sm font-medium transition-all hover:scale-[1.02]"
-                  style={{
-                    backgroundColor: 'rgba(34, 197, 94, 0.1)',
-                    border: '1px solid rgba(34, 197, 94, 0.25)',
-                    color: '#0f172a',
-                  }}
-                >
-                  {isDE ? 'Alle Tools →' : 'All Tools →'}
-                </Link>
               </motion.div>
 
             </div>
