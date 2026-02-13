@@ -92,7 +92,7 @@ export default function Home() {
         </section>
 
         {/* ─── THREE PILLARS ─── */}
-        <section className="relative pb-3">
+        <section className="relative">
           <div className="relative z-10 w-full px-5">
             <div className="grid md:grid-cols-3 gap-5">
 

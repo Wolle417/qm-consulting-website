@@ -164,12 +164,9 @@ export default function Navigation() {
       subtitle: isDE ? tool.description : tool.descriptionEn,
     })),
     { divider: true },
-    { label: isDE ? 'Geplante Tools' : 'Planned Tools', isHeader: true },
-    ...tools.filter(tool => tool.status === 'planned').map(tool => ({
-      label: isDE ? tool.name : (tool.nameEn || tool.name),
-      subtitle: isDE ? tool.description : tool.descriptionEn,
-      disabled: true,
-    })),
+    { label: isDE ? 'Wissen' : 'Knowledge', isHeader: true },
+    { label: isDE ? 'QM-Wissen' : 'QM Knowledge', href: '/qm-wissen', subtitle: isDE ? 'Artikel zu ISO 13485, CAPA, FMEA & mehr' : 'Articles on ISO 13485, CAPA, FMEA & more' },
+    { label: isDE ? 'QMB-Prüfungstrainer' : 'QMB Exam Trainer', href: '/qmb-trainer', subtitle: isDE ? 'Multiple-Choice Prüfungsvorbereitung' : 'Multiple choice exam prep' },
     { divider: true },
     { label: isDE ? 'Alle Tools anzeigen →' : 'View all tools →', href: '/tools', highlight: true },
   ];
@@ -188,8 +185,6 @@ export default function Navigation() {
 
   const aboutItems = [
     { label: t('nav.dropdown.profile'), href: '/ueber-mich' },
-    { label: t('nav.dropdown.qmKnowledge'), href: '/qm-wissen' },
-    { label: t('nav.dropdown.qmTrainer'), href: '/qmb-trainer' },
   ];
 
   return (
@@ -239,7 +234,7 @@ export default function Navigation() {
             </Link>
 
             <NavDropdown
-              label={t('nav.services')}
+              label="Consulting"
               items={leistungenItems}
               isOpen={openDropdown === 'leistungen'}
               onToggle={() => toggleDropdown('leistungen')}
@@ -248,31 +243,35 @@ export default function Navigation() {
             />
 
             <NavDropdown
-              label={t('nav.tools')}
-              items={toolsItems}
-              isOpen={openDropdown === 'tools'}
-              onToggle={() => toggleDropdown('tools')}
-              onClose={closeDropdown}
-              minWidth={320}
-            />
-
-            <NavDropdown
-              label={t('nav.products')}
+              label="Templates"
               items={produkteItems}
               isOpen={openDropdown === 'produkte'}
               onToggle={() => toggleDropdown('produkte')}
               onClose={closeDropdown}
               minWidth={280}
             />
-            
+
             <NavDropdown
-              label={t('nav.about')}
-              items={aboutItems}
-              isOpen={openDropdown === 'about'}
-              onToggle={() => toggleDropdown('about')}
+              label={isDE ? 'Tools & Wissen' : 'Tools & Knowledge'}
+              items={toolsItems}
+              isOpen={openDropdown === 'tools'}
+              onToggle={() => toggleDropdown('tools')}
               onClose={closeDropdown}
-              minWidth={180}
+              minWidth={320}
             />
+            
+            <Link
+              href="/ueber-mich"
+              className="hover:text-slate-600 transition-colors"
+              style={{
+                fontFamily: "'Cormorant', serif",
+                fontSize: '1.15rem',
+                fontWeight: 400,
+                color: '#1e293b',
+              }}
+            >
+              {t('nav.about')}
+            </Link>
           </div>
 
           {/* Rechts: Kontakt + Language Switch */}
@@ -374,10 +373,10 @@ export default function Navigation() {
             className="md:hidden mt-4 py-4 border-t"
             style={{ borderColor: 'rgba(30, 58, 138, 0.15)' }}
           >
-            {/* Mobile: Leistungen */}
+            {/* Mobile: Consulting */}
             <div className="mb-4">
               <div className="font-semibold mb-2 px-2" style={{ color: '#1e3a8a', fontFamily: "'Cormorant', serif" }}>
-                {t('nav.services')}
+                Consulting
               </div>
               {leistungenItems.filter(i => !i.divider).map((item, idx) => (
                 item.disabled ? (
@@ -398,45 +397,10 @@ export default function Navigation() {
               ))}
             </div>
 
-            {/* Mobile: Tools */}
+            {/* Mobile: Templates */}
             <div className="mb-4">
               <div className="font-semibold mb-2 px-2" style={{ color: '#1e3a8a', fontFamily: "'Cormorant', serif" }}>
-                {t('nav.tools')}
-              </div>
-              {toolsItems.filter(i => !i.divider).map((item, idx) => (
-                item.isHeader ? (
-                  <div
-                    key={idx}
-                    className="px-4 py-2 mt-2 flex items-center justify-between"
-                    style={{ backgroundColor: 'rgba(30, 58, 138, 0.04)' }}
-                  >
-                    <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#1e3a8a' }}>
-                      {item.label}
-                    </span>
-                  </div>
-                ) : item.disabled ? (
-                  <div key={idx} className="px-4 py-2 text-sm" style={{ color: '#94a3b8' }}>
-                    {item.label} (Soon)
-                  </div>
-                ) : (
-                  <Link
-                    key={idx}
-                    href={item.href}
-                    className="block px-4 py-2 flex justify-between"
-                    style={{ color: item.highlight ? '#16a34a' : '#334155', fontFamily: "'Cormorant', serif", fontWeight: item.highlight ? 500 : 400 }}
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <span>{item.label}</span>
-                    {item.freeTag && <span className="text-sm font-bold" style={{ color: '#22c55e' }}>FREE</span>}
-                  </Link>
-                )
-              ))}
-            </div>
-
-            {/* Mobile: Produkte */}
-            <div className="mb-4">
-              <div className="font-semibold mb-2 px-2" style={{ color: '#1e3a8a', fontFamily: "'Cormorant', serif" }}>
-                {t('nav.products')}
+                Templates
               </div>
               {produkteItems.filter(i => !i.divider).map((item, idx) => (
                 item.isHeader ? (
@@ -475,23 +439,49 @@ export default function Navigation() {
               ))}
             </div>
 
-            {/* Mobile: Über mich */}
+            {/* Mobile: Tools & Wissen */}
             <div className="mb-4">
               <div className="font-semibold mb-2 px-2" style={{ color: '#1e3a8a', fontFamily: "'Cormorant', serif" }}>
-                {t('nav.about')}
+                {isDE ? 'Tools & Wissen' : 'Tools & Knowledge'}
               </div>
-              {aboutItems.map((item, idx) => (
-                <Link 
-                  key={idx} 
-                  href={item.href} 
-                  className="block px-4 py-2"
-                  style={{ color: '#334155', fontFamily: "'Cormorant', serif" }}
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {item.label}
-                </Link>
+              {toolsItems.filter(i => !i.divider).map((item, idx) => (
+                item.isHeader ? (
+                  <div
+                    key={idx}
+                    className="px-4 py-2 mt-2 flex items-center justify-between"
+                    style={{ backgroundColor: 'rgba(30, 58, 138, 0.04)' }}
+                  >
+                    <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: '#1e3a8a' }}>
+                      {item.label}
+                    </span>
+                  </div>
+                ) : item.disabled ? (
+                  <div key={idx} className="px-4 py-2 text-sm" style={{ color: '#94a3b8' }}>
+                    {item.label} (Soon)
+                  </div>
+                ) : (
+                  <Link
+                    key={idx}
+                    href={item.href}
+                    className="block px-4 py-2 flex justify-between"
+                    style={{ color: item.highlight ? '#16a34a' : '#334155', fontFamily: "'Cormorant', serif", fontWeight: item.highlight ? 500 : 400 }}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <span>{item.label}</span>
+                  </Link>
+                )
               ))}
             </div>
+
+            {/* Mobile: Über mich */}
+            <Link 
+              href="/ueber-mich" 
+              className="block px-4 py-2 font-semibold mb-2"
+              style={{ color: '#1e3a8a', fontFamily: "'Cormorant', serif" }}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {t('nav.about')}
+            </Link>
 
             {/* Mobile: Kontakt */}
             <Link 
