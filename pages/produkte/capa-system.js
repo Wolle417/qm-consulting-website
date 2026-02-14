@@ -136,28 +136,46 @@ const boxStyle = {
   backdropFilter: 'blur(3px)',
 };
 
+// Gumroad links
+const GUMROAD_LINKS = {
+  en: 'https://qcore33.gumroad.com/l/capa-system',
+  de: 'https://qcore33.gumroad.com/l/zkrijn',
+};
+
 // Purchase Box Component - Gumroad
 function PurchaseBox({ locale }) {
   const text = {
     de: {
-      heroText: 'Komplettes CAPA-Bundle — sofort einsatzbereit.',
-      buy: 'Jetzt kaufen',
+      heroText: 'Komplettes CAPA-Bundle v2.0 — sofort einsatzbereit.',
+      buyEn: '🇬🇧 English kaufen',
+      buyDe: '🇩🇪 Deutsch kaufen',
       secure: 'Sichere Zahlung via Gumroad · Sofort-Download',
+      version: 'v2.0',
+      versionNote: 'Komplett überarbeitet — 13 kritische Audit-Lücken geschlossen',
       included: [
-        '7 Dokumente (Word, Excel, PDF)',
-        'Ausgefülltes Beispiel inklusive',
-        'RCA Toolkit (5-Why, Ishikawa, Pareto)',
+        '7 Dokumente (Word & Excel)',
+        'SOP mit Eskalationsmatrix & Wiedereröffnung',
+        'RCA-Toolkit (5-Why, Ishikawa, Pareto + Methodenauswahl)',
+        'Tracking-Log mit KPI-Dashboard',
+        'Ausgefülltes Beispiel (Katheter-Etikettierung)',
+        'Quick Reference Card + ReadMe',
         'Firmenweite Lizenz'
       ]
     },
     en: {
-      heroText: 'Complete CAPA bundle — ready to use immediately.',
-      buy: 'Buy now',
+      heroText: 'Complete CAPA Bundle v2.0 — ready to use immediately.',
+      buyEn: '🇬🇧 Buy English',
+      buyDe: '🇩🇪 Buy German',
       secure: 'Secure payment via Gumroad · Instant download',
+      version: 'v2.0',
+      versionNote: 'Completely revised — 13 critical audit gaps closed',
       included: [
-        '7 Documents (Word, Excel, PDF)',
-        'Filled example included',
-        'RCA Toolkit (5-Why, Ishikawa, Pareto)',
+        '7 Documents (Word & Excel)',
+        'SOP with escalation matrix & reopening workflow',
+        'RCA Toolkit (5-Why, Ishikawa, Pareto + method guide)',
+        'Tracking log with KPI dashboard',
+        'Filled example (catheter labeling)',
+        'Quick Reference Card + ReadMe',
         'Company-wide license'
       ]
     }
@@ -170,30 +188,53 @@ function PurchaseBox({ locale }) {
       className="rounded-xl p-6"
       style={boxStyle}
     >
-      {/* Price */}
-      <div className="text-center mb-2">
-        <span className="text-4xl font-bold" style={{ color: '#1e3a8a' }}>€129</span>
+      {/* Price + Version */}
+      <div className="text-center mb-1">
+        <span className="text-4xl font-bold" style={{ color: '#1e3a8a' }}>€189</span>
+      </div>
+      <div className="text-center mb-1">
+        <span className="inline-block px-2 py-0.5 rounded text-xs font-bold" style={{ backgroundColor: 'rgba(30, 58, 138, 0.1)', color: '#1e3a8a' }}>
+          {t.version}
+        </span>
       </div>
 
       {/* Hero Text */}
-      <p className="text-center text-sm mb-5" style={{ color: '#475569' }}>
+      <p className="text-center text-sm mb-2" style={{ color: '#475569' }}>
         {t.heroText}
       </p>
+      <p className="text-center text-xs mb-5" style={{ color: '#16a34a' }}>
+        {t.versionNote}
+      </p>
 
-      {/* Gumroad Buy Button */}
-      <a
-        href="https://qcore33.gumroad.com/l/capa-system"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="block w-full py-3 rounded-lg font-semibold text-center transition-all hover:scale-[1.02]"
-        style={{
-          backgroundColor: '#1e3a8a',
-          color: '#ffffff',
-          border: '1px solid #1e3a8a',
-        }}
-      >
-        {t.buy}
-      </a>
+      {/* Buy Buttons - EN + DE */}
+      <div className="space-y-2 mb-2">
+        <a
+          href={GUMROAD_LINKS.en}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block w-full py-3 rounded-lg font-semibold text-center transition-all hover:scale-[1.02]"
+          style={{
+            backgroundColor: '#1e3a8a',
+            color: '#ffffff',
+            border: '1px solid #1e3a8a',
+          }}
+        >
+          {t.buyEn}
+        </a>
+        <a
+          href={GUMROAD_LINKS.de}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block w-full py-3 rounded-lg font-semibold text-center transition-all hover:scale-[1.02]"
+          style={{
+            backgroundColor: '#1e3a8a',
+            color: '#ffffff',
+            border: '1px solid #1e3a8a',
+          }}
+        >
+          {t.buyDe}
+        </a>
+      </div>
 
       <p className="text-xs text-center mt-3 mb-4" style={{ color: '#64748b' }}>
         {t.secure}
@@ -414,87 +455,88 @@ export default function CAPASystem() {
       step1: {
         title: 'Den Prozess definieren – CAPA SOP',
         whyFirst: 'Warum zuerst die SOP?',
-        whyFirstText: 'Die SOP ist das Fundament Ihres CAPA-Systems. Ohne klare Prozessdefinition weiß niemand, wann ein CAPA gestartet wird und wer verantwortlich ist.',
-        whatRegulates: 'Was diese SOP regelt:',
+        whyFirstText: 'Die SOP ist das Fundament Ihres CAPA-Systems. Version 2.0 deckt 11 Abschnitte ab – von NC→CAPA-Kriterien über Lieferanten-CAPA bis zum Wiedereröffnungs-Workflow.',
+        whatRegulates: 'Neu in v2.0:',
         items: [
-          { label: 'Trigger:', text: 'Wann wird ein CAPA eröffnet?' },
-          { label: 'Eskalation:', text: 'Minor vs. Major vs. Critical' },
-          { label: 'Verantwortlichkeiten:', text: 'Wer macht was?' },
-          { label: 'Fristen:', text: 'Wie lange darf ein CAPA offen sein?' },
-          { label: 'Schnittstellen:', text: 'NC, Complaints, Management Review' }
+          { label: 'Eskalationsmatrix:', text: 'Priorität bestimmt automatisch Fristen und Genehmigungsstufen' },
+          { label: 'NC→CAPA-Kriterien:', text: 'Klare Entscheidungstabelle – nicht jede NC braucht ein CAPA' },
+          { label: 'Lieferanten-CAPA:', text: 'Dedizierter Prozess für externe Abweichungen' },
+          { label: 'Wiedereröffnung:', text: 'Definierter Workflow mit Auto-Eskalation bei 2. Wiedereröffnung' },
+          { label: 'KPI-Definitionen:', text: 'Wirksamkeitsrate, Wiederauftretensrate, Termintreue, Vorbeugungsverhältnis' }
         ],
-        tip: 'Die Entscheidungstabelle in §5.1.1 verhindert CAPA-Inflation – nicht jede NC braucht ein CAPA.'
+        tip: '11 Abschnitte – vollständig konform mit ISO 13485 §8.5.2/8.5.3, FDA 21 CFR 820.100 und EU MDR.'
       },
       step2: {
         title: 'CAPAs dokumentieren – Das Formular',
         oneForm: 'Ein Formular pro CAPA',
-        oneFormText: 'Das Formular führt strukturiert durch den gesamten CAPA-Lebenszyklus – von der Problembeschreibung bis zum Abschluss.',
-        sections: 'Enthaltene Sektionen:',
+        oneFormText: 'Version 2.0 mit 10 Sektionen – jetzt inkl. Risikomanagement-Akte-Prüfung, FSCA-Bewertung und verpflichtender horizontaler Ausweitung.',
+        sections: 'Die 10 Sektionen:',
         items: [
-          { label: 'Header:', text: 'ID, Datum, Quelle, Priorität' },
-          { label: 'Problem:', text: 'Was ist passiert? Impact?' },
-          { label: 'Root Cause:', text: 'Methode + Ergebnis' },
-          { label: 'Actions:', text: 'Corrective + Preventive' },
-          { label: 'Verification:', text: 'Wirksamkeitsnachweis' },
-          { label: 'Closure:', text: 'Freigaben + Unterschriften' }
+          { label: 'Problembeschreibung:', text: 'Mit Auswirkungsbewertung und Kostenschätzung' },
+          { label: 'Sofortmaßnahmen:', text: 'Eindämmung + FSCA-Bewertung (Sicherheitskorrektur)' },
+          { label: 'Ursachenuntersuchung:', text: '5-Warum mit Validierungs-Checkliste' },
+          { label: 'Korrektur- & Vorbeugungsmaßnahmen:', text: 'Inkl. verpflichtender horizontaler Ausweitung' },
+          { label: 'RM-Akte-Prüfung:', text: 'Brücke zu ISO 14971 Risikomanagement' },
+          { label: 'Wiedereröffnung & Abschluss:', text: 'Definierte Auslöser, Managementbewertung' }
         ],
-        tip: 'Alle Pflichtfelder nach ISO 13485 §8.5.2/8.5.3 und FDA 820.100 enthalten.'
+        tip: 'Verpflichtende horizontale Ausweitung – ein Top-Finding in FDA Warning Letters, jetzt fest im Formular verankert.'
       },
       step3: {
         title: 'Ursachen finden – Root Cause Analysis Toolkit',
         images: [
-          { tab: '5-Why', caption: 'Strukturiertes Nachfragen bis zur Ursache' },
-          { tab: 'Ishikawa', caption: 'Ursachen nach 6M-Kategorien sortieren' },
-          { tab: 'Pareto', caption: 'Die wichtigsten 20% identifizieren' }
+          { tab: '5-Why', caption: 'Strukturiertes Nachfragen mit Validierungs-Checkliste' },
+          { tab: 'Ishikawa', caption: 'Ursachen nach 6M-Kategorien – 4 Ursachenfelder pro Kategorie' },
+          { tab: 'Pareto', caption: '80/20-Analyse mit Auto-Berechnung' }
         ],
-        popupLabel: 'Anleitung – Wann welche Methode?',
+        popupLabel: 'Methodenauswahl-Leitfaden anzeigen',
         commonMistake: 'Der häufigste CAPA-Fehler',
-        commonMistakeText: '"Menschliches Versagen" ist keine Root Cause. Oberflächliche Analyse führt zu unwirksamen Maßnahmen.',
-        toolkitContains: 'Das Toolkit enthält:',
+        commonMistakeText: '"Menschliches Versagen" ist keine Root Cause. Oberflächliche Analyse führt zu unwirksamen Maßnahmen und Wiederholungsfunden.',
+        toolkitContains: 'Neu in v2.0:',
         items: [
-          { label: '5-Why:', text: 'Strukturiertes Nachfragen' },
-          { label: 'Ishikawa:', text: '6M-Kategorien (Mensch, Maschine, Material, Methode, Messung, Mitwelt)' },
-          { label: 'Pareto:', text: '80/20-Regel anwenden' },
-          { label: 'Anleitung:', text: 'Welche Methode wann?' }
+          { label: '5-Why:', text: 'Mit Grundursachen-Validierungs-Checkliste (Ja/Nein-Dropdown)' },
+          { label: 'Ishikawa:', text: '6M-Kategorien mit 4 Ursachenfeldern + Beschreibungen' },
+          { label: 'Pareto:', text: '15 Zeilen, automatische Kumulativ-% Berechnung' },
+          { label: 'Methodenauswahl:', text: 'NEU – Vergleichstabelle + Entscheidungshilfe' }
         ],
-        tip: 'Fragen Sie mindestens 5x "Warum?", bis Sie bei einem Prozess- oder Systemfehler landen.'
+        tip: 'Für CAPA mit Priorität Kritisch/Hoch: mindestens zwei komplementäre RCA-Methoden verwenden.'
       },
       step4: {
         title: 'Überblick behalten – CAPA Tracking Log',
         images: [
-          { caption: 'Dashboard – KPIs für Management Review' }
+          { caption: 'Dashboard v2.0 – KPIs, Wirksamkeit, Kosten' }
         ],
         popupLabel: 'Anleitung zur Nutzung anzeigen',
-        bigPicture: 'Das große Bild',
-        bigPictureText: 'Einzelne CAPAs sind wichtig – aber Sie brauchen die Gesamtübersicht. Der Log ist Ihre zentrale Datenbank.',
+        bigPicture: 'Zentrale Datenbank mit KPI-Dashboard',
+        bigPictureText: 'Version 2.0: 20 Spalten, 4 Blätter, bedingte Formatierung für Priorität, Status, Überfällig und Wirksamkeit.',
         features: 'Features:',
         featureItems: [
-          { label: 'Status-Tracking:', text: 'Ampelfarben' },
-          { label: 'Fristenüberwachung:', text: 'Überfällig = rot' },
-          { label: 'Dashboard:', text: 'KPIs auf einen Blick' }
+          { label: 'Farbcodierung:', text: 'Priorität, Status, Überfällig, Wirksamkeit – alles mit bedingter Formatierung' },
+          { label: 'Dashboard:', text: 'Leistungskennzahlen, Wirksamkeitsmetriken, Quellen-, Prioritäts- und Ursachenverteilung' },
+          { label: 'Kostenübersicht:', text: 'CAPA-Gesamtkosten, Ø pro CAPA, offene vs. abgeschlossene Kosten' }
         ],
-        kpis: 'KPIs für Management Review:',
+        kpis: 'Dashboard-KPIs:',
         kpiItems: [
-          'Durchschnittliche Schließzeit',
-          'Anzahl überfälliger CAPAs',
-          'Verteilung nach Quelle'
+          'Wirksamkeitsrate (Ziel: ≥85%)',
+          'Wiederauftretensrate (Ziel: ≤5%)',
+          'Termingerechter Abschluss (Ziel: ≥90%)',
+          'Vorbeugungsverhältnis (steigender Trend)'
         ]
       },
       step5: {
         title: 'So sieht\'s fertig aus – Beispiel-CAPA',
         learnByExample: 'Lernen am Beispiel',
-        learnByExampleText: 'Theorie ist gut, ein echtes Beispiel besser. Dieses komplett ausgefüllte CAPA zeigt, wie alles zusammenwirkt.',
-        scenario: 'Das Szenario:',
+        learnByExampleText: 'Alle 10 Sektionen komplett ausgefüllt – vom Katheter-Etikettierungsproblem bis zur erfolgreichen Wirksamkeitsprüfung.',
+        scenario: 'Das Szenario (Katheter UC-200):',
         scenarioItems: [
-          'OOS-Befund bei Incoming Inspection',
-          '5-Why-Analyse durchgeführt',
-          'Root Cause: Lieferant änderte Spec',
-          'Action: Lieferantenaudit + neue Prüfung',
-          'Prevention: Change-Notification-Agreement',
-          'Verification: 3 Monate Monitoring',
-          'Closure: Freigabe durch QM'
+          'Falsches Verfallsdatum auf 2.400 Einheiten gedruckt',
+          '5-Warum-Analyse → SOP fehlt DHF/DMR-Verifizierungsschritt',
+          'Sofortmaßnahmen: Lot gesperrt, 12 Kunden benachrichtigt',
+          'Korrektur: SOP Rev 4, Checkliste erstellt, 6 Mitarbeiter geschult',
+          'Horizontale Ausweitung: 32 SKUs auditiert, UC-150 Diskrepanz gefunden',
+          'Vorbeugung: ERP-Automatisierung geplant, jährliches Etikettenaudit',
+          'Wirksamkeit: 92 Tage Monitoring, 0 Wiederholungen → WIRKSAM'
         ],
-        tip: 'Eignet sich auch als Trainingsreferenz für neue Mitarbeiter.'
+        tip: 'Inkl. RM-Akte-Prüfung, FSCA-Bewertung und Managementbewertungs-Abschluss – perfekte Trainingsreferenz.'
       },
       step6: {
         title: 'Für den Schreibtisch – Quick Reference Card',
@@ -540,87 +582,88 @@ export default function CAPASystem() {
       step1: {
         title: 'Define the Process – CAPA SOP',
         whyFirst: 'Why the SOP first?',
-        whyFirstText: 'The SOP is the foundation of your CAPA system. Without a clear process definition, no one knows when a CAPA should be initiated and who is responsible.',
-        whatRegulates: 'What this SOP regulates:',
+        whyFirstText: 'The SOP is the foundation of your CAPA system. Version 2.0 covers 11 sections – from NC→CAPA criteria to Supplier CAPA to reopening workflow.',
+        whatRegulates: 'New in v2.0:',
         items: [
-          { label: 'Trigger:', text: 'When is a CAPA opened?' },
-          { label: 'Escalation:', text: 'Minor vs. Major vs. Critical' },
-          { label: 'Responsibilities:', text: 'Who does what?' },
-          { label: 'Deadlines:', text: 'How long can a CAPA stay open?' },
-          { label: 'Interfaces:', text: 'NC, Complaints, Management Review' }
+          { label: 'Escalation Matrix:', text: 'Priority auto-determines timelines and approval levels' },
+          { label: 'NC→CAPA Criteria:', text: 'Clear decision table – not every NC needs a CAPA' },
+          { label: 'Supplier CAPA:', text: 'Dedicated process for external deviations' },
+          { label: 'Reopening:', text: 'Defined workflow with auto-escalation on 2nd reopen' },
+          { label: 'KPI Definitions:', text: 'Effectiveness rate, recurrence rate, on-time closure, preventive ratio' }
         ],
-        tip: 'The decision table in §5.1.1 prevents CAPA inflation – not every NC needs a CAPA.'
+        tip: '11 sections – fully compliant with ISO 13485 §8.5.2/8.5.3, FDA 21 CFR 820.100 and EU MDR.'
       },
       step2: {
         title: 'Document CAPAs – The Form',
         oneForm: 'One form per CAPA',
-        oneFormText: 'The form guides you through the entire CAPA lifecycle in a structured way – from problem description to closure.',
-        sections: 'Included sections:',
+        oneFormText: 'Version 2.0 with 10 sections – now incl. Risk Management file review, FSCA assessment, and mandatory horizontal deployment.',
+        sections: 'The 10 sections:',
         items: [
-          { label: 'Header:', text: 'ID, date, source, priority' },
-          { label: 'Problem:', text: 'What happened? Impact?' },
-          { label: 'Root Cause:', text: 'Method + result' },
-          { label: 'Actions:', text: 'Corrective + Preventive' },
-          { label: 'Verification:', text: 'Effectiveness evidence' },
-          { label: 'Closure:', text: 'Approvals + signatures' }
+          { label: 'Problem Description:', text: 'With impact assessment and cost estimation' },
+          { label: 'Containment:', text: 'Immediate actions + FSCA assessment (field safety corrective action)' },
+          { label: 'Root Cause Investigation:', text: '5-Why with validation checklist' },
+          { label: 'Corrective & Preventive Actions:', text: 'Incl. mandatory horizontal deployment' },
+          { label: 'RM File Review:', text: 'Bridge to ISO 14971 risk management' },
+          { label: 'Reopening & Closure:', text: 'Defined triggers, management review' }
         ],
-        tip: 'All mandatory fields per ISO 13485 §8.5.2/8.5.3 and FDA 820.100 included.'
+        tip: 'Mandatory horizontal deployment – a top finding in FDA Warning Letters, now built into the form.'
       },
       step3: {
         title: 'Find Root Causes – Root Cause Analysis Toolkit',
         images: [
-          { tab: '5-Why', caption: 'Structured questioning to the root cause' },
-          { tab: 'Ishikawa', caption: 'Sort causes by 6M categories' },
-          { tab: 'Pareto', caption: 'Identify the vital 20%' }
+          { tab: '5-Why', caption: 'Structured questioning with validation checklist' },
+          { tab: 'Ishikawa', caption: '6M categories – 4 cause slots per category' },
+          { tab: 'Pareto', caption: '80/20 analysis with auto-calculation' }
         ],
-        popupLabel: 'Instructions – When to use which method?',
+        popupLabel: 'Show method selection guide',
         commonMistake: 'The most common CAPA mistake',
-        commonMistakeText: '"Human error" is not a root cause. Superficial analysis leads to ineffective actions.',
-        toolkitContains: 'The toolkit contains:',
+        commonMistakeText: '"Human error" is not a root cause. Superficial analysis leads to ineffective actions and repeat findings.',
+        toolkitContains: 'New in v2.0:',
         items: [
-          { label: '5-Why:', text: 'Structured questioning' },
-          { label: 'Ishikawa:', text: '6M categories (Man, Machine, Material, Method, Measurement, Environment)' },
-          { label: 'Pareto:', text: 'Apply the 80/20 rule' },
-          { label: 'Instructions:', text: 'Which method when?' }
+          { label: '5-Why:', text: 'With root cause validation checklist (Yes/No dropdown)' },
+          { label: 'Ishikawa:', text: '6M categories with 4 cause slots + descriptions' },
+          { label: 'Pareto:', text: '15 rows, automatic cumulative % calculation' },
+          { label: 'Method Guide:', text: 'NEW – comparison table + decision aid' }
         ],
-        tip: 'Ask "Why?" at least 5 times until you reach a process or system failure.'
+        tip: 'For Critical/High priority CAPAs: use at least two complementary RCA methods.'
       },
       step4: {
         title: 'Keep the Overview – CAPA Tracking Log',
         images: [
-          { caption: 'Dashboard – KPIs for Management Review' }
+          { caption: 'Dashboard v2.0 – KPIs, effectiveness, costs' }
         ],
         popupLabel: 'Show usage instructions',
-        bigPicture: 'The big picture',
-        bigPictureText: 'Individual CAPAs are important – but you need the overall view. The log is your central database.',
+        bigPicture: 'Central database with KPI dashboard',
+        bigPictureText: 'Version 2.0: 20 columns, 4 sheets, conditional formatting for priority, status, overdue, and effectiveness.',
         features: 'Features:',
         featureItems: [
-          { label: 'Status tracking:', text: 'Traffic light colors' },
-          { label: 'Deadline monitoring:', text: 'Overdue = red' },
-          { label: 'Dashboard:', text: 'KPIs at a glance' }
+          { label: 'Color coding:', text: 'Priority, status, overdue, effectiveness – all with conditional formatting' },
+          { label: 'Dashboard:', text: 'Performance KPIs, effectiveness metrics, source/priority/root cause breakdowns' },
+          { label: 'Cost summary:', text: 'Total CAPA costs, avg per CAPA, open vs. closed costs' }
         ],
-        kpis: 'KPIs for Management Review:',
+        kpis: 'Dashboard KPIs:',
         kpiItems: [
-          'Average closure time',
-          'Number of overdue CAPAs',
-          'Distribution by source'
+          'Effectiveness rate (target: ≥85%)',
+          'Recurrence rate (target: ≤5%)',
+          'On-time closure (target: ≥90%)',
+          'Preventive ratio (rising trend)'
         ]
       },
       step5: {
         title: 'See the Finished Result – Example CAPA',
         learnByExample: 'Learn by example',
-        learnByExampleText: 'Theory is good, a real example is better. This completely filled out CAPA shows how everything works together.',
-        scenario: 'The scenario:',
+        learnByExampleText: 'All 10 sections completely filled – from catheter labeling issue to successful effectiveness verification.',
+        scenario: 'The scenario (Catheter UC-200):',
         scenarioItems: [
-          'OOS finding at incoming inspection',
-          '5-Why analysis performed',
-          'Root Cause: Supplier changed spec',
-          'Action: Supplier audit + new testing',
-          'Prevention: Change notification agreement',
-          'Verification: 3 months monitoring',
-          'Closure: Approval by QM'
+          'Wrong expiry date printed on 2,400 units',
+          '5-Why analysis → SOP missing DHF/DMR verification step',
+          'Containment: lot quarantined, 12 customers notified',
+          'Correction: SOP Rev 4, checklist created, 6 employees trained',
+          'Horizontal deployment: 32 SKUs audited, UC-150 discrepancy found',
+          'Prevention: ERP automation planned, annual labeling audit',
+          'Effectiveness: 92 days monitoring, 0 recurrences → EFFECTIVE'
         ],
-        tip: 'Also suitable as training reference for new employees.'
+        tip: 'Incl. RM file review, FSCA assessment, and management review closure – perfect training reference.'
       },
       step6: {
         title: 'For Your Desk – Quick Reference Card',
@@ -744,7 +787,7 @@ export default function CAPASystem() {
           <StepPDF 
             number={1} 
             title={text.step1.title}
-            pdfPath="/docs/capa/QCore_CAPA-SOP_v1.0.pdf"
+            pdfPath={isEn ? '/docs/capa/QCore_CAPA-SOP_v2.0.pdf' : '/docs/capa/QCore_CAPA-SOP_v2.0_DE.pdf'}
             pdfHeight={700}
           >
             <h4 className="font-semibold text-lg mb-3" style={{ color: '#0f172a' }}>{text.step1.whyFirst}</h4>
@@ -770,7 +813,7 @@ export default function CAPASystem() {
           <StepPDF 
             number={2} 
             title={text.step2.title}
-            pdfPath="/docs/capa/QCore_CAPA-Form_v1.0.pdf"
+            pdfPath={isEn ? '/docs/capa/QCore_CAPA-Form_v2.0.pdf' : '/docs/capa/QCore_CAPA-Form_v2.0_DE.pdf'}
             pdfHeight={650}
           >
             <h4 className="font-semibold text-lg mb-3" style={{ color: '#0f172a' }}>{text.step2.oneForm}</h4>
@@ -861,7 +904,7 @@ export default function CAPASystem() {
           <StepPDF 
             number={5} 
             title={text.step5.title}
-            pdfPath="/docs/capa/QCore_CAPA-Example_v1.0.pdf"
+            pdfPath={isEn ? '/docs/capa/QCore_CAPA-Example_v2.0.pdf' : '/docs/capa/QCore_CAPA-Example_v2.0_DE.pdf'}
             pdfHeight={700}
           >
             <h4 className="font-semibold text-lg mb-3" style={{ color: '#0f172a' }}>{text.step5.learnByExample}</h4>

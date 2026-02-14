@@ -10,7 +10,7 @@ const getProducts = (t) => [
     id: 'capa-system',
     title: t('products.capa.title'),
     oneLiner: t('products.capa.oneLiner'),
-    price: '129',
+    price: '189',
 
     docs: 7,
     pages: '~45',
@@ -19,7 +19,7 @@ const getProducts = (t) => [
     documents: t('products.capa.documents'),
     faq: t('products.capa.faq'),
     href: '/produkte/capa-system',
-    gumroad: { en: 'https://qcore33.gumroad.com/l/capa-system', de: null },
+    gumroad: { en: 'https://qcore33.gumroad.com/l/capa-system', de: 'https://qcore33.gumroad.com/l/zkrijn' },
   },
   {
     id: 'nc-system',
@@ -145,85 +145,69 @@ export default function Produkte() {
       
       <main className="relative min-h-screen">
         
-        {/* Hero - Mit Expertise-Signal */}
-        <section className="relative pt-24 pb-4">
+        {/* Hero + Tabs — kompakt in einer Zeile */}
+        <section className="relative pt-24 pb-2">
           <div className="relative z-10 max-w-[90%] mx-auto px-8">
-            <h1 
-              className="text-4xl md:text-5xl mb-2"
-              style={{ fontFamily: "'Cormorant', serif", color: '#1e293b', fontWeight: 400 }}
-            >
-              {t('products.hero.title')}
-            </h1>
-            <p className="text-lg mb-3" style={{ color: '#475569' }}>
-              {t('products.hero.subtitle')}
-            </p>
-            {/* Expertise Signal */}
-            <p className="text-sm" style={{ color: '#64748b' }}>
-              {t('products.hero.expertise')}{' '}
-              <Link href="/ueber-mich" className="hover:underline" style={{ color: '#3b82f6' }}>
-                {t('products.hero.learnMore')}
-              </Link>
-            </p>
-          </div>
-        </section>
+            <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+              {/* Links: Titel + Subtitle */}
+              <div className="flex-1 min-w-0">
+                <h1 
+                  className="text-4xl md:text-5xl mb-1"
+                  style={{ fontFamily: "'Cormorant', serif", color: '#1e293b', fontWeight: 400 }}
+                >
+                  {t('products.hero.title')}
+                </h1>
+                <p className="text-base mb-2" style={{ color: '#475569' }}>
+                  {t('products.hero.subtitle')}
+                </p>
+                <p className="text-sm" style={{ color: '#64748b' }}>
+                  {t('products.hero.expertise')}{' '}
+                  <Link href="/ueber-mich" className="hover:underline" style={{ color: '#3b82f6' }}>
+                    {t('products.hero.learnMore')}
+                  </Link>
+                </p>
+              </div>
 
-        {/* Trust Signals Bar */}
-        <section className="relative py-3">
-          <div className="relative z-10 max-w-[90%] mx-auto px-8">
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs" style={{ color: '#64748b' }}>
-              <span className="flex items-center gap-1.5">
-                <span style={{ color: '#22c55e' }}>✓</span>
-                {t('products.trust.auditBased')}
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span style={{ color: '#22c55e' }}>✓</span>
-                {t('products.trust.noGeneric')}
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span style={{ color: '#22c55e' }}>✓</span>
-                {t('products.trust.readyToUse')}
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span style={{ color: '#22c55e' }}>✓</span>
-                {t('products.trust.transparent')}
-              </span>
+              {/* Rechts: Industrie-Tabs */}
+              <div className="flex gap-2 flex-shrink-0">
+                {/* MedTech - Active */}
+                <div 
+                  className="backdrop-blur-sm px-4 py-3 rounded-lg border"
+                  style={{ backgroundColor: 'rgba(30, 58, 138, 0.06)', borderColor: 'rgba(30, 58, 138, 0.1)' }}
+                >
+                  <p className="text-base font-semibold mb-1" style={{ color: '#1e293b', fontFamily: "'Cormorant', serif" }}>
+                    {t('products.tabs.medtech')}
+                  </p>
+                  <div className="flex flex-wrap gap-1">
+                    <span className="px-1.5 py-0.5 rounded text-xs" style={{ backgroundColor: 'rgba(30, 58, 138, 0.2)', color: '#1e3a8a' }}>ISO 13485</span>
+                    <span className="px-1.5 py-0.5 rounded text-xs" style={{ backgroundColor: 'rgba(30, 58, 138, 0.2)', color: '#1e3a8a' }}>FDA 820</span>
+                    <span className="px-1.5 py-0.5 rounded text-xs" style={{ backgroundColor: 'rgba(30, 58, 138, 0.2)', color: '#1e3a8a' }}>EU MDR</span>
+                  </div>
+                </div>
+                
+                {/* Pharma - Coming Soon */}
+                <div 
+                  className="backdrop-blur-sm px-4 py-3 rounded-lg opacity-60 border"
+                  style={{ backgroundColor: 'rgba(30, 58, 138, 0.04)', borderColor: 'rgba(30, 58, 138, 0.08)' }}
+                >
+                  <p className="text-base font-semibold mb-1" style={{ color: '#64748b', fontFamily: "'Cormorant', serif" }}>
+                    {t('products.tabs.pharma')}
+                  </p>
+                  <div className="flex flex-wrap gap-1">
+                    <span className="px-1.5 py-0.5 rounded text-xs" style={{ backgroundColor: 'rgba(100, 116, 139, 0.2)', color: '#64748b' }}>GMP</span>
+                    <span className="px-1.5 py-0.5 rounded text-xs" style={{ backgroundColor: 'rgba(100, 116, 139, 0.2)', color: '#64748b' }}>ICH Q7</span>
+                    <span className="text-xs ml-1" style={{ color: '#94a3b8' }}>{t('products.tabs.planned')}</span>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        </section>
 
-        {/* Industrie-Tabs */}
-        <section className="relative py-4">
-          <div className="relative z-10 max-w-[90%] mx-auto px-8">
-            <div className="flex gap-3">
-              {/* MedTech - Active */}
-              <div 
-                className="backdrop-blur-sm px-6 py-4 rounded-lg flex-1 md:flex-none md:min-w-[280px] border"
-                style={{ backgroundColor: 'rgba(30, 58, 138, 0.06)', borderColor: 'rgba(30, 58, 138, 0.1)' }}
-              >
-                <p className="text-xl font-semibold mb-1" style={{ color: '#1e293b', fontFamily: "'Cormorant', serif" }}>
-                  {t('products.tabs.medtech')}
-                </p>
-                <div className="flex flex-wrap gap-1">
-                  <span className="px-2 py-0.5 rounded text-xs" style={{ backgroundColor: 'rgba(30, 58, 138, 0.2)', color: '#1e3a8a' }}>ISO 13485</span>
-                  <span className="px-2 py-0.5 rounded text-xs" style={{ backgroundColor: 'rgba(30, 58, 138, 0.2)', color: '#1e3a8a' }}>FDA 21 CFR 820</span>
-                  <span className="px-2 py-0.5 rounded text-xs" style={{ backgroundColor: 'rgba(30, 58, 138, 0.2)', color: '#1e3a8a' }}>EU MDR</span>
-                </div>
-              </div>
-              
-              {/* Pharma - Coming Soon */}
-              <div 
-                className="backdrop-blur-sm px-6 py-4 rounded-lg flex-1 md:flex-none md:min-w-[280px] opacity-60 border"
-                style={{ backgroundColor: 'rgba(30, 58, 138, 0.04)', borderColor: 'rgba(30, 58, 138, 0.08)' }}
-              >
-                <p className="text-xl font-semibold mb-1" style={{ color: '#64748b', fontFamily: "'Cormorant', serif" }}>
-                  {t('products.tabs.pharma')}
-                </p>
-                <div className="flex flex-wrap gap-1">
-                  <span className="px-2 py-0.5 rounded text-xs" style={{ backgroundColor: 'rgba(100, 116, 139, 0.2)', color: '#64748b' }}>GMP</span>
-                  <span className="px-2 py-0.5 rounded text-xs" style={{ backgroundColor: 'rgba(100, 116, 139, 0.2)', color: '#64748b' }}>ICH Q7</span>
-                  <span className="text-xs ml-1" style={{ color: '#94a3b8' }}>{t('products.tabs.planned')}</span>
-                </div>
-              </div>
+            {/* Trust Signals — inline, kompakt */}
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-1 text-xs mt-3" style={{ color: '#64748b' }}>
+              <span className="flex items-center gap-1"><span style={{ color: '#22c55e' }}>✓</span> {t('products.trust.auditBased')}</span>
+              <span className="flex items-center gap-1"><span style={{ color: '#22c55e' }}>✓</span> {t('products.trust.noGeneric')}</span>
+              <span className="flex items-center gap-1"><span style={{ color: '#22c55e' }}>✓</span> {t('products.trust.readyToUse')}</span>
+              <span className="flex items-center gap-1"><span style={{ color: '#22c55e' }}>✓</span> {t('products.trust.transparent')}</span>
             </div>
           </div>
         </section>

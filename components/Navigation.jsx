@@ -158,7 +158,7 @@ export default function Navigation() {
 
   const produkteItems = [
     { label: 'MedTech', isHeader: true, badge: 'ISO 13485 · FDA' },
-    { label: t('nav.dropdown.capa'), href: '/produkte/capa-system', price: '€129' },
+    { label: t('nav.dropdown.capa'), href: '/produkte/capa-system', price: '€189' },
     { label: t('nav.dropdown.nc'), href: '/produkte/nc-system', price: '€99' },
     { label: t('nav.dropdown.audit'), href: '/produkte/audit-prep-kit', price: '€79' },
     { divider: true },

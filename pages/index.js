@@ -194,7 +194,7 @@ export default function Home() {
                   {[
                     {
                       title: 'CAPA System',
-                      price: '€129',
+                      price: '€189',
                       desc: isDE ? '7 Dokumente · SOP, RCA-Toolkit, Tracking' : '7 documents · SOP, RCA toolkit, tracking',
                       href: '/produkte/capa-system',
                     },
