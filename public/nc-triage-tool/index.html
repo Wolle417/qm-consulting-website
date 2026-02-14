@@ -329,7 +329,7 @@ function renderStepIndicator(){
     let dotClass='step-pending';let icon=i+1;
     if(isCurrent){dotClass='step-current';}
     else if(answered){dotClass='step-done';icon='✓';}
-    const clickAttr=answered&&!isCurrent?`onclick="goToStep('${s.id}')"`:''
+    const clickAttr=answered&&!isCurrent?`onclick="goToStep('${s.id}')"`:'';
     return`<div class="flex items-center gap-1">
       <div class="tooltip-custom"><div class="step-dot ${dotClass}" ${clickAttr}>${icon}</div>${answered&&summary?`<div class="tooltip-text">${summary}</div>`:''}</div>
       <span class="text-xs ${isCurrent?'text-blue-700 font-semibold':'text-gray-500'} hidden sm:inline">${s.label}</span>
