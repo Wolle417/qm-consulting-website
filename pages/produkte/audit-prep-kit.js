@@ -349,10 +349,10 @@ const t = {
       title: 'Komplettpaket für Ihr QMS',
       text: 'Das Audit Prep Kit ist Teil unserer QMS-Bundle-Serie:',
       bundles: [
-        { name: 'CAPA System Bundle', price: '€129', link: '/produkte/capa-system' },
-        { name: 'NC Management Bundle', price: '€99', link: '/produkte/nc-system' }
+        { name: 'CAPA System Bundle', price: '€189', link: '/produkte/capa-system' },
+        { name: 'NC Management Bundle', price: '€139', link: '/produkte/nc-system' }
       ],
-      bundleHint: 'Alle 3 Bundles zusammen: €307 statt €349'
+      bundleHint: 'Alle 3 Bundles zusammen: Fragen Sie nach einem Paketpreis'
     },
     buyBox: {
       price: '€79',
@@ -503,10 +503,10 @@ const t = {
       title: 'Complete package for your QMS',
       text: 'The Audit Prep Kit is part of our QMS bundle series:',
       bundles: [
-        { name: 'CAPA System Bundle', price: '€129', link: '/produkte/capa-system' },
-        { name: 'NC Management Bundle', price: '€99', link: '/produkte/nc-system' }
+        { name: 'CAPA System Bundle', price: '€189', link: '/produkte/capa-system' },
+        { name: 'NC Management Bundle', price: '€139', link: '/produkte/nc-system' }
       ],
-      bundleHint: 'All 3 bundles together: €307 instead of €349'
+      bundleHint: 'All 3 bundles together: Ask for a package price'
     },
     buyBox: {
       price: '€79',

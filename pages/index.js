@@ -200,8 +200,8 @@ export default function Home() {
                     },
                     {
                       title: 'NC Management',
-                      price: '€99',
-                      desc: isDE ? '7 Dokumente · Bewertungsmatrix, Eskalation' : '7 documents · Assessment matrix, escalation',
+                      price: '€139',
+                      desc: isDE ? '11 Dokumente · Dashboard, Classifier, CAPA-Guide' : '11 documents · Dashboard, Classifier, CAPA Guide',
                       href: '/produkte/nc-system',
                     },
                     {

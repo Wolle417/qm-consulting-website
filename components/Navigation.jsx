@@ -159,7 +159,7 @@ export default function Navigation() {
   const produkteItems = [
     { label: 'MedTech', isHeader: true, badge: 'ISO 13485 · FDA' },
     { label: t('nav.dropdown.capa'), href: '/produkte/capa-system', price: '€189' },
-    { label: t('nav.dropdown.nc'), href: '/produkte/nc-system', price: '€99' },
+    { label: t('nav.dropdown.nc'), href: '/produkte/nc-system', price: '€139' },
     { label: t('nav.dropdown.audit'), href: '/produkte/audit-prep-kit', price: '€79' },
     { divider: true },
     { label: 'Pharma', isHeader: true, badge: 'GMP · GDP' },
@@ -177,8 +177,8 @@ export default function Navigation() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
-      className="fixed top-0 left-0 right-0 bg-slate-900/40 backdrop-blur-sm"
-      style={{ zIndex: 100 }}
+      className="fixed top-0 left-0 right-0 backdrop-blur-sm"
+      style={{ backgroundColor: 'rgba(30, 58, 138, 0.06)', borderBottom: '1px solid rgba(30, 58, 138, 0.1)', zIndex: 100 }}
     >
       <div className="w-full pl-4 pr-6 lg:pl-8 lg:pr-12 xl:pl-12 xl:pr-24 py-3">
         <div className="flex items-center justify-between">
