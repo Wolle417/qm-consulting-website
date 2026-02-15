@@ -27,6 +27,7 @@ export default function NCTriage() {
 
       <main className="relative min-h-screen">
         <div className="pt-20">
+          <h1 className="sr-only">{isDE ? 'NC-Triage Tool — CAPA oder Korrektur?' : 'NC-Triage Tool — CAPA or Correction?'}</h1>
           <iframe
             key={locale}
             src={`/nc-triage-tool/index.html?lang=${locale === 'en' ? 'en' : 'de'}`}

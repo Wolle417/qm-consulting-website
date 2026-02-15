@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import QMWissenSidebar from '../components/QMWissenSidebar';
@@ -30,6 +31,10 @@ export default function QMWissen() {
 
   return (
     <div className="min-h-screen relative">
+      <Head>
+        <title>QM-Wissen | Fachartikel zu ISO 13485, CAPA, FMEA & mehr | QCore</title>
+        <meta name="description" content="Praxisnahe QM-Fachartikel für MedTech & Pharma: ISO 13485, CAPA-Prozesse, FMEA, Audit-Vorbereitung, Validierung. Kostenlos von QCore Consulting." />
+      </Head>
       <Navigation />
       
       {/* Main Layout with proper spacing */}

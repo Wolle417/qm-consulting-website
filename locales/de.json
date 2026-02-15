@@ -60,7 +60,7 @@
   "about": {
     "meta": {
       "title": "Über mich | QCore Consulting",
-      "description": "17+ Jahre QM-Erfahrung in MedTech, Pharma und hochregulierten Industrien."
+      "description": "Stefan Schönwälder — 17+ Jahre QM-Erfahrung in MedTech, Pharma & Nukleartechnik. Siemens Healthineers, Framatome, OSRAM. QM-Beratung & Templates für regulierte Industrien."
     },
     "tagline": "Technisches Qualitätsmanagement für regulierte Industrien",
     "intro1": "18 Jahre Erfahrung in hochregulierten Branchen – von Halbleitertechnik über LED-Entwicklung bis Medizintechnik.",
@@ -111,7 +111,7 @@
   "contact": {
     "meta": {
       "title": "Kontakt | QCore Consulting",
-      "description": "Kontaktieren Sie QCore Consulting für QM-Beratung und Templates."
+      "description": "Kontakt zu QCore Consulting: QM-Beratung, Templates & Audit-Vorbereitung für MedTech und Pharma. Standort Herzogenaurach — auch remote verfügbar."
     },
     "title": "Kontakt",
     "subtitle": "Schreiben Sie mir – ich antworte in der Regel innerhalb von 24 Stunden.",
@@ -123,7 +123,7 @@
   "services": {
     "meta": {
       "title": "Leistungen | QCore Consulting",
-      "description": "QM-Beratung für MedTech, Pharma und regulierte Industrien."
+      "description": "QM-Beratung für MedTech & Pharma: ISO 13485 Zertifizierung, CAPA & NC-Systeme, Risikomanagement, Audit-Vorbereitung, Prozessvalidierung. Praxisnah & regulatorisch sicher."
     },
     "title": "Leistungen",
     "subtitle": "Fokussierte QM-Unterstützung – von der Prozessanalyse bis zur Zertifizierung."
@@ -131,7 +131,7 @@
   "caseStudy": {
     "meta": {
       "title": "Praxisbeispiel | QCore Consulting",
-      "description": "Pharma QM Projekt: API-Registrierung für den japanischen Markt."
+      "description": "Pharma-Praxisbeispiel: API-Registrierung für den japanischen Markt. GMP-konforme Dokumentation, Behördenkommunikation & Qualitätssicherung. Von QCore Consulting."
     },
     "title": "Praxisbeispiel",
     "subtitle": "Pharma QM Projekt: API-Registrierung Japan"
@@ -307,7 +307,7 @@
     "capa": {
       "meta": {
         "title": "CAPA System Bundle | ISO 13485 & FDA konforme Templates | QCore",
-        "description": "Audit-fertiges CAPA-System für MedTech: SOP, Formulare, Tracking, Root Cause Toolkit. ISO 13485, FDA 21 CFR 820.100, EU MDR konform. €129."
+        "description": "Audit-fertiges CAPA-System für MedTech: SOP, Formulare, Tracking, Root Cause Toolkit. ISO 13485, FDA 21 CFR 820.100, EU MDR konform. €189."
       },
       "title": "CAPA System Bundle",
       "subtitle": "7 Dokumente für ein funktionierendes, audit-fertiges CAPA-System. Sofort einsetzbar, mit ausgefülltem Beispiel.",
@@ -346,12 +346,12 @@
         { "q": "Wie funktioniert die Zahlung?", "a": "Die Zahlung läuft über Gumroad (Kreditkarte, PayPal). Nach der Zahlung erhalten Sie sofort den Download-Link per E-Mail." },
         { "q": "Gibt es Support bei Fragen?", "a": "Ja, bei Fragen zur Implementierung können Sie mich per E-Mail kontaktieren. Für umfangreichere Anpassungen biete ich auch Beratung an." }
       ],
-      "ctaText": "€129 für ein audit-fertiges System, das Ihnen Wochen an Entwicklungszeit spart."
+      "ctaText": "€189 für ein audit-fertiges System, das Ihnen Wochen an Entwicklungszeit spart."
     },
     "nc": {
       "meta": {
         "title": "NC Management Bundle | ISO 13485 & FDA konforme Templates | QCore",
-        "description": "Vollständiges NC-System für MedTech: SOP, Formulare, Tracking, Bewertungsmatrix. ISO 13485, FDA 21 CFR 820.90, EU MDR konform. €99."
+        "description": "Vollständiges NC-System für MedTech: SOP, Formulare, Tracking, Bewertungsmatrix. ISO 13485, FDA 21 CFR 820.90, EU MDR konform. €139."
       },
       "title": "NC Management Bundle",
       "subtitle": "7 Dokumente für systematische Fehlerbehandlung. Mit Bewertungsmatrix, Eskalationsleitfaden und ausgefülltem Beispiel.",
@@ -390,7 +390,7 @@
         { "q": "Ist die Sprache Englisch oder Deutsch?", "a": "Die Dokumente sind auf Englisch – der Industriestandard für internationale Zertifizierungen und FDA-Submissions." },
         { "q": "Wie funktioniert die Zahlung?", "a": "Die Zahlung läuft über Gumroad (Kreditkarte, PayPal). Nach der Zahlung erhalten Sie sofort den Download-Link per E-Mail." }
       ],
-      "ctaText": "€99 für einen systematischen NC-Prozess, der konsistente Fehlerbehandlung sicherstellt."
+      "ctaText": "€139 für einen systematischen NC-Prozess, der konsistente Fehlerbehandlung sicherstellt."
     },
     "audit": {
       "meta": {

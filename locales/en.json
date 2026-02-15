@@ -60,7 +60,7 @@
   "about": {
     "meta": {
       "title": "About | QCore Consulting",
-      "description": "17+ years QM experience in MedTech, Pharma and highly regulated industries."
+      "description": "Stefan Schönwälder — 17+ years QM experience in MedTech, Pharma & nuclear technology. Siemens Healthineers, Framatome, OSRAM. QM consulting & templates for regulated industries."
     },
     "tagline": "Technical Quality Management for Regulated Industries",
     "intro1": "18 years of experience in highly regulated industries – from semiconductor technology to LED development to medical devices.",
@@ -111,7 +111,7 @@
   "contact": {
     "meta": {
       "title": "Contact | QCore Consulting",
-      "description": "Contact QCore Consulting for QM consulting and templates."
+      "description": "Contact QCore Consulting: QM consulting, audit-ready templates & audit preparation for MedTech and Pharma. Based in Germany — available remotely worldwide."
     },
     "title": "Contact",
     "subtitle": "Write to me – I usually respond within 24 hours.",
@@ -123,7 +123,7 @@
   "services": {
     "meta": {
       "title": "Services | QCore Consulting",
-      "description": "QM consulting for MedTech, Pharma and regulated industries."
+      "description": "QM consulting for MedTech & Pharma: ISO 13485 certification, CAPA & NC systems, risk management, audit preparation, process validation. Practical & regulatory-compliant."
     },
     "title": "Services",
     "subtitle": "Focused QM support – from process analysis to certification."
@@ -131,7 +131,7 @@
   "caseStudy": {
     "meta": {
       "title": "Case Study | QCore Consulting",
-      "description": "Pharma QM Project: API Registration for the Japanese Market."
+      "description": "Pharma case study: API registration for the Japanese market. GMP-compliant documentation, regulatory authority communication & quality assurance. By QCore Consulting."
     },
     "title": "Case Study",
     "subtitle": "Pharma QM Project: API Registration Japan"
@@ -307,7 +307,7 @@
     "capa": {
       "meta": {
         "title": "CAPA System Bundle | ISO 13485 & FDA compliant Templates | QCore",
-        "description": "Audit-ready CAPA system for MedTech: SOP, forms, tracking, Root Cause Toolkit. ISO 13485, FDA 21 CFR 820.100, EU MDR compliant. €129."
+        "description": "Audit-ready CAPA system for MedTech: SOP, forms, tracking, Root Cause Toolkit. ISO 13485, FDA 21 CFR 820.100, EU MDR compliant. €189."
       },
       "title": "CAPA System Bundle",
       "subtitle": "7 documents for a functional, audit-ready CAPA system. Ready to use immediately, with completed example.",
@@ -346,12 +346,12 @@
         { "q": "How does payment work?", "a": "Payment is processed via Gumroad (credit card, PayPal). After payment, you immediately receive the download link via email." },
         { "q": "Is there support for questions?", "a": "Yes, for implementation questions you can contact me via email. For extensive customizations, I also offer consulting." }
       ],
-      "ctaText": "€129 for an audit-ready system that saves you weeks of development time."
+      "ctaText": "€189 for an audit-ready system that saves you weeks of development time."
     },
     "nc": {
       "meta": {
         "title": "NC Management Bundle | ISO 13485 & FDA compliant Templates | QCore",
-        "description": "Complete NC system for MedTech: SOP, forms, tracking, assessment matrix. ISO 13485, FDA 21 CFR 820.90, EU MDR compliant. €99."
+        "description": "Complete NC system for MedTech: SOP, forms, tracking, assessment matrix. ISO 13485, FDA 21 CFR 820.90, EU MDR compliant. €139."
       },
       "title": "NC Management Bundle",
       "subtitle": "7 documents for systematic nonconformance handling. With assessment matrix, escalation guide, and completed example.",
@@ -390,7 +390,7 @@
         { "q": "Is the language English or German?", "a": "The documents are in English – the industry standard for international certifications and FDA submissions." },
         { "q": "How does payment work?", "a": "Payment is processed via Gumroad (credit card, PayPal). After payment, you immediately receive the download link via email." }
       ],
-      "ctaText": "€99 for a systematic NC process that ensures consistent handling of nonconformances."
+      "ctaText": "€139 for a systematic NC process that ensures consistent handling of nonconformances."
     },
     "audit": {
       "meta": {

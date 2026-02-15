@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://qcore-consulting.de/sitemap.xml
+
+# Block non-content pages
+Disallow: /api/
+Disallow: /_next/

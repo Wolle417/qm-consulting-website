@@ -29,7 +29,7 @@ const glassCta = {
 const t = {
   de: {
     seo: {
-      title: 'Stichprobenrechner — AQL, Validierung & Cpk kostenlos berechnen | QCore',
+      title: 'Stichprobenrechner — AQL & Validierung kostenlos | QCore',
       description: 'Kostenloser Stichprobenrechner für QM-Professionals: AQL nach ISO 2859-1, Confidence/Reliability für Prozessvalidierung, audit-sichere Normreferenzen. MedTech & Pharma.',
     },
     hero: {

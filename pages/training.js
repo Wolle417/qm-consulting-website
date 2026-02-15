@@ -11,7 +11,7 @@ export default function Training() {
   const t = {
     de: {
       meta: {
-        title: 'QM Schulungen & Workshops | FMEA, CAPA, Audit-Training | QCore Consulting',
+        title: 'QM Schulungen & Workshops | FMEA, CAPA, Audit | QCore',
         description: 'Praxisnahe QM-Schulungen für MedTech und Pharma. FMEA-Workshop, Audit-Training, CAPA-Schulung. Vor Ort oder Remote.'
       },
       hero: {
