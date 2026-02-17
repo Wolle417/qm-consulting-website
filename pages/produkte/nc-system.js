@@ -18,7 +18,7 @@ export default function NCSystem() {
   // Gumroad links
   const GUMROAD_LINKS = {
     en: 'https://qcore33.gumroad.com/l/cgjwqa',
-    de: 'https://qcore33.gumroad.com/l/TODO_DE_LINK',  // TODO: Replace with actual DE link
+    de: 'https://qcore33.gumroad.com/l/rmcqsx',
   };
 
   // Translation Object

@@ -33,7 +33,7 @@ const getProducts = (t) => [
     documents: t('products.nc.documents'),
     faq: t('products.nc.faq'),
     href: '/produkte/nc-system',
-    gumroad: { en: 'https://qcore33.gumroad.com/l/cgjwqa', de: null },
+    gumroad: { en: 'https://qcore33.gumroad.com/l/cgjwqa', de: 'https://qcore33.gumroad.com/l/rmcqsx' },
   },
   {
     id: 'audit-prep-kit',
