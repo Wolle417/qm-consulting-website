@@ -504,7 +504,7 @@ export default function NCSystem() {
             <StepContent step={text.step1} />
           </StepPDF>
 
-          <StepPDF number={2} title={text.step2.title} pdfPath={isEn ? '/docs/nc/QCore_NC-SOP_v2.0_preview.pdf' : '/docs/nc/QCore_NC-SOP_v2.0_DE_preview.pdf'} pdfHeight={550}>
+          <StepPDF number={2} title={text.step2.title} pdfPath={isEn ? '/docs/nc/QCore_NC-Form_v2.0_preview.pdf' : '/docs/nc/QCore_NC-Form_v2.0_DE_preview.pdf'} pdfHeight={550}>
             <StepContent step={text.step2} />
           </StepPDF>
 
