@@ -868,13 +868,13 @@ export default function CAPASystem() {
             </div>
           </StepTabbed>
           
-          {/* STEP 4: LOG (Images) */}
+          {/* STEP 4: LOG (Images - locale-based) */}
           <StepImages 
             number={4} 
             title={text.step4.title}
             locale={locale}
             images={[
-              { src: '/docs/capa/images/CAPA_dashboard.png', alt: 'CAPA Dashboard KPIs', caption: text.step4.images[0].caption },
+              { src: isEn ? '/docs/capa/images/CAPA_dashboard.png' : '/docs/capa/images/CAPA_dashboard_de.png', alt: isEn ? 'CAPA Dashboard KPIs' : 'CAPA Dashboard KPIs (deutsch)', caption: text.step4.images[0].caption },
             ]}
             popupImages={[
               { src: '/docs/capa/images/CAPA_instructions.png', alt: 'CAPA Log Instructions', label: text.step4.popupLabel },
@@ -926,12 +926,12 @@ export default function CAPASystem() {
             </div>
           </StepPDF>
           
-          {/* STEP 6: QUICKREF (Single Image) */}
+          {/* STEP 6: QUICKREF (Single Image - locale-based) */}
           <StepImage 
             number={6} 
             title={text.step6.title}
-            imageSrc="/docs/capa/images/Quick_Ref_Card.png"
-            imageAlt="CAPA Quick Reference Card"
+            imageSrc={isEn ? '/docs/capa/images/Quick_Ref_Card.png' : '/docs/capa/images/Quick_Ref_Card_DE.png'}
+            imageAlt={isEn ? 'CAPA Quick Reference Card' : 'CAPA Kurzreferenz'}
           >
             <h4 className="font-semibold text-lg mb-3" style={{ color: '#0f172a' }}>{text.step6.onePage}</h4>
             <p className="mb-4" style={{ color: '#475569' }}>
