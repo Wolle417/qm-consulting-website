@@ -271,6 +271,34 @@ export default function Home() {
                 </p>
 
                 <div className="space-y-4 flex-grow">
+                  <Link
+                    href="/fda-483-dashboard"
+                    className="flex items-start gap-3 group/item"
+                  >
+                    <span className="text-xl flex-shrink-0 mt-0.5">📊</span>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span
+                          className="text-base font-medium group-hover/item:underline"
+                          style={{ color: '#0f172a' }}
+                        >
+                          FDA 483 Dashboard
+                        </span>
+                        <span
+                          className="text-xs px-1.5 py-0.5 rounded font-semibold"
+                          style={{ backgroundColor: 'rgba(239, 68, 68, 0.1)', color: '#b91c1c' }}
+                        >
+                          NEW
+                        </span>
+                      </div>
+                      <p className="text-sm" style={{ color: '#1e293b' }}>
+                        {isDE ? 'Top 10 FDA-Findings — interaktiv & kostenlos' : 'Top 10 FDA findings — interactive & free'}
+                      </p>
+                    </div>
+                  </Link>
+
+                  <div className="pt-2" style={{ borderTop: '1px solid rgba(30, 58, 138, 0.1)' }} />
+
                   {liveTools.map(tool => (
                     <Link
                       key={tool.id}
