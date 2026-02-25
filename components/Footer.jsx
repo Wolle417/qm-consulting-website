@@ -55,7 +55,7 @@ export default function Footer() {
       </div>
 
       {/* Bottom: © left, Legal right */}
-      <div className="pt-6 border-t flex flex-col sm:flex-row items-center justify-between gap-2 text-xs" style={{ borderColor: 'rgba(30, 58, 138, 0.08)', color: '#94a3b8' }}>
+      <div className="pt-6 border-t flex flex-col sm:flex-row items-center justify-between gap-2 text-xs" style={{ borderColor: 'rgba(30, 58, 138, 0.08)', color: '#475569' }}>
         <p>© {currentYear} QCore Consulting</p>
         <div className="flex items-center gap-4">
           {legalLinks.map((link) => (
@@ -63,7 +63,7 @@ export default function Footer() {
               key={link.href}
               href={link.href}
               className="hover:text-qcore-blue transition-colors"
-              style={{ color: '#94a3b8' }}
+              style={{ color: '#475569' }}
             >
               {link.label}
             </Link>
