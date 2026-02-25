@@ -7,7 +7,6 @@ import { useRouter } from 'next/router';
 const servicesDE = [
   {
     id: 'capa-setup',
-    icon: '🔧',
     title: 'CAPA-System Setup',
     text: 'Komplettes CAPA-System mit SOPs, Formularen, Workflow und Wirksamkeitsnachweisen. Inkl. Einführungs-Call und 30 Tage Support.',
     includes: ['CAPA-Prozess (SOP, Formulare, Workflow)', 'Root Cause Analysis Toolkit', 'Wirksamkeitsnachweis-Templates', 'Einführungs-Call + 30 Tage Support'],
@@ -15,7 +14,6 @@ const servicesDE = [
   },
   {
     id: 'fmea-workshop',
-    icon: '⚠️',
     title: 'FMEA-Workshop + Dokumentation',
     text: 'Moderierter FMEA-Workshop für Ihr Produkt oder Ihren Prozess. Ergebnis: fertige FMEA, Risikobewertung und Maßnahmenplan. Remote oder vor Ort.',
     includes: ['Moderierter Workshop (1–2 Tage)', 'Fertige FMEA-Dokumentation', 'Risikobewertung nach ISO 14971', 'Maßnahmenplan mit Verantwortlichkeiten'],
@@ -23,7 +21,6 @@ const servicesDE = [
   },
   {
     id: 'tech-doku',
-    icon: '📄',
     title: 'Technische QM-Dokumentation',
     text: 'Erstellung oder Review technischer QM-Dokumente: Spezifikationen, Validierungsberichte, technische Files. Als Physiker verstehe ich die Prozesse, die ich dokumentiere.',
     includes: ['Technische Spezifikationen', 'Validierungsberichte', 'Requirements-Review', 'Revisionsverwaltung'],
@@ -31,7 +28,6 @@ const servicesDE = [
   },
   {
     id: 'gmp-doku',
-    icon: '💊',
     title: 'GMP/Pharma-Dokumentation',
     text: 'GMP-konforme Dokumentation: Quality Manual, Validierungsprotokolle, CAPA Reports, DMF-Struktur. Für Pharma, Biotech und verwandte Branchen.',
     includes: ['Quality Manual', 'Validierungsprotokolle', 'CAPA Reports', 'DMF-Struktur'],
@@ -39,7 +35,6 @@ const servicesDE = [
   },
   {
     id: 'externer-qmb',
-    icon: '🏢',
     title: 'Externer QMB (Teilzeit)',
     text: 'Externer Qualitätsmanagementbeauftragter auf Teilzeitbasis. QMS-Pflege, Management Reviews, Dokumentenlenkung, CAPA-Nachverfolgung.',
     includes: ['QMS-Pflege & Dokumentenlenkung', 'Management Reviews', 'CAPA/NC Nachverfolgung', 'Flexibel nach Vereinbarung'],
@@ -47,7 +42,6 @@ const servicesDE = [
   },
   {
     id: 'hybrid-bundle',
-    icon: '📦',
     title: 'Bundle + Review Call',
     text: 'QCore Template-Bundle (CAPA, NC oder Audit Prep) + persönlicher Review-Call. Gemeinsam Templates anpassen, Fragen klären, Quick Wins identifizieren.',
     includes: ['Template-Bundle Ihrer Wahl', 'Persönlicher Video-Call', 'Anpassung an Ihre Prozesse', 'Quick-Win Empfehlungen'],
@@ -55,7 +49,6 @@ const servicesDE = [
   },
   {
     id: 'qmai',
-    icon: '🤖',
     title: 'QMAI — QM × AI/LLM',
     text: 'Beratung zur Integration von AI/LLM in regulierte Produkte und Prozesse. Gap-Assessment, Validierungs-SOPs für nicht-deterministische Software, Compliance-Roadmaps.',
     includes: ['AI Gap-Assessment', 'SOP: Validierung nicht-deterministischer Software', 'AI Supplier Qualification Framework', 'EU AI Act Compliance-Roadmap'],
@@ -67,7 +60,6 @@ const servicesDE = [
 const servicesEN = [
   {
     id: 'capa-setup',
-    icon: '🔧',
     title: 'CAPA System Setup',
     text: 'Complete CAPA system with SOPs, forms, workflow, and effectiveness verification. Includes onboarding call and 30-day support.',
     includes: ['CAPA process (SOP, forms, workflow)', 'Root Cause Analysis toolkit', 'Effectiveness verification templates', 'Onboarding call + 30-day support'],
@@ -75,7 +67,6 @@ const servicesEN = [
   },
   {
     id: 'fmea-workshop',
-    icon: '⚠️',
     title: 'FMEA Workshop + Documentation',
     text: 'Facilitated FMEA workshop for your product or process. Deliverable: complete FMEA, risk assessment, and action plan. Remote or on-site.',
     includes: ['Facilitated workshop (1–2 days)', 'Complete FMEA documentation', 'Risk assessment per ISO 14971', 'Action plan with responsibilities'],
@@ -83,7 +74,6 @@ const servicesEN = [
   },
   {
     id: 'tech-doku',
-    icon: '📄',
     title: 'Technical QM Documentation',
     text: 'Creation or review of technical QM documentation: specifications, validation reports, technical files. As a physicist, I understand the processes I document.',
     includes: ['Technical specifications', 'Validation reports', 'Requirements review', 'Revision management'],
@@ -91,7 +81,6 @@ const servicesEN = [
   },
   {
     id: 'gmp-doku',
-    icon: '💊',
     title: 'GMP/Pharma Documentation',
     text: 'GMP-compliant documentation: Quality Manual, validation protocols, CAPA reports, DMF structure. For pharma, biotech and related industries.',
     includes: ['Quality Manual', 'Validation protocols', 'CAPA Reports', 'DMF structure'],
@@ -99,7 +88,6 @@ const servicesEN = [
   },
   {
     id: 'externer-qmb',
-    icon: '🏢',
     title: 'External QMR (Part-time)',
     text: 'External Quality Management Representative on a part-time basis. QMS maintenance, management reviews, document control, CAPA follow-up.',
     includes: ['QMS maintenance & document control', 'Management reviews', 'CAPA/NC follow-up', 'Flexible as agreed'],
@@ -107,7 +95,6 @@ const servicesEN = [
   },
   {
     id: 'hybrid-bundle',
-    icon: '📦',
     title: 'Bundle + Review Call',
     text: 'QCore template bundle (CAPA, NC, or Audit Prep) + personal review call. Adapt templates together, answer questions, identify quick wins.',
     includes: ['Template bundle of your choice', 'Personal video call', 'Adaptation to your processes', 'Quick-win recommendations'],
@@ -115,7 +102,6 @@ const servicesEN = [
   },
   {
     id: 'qmai',
-    icon: '🤖',
     title: 'QMAI — QM × AI/LLM',
     text: 'Consulting for integrating AI/LLM into regulated products and processes. Gap assessment, validation SOPs for non-deterministic software, compliance roadmaps.',
     includes: ['AI Gap Assessment', 'SOP: Validation of non-deterministic software', 'AI Supplier Qualification Framework', 'EU AI Act compliance roadmap'],
@@ -209,8 +195,7 @@ export default function QMBeratung() {
                 style={cardStyle}
               >
                 {/* Header */}
-                <div className="flex items-center gap-3 mb-3">
-                  <span className="text-2xl">{service.icon}</span>
+                <div className="mb-3">
                   <h2
                     className="text-xl font-semibold leading-tight"
                     style={{ fontFamily: "'Cormorant', serif", color: '#0f172a' }}

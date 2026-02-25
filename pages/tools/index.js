@@ -70,8 +70,7 @@ export default function ToolsHub() {
                 borderColor: 'rgba(34, 197, 94, 0.25)',
               }}
             >
-              <div className="flex items-start justify-between mb-3">
-                <span className="text-3xl">📊</span>
+              <div className="flex items-end justify-between mb-3">
                 <div className="flex gap-2">
                   <span
                     className="text-xs px-2 py-0.5 rounded-full font-medium"
@@ -124,8 +123,7 @@ export default function ToolsHub() {
                     borderColor: 'rgba(34, 197, 94, 0.2)',
                   }}
                 >
-                  <div className="flex items-start justify-between mb-3">
-                    <span className="text-3xl">{tool.icon}</span>
+                  <div className="flex items-end justify-between mb-3">
                     <span
                       className="text-xs px-2 py-0.5 rounded-full font-medium"
                       style={{
@@ -160,6 +158,88 @@ export default function ToolsHub() {
                 </Link>
               );
             })}
+
+            {/* QM-Wissen */}
+            <Link
+              href="/qm-wissen"
+              className="rounded-xl p-6 transition-all duration-300 hover:shadow-lg block"
+              style={{
+                ...cardStyle,
+                borderColor: 'rgba(34, 197, 94, 0.2)',
+              }}
+            >
+              <div className="flex items-end justify-between mb-3">
+                <span
+                  className="text-xs px-2 py-0.5 rounded-full font-medium"
+                  style={{ backgroundColor: 'rgba(34, 197, 94, 0.1)', color: '#22c55e', border: '1px solid rgba(34, 197, 94, 0.25)' }}
+                >
+                  Live
+                </span>
+              </div>
+              <h2
+                className="text-xl font-semibold mb-2"
+                style={{ fontFamily: "'Cormorant', serif", color: '#0f172a' }}
+              >
+                {isDE ? 'QM-Wissen' : 'QM Knowledge'}
+              </h2>
+              <p className="text-sm mb-3" style={{ color: '#475569' }}>
+                {isDE
+                  ? 'Praxisnahe Artikel zu ISO 13485, CAPA, FMEA, Root Cause Analysis und mehr — verständlich erklärt.'
+                  : 'Practical articles on ISO 13485, CAPA, FMEA, root cause analysis and more — clearly explained.'}
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {['ISO 13485', 'CAPA', 'FMEA', isDE ? 'Artikel' : 'Articles'].map(tag => (
+                  <span
+                    key={tag}
+                    className="text-xs px-2.5 py-0.5 rounded-full"
+                    style={{ backgroundColor: 'rgba(30, 58, 138, 0.1)', color: '#1e3a8a' }}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </Link>
+
+            {/* QMB-Prüfungstrainer */}
+            <Link
+              href="/qmb-trainer"
+              className="rounded-xl p-6 transition-all duration-300 hover:shadow-lg block"
+              style={{
+                ...cardStyle,
+                borderColor: 'rgba(34, 197, 94, 0.2)',
+              }}
+            >
+              <div className="flex items-end justify-between mb-3">
+                <span
+                  className="text-xs px-2 py-0.5 rounded-full font-medium"
+                  style={{ backgroundColor: 'rgba(34, 197, 94, 0.1)', color: '#22c55e', border: '1px solid rgba(34, 197, 94, 0.25)' }}
+                >
+                  Live
+                </span>
+              </div>
+              <h2
+                className="text-xl font-semibold mb-2"
+                style={{ fontFamily: "'Cormorant', serif", color: '#0f172a' }}
+              >
+                {isDE ? 'QMB-Prüfungstrainer' : 'QMB Exam Trainer'}
+              </h2>
+              <p className="text-sm mb-3" style={{ color: '#475569' }}>
+                {isDE
+                  ? 'Multiple-Choice-Fragen zur Vorbereitung auf die QMB-Zertifizierung. Themenbasiert, mit Erklärungen.'
+                  : 'Multiple choice questions for QMB certification preparation. Topic-based, with explanations.'}
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {['QMB', isDE ? 'Zertifizierung' : 'Certification', 'Multiple Choice'].map(tag => (
+                  <span
+                    key={tag}
+                    className="text-xs px-2.5 py-0.5 rounded-full"
+                    style={{ backgroundColor: 'rgba(30, 58, 138, 0.1)', color: '#1e3a8a' }}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </Link>
           </div>
 
           {/* Planned Tools */}
@@ -180,8 +260,7 @@ export default function ToolsHub() {
                       className="rounded-xl p-6"
                       style={{ ...cardStyle, opacity: 0.65 }}
                     >
-                      <div className="flex items-start justify-between mb-3">
-                        <span className="text-2xl">{tool.icon}</span>
+                      <div className="flex items-end justify-between mb-3">
                         <span
                           className="text-xs px-2 py-0.5 rounded-full"
                           style={{

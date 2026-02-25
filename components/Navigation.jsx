@@ -129,6 +129,7 @@ export default function Navigation() {
   };
 
   // Dropdown configurations
+  const isDE = locale === 'de';
   const leistungenItems = [
     { label: t('nav.dropdown.qmKmu'), href: '/qm-beratung', subtitle: 'MedTech · Pharma' },
     { label: t('nav.dropdown.riskMgmt'), href: '/risikomanagement', subtitle: 'FMEA · ISO 14971' },
@@ -140,14 +141,14 @@ export default function Navigation() {
   ];
 
   // Tools dropdown items - generated from data/tools.js
-  const isDE = locale === 'de';
   const toolsItems = [
     { label: isDE ? 'QM-Tools' : 'QM Tools', isHeader: true },
     ...tools.filter(tool => tool.status === 'live').map(tool => ({
-      label: tool.name,
+      label: isDE ? tool.name : (tool.nameEn || tool.name),
       href: tool.slug,
       subtitle: isDE ? tool.description : tool.descriptionEn,
     })),
+    { label: 'FDA 483 Dashboard', href: '/fda-483-dashboard', subtitle: isDE ? 'Top 10 FDA-Observations interaktiv analysieren' : 'Analyze top 10 FDA observations interactively' },
     { divider: true },
     { label: isDE ? 'Wissen' : 'Knowledge', isHeader: true },
     { label: isDE ? 'QM-Wissen' : 'QM Knowledge', href: '/qm-wissen', subtitle: isDE ? 'Artikel zu ISO 13485, CAPA, FMEA & mehr' : 'Articles on ISO 13485, CAPA, FMEA & more' },

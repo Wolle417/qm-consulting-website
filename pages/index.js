@@ -273,9 +273,8 @@ export default function Home() {
                 <div className="space-y-4 flex-grow">
                   <Link
                     href="/fda-483-dashboard"
-                    className="flex items-start gap-3 group/item"
+                    className="block group/item"
                   >
-                    <span className="text-xl flex-shrink-0 mt-0.5">📊</span>
                     <div>
                       <div className="flex items-center gap-2">
                         <span
@@ -303,9 +302,8 @@ export default function Home() {
                     <Link
                       key={tool.id}
                       href={tool.slug}
-                      className="flex items-start gap-3 group/item"
+                      className="block group/item"
                     >
-                      <span className="text-xl flex-shrink-0 mt-0.5">{tool.icon}</span>
                       <div>
                         <span
                           className="text-base font-medium group-hover/item:underline"
@@ -324,9 +322,8 @@ export default function Home() {
 
                   <Link
                     href="/qm-wissen"
-                    className="flex items-start gap-3 group/item"
+                    className="block group/item"
                   >
-                    <span className="text-xl flex-shrink-0 mt-0.5">📚</span>
                     <div>
                       <span
                         className="text-base font-medium group-hover/item:underline"
@@ -342,9 +339,8 @@ export default function Home() {
 
                   <Link
                     href="/qmb-trainer"
-                    className="flex items-start gap-3 group/item"
+                    className="block group/item"
                   >
-                    <span className="text-xl flex-shrink-0 mt-0.5">🎓</span>
                     <div>
                       <span
                         className="text-base font-medium group-hover/item:underline"
