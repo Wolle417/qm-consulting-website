@@ -216,14 +216,14 @@ const t = {
   de: {
     meta: {
       title: 'Audit Prep Kit | ISO 13485 Zertifizierungsaudit | QCore',
-      description: 'Audit Preparation Kit für MedTech: SOP, Interview-Guide, Checklisten, Finding Response. Systematisch vorbereitet auf ISO 13485 & FDA Audits. €79.'
+      description: 'Audit Preparation Kit v2.0 für MedTech: SOP, Interview-Guide, Checklisten, Supplier-Toolkit, Dashboard. QMSR-konform. ISO 13485, FDA & EU MDR.'
     },
     breadcrumb: 'Produkte',
     hero: {
       title: 'Audit Preparation Kit',
       badges: [
         { std: 'ISO 13485', clause: '§8.2.4' },
-        { std: 'FDA 21 CFR 820', clause: '§820.22' },
+        { std: 'FDA 21 CFR 820 / QMSR', clause: '§820.22' },
         { std: 'ISO 19011', clause: 'Audit Guidelines' }
       ],
       warning: {
@@ -233,6 +233,18 @@ const t = {
       problem: 'Unstrukturierte Audit-Vorbereitung führt zu Findings, die vermeidbar gewesen wären.',
       solution: 'Ein systematischer Audit-Prozess mit Interview-Guide, Checklisten und Pre-Check – damit Sie vor dem Auditor wissen, wo Sie stehen.',
       howItWorks: 'Das Kit führt Sie durch den kompletten Audit-Zyklus: Von der Planung über die Durchführung bis zum Reporting. Jedes Dokument ist audit-erprobt und direkt einsetzbar.'
+    },
+    v2features: {
+      title: 'Neu in v2.0',
+      items: [
+        { icon: '🏥', text: 'QMSR-konform – FDA hat 21 CFR 820 durch ISO 13485 ersetzt (seit Feb. 2026)' },
+        { icon: '📊', text: 'Audit-Dashboard mit automatischen KPIs (Closure Rate, Overdue-Tracking, Risikobewertung)' },
+        { icon: '🛩️', text: 'Supplier-Audit-Toolkit mit 35+ Prüfpunkten' },
+        { icon: '🎓', text: 'Auditor-Kompetenzmatrix mit Qualifikationstracking' },
+        { icon: '⚠️', text: 'Risk-basierte Auditplanung mit automatischer Frequenzberechnung' },
+        { icon: '📄', text: '14 statt 8 Dokumente – umfassend erweitert' },
+        { icon: '🌐', text: 'Erhältlich in Englisch und Deutsch' }
+      ]
     },
     step1: {
       title: 'Internal Audit SOP',
@@ -244,10 +256,12 @@ const t = {
           'Auditor-Qualifikation & Unabhängigkeit',
           'Major/Minor NC Klassifizierung',
           'CAPA-Verknüpfung & Follow-up',
-          'Management Review Input'
+          'Management Review Input',
+          'Risk-basierte Auditauswahl (neu in v2.0)',
+          'Supplier-Audit-Integration'
         ]
       },
-      tip: '💡 Die SOP definiert klare Eskalationskriterien – so weiß jeder, wann ein Finding "Major" wird.'
+      tip: '💡 Jetzt QMSR-konform: Die SOP berücksichtigt die neue FDA QMSR (seit Feb. 2026) und definiert klare Eskalationskriterien.'
     },
     step2: {
       title: 'Audit Plan Template',
@@ -296,7 +310,7 @@ const t = {
     },
     step5: {
       title: 'Audit Checklists',
-      intro: 'Umfassende Checklisten für ISO 13485 und FDA 21 CFR 820 – mit Objective Evidence.',
+      intro: 'Umfassende Checklisten für ISO 13485 und FDA 21 CFR 820 / QMSR – mit Legacy-Mapping-Tabelle für die Übergangsphase.',
       tabs: {
         iso: 'ISO 13485',
         fda: 'FDA 820'
@@ -342,7 +356,7 @@ const t = {
     },
     cta: {
       title: 'Bereit für Ihr nächstes Audit?',
-      text: '€79 für strukturierte Vorbereitung – damit das Audit keine Überraschungen bringt.',
+      text: '€279 für strukturierte Vorbereitung – damit das Audit keine Überraschungen bringt.',
       button: 'Jetzt kaufen'
     },
     upsell: {
@@ -355,14 +369,16 @@ const t = {
       bundleHint: 'Alle 3 Bundles zusammen: Fragen Sie nach einem Paketpreis'
     },
     buyBox: {
-      price: '€79',
+      price: '€279',
       oneTime: 'einmalig',
       button: 'Jetzt kaufen',
       secure: 'Sichere Zahlung via Gumroad · Sofortiger Download',
       included: [
-        '8 Dokumente (Word, Excel, PDF)',
-        'Interview Guide mit Red Flags',
-        'ISO + FDA Checklisten',
+        '14 Dokumente (Word, Excel)',
+        'Interview Guide mit Warnsignalen',
+        'ISO + FDA/QMSR Checklisten',
+        'Audit-Dashboard mit KPIs',
+        'Supplier-Audit-Toolkit',
         'Firmenweite Lizenz'
       ]
     }
@@ -370,14 +386,14 @@ const t = {
   en: {
     meta: {
       title: 'Audit Prep Kit | ISO 13485 Certification Audit | QCore',
-      description: 'Audit Preparation Kit for MedTech: SOP, Interview Guide, Checklists, Finding Response. Systematically prepared for ISO 13485 & FDA audits. €79.'
+      description: 'Audit Preparation Kit v2.0 for MedTech: SOP, Interview Guide, Checklists, Supplier Toolkit, Dashboard. QMSR-compliant. ISO 13485, FDA & EU MDR.'
     },
     breadcrumb: 'Products',
     hero: {
       title: 'Audit Preparation Kit',
       badges: [
         { std: 'ISO 13485', clause: '§8.2.4' },
-        { std: 'FDA 21 CFR 820', clause: '§820.22' },
+        { std: 'FDA 21 CFR 820 / QMSR', clause: '§820.22' },
         { std: 'ISO 19011', clause: 'Audit Guidelines' }
       ],
       warning: {
@@ -387,6 +403,18 @@ const t = {
       problem: 'Unstructured audit preparation leads to findings that could have been avoided.',
       solution: 'A systematic audit process with interview guide, checklists, and pre-check – so you know where you stand before the auditor does.',
       howItWorks: 'The kit guides you through the complete audit cycle: from planning to execution to reporting. Every document is audit-proven and ready to use.'
+    },
+    v2features: {
+      title: 'New in v2.0',
+      items: [
+        { icon: '🏥', text: 'QMSR-compliant – FDA replaced 21 CFR 820 with ISO 13485 (effective Feb. 2026)' },
+        { icon: '📊', text: 'Audit Dashboard with automatic KPIs (Closure Rate, Overdue Tracking, Risk Assessment)' },
+        { icon: '🛩️', text: 'Supplier Audit Toolkit with 35+ checkpoints' },
+        { icon: '🎓', text: 'Auditor Competency Matrix with qualification tracking' },
+        { icon: '⚠️', text: 'Risk-based audit planning with automatic frequency calculation' },
+        { icon: '📄', text: '14 instead of 8 documents – comprehensively expanded' },
+        { icon: '🌐', text: 'Available in English and German' }
+      ]
     },
     step1: {
       title: 'Internal Audit SOP',
@@ -398,10 +426,12 @@ const t = {
           'Auditor Qualification & Independence',
           'Major/Minor NC Classification',
           'CAPA Linkage & Follow-up',
-          'Management Review Input'
+          'Management Review Input',
+          'Risk-based audit selection (new in v2.0)',
+          'Supplier audit integration'
         ]
       },
-      tip: '💡 The SOP defines clear escalation criteria – so everyone knows when a finding becomes "Major".'
+      tip: '💡 Now QMSR-compliant: The SOP accounts for the new FDA QMSR (effective Feb. 2026) and defines clear escalation criteria.'
     },
     step2: {
       title: 'Audit Plan Template',
@@ -450,7 +480,7 @@ const t = {
     },
     step5: {
       title: 'Audit Checklists',
-      intro: 'Comprehensive checklists for ISO 13485 and FDA 21 CFR 820 – with objective evidence.',
+      intro: 'Comprehensive checklists for ISO 13485 and FDA 21 CFR 820 / QMSR – with legacy mapping table for the transition period.',
       tabs: {
         iso: 'ISO 13485',
         fda: 'FDA 820'
@@ -496,7 +526,7 @@ const t = {
     },
     cta: {
       title: 'Ready for your next audit?',
-      text: '€79 for structured preparation – so the audit brings no surprises.',
+      text: '€279 for structured preparation – so the audit brings no surprises.',
       button: 'Buy now'
     },
     upsell: {
@@ -509,15 +539,17 @@ const t = {
       bundleHint: 'All 3 bundles together: Ask for a package price'
     },
     buyBox: {
-      price: '€79',
+      price: '€279',
       oneTime: 'one-time',
       button: 'Buy now',
       secure: 'Secure payment via Gumroad · Instant download',
       included: [
-        '8 Documents (Word, Excel, PDF)',
-        'Interview Guide with Red Flags',
-        'ISO + FDA Checklists',
-        'Company-wide license'
+        '14 Documents (Word, Excel)',
+        'Interview Guide with Warning Signals',
+        'ISO + FDA/QMSR Checklists',
+        'Audit Dashboard with KPIs',
+        'Supplier Audit Toolkit',
+        'Company-wide License'
       ]
     }
   }
@@ -541,7 +573,7 @@ export default function AuditPrepKit() {
         <meta property="og:title" content={text.meta.title} />
         <meta property="og:description" content={text.meta.description} />
         <meta property="og:type" content="product" />
-        <meta property="product:price:amount" content="79" />
+        <meta property="product:price:amount" content="279" />
         <meta property="product:price:currency" content="EUR" />
       </Head>
       
@@ -619,6 +651,20 @@ export default function AuditPrepKit() {
                     href="https://qcore33.gumroad.com/l/wcevjy"
                     target="_blank"
                     rel="noopener noreferrer"
+                    className="block w-full text-center px-6 py-4 rounded-lg text-lg font-semibold transition-all hover:scale-105 mb-2"
+                    style={{ 
+                      backgroundColor: 'rgba(191, 219, 254, 0.35)',
+                      backdropFilter: 'blur(3px)',
+                      border: '1px solid rgba(191, 219, 254, 0.5)',
+                      color: '#1e3a8a'
+                    }}
+                  >
+                    🇬🇧 {locale === 'de' ? 'English Version kaufen' : 'Buy English Version'}
+                  </a>
+                  <a 
+                    href="https://qcore33.gumroad.com/l/yownbk"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="block w-full text-center px-6 py-4 rounded-lg text-lg font-semibold transition-all hover:scale-105 mb-3"
                     style={{ 
                       backgroundColor: 'rgba(191, 219, 254, 0.35)',
@@ -627,7 +673,7 @@ export default function AuditPrepKit() {
                       color: '#1e3a8a'
                     }}
                   >
-                    🇬🇧 {text.buyBox.button}
+                    🇩🇪 {locale === 'de' ? 'Deutsche Version kaufen' : 'Buy German Version'}
                   </a>
 
                   <p className="text-xs text-center mb-4" style={{ color: '#64748b' }}>
@@ -653,6 +699,35 @@ export default function AuditPrepKit() {
           </div>
         </section>
 
+        {/* V2.0 FEATURES */}
+        <section className="relative py-8">
+          <div className="relative z-10 max-w-[90%] mx-auto px-8">
+            <div 
+              className="rounded-xl p-8"
+              style={{ backgroundColor: 'rgba(34, 197, 94, 0.06)', border: '1px solid rgba(34, 197, 94, 0.2)' }}
+            >
+              <h2 
+                className="text-3xl mb-6 text-center"
+                style={{ color: '#0f172a', fontFamily: "'Cormorant', serif", fontWeight: 600 }}
+              >
+                {text.v2features.title}
+              </h2>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {text.v2features.items.map((item, i) => (
+                  <div 
+                    key={i} 
+                    className="flex items-start gap-3 p-4 rounded-lg"
+                    style={{ backgroundColor: 'rgba(255, 255, 255, 0.6)' }}
+                  >
+                    <span className="text-2xl flex-shrink-0">{item.icon}</span>
+                    <span className="text-sm" style={{ color: '#334155' }}>{item.text}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* STEPS */}
         <section className="relative py-8">
           <div className="relative z-10 max-w-[90%] mx-auto px-8">
@@ -661,7 +736,7 @@ export default function AuditPrepKit() {
             <StepPDF 
               number={1} 
               title={text.step1.title}
-              pdfPath="/docs/audit/QCore_Audit-SOP_v1.1.pdf"
+              pdfPath={locale === 'de' ? '/docs/audit-de/QCore_Audit-SOP_v2.0_DE.pdf' : '/docs/audit/QCore_Audit-SOP_v2.0.pdf'}
               pdfHeight={700}
             >
               <p className="mb-4" style={{ color: '#475569' }}>{text.step1.intro}</p>
@@ -686,7 +761,7 @@ export default function AuditPrepKit() {
             <StepPDF 
               number={2} 
               title={text.step2.title}
-              pdfPath="/docs/audit/QCore_Audit-Plan_v1.1.pdf"
+              pdfPath={locale === 'de' ? '/docs/audit-de/QCore_Audit-Plan_v2.0_DE.pdf' : '/docs/audit/QCore_Audit-Plan_v2.0.pdf'}
               pdfHeight={650}
             >
               <p className="mb-4" style={{ color: '#475569' }}>{text.step2.intro}</p>
@@ -711,7 +786,7 @@ export default function AuditPrepKit() {
             <StepPDF 
               number={3} 
               title={text.step3.title}
-              pdfPath="/docs/audit/QCore_Audit-Report_v1.1.pdf"
+              pdfPath={locale === 'de' ? '/docs/audit-de/QCore_Audit-Report_v2.0_DE.pdf' : '/docs/audit/QCore_Audit-Report_v2.0.pdf'}
               pdfHeight={650}
             >
               <p className="mb-4" style={{ color: '#475569' }}>{text.step3.intro}</p>
@@ -736,7 +811,7 @@ export default function AuditPrepKit() {
             <StepPDF 
               number={4} 
               title={text.step4.title}
-              pdfPath="/docs/audit/QCore_Audit-Interview-Guide_v1.1.pdf"
+              pdfPath={locale === 'de' ? '/docs/audit-de/QCore_Audit-Interview-Guide_v2.0_DE.pdf' : '/docs/audit/QCore_Audit-Interview-Guide_v2.0.pdf'}
               pdfHeight={700}
             >
               <p className="mb-4" style={{ color: '#475569' }}>{text.step4.intro}</p>
@@ -762,8 +837,8 @@ export default function AuditPrepKit() {
               number={5} 
               title={text.step5.title}
               images={[
-                { src: '/docs/audit/images/Audit_checklist.png', alt: 'ISO 13485 Checklist', tab: text.step5.tabs.iso, caption: 'ISO 13485:2016 Audit Checklist' },
-                { src: '/docs/audit/images/Audit_checklist_FDA.png', alt: 'FDA 820 Checklist', tab: text.step5.tabs.fda, caption: 'FDA 21 CFR 820 Audit Checklist' }
+                { src: locale === 'de' ? '/docs/audit-de/images/Audit_checklist.png' : '/docs/audit/images/Audit_checklist.png', alt: 'ISO 13485 Checklist', tab: text.step5.tabs.iso, caption: 'ISO 13485:2016 Audit Checklist' },
+                { src: locale === 'de' ? '/docs/audit-de/images/Audit_checklist_FDA.png' : '/docs/audit/images/Audit_checklist_FDA.png', alt: 'FDA 820 / QMSR Checklist', tab: text.step5.tabs.fda, caption: 'FDA 21 CFR 820 / QMSR Audit Checklist' }
               ]}
             >
               <p className="mb-4" style={{ color: '#475569' }}>{text.step5.intro}</p>
@@ -788,7 +863,7 @@ export default function AuditPrepKit() {
             <StepImage 
               number={6} 
               title={text.step6.title}
-              imageSrc="/docs/audit/images/Audit_planning.png"
+              imageSrc={locale === 'de' ? '/docs/audit-de/images/Audit_planning.png' : '/docs/audit/images/Audit_planning.png'}
               imageAlt="Audit Schedule"
               imageCaption="Audit Schedule Template"
             >
@@ -814,7 +889,7 @@ export default function AuditPrepKit() {
             <StepImage 
               number={7} 
               title={text.step7.title}
-              imageSrc="/docs/audit/images/Audit_quickref.png"
+              imageSrc={locale === 'de' ? '/docs/audit-de/images/Audit_quickref.png' : '/docs/audit/images/Audit_quickref.png'}
               imageAlt="Quick Reference Card"
               imageCaption="Audit Quick Reference Card (1 Page)"
             >
@@ -855,20 +930,36 @@ export default function AuditPrepKit() {
               <p className="mb-6 text-lg" style={{ color: '#475569' }}>
                 {text.cta.text}
               </p>
-              <a 
-                href="https://qcore33.gumroad.com/l/wcevjy"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block px-8 py-4 rounded-lg text-lg font-semibold transition-all hover:scale-105"
-                style={{ 
-                  backgroundColor: 'rgba(191, 219, 254, 0.35)',
-                  backdropFilter: 'blur(3px)',
-                  border: '1px solid rgba(191, 219, 254, 0.5)',
-                  color: '#1e3a8a'
-                }}
-              >
-                {text.cta.button} – €79
-              </a>
+              <div className="flex flex-wrap justify-center gap-3">
+                <a 
+                  href="https://qcore33.gumroad.com/l/wcevjy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block px-8 py-4 rounded-lg text-lg font-semibold transition-all hover:scale-105"
+                  style={{ 
+                    backgroundColor: 'rgba(191, 219, 254, 0.35)',
+                    backdropFilter: 'blur(3px)',
+                    border: '1px solid rgba(191, 219, 254, 0.5)',
+                    color: '#1e3a8a'
+                  }}
+                >
+                  🇬🇧 {text.cta.button} – €279
+                </a>
+                <a 
+                  href="https://qcore33.gumroad.com/l/yownbk"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block px-8 py-4 rounded-lg text-lg font-semibold transition-all hover:scale-105"
+                  style={{ 
+                    backgroundColor: 'rgba(191, 219, 254, 0.35)',
+                    backdropFilter: 'blur(3px)',
+                    border: '1px solid rgba(191, 219, 254, 0.5)',
+                    color: '#1e3a8a'
+                  }}
+                >
+                  🇩🇪 {text.cta.button} – €279
+                </a>
+              </div>
             </div>
           </div>
         </section>

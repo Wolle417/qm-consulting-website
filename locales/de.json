@@ -395,7 +395,7 @@
     "audit": {
       "meta": {
         "title": "Internes Audit Kit | ISO 13485 & FDA konforme Templates | QCore",
-        "description": "Vollständiges Audit-System für MedTech: SOP, Checklisten, Interviewfragen, Berichtsvorlagen. ISO 13485, FDA 21 CFR 820.22 konform. €79."
+        "description": "Vollständiges Audit-System für MedTech: SOP, Checklisten, Interviewfragen, Berichtsvorlagen, QMSR-Compliance. ISO 13485, FDA 21 CFR 820 / QMSR konform. €279."
       },
       "title": "Internes Audit Kit",
       "subtitle": "8 Dokumente für professionelle interne Audits. Mit 80+ Prüfpunkten, 50+ Interviewfragen und Finding-Klassifizierung.",
@@ -435,7 +435,7 @@
         { "q": "Ist die Sprache Englisch oder Deutsch?", "a": "Die Dokumente sind auf Englisch – der Industriestandard für internationale Zertifizierungen und FDA-Submissions." },
         { "q": "Wie funktioniert die Zahlung?", "a": "Die Zahlung läuft über Gumroad (Kreditkarte, PayPal). Nach der Zahlung erhalten Sie sofort den Download-Link per E-Mail." }
       ],
-      "ctaText": "€79 für ein komplettes Audit-Toolkit, das Ihre internen Audits von Checkbox-Übungen zu echten Verbesserungstreibern macht."
+      "ctaText": "€279 für ein komplettes Audit-Toolkit, das Ihre internen Audits von Checkbox-Übungen zu echten Verbesserungstreibern macht."
     }
   },
   "footer": {

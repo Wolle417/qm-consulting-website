@@ -161,7 +161,7 @@ export default function Navigation() {
     { label: 'MedTech', isHeader: true, badge: 'ISO 13485 · FDA' },
     { label: t('nav.dropdown.capa'), href: '/produkte/capa-system', price: '€189' },
     { label: t('nav.dropdown.nc'), href: '/produkte/nc-system', price: '€139' },
-    { label: t('nav.dropdown.audit'), href: '/produkte/audit-prep-kit', price: '€79' },
+    { label: t('nav.dropdown.audit'), href: '/produkte/audit-prep-kit', price: '€279' },
     { divider: true },
     { label: 'Pharma', isHeader: true, badge: 'GMP · GDP' },
     { label: 'Data Integrity Kit', href: '/produkte/data-integrity-kit', price: '€299', highlight: true },
