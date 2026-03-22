@@ -3,14 +3,65 @@ import Footer from '../../components/Footer';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { tools, toolStatusConfig } from '../../data/tools';
+
+const toolsDE = [
+  {
+    id: 'nc-triage',
+    title: 'NC-Triage + Justifier',
+    href: '/nc-triage',
+    text: 'CAPA oder Korrektur? Systematische Entscheidungshilfe mit audit-sicherer Begründung. In unter 3 Minuten zur dokumentierten, normkonformen Bewertung Ihrer Nichtkonformität.',
+    includes: ['Strukturierter Entscheidungsbaum', 'Automatische Begründung (Copy & Paste)', 'Risiko- und Wiederholungsbewertung', 'Normreferenz: ISO 13485, FDA 820'],
+    tags: ['MedTech', 'Pharma', 'ISO 13485', 'FDA'],
+  },
+  {
+    id: 'stichprobe',
+    title: 'Stichprobenrechner',
+    href: '/tools/stichprobe',
+    text: 'AQL nach ISO 2859-1, Confidence/Reliability für Prozessvalidierung, Cpk-Nachweis. Drei Module in einem Tool — mit Normreferenz, Formel und kopierbarem Prüfbericht.',
+    includes: ['Wareneingangsprüfung (AQL)', 'Validierungsstichprobe (C/R)', 'Risikoklassen-Orientierung', 'Audit-fertiger Report-Export'],
+    tags: ['ISO 2859-1', 'ISO 16269-6', 'Prozessvalidierung'],
+  },
+  {
+    id: 'qm-wissen',
+    title: 'QM-Wissen',
+    href: '/qm-wissen',
+    text: 'Praxisnahe Artikel zu den Kernthemen im regulierten Qualitätsmanagement. Klar strukturiert, normbasiert, verständlich erklärt — als Nachschlagewerk für den Arbeitsalltag.',
+    includes: ['CAPA, FMEA, Root Cause Analysis', 'ISO 13485 Kernprozesse', 'Risikomanagement nach ISO 14971', 'Prozessvalidierung & Statistik'],
+    tags: ['ISO 13485', 'CAPA', 'FMEA', 'Artikel'],
+  },
+];
+
+const toolsEN = [
+  {
+    id: 'nc-triage',
+    title: 'NC Triage + Justifier',
+    href: '/nc-triage',
+    text: 'CAPA or correction? Systematic decision support with audit-safe justification. Get a documented, standards-compliant assessment of your nonconformity in under 3 minutes.',
+    includes: ['Structured decision tree', 'Automatic justification (copy & paste)', 'Risk and recurrence assessment', 'Norm reference: ISO 13485, FDA 820'],
+    tags: ['MedTech', 'Pharma', 'ISO 13485', 'FDA'],
+  },
+  {
+    id: 'stichprobe',
+    title: 'Sample Size Calculator',
+    href: '/tools/stichprobe',
+    text: 'AQL per ISO 2859-1, confidence/reliability for process validation, Cpk demonstration. Three modules in one tool — with norm references, formulas, and copyable inspection reports.',
+    includes: ['Incoming inspection (AQL)', 'Validation sample size (C/R)', 'Risk class orientation', 'Audit-ready report export'],
+    tags: ['ISO 2859-1', 'ISO 16269-6', 'Process Validation'],
+  },
+  {
+    id: 'qm-wissen',
+    title: 'QM Knowledge',
+    href: '/qm-wissen',
+    text: 'Practical articles on core topics in regulated quality management. Clearly structured, standards-based, and easy to understand — as a reference for daily work.',
+    includes: ['CAPA, FMEA, Root Cause Analysis', 'ISO 13485 core processes', 'Risk management per ISO 14971', 'Process validation & statistics'],
+    tags: ['ISO 13485', 'CAPA', 'FMEA', 'Articles'],
+  },
+];
 
 export default function ToolsHub() {
   const { locale } = useRouter();
   const isDE = locale !== 'en';
-
-  const liveTools = tools.filter(t => t.status === 'live');
-  const plannedTools = tools.filter(t => t.status === 'planned');
+  const items = isDE ? toolsDE : toolsEN;
 
   const cardStyle = {
     backgroundColor: 'rgba(30, 58, 138, 0.06)',
@@ -21,272 +72,86 @@ export default function ToolsHub() {
   return (
     <>
       <Head>
-        <title>{isDE ? 'Kostenlose QM-Tools | QCore Consulting' : 'Free QM Tools | QCore Consulting'}</title>
+        <title>{isDE ? 'Kostenlose QM-Tools & Wissen | QCore Consulting' : 'Free QM Tools & Knowledge | QCore Consulting'}</title>
         <meta
           name="description"
           content={isDE
-            ? 'Kostenlose QM-Tools: FDA 483 Dashboard, Stichprobenrechner, NC-Triage. Normgerecht, audit-sicher, ohne Registrierung.'
-            : 'Free QM tools: FDA 483 Dashboard, sample size calculator, NC triage. Standards-compliant, audit-ready, no registration.'}
+            ? 'Kostenlose QM-Tools: Stichprobenrechner, NC-Triage, QM-Wissensartikel. Normgerecht, audit-sicher, ohne Registrierung.'
+            : 'Free QM tools: sample size calculator, NC triage, QM knowledge articles. Standards-compliant, audit-ready, no registration.'}
         />
         <link rel="canonical" href={`https://qcore-consulting.de/${locale === 'en' ? 'en/' : ''}tools`} />
       </Head>
 
       <Navigation />
 
-      {/* Background */}
-      <div className="fixed inset-0 -z-10">
-        <div className="absolute inset-0" style={{
-          background: 'linear-gradient(135deg, #dbeafe 0%, #e0e7ff 25%, #f0fdfa 50%, #dbeafe 75%, #ede9fe 100%)',
-        }} />
-      </div>
-
-      <main className="pt-24 pb-16 px-6 lg:px-16 xl:px-24">
+      <main className="pt-24 pb-16 px-6 lg:px-16 xl:px-24 relative" style={{ zIndex: 2 }}>
         <div className="max-w-[1600px] mx-auto">
 
           {/* Hero */}
           <section className="mb-10">
             <h1
-              className="text-4xl lg:text-5xl font-semibold mb-2"
-              style={{ fontFamily: "'Cormorant', serif", color: '#0f172a' }}
+              className="text-4xl lg:text-5xl mb-2"
+              style={{ fontFamily: "'Cormorant', serif", color: '#0f172a', fontWeight: 400 }}
             >
-              {isDE ? 'Tools & Wissen' : 'Tools & Knowledge'}
+              Tools
             </h1>
-            <p className="text-lg max-w-3xl" style={{ color: '#475569' }}>
+            <p
+              className="text-2xl"
+              style={{ fontFamily: "'Cormorant', serif", color: '#334155' }}
+            >
               {isDE
-                ? 'Kostenlose, normgerechte Werkzeuge für QM-Professionals. Kein Login, keine Registrierung.'
-                : 'Free, standards-compliant tools for QM professionals. No login, no registration.'}
+                ? 'Kostenlose Werkzeuge für QM-Professionals'
+                : 'Free tools for QM professionals'}
             </p>
           </section>
 
-          {/* Live Tools Grid */}
-          <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5 mb-12">
-
-            {/* FDA 483 Dashboard — Featured */}
-            <Link
-              href="/fda-483-dashboard"
-              className="rounded-xl p-6 transition-all duration-300 hover:shadow-lg block md:col-span-2 xl:col-span-1"
-              style={{
-                ...cardStyle,
-                borderColor: 'rgba(34, 197, 94, 0.25)',
-              }}
-            >
-              <div className="flex items-end justify-between mb-3">
-                <div className="flex gap-2">
-                  <span
-                    className="text-xs px-2 py-0.5 rounded-full font-medium"
-                    style={{ backgroundColor: 'rgba(239, 68, 68, 0.1)', color: '#b91c1c', border: '1px solid rgba(239, 68, 68, 0.25)' }}
-                  >
-                    NEW
-                  </span>
-                  <span
-                    className="text-xs px-2 py-0.5 rounded-full font-medium"
-                    style={{ backgroundColor: 'rgba(34, 197, 94, 0.1)', color: '#22c55e', border: '1px solid rgba(34, 197, 94, 0.25)' }}
-                  >
-                    Live
-                  </span>
-                </div>
-              </div>
-              <h2
-                className="text-xl font-semibold mb-2"
-                style={{ fontFamily: "'Cormorant', serif", color: '#0f172a' }}
+          {/* Tools Grid — matching Consulting page density */}
+          <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
+            {items.map((tool) => (
+              <Link
+                key={tool.id}
+                href={tool.href}
+                className="block p-6 rounded-xl transition-all duration-300 hover:shadow-lg flex flex-col"
+                style={cardStyle}
               >
-                FDA 483 Dashboard
-              </h2>
-              <p className="text-sm mb-3" style={{ color: '#475569' }}>
-                {isDE
-                  ? 'Top 10 FDA-Observations interaktiv analysieren. Branchenvergleich, Trends und Benchmarking für Ihre Audit-Vorbereitung.'
-                  : 'Analyze top 10 FDA observations interactively. Industry comparison, trends, and benchmarking for your audit preparation.'}
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {['FDA', 'MedTech', 'Pharma', isDE ? 'Interaktiv' : 'Interactive'].map(tag => (
-                  <span
-                    key={tag}
-                    className="text-xs px-2.5 py-0.5 rounded-full"
-                    style={{ backgroundColor: 'rgba(30, 58, 138, 0.1)', color: '#1e3a8a' }}
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </Link>
-
-            {/* Tools from data/tools.js */}
-            {liveTools.map(tool => {
-              const status = toolStatusConfig[tool.status];
-              return (
-                <Link
-                  key={tool.id}
-                  href={tool.slug}
-                  className="rounded-xl p-6 transition-all duration-300 hover:shadow-lg block"
-                  style={{
-                    ...cardStyle,
-                    borderColor: 'rgba(34, 197, 94, 0.2)',
-                  }}
-                >
-                  <div className="flex items-end justify-between mb-3">
-                    <span
-                      className="text-xs px-2 py-0.5 rounded-full font-medium"
-                      style={{
-                        backgroundColor: status.bgColor,
-                        color: status.color,
-                        border: `1px solid ${status.borderColor}`,
-                      }}
-                    >
-                      {isDE ? status.label : status.labelEn}
-                    </span>
-                  </div>
+                <div className="mb-3">
                   <h2
-                    className="text-xl font-semibold mb-2"
-                    style={{ fontFamily: "'Cormorant', serif", color: '#0f172a' }}
+                    className="text-xl leading-tight"
+                    style={{ fontFamily: "'Cormorant', serif", color: '#0f172a', fontWeight: 600 }}
                   >
-                    {isDE ? tool.name : (tool.nameEn || tool.name)}
+                    {tool.title}
                   </h2>
-                  <p className="text-sm mb-3" style={{ color: '#475569' }}>
-                    {isDE ? tool.description : tool.descriptionEn}
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {tool.industries.map(ind => (
-                      <span
-                        key={ind}
-                        className="text-xs px-2.5 py-0.5 rounded-full"
-                        style={{ backgroundColor: 'rgba(30, 58, 138, 0.1)', color: '#1e3a8a' }}
-                      >
-                        {ind === 'medtech' ? 'MedTech' : 'Pharma'}
-                      </span>
+                </div>
+
+                <p className="text-sm mb-4 leading-relaxed" style={{ color: '#334155' }}>
+                  {tool.text}
+                </p>
+
+                <div className="flex-1">
+                  <div className="space-y-1.5">
+                    {tool.includes.map((item, i) => (
+                      <div key={i} className="flex items-start gap-2">
+                        <span className="text-xs mt-1 flex-shrink-0" style={{ color: '#1e3a8a' }}>▸</span>
+                        <span className="text-sm" style={{ color: '#475569' }}>{item}</span>
+                      </div>
                     ))}
                   </div>
-                </Link>
-              );
-            })}
+                </div>
 
-            {/* QM-Wissen */}
-            <Link
-              href="/qm-wissen"
-              className="rounded-xl p-6 transition-all duration-300 hover:shadow-lg block"
-              style={{
-                ...cardStyle,
-                borderColor: 'rgba(34, 197, 94, 0.2)',
-              }}
-            >
-              <div className="flex items-end justify-between mb-3">
-                <span
-                  className="text-xs px-2 py-0.5 rounded-full font-medium"
-                  style={{ backgroundColor: 'rgba(34, 197, 94, 0.1)', color: '#22c55e', border: '1px solid rgba(34, 197, 94, 0.25)' }}
-                >
-                  Live
-                </span>
-              </div>
-              <h2
-                className="text-xl font-semibold mb-2"
-                style={{ fontFamily: "'Cormorant', serif", color: '#0f172a' }}
-              >
-                {isDE ? 'QM-Wissen' : 'QM Knowledge'}
-              </h2>
-              <p className="text-sm mb-3" style={{ color: '#475569' }}>
-                {isDE
-                  ? 'Praxisnahe Artikel zu ISO 13485, CAPA, FMEA, Root Cause Analysis und mehr — verständlich erklärt.'
-                  : 'Practical articles on ISO 13485, CAPA, FMEA, root cause analysis and more — clearly explained.'}
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {['ISO 13485', 'CAPA', 'FMEA', isDE ? 'Artikel' : 'Articles'].map(tag => (
-                  <span
-                    key={tag}
-                    className="text-xs px-2.5 py-0.5 rounded-full"
-                    style={{ backgroundColor: 'rgba(30, 58, 138, 0.1)', color: '#1e3a8a' }}
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </Link>
-
-            {/* QMB-Prüfungstrainer */}
-            <Link
-              href="/qmb-trainer"
-              className="rounded-xl p-6 transition-all duration-300 hover:shadow-lg block"
-              style={{
-                ...cardStyle,
-                borderColor: 'rgba(34, 197, 94, 0.2)',
-              }}
-            >
-              <div className="flex items-end justify-between mb-3">
-                <span
-                  className="text-xs px-2 py-0.5 rounded-full font-medium"
-                  style={{ backgroundColor: 'rgba(34, 197, 94, 0.1)', color: '#22c55e', border: '1px solid rgba(34, 197, 94, 0.25)' }}
-                >
-                  Live
-                </span>
-              </div>
-              <h2
-                className="text-xl font-semibold mb-2"
-                style={{ fontFamily: "'Cormorant', serif", color: '#0f172a' }}
-              >
-                {isDE ? 'QMB-Prüfungstrainer' : 'QMB Exam Trainer'}
-              </h2>
-              <p className="text-sm mb-3" style={{ color: '#475569' }}>
-                {isDE
-                  ? 'Multiple-Choice-Fragen zur Vorbereitung auf die QMB-Zertifizierung. Themenbasiert, mit Erklärungen.'
-                  : 'Multiple choice questions for QMB certification preparation. Topic-based, with explanations.'}
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {['QMB', isDE ? 'Zertifizierung' : 'Certification', 'Multiple Choice'].map(tag => (
-                  <span
-                    key={tag}
-                    className="text-xs px-2.5 py-0.5 rounded-full"
-                    style={{ backgroundColor: 'rgba(30, 58, 138, 0.1)', color: '#1e3a8a' }}
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </Link>
-          </div>
-
-          {/* Planned Tools */}
-          {plannedTools.length > 0 && (
-            <section>
-              <h2
-                className="text-2xl font-semibold mb-5"
-                style={{ fontFamily: "'Cormorant', serif", color: '#0f172a' }}
-              >
-                {isDE ? 'In Planung' : 'Planned'}
-              </h2>
-              <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
-                {plannedTools.map(tool => {
-                  const status = toolStatusConfig[tool.status];
-                  return (
-                    <div
-                      key={tool.id}
-                      className="rounded-xl p-6"
-                      style={{ ...cardStyle, opacity: 0.65 }}
+                <div className="mt-4 pt-3 flex flex-wrap gap-1.5" style={{ borderTop: '1px solid rgba(30, 58, 138, 0.1)' }}>
+                  {tool.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-2.5 py-0.5 rounded-full text-xs"
+                      style={{ backgroundColor: 'rgba(30, 58, 138, 0.1)', color: '#1e3a8a' }}
                     >
-                      <div className="flex items-end justify-between mb-3">
-                        <span
-                          className="text-xs px-2 py-0.5 rounded-full"
-                          style={{
-                            backgroundColor: status.bgColor,
-                            color: status.color,
-                            border: `1px solid ${status.borderColor}`,
-                          }}
-                        >
-                          {isDE ? status.label : status.labelEn}
-                        </span>
-                      </div>
-                      <h3
-                        className="text-lg font-semibold mb-1"
-                        style={{ fontFamily: "'Cormorant', serif", color: '#0f172a' }}
-                      >
-                        {isDE ? tool.name : (tool.nameEn || tool.name)}
-                      </h3>
-                      <p className="text-sm" style={{ color: '#64748b' }}>
-                        {isDE ? tool.description : tool.descriptionEn}
-                      </p>
-                    </div>
-                  );
-                })}
-              </div>
-            </section>
-          )}
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </Link>
+            ))}
+          </div>
 
         </div>
       </main>

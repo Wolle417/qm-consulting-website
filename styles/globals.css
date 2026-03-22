@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-  /* Scroll offset für Anchor-Links (wegen fixer Navigation) */
   [id] {
     scroll-margin-top: 80px;
   }
@@ -15,22 +14,7 @@
     overflow-x: hidden;
   }
   
-  /* Separates Element für animiertes Hintergrundbild - DEAKTIVIERT: Ersetzt durch NetworkBackground */
-  /* body::after {
-    content: '';
-    position: fixed;
-    top: -20px;
-    left: -20px;
-    width: calc(100% + 40px);
-    height: calc(100% + 40px);
-    background-image: url('/images/hero-bg.jpeg');
-    background-size: cover;
-    background-position: center right;
-    z-index: -2;
-    animation: breathe 25s ease-in-out infinite;
-  } */
-  
-  /* Gradient Overlay - Über dem NetworkBackground für bessere Lesbarkeit */
+  /* Steel Blue Overlay — heller, matching Stichprobe */
   body::before {
     content: '';
     position: fixed;
@@ -38,7 +22,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to right, rgba(248,250,252,0.95) 0%, rgba(248,250,252,0.3) 50%, transparent 100%);
+    background: rgba(226, 232, 240, 0.62);
     pointer-events: none;
     z-index: -1;
   }
@@ -48,96 +32,34 @@
     font-weight: 500;
   }
   
-  h1 {
-    font-size: 3.5rem;
-  }
-  
-  h2 {
-    font-size: 3rem;
-  }
-  
-  h3 {
-    font-size: 2rem;
-  }
+  h1 { font-size: 3.5rem; }
+  h2 { font-size: 3rem; }
+  h3 { font-size: 2rem; }
 }
 
 @layer utilities {
-  .btn-outline {
-    @apply px-8 py-4 border-2 border-qcore-blue text-qcore-blue font-semibold rounded;
-    transition: all 0.3s ease;
-  }
-  
-  .btn-outline:hover {
-    @apply bg-qcore-blue text-dark-navy;
-  }
-  
-  .btn-ghost {
-    @apply px-8 py-4 border border-border-dark text-text-light font-medium rounded;
-    transition: all 0.3s ease;
-  }
-  
-  .btn-ghost:hover {
-    @apply border-qcore-blue text-qcore-blue bg-qcore-navy bg-opacity-20;
-  }
-
-  /* QCore V2 Card Styles - BREITER + KOMPAKTER */
-  .card-minimal {
-    @apply p-6 bg-qcore-navy bg-opacity-30 border border-border-dark rounded-lg;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    min-width: 500px;
-  }
-  
-  .card-minimal:hover {
-    @apply border-qcore-blue shadow-lg;
-    box-shadow: 0 4px 20px rgba(74, 144, 226, 0.2);
-  }
-
-  /* KOMPAKTE LISTEN - SCHWARZER TEXT */
-  .card-minimal ul {
-    margin: 0 !important;
-    padding-left: 1.2em !important;
-    list-style: disc !important;
-  }
-
-  .card-minimal li {
-    margin-bottom: 2px !important;
-    margin-top: 0 !important;
-    padding: 0 !important;
-    line-height: 1.2 !important;
-    color: #000000 !important;
-    font-size: 0.95rem !important;
-  }
-
   .section-padding {
     @apply py-24 px-4;
   }
 
-  .glass-effect {
-    background: rgba(30, 58, 95, 0.2);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+  .card-steel {
+    background: rgba(30, 58, 138, 0.07);
+    border: 1px solid rgba(30, 58, 138, 0.14);
+    backdrop-filter: blur(6px);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .card-steel:hover {
+    background: rgba(30, 58, 138, 0.11);
+    transform: translateY(-2px);
   }
 }
 
-/* Hintergrund-Animation - NUR das Bild bewegt sich */
-@keyframes breathe {
-  0%, 100% {
-    transform: scale(1) translate(0, 0);
-  }
-  50% {
-    transform: scale(1.05) translate(10px, 10px);
-  }
-}
-
-/* Float animation für andere Elemente falls benötigt */
 @keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
 }
 
 .animate-float {

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+  <rect width="600" height="400" fill="#eff6ff" rx="8"/>
+  <rect x="40" y="40" width="520" height="320" fill="white" rx="6" stroke="#1e3a8a" stroke-opacity="0.2" stroke-width="1"/>
+  <rect x="40" y="40" width="520" height="6" fill="#1e3a8a" fill-opacity="0.8" rx="3"/>
+  <text x="80" y="90" font-family="serif" font-size="22" font-weight="600" fill="#1e3a8a">QM-Relevanz: Regulatorische Deadlines</text>
+  <rect x="80" y="110" width="440" height="1" fill="#1e3a8a" fill-opacity="0.1"/>
+  <circle cx="100" cy="150" r="8" fill="#ef4444" fill-opacity="0.15"/>
+  <circle cx="100" cy="150" r="4" fill="#ef4444"/>
+  <text x="120" y="147" font-family="sans-serif" font-size="13" font-weight="600" fill="#0f172a">NIS-2 — in Kraft seit Dez. 2025</text>
+  <text x="120" y="165" font-family="sans-serif" font-size="11" fill="#64748b">≥50 MA oder &gt;10 Mio. € · Bußgeld: bis 10 Mio. € / 2% Umsatz</text>
+  <circle cx="100" cy="210" r="8" fill="#f59e0b" fill-opacity="0.15"/>
+  <circle cx="100" cy="210" r="4" fill="#f59e0b"/>
+  <text x="120" y="207" font-family="sans-serif" font-size="13" font-weight="600" fill="#0f172a">CRA-Meldepflicht — ab Sept. 2026</text>
+  <text x="120" y="225" font-family="sans-serif" font-size="11" fill="#64748b">Schwachstellen: 24h · Vorfälle: 72h</text>
+  <circle cx="100" cy="270" r="8" fill="#1e3a8a" fill-opacity="0.15"/>
+  <circle cx="100" cy="270" r="4" fill="#1e3a8a"/>
+  <text x="120" y="267" font-family="sans-serif" font-size="13" font-weight="600" fill="#0f172a">ISO 14971 — Cyber-Threats als Hazard</text>
+  <text x="120" y="285" font-family="sans-serif" font-size="11" fill="#64748b">Supply-Chain-Ausfall = Patientenrisiko</text>
+  <circle cx="100" cy="325" r="8" fill="#059669" fill-opacity="0.15"/>
+  <circle cx="100" cy="325" r="4" fill="#059669"/>
+  <text x="120" y="322" font-family="sans-serif" font-size="13" font-weight="600" fill="#0f172a">ISO 13485 §8.2.3 — Business Continuity</text>
+  <text x="120" y="340" font-family="sans-serif" font-size="11" fill="#64748b">Wiper-Szenario in BCP aufnehmen + testen</text>
+</svg>

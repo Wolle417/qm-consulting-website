@@ -27,13 +27,6 @@ const servicesDE = [
     tags: ['Nuklear', 'MedTech', 'Halbleiter', 'Alle Branchen'],
   },
   {
-    id: 'gmp-doku',
-    title: 'GMP/Pharma-Dokumentation',
-    text: 'GMP-konforme Dokumentation: Quality Manual, Validierungsprotokolle, CAPA Reports, DMF-Struktur. Für Pharma, Biotech und verwandte Branchen.',
-    includes: ['Quality Manual', 'Validierungsprotokolle', 'CAPA Reports', 'DMF-Struktur'],
-    tags: ['GMP', 'GDP', 'Pharma', 'Biotech'],
-  },
-  {
     id: 'externer-qmb',
     title: 'Externer QMB (Teilzeit)',
     text: 'Externer Qualitätsmanagementbeauftragter auf Teilzeitbasis. QMS-Pflege, Management Reviews, Dokumentenlenkung, CAPA-Nachverfolgung.',
@@ -80,13 +73,6 @@ const servicesEN = [
     tags: ['Nuclear', 'MedTech', 'Semiconductor', 'All industries'],
   },
   {
-    id: 'gmp-doku',
-    title: 'GMP/Pharma Documentation',
-    text: 'GMP-compliant documentation: Quality Manual, validation protocols, CAPA reports, DMF structure. For pharma, biotech and related industries.',
-    includes: ['Quality Manual', 'Validation protocols', 'CAPA Reports', 'DMF structure'],
-    tags: ['GMP', 'GDP', 'Pharma', 'Biotech'],
-  },
-  {
     id: 'externer-qmb',
     title: 'External QMR (Part-time)',
     text: 'External Quality Management Representative on a part-time basis. QMS maintenance, management reviews, document control, CAPA follow-up.',
@@ -120,24 +106,22 @@ export default function QMBeratung() {
   const meta = isDE
     ? {
         title: 'Services | Technisches QM für regulierte Branchen | QCore Consulting',
-        description: 'CAPA Setup, FMEA Workshops, Technische Dokumentation, Externer QMB, AI/QM-Beratung. Von einem Physiker und Ingenieur mit 15+ Jahren in Nuklear, MedTech und Halbleiter.',
+        description: 'CAPA Setup, FMEA Workshops, Technische Dokumentation, Externer QMB, AI/QM-Beratung für MedTech, Pharma und regulierte Industrien.',
       }
     : {
         title: 'Services | Technical QM for Regulated Industries | QCore Consulting',
-        description: 'CAPA setup, FMEA workshops, technical documentation, external QMR, AI/QM consulting. From a physicist and engineer with 15+ years in nuclear, MedTech and semiconductor.',
+        description: 'CAPA setup, FMEA workshops, technical documentation, external QMR, AI/QM consulting for MedTech, Pharma and regulated industries.',
       };
 
   const labels = isDE
     ? {
         heroTitle: 'Services',
         heroSubtitle: 'Technisches QM für regulierte Branchen',
-        heroText: 'Physiker und Ingenieur mit 15+ Jahren in Nuklear, MedTech und Halbleiter. Ich verstehe die Prozesse, die ich dokumentiere — und baue QM-Systeme mit LLM-Unterstützung.',
         deadlineLabel: 'Regulatorische Deadline',
       }
     : {
         heroTitle: 'Services',
         heroSubtitle: 'Technical QM for Regulated Industries',
-        heroText: 'Physicist and engineer with 15+ years in nuclear, MedTech, and semiconductor. I understand the processes I document — and build QM systems with LLM support.',
         deadlineLabel: 'Regulatory deadline',
       };
 
@@ -156,32 +140,22 @@ export default function QMBeratung() {
 
       <Navigation />
 
-      {/* Background */}
-      <div className="fixed inset-0 -z-10">
-        <div className="absolute inset-0" style={{
-          background: 'linear-gradient(135deg, #dbeafe 0%, #e0e7ff 25%, #f0fdfa 50%, #dbeafe 75%, #ede9fe 100%)',
-        }} />
-      </div>
-
-      <main className="pt-24 pb-16 px-6 lg:px-16 xl:px-24">
+      <main className="pt-24 pb-16 px-6 lg:px-16 xl:px-24 relative" style={{ zIndex: 2 }}>
         <div className="max-w-[1600px] mx-auto">
 
           {/* Hero */}
           <section className="mb-10">
             <h1
-              className="text-4xl lg:text-5xl font-semibold mb-2"
-              style={{ fontFamily: "'Cormorant', serif", color: '#0f172a' }}
+              className="text-4xl lg:text-5xl mb-2"
+              style={{ fontFamily: "'Cormorant', serif", color: '#0f172a', fontWeight: 400 }}
             >
               {labels.heroTitle}
             </h1>
             <p
-              className="text-2xl mb-3"
+              className="text-2xl"
               style={{ fontFamily: "'Cormorant', serif", color: '#334155' }}
             >
               {labels.heroSubtitle}
-            </p>
-            <p className="text-lg max-w-3xl" style={{ color: '#475569' }}>
-              {labels.heroText}
             </p>
           </section>
 
@@ -194,22 +168,19 @@ export default function QMBeratung() {
                 className="p-6 rounded-xl transition-all duration-300 hover:shadow-lg flex flex-col"
                 style={cardStyle}
               >
-                {/* Header */}
                 <div className="mb-3">
                   <h2
-                    className="text-xl font-semibold leading-tight"
-                    style={{ fontFamily: "'Cormorant', serif", color: '#0f172a' }}
+                    className="text-xl leading-tight"
+                    style={{ fontFamily: "'Cormorant', serif", color: '#0f172a', fontWeight: 600 }}
                   >
                     {service.title}
                   </h2>
                 </div>
 
-                {/* Description */}
                 <p className="text-sm mb-4 leading-relaxed" style={{ color: '#334155' }}>
                   {service.text}
                 </p>
 
-                {/* Includes */}
                 <div className="flex-1">
                   <div className="space-y-1.5">
                     {service.includes.map((item, i) => (
@@ -221,7 +192,6 @@ export default function QMBeratung() {
                   </div>
                 </div>
 
-                {/* Deadline */}
                 {service.deadline && (
                   <div
                     className="mt-4 px-3 py-2 rounded-lg text-xs"
@@ -231,7 +201,6 @@ export default function QMBeratung() {
                   </div>
                 )}
 
-                {/* Tags */}
                 <div className="mt-4 pt-3 flex flex-wrap gap-1.5" style={{ borderTop: '1px solid rgba(30, 58, 138, 0.1)' }}>
                   {service.tags.map((tag) => (
                     <span
@@ -246,8 +215,6 @@ export default function QMBeratung() {
               </div>
             ))}
           </div>
-
-
 
         </div>
       </main>

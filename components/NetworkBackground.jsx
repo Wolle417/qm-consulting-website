@@ -32,7 +32,6 @@ export default function NetworkBackground() {
       ctx.scale(DPR, DPR);
     }
 
-    // Mouse tracking
     const handlePointerMove = (e) => { mouse.x = e.clientX; mouse.y = e.clientY; mouse.active = true; };
     const handlePointerDown = () => { mouse.down = true; };
     const handlePointerUp = () => { mouse.down = false; };
@@ -43,13 +42,9 @@ export default function NetworkBackground() {
     window.addEventListener('pointerup', handlePointerUp);
     window.addEventListener('pointerleave', handlePointerLeave);
 
-    // Fake DOF - Stärkerer Blur für mehr Tiefe
     const DOF = { focusZ: 3.05, blurStrength: 14, maxBlur: 16 };
-
-    // Overall motion speed
     const SPEED = prefersReduced ? 0.28 : 0.38;
 
-    // Stable framing
     const FRAME = {
       projScale: 0.60,
       zoff: 3.0,
@@ -254,10 +249,6 @@ export default function NetworkBackground() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.scale(DPR, DPR);
 
-      ctx.globalCompositeOperation = 'source-over';
-      ctx.fillStyle = 'rgba(175,195,202,0.04)';
-      ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
-
       const proj = new Array(nodes.length);
       for (let i = 0; i < nodes.length; i++) proj[i] = worldToScreen(nodes[i]);
 
@@ -276,7 +267,7 @@ export default function NetworkBackground() {
 
         ctx.shadowBlur = blur;
         ctx.shadowColor = 'rgba(0,0,0,0.22)';
-        ctx.strokeStyle = `rgba(10,14,16,${alpha})`;
+        ctx.strokeStyle = `rgba(15,23,42,${alpha})`;
 
         ctx.beginPath();
         ctx.moveTo(a.x, a.y);
@@ -294,7 +285,7 @@ export default function NetworkBackground() {
 
         ctx.shadowBlur = blur;
         ctx.shadowColor = 'rgba(0,0,0,0.24)';
-        ctx.fillStyle = `rgba(45,75,85,${a})`;
+        ctx.fillStyle = `rgba(30,58,90,${a})`;
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
@@ -334,7 +325,6 @@ export default function NetworkBackground() {
     buildGraph();
     animationId = requestAnimationFrame(loop);
 
-    // Cleanup
     return () => {
       if (animationId) cancelAnimationFrame(animationId);
       window.removeEventListener('pointermove', handlePointerMove);
@@ -355,10 +345,10 @@ export default function NetworkBackground() {
           height: 100vh;
           z-index: -10;
           background:
-            radial-gradient(1200px 900px at 18% 12%, rgba(255,255,255,.55), transparent 62%),
-            radial-gradient(900px 700px at 78% 65%, rgba(255,255,255,.25), transparent 58%),
-            radial-gradient(1400px 1100px at 82% 20%, rgba(130,170,185,.28), transparent 60%),
-            linear-gradient(180deg, #c5d3d8, #7a9299);
+            radial-gradient(1200px 900px at 18% 12%, rgba(255,255,255,.50), transparent 62%),
+            radial-gradient(900px 700px at 78% 65%, rgba(255,255,255,.20), transparent 58%),
+            radial-gradient(1400px 1100px at 82% 20%, rgba(100,130,170,.22), transparent 60%),
+            linear-gradient(180deg, #b8c8d6, #7889a0);
         }
         .network-canvas {
           position: fixed;

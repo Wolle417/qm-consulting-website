@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+  <rect width="600" height="400" fill="#f0fdfa" rx="8"/>
+  <rect x="40" y="40" width="520" height="320" fill="white" rx="6" stroke="#0f766e" stroke-opacity="0.2" stroke-width="1"/>
+  <rect x="40" y="40" width="520" height="6" fill="#0f766e" fill-opacity="0.8" rx="3"/>
+  <line x1="80" y1="100" x2="520" y2="100" stroke="#0f766e" stroke-opacity="0.1" stroke-width="1"/>
+  <text x="80" y="140" font-family="serif" font-size="28" font-weight="600" fill="#0f766e">Omnipod 5 — Defect</text>
+  <text x="80" y="170" font-family="sans-serif" font-size="14" fill="#64748b">Internal Tubing Tear · Insulin Under-Delivery</text>
+  <rect x="80" y="200" width="440" height="8" fill="#0f766e" fill-opacity="0.06" rx="4"/>
+  <rect x="80" y="220" width="380" height="8" fill="#0f766e" fill-opacity="0.06" rx="4"/>
+  <rect x="80" y="240" width="420" height="8" fill="#0f766e" fill-opacity="0.06" rx="4"/>
+  <rect x="80" y="260" width="300" height="8" fill="#0f766e" fill-opacity="0.06" rx="4"/>
+  <rect x="80" y="290" width="440" height="8" fill="#0f766e" fill-opacity="0.04" rx="4"/>
+  <rect x="80" y="310" width="350" height="8" fill="#0f766e" fill-opacity="0.04" rx="4"/>
+</svg>
