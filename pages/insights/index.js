@@ -1,16 +1,14 @@
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { insights } from '../../data/insights';
 
-// /insights → redirect to latest article
-export async function getStaticProps() {
-  const latest = insights[0];
-  return {
-    redirect: {
-      destination: `/insights/${latest.slug}`,
-      permanent: false,
-    },
-  };
-}
-
+// /insights → client-side redirect to latest article
 export default function InsightsIndex() {
+  const router = useRouter();
+  useEffect(() => {
+    if (insights.length > 0) {
+      router.replace(`/insights/${insights[0].slug}`);
+    }
+  }, []);
   return null;
 }
