@@ -186,13 +186,20 @@ export function StrykerCyberattack({ isDE }) {
 
       <div className="source-box">
         <p><strong>Quellen</strong></p>
-        <p>Stryker Corporation — SEC 8-K Filing, 11.03.2026</p>
-        <p>FBI Affidavit — District Court for the District of Maryland, 19.03.2026</p>
-        <p>DOJ — Seizure of Handala Domains, 20.03.2026</p>
-        <p>CISA Advisory — Microsoft Intune Hardening, 18.03.2026</p>
-        <p>BleepingComputer, TechCrunch, SecurityWeek, Axios, NBC News, Bloomberg — März 2026</p>
+        <p><a href="https://www.sec.gov/Archives/edgar/data/310764/000119312526102460/d76279d8k.htm" target="_blank" rel="noopener noreferrer">Stryker Corporation — SEC 8-K Filing, 11.03.2026</a></p>
+        <p><a href="https://www.justice.gov/opa/pr/justice-department-disrupts-iranian-cyber-enabled-psychological-operations" target="_blank" rel="noopener noreferrer">FBI Affidavit — District Court for the District of Maryland, 19.03.2026</a></p>
+        <p><a href="https://www.justice.gov/opa/pr/justice-department-disrupts-iranian-cyber-enabled-psychological-operations" target="_blank" rel="noopener noreferrer">DOJ — Seizure of Handala Domains, 20.03.2026</a></p>
+        <p><a href="https://www.cisa.gov/news-events/alerts/2026/03/18/cisa-urges-endpoint-management-system-hardening-after-cyberattack-against-us-organization" target="_blank" rel="noopener noreferrer">CISA Advisory — Microsoft Intune Hardening, 18.03.2026</a></p>
+        <p>
+          <a href="https://www.bleepingcomputer.com/news/security/fbi-seizes-handala-data-leak-site-after-stryker-cyberattack/" target="_blank" rel="noopener noreferrer">BleepingComputer</a>,{' '}
+          <a href="https://techcrunch.com/2026/03/19/fbi-seizes-pro-iranian-hacking-groups-websites-after-destructive-stryker-hack/" target="_blank" rel="noopener noreferrer">TechCrunch</a>,{' '}
+          <a href="https://www.securityweek.com/" target="_blank" rel="noopener noreferrer">SecurityWeek</a>,{' '}
+          <a href="https://www.axios.com/2026/03/20/iran-cyber-attack-stryker-domains-fbi" target="_blank" rel="noopener noreferrer">Axios</a>,{' '}
+          <a href="https://www.nbcnews.com/politics/justice-department/justice-department-seizes-domains-linked-iran-hacker-group-rcna263410" target="_blank" rel="noopener noreferrer">NBC News</a>,{' '}
+          Bloomberg — März 2026
+        </p>
         <p>Check Point Research, Palo Alto Networks, IBM — Threat Intelligence Reports</p>
-        <p>Arctic Wolf — Incident Analysis, März 2026</p>
+        <p><a href="https://arcticwolf.com/resources/blog/stryker-systems-disrupted-cyber-attack-handala-group-claims-responsibility/" target="_blank" rel="noopener noreferrer">Arctic Wolf — Incident Analysis, März 2026</a></p>
       </div>
     </div>
   );
@@ -373,13 +380,20 @@ function StrykerCyberattackEN() {
 
       <div className="source-box">
         <p><strong>Sources</strong></p>
-        <p>Stryker Corporation — SEC 8-K Filing, March 11, 2026</p>
-        <p>FBI Affidavit — District Court for the District of Maryland, March 19, 2026</p>
-        <p>DOJ — Seizure of Handala Domains, March 20, 2026</p>
-        <p>CISA Advisory — Microsoft Intune Hardening, March 18, 2026</p>
-        <p>BleepingComputer, TechCrunch, SecurityWeek, Axios, NBC News, Bloomberg — March 2026</p>
+        <p><a href="https://www.sec.gov/Archives/edgar/data/310764/000119312526102460/d76279d8k.htm" target="_blank" rel="noopener noreferrer">Stryker Corporation — SEC 8-K Filing, March 11, 2026</a></p>
+        <p><a href="https://www.justice.gov/opa/pr/justice-department-disrupts-iranian-cyber-enabled-psychological-operations" target="_blank" rel="noopener noreferrer">FBI Affidavit — District Court for the District of Maryland, March 19, 2026</a></p>
+        <p><a href="https://www.justice.gov/opa/pr/justice-department-disrupts-iranian-cyber-enabled-psychological-operations" target="_blank" rel="noopener noreferrer">DOJ — Seizure of Handala Domains, March 20, 2026</a></p>
+        <p><a href="https://www.cisa.gov/news-events/alerts/2026/03/18/cisa-urges-endpoint-management-system-hardening-after-cyberattack-against-us-organization" target="_blank" rel="noopener noreferrer">CISA Advisory — Microsoft Intune Hardening, March 18, 2026</a></p>
+        <p>
+          <a href="https://www.bleepingcomputer.com/news/security/fbi-seizes-handala-data-leak-site-after-stryker-cyberattack/" target="_blank" rel="noopener noreferrer">BleepingComputer</a>,{' '}
+          <a href="https://techcrunch.com/2026/03/19/fbi-seizes-pro-iranian-hacking-groups-websites-after-destructive-stryker-hack/" target="_blank" rel="noopener noreferrer">TechCrunch</a>,{' '}
+          <a href="https://www.securityweek.com/" target="_blank" rel="noopener noreferrer">SecurityWeek</a>,{' '}
+          <a href="https://www.axios.com/2026/03/20/iran-cyber-attack-stryker-domains-fbi" target="_blank" rel="noopener noreferrer">Axios</a>,{' '}
+          <a href="https://www.nbcnews.com/politics/justice-department/justice-department-seizes-domains-linked-iran-hacker-group-rcna263410" target="_blank" rel="noopener noreferrer">NBC News</a>,{' '}
+          Bloomberg — March 2026
+        </p>
         <p>Check Point Research, Palo Alto Networks, IBM — Threat Intelligence Reports</p>
-        <p>Arctic Wolf — Incident Analysis, March 2026</p>
+        <p><a href="https://arcticwolf.com/resources/blog/stryker-systems-disrupted-cyber-attack-handala-group-claims-responsibility/" target="_blank" rel="noopener noreferrer">Arctic Wolf — Incident Analysis, March 2026</a></p>
       </div>
     </div>
   );
