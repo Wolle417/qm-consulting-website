@@ -1,97 +1,120 @@
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
+import LandingCards from '../components/LandingCards';
 import Head from 'next/head';
 import { motion } from 'framer-motion';
 import { useTranslation } from '../hooks/useTranslation';
 
 export default function Home() {
-  const { t, locale } = useTranslation();
+  const { locale } = useTranslation();
   const isDE = locale !== 'en';
 
   return (
     <>
       <Head>
         <title>{isDE
-          ? 'QCore Consulting | QM-Beratung, Templates & Tools für MedTech & Pharma'
+          ? 'QCore Consulting | QM-Beratung, Templates & Tools f\u00fcr MedTech & Pharma'
           : 'QCore Consulting | QM Consulting, Templates & Tools for MedTech & Pharma'}</title>
         <meta name="description" content={isDE
-          ? 'QM-Beratung, audit-fertige Templates und kostenlose Tools für MedTech & Pharma. ISO 13485, FDA 21 CFR 820, EU MDR, GMP.'
+          ? 'QM-Beratung, audit-fertige Templates und kostenlose Tools f\u00fcr MedTech & Pharma. ISO 13485, FDA 21 CFR 820, EU MDR, GMP.'
           : 'QM consulting, audit-ready templates and free tools for MedTech & Pharma. ISO 13485, FDA 21 CFR 820, EU MDR, GMP.'} />
       </Head>
 
       <Navigation />
 
-      {/* ─── QCORE WATERMARK + TAGLINE — same left anchor ─── */}
-      <div
-        className="fixed pointer-events-none select-none"
-        style={{ top: '18%', left: '8%', zIndex: 1 }}
+      {/* ================================================================
+          HERO SECTION
+          Big Cormorant "QCore" mark on the left, tagline with blue
+          accent colour on "Consulting" + "hochregulierte Industrien"
+          (Zeineb's feedback: mehr Kontrast, klarere Hierarchie).
+          ================================================================ */}
+      <section
+        className="relative"
+        style={{ minHeight: '62vh' }}
       >
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.5, delay: 0.1 }}
+        {/* QCore mark */}
+        <div
+          className="absolute pointer-events-none select-none"
+          style={{ top: '20%', left: '8%', zIndex: 1 }}
         >
-          <span
-            style={{
-              fontFamily: "'Cormorant', serif",
-              fontSize: 'clamp(5.5rem, 13vw, 11rem)',
-              fontWeight: 500,
-              color: '#000000',
-              opacity: 0.82,
-              lineHeight: 1.1,
-              userSelect: 'none',
-              display: 'block',
-            }}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.5, delay: 0.1 }}
           >
-            QCore
-          </span>
-          <span
-            style={{
-              fontFamily: "'Cormorant', serif",
-              fontSize: 'clamp(0.6rem, 1.2vw, 0.9rem)',
-              fontWeight: 400,
-              letterSpacing: '0.22em',
-              textTransform: 'uppercase',
-              color: '#000000',
-              opacity: 0.55,
-              userSelect: 'none',
-              display: 'block',
-              marginTop: '0.5em',
-              paddingLeft: '0.15em',
-            }}
-          >
-            Consulting
-          </span>
-        </motion.div>
-      </div>
+            <span
+              style={{
+                fontFamily: "'Cormorant', serif",
+                fontSize: 'clamp(4.5rem, 10vw, 8.5rem)',
+                fontWeight: 500,
+                color: '#000000',
+                opacity: 0.82,
+                lineHeight: 1.1,
+                userSelect: 'none',
+                display: 'block',
+              }}
+            >
+              QCore
+            </span>
+            <span
+              style={{
+                fontFamily: "'Cormorant', serif",
+                fontSize: 'clamp(0.7rem, 1.3vw, 1rem)',
+                fontWeight: 500,
+                letterSpacing: '0.22em',
+                textTransform: 'uppercase',
+                color: '#1e3a8a',
+                opacity: 0.9,
+                userSelect: 'none',
+                display: 'block',
+                marginTop: '0.5em',
+                paddingLeft: '0.15em',
+              }}
+            >
+              Consulting
+            </span>
+          </motion.div>
+        </div>
 
-      {/* ─── TAGLINE — same left as QCore, middle of lower half ─── */}
-      <div
-        className="fixed pointer-events-none select-none"
-        style={{ top: '65%', left: '8%', zIndex: 2 }}
-      >
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.0, delay: 0.6 }}
-        >
-          <p
-            style={{
-              fontFamily: "'Cormorant', serif",
-              fontSize: 'clamp(1rem, 2vw, 1.5rem)',
-              fontWeight: 400,
-              color: '#000000',
-              opacity: 0.45,
-              letterSpacing: '0.04em',
-              lineHeight: 1.4,
-            }}
+        {/* Tagline — probeweise ausgeblendet, s. Chatverlauf.
+            Falls wieder rein: einfach diesen Block unkommentieren und top-Wert anpassen. */}
+        {false && (
+          <div
+            className="absolute pointer-events-none select-none"
+            style={{ top: '78%', left: '8%', right: '8%', zIndex: 2 }}
           >
-            {isDE
-              ? 'Qualitätsmanagement für hochregulierte Industrien'
-              : 'Quality Management for highly regulated industries'}
-          </p>
-        </motion.div>
-      </div>
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.0, delay: 0.6 }}
+            >
+              <p
+                style={{
+                  fontFamily: "'Montserrat', sans-serif",
+                  fontWeight: 900,
+                  fontSize: 'clamp(0.95rem, 1.9vw, 1.5rem)',
+                  letterSpacing: '-0.01em',
+                  wordSpacing: '0.5em',
+                  textTransform: 'uppercase',
+                  color: 'rgba(29, 78, 156, 0.5)',
+                  lineHeight: 1.25,
+                }}
+              >
+                {isDE
+                  ? 'Qualit\u00e4tsmanagement f\u00fcr hochregulierte Industrien'
+                  : 'Quality Management for highly regulated industries'}
+              </p>
+            </motion.div>
+          </div>
+        )}
+
+      </section>
+
+      {/* ================================================================
+          LANDING CARDS
+          Drei Glass-Container: Consulting | Templates | (free) Tools
+          ================================================================ */}
+      <LandingCards />
 
       <Footer />
     </>
